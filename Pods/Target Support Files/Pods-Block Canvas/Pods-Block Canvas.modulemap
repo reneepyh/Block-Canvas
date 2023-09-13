@@ -1,0 +1,6 @@
+framework module Pods_Block_Canvas {
+  umbrella header "Pods-Block Canvas-umbrella.h"
+
+  export *
+  module * { export * }
+}
