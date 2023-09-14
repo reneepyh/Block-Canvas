@@ -1,0 +1,13 @@
+query getTrending {
+  randomTopGenerativeToken {
+    author {
+      name
+    }
+    metadataUri
+    gentkContractAddress
+    thumbnailUri
+    displayUri
+    issuerContractAddress
+    name
+  }
+}
