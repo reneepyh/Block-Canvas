@@ -1,0 +1,32 @@
+{
+  "schemaNamespace" : "getTrending",
+  "options" : {
+    "cocoapodsCompatibleImportStatements" : true
+  },
+  "input" : {
+    "operationSearchPaths" : [
+      "./Block Canvas/*.graphql"
+    ],
+    "schemaSearchPaths" : [
+      "./Block Canvas/*.json"
+    ]
+  },
+  "output" : {
+    "testMocks" : {
+      "none" : {
+      }
+    },
+    "schemaTypes" : {
+      "path" : "./getTrending",
+      "moduleType" : {
+        "embeddedInTarget" : {
+          "name" : "BlockCanvas"
+        }
+      }
+    },
+    "operations" : {
+      "inSchemaModule" : {
+      }
+    }
+  }
+}

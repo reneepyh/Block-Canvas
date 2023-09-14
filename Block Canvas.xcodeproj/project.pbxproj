@@ -10,10 +10,22 @@
 		C7F524C7AFBED96AF65C050C /* Pods_Block_Canvas.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3DC6D694CA5A48BE07CB0F /* Pods_Block_Canvas.framework */; };
 		DB1DBD202AB1D45A00F74B64 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DBD1F2AB1D45A00F74B64 /* AppDelegate.swift */; };
 		DB1DBD222AB1D45A00F74B64 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DBD212AB1D45A00F74B64 /* SceneDelegate.swift */; };
-		DB1DBD242AB1D45A00F74B64 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DBD232AB1D45A00F74B64 /* ViewController.swift */; };
+		DB1DBD242AB1D45A00F74B64 /* DiscoverPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DBD232AB1D45A00F74B64 /* DiscoverPageViewController.swift */; };
 		DB1DBD272AB1D45A00F74B64 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB1DBD252AB1D45A00F74B64 /* Main.storyboard */; };
 		DB1DBD292AB1D45B00F74B64 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB1DBD282AB1D45B00F74B64 /* Assets.xcassets */; };
 		DB1DBD2C2AB1D45B00F74B64 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB1DBD2A2AB1D45B00F74B64 /* LaunchScreen.storyboard */; };
+		DB86552B2AB2D88C006905FB /* GetTrendingQuery.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8655202AB2D88C006905FB /* GetTrendingQuery.graphql.swift */; };
+		DB86552C2AB2D88C006905FB /* JSONObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8655232AB2D88C006905FB /* JSONObject.swift */; };
+		DB86552D2AB2D88C006905FB /* GenerativeToken.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8655252AB2D88C006905FB /* GenerativeToken.graphql.swift */; };
+		DB86552E2AB2D88C006905FB /* User.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8655262AB2D88C006905FB /* User.graphql.swift */; };
+		DB86552F2AB2D88C006905FB /* Query.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8655272AB2D88C006905FB /* Query.graphql.swift */; };
+		DB8655302AB2D88C006905FB /* SchemaConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8655282AB2D88C006905FB /* SchemaConfiguration.swift */; };
+		DB8655312AB2D88C006905FB /* SchemaMetadata.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8655292AB2D88C006905FB /* SchemaMetadata.graphql.swift */; };
+		DB8655322AB2D88C006905FB /* GetTrending.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB86552A2AB2D88C006905FB /* GetTrending.graphql.swift */; };
+		DBA478792AB2B29C0014E825 /* BCTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA478762AB2B29C0014E825 /* BCTabBarController.swift */; };
+		DBA4787A2AB2B29C0014E825 /* Discover.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBA478772AB2B29C0014E825 /* Discover.storyboard */; };
+		DBA4787B2AB2B29C0014E825 /* UIStoryboard+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA478782AB2B29C0014E825 /* UIStoryboard+Extension.swift */; };
+		DBAA52F52AB2B7D000FE51FF /* schema.json in Resources */ = {isa = PBXBuildFile; fileRef = DBAA52F42AB2B7D000FE51FF /* schema.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,11 +35,23 @@
 		DB1DBD1C2AB1D45A00F74B64 /* Block Canvas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Block Canvas.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB1DBD1F2AB1D45A00F74B64 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DB1DBD212AB1D45A00F74B64 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		DB1DBD232AB1D45A00F74B64 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		DB1DBD232AB1D45A00F74B64 /* DiscoverPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverPageViewController.swift; sourceTree = "<group>"; };
 		DB1DBD262AB1D45A00F74B64 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DB1DBD282AB1D45B00F74B64 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DB1DBD2B2AB1D45B00F74B64 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DB1DBD2D2AB1D45B00F74B64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DB8655202AB2D88C006905FB /* GetTrendingQuery.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetTrendingQuery.graphql.swift; sourceTree = "<group>"; };
+		DB8655232AB2D88C006905FB /* JSONObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONObject.swift; sourceTree = "<group>"; };
+		DB8655252AB2D88C006905FB /* GenerativeToken.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenerativeToken.graphql.swift; sourceTree = "<group>"; };
+		DB8655262AB2D88C006905FB /* User.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.graphql.swift; sourceTree = "<group>"; };
+		DB8655272AB2D88C006905FB /* Query.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Query.graphql.swift; sourceTree = "<group>"; };
+		DB8655282AB2D88C006905FB /* SchemaConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchemaConfiguration.swift; sourceTree = "<group>"; };
+		DB8655292AB2D88C006905FB /* SchemaMetadata.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchemaMetadata.graphql.swift; sourceTree = "<group>"; };
+		DB86552A2AB2D88C006905FB /* GetTrending.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetTrending.graphql.swift; sourceTree = "<group>"; };
+		DBA478762AB2B29C0014E825 /* BCTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BCTabBarController.swift; sourceTree = "<group>"; };
+		DBA478772AB2B29C0014E825 /* Discover.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Discover.storyboard; sourceTree = "<group>"; };
+		DBA478782AB2B29C0014E825 /* UIStoryboard+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+Extension.swift"; sourceTree = "<group>"; };
+		DBAA52F42AB2B7D000FE51FF /* schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schema.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,15 +104,75 @@
 		DB1DBD1E2AB1D45A00F74B64 /* Block Canvas */ = {
 			isa = PBXGroup;
 			children = (
+				DB86551D2AB2D88C006905FB /* getTrending */,
 				DB1DBD1F2AB1D45A00F74B64 /* AppDelegate.swift */,
 				DB1DBD212AB1D45A00F74B64 /* SceneDelegate.swift */,
-				DB1DBD232AB1D45A00F74B64 /* ViewController.swift */,
+				DBA478762AB2B29C0014E825 /* BCTabBarController.swift */,
+				DBA478772AB2B29C0014E825 /* Discover.storyboard */,
+				DBA478782AB2B29C0014E825 /* UIStoryboard+Extension.swift */,
+				DB1DBD232AB1D45A00F74B64 /* DiscoverPageViewController.swift */,
+				DBAA52F42AB2B7D000FE51FF /* schema.json */,
 				DB1DBD252AB1D45A00F74B64 /* Main.storyboard */,
 				DB1DBD282AB1D45B00F74B64 /* Assets.xcassets */,
 				DB1DBD2A2AB1D45B00F74B64 /* LaunchScreen.storyboard */,
 				DB1DBD2D2AB1D45B00F74B64 /* Info.plist */,
 			);
 			path = "Block Canvas";
+			sourceTree = "<group>";
+		};
+		DB86551D2AB2D88C006905FB /* getTrending */ = {
+			isa = PBXGroup;
+			children = (
+				DB86551E2AB2D88C006905FB /* Operations */,
+				DB8655212AB2D88C006905FB /* Schema */,
+				DB86552A2AB2D88C006905FB /* GetTrending.graphql.swift */,
+			);
+			path = getTrending;
+			sourceTree = SOURCE_ROOT;
+		};
+		DB86551E2AB2D88C006905FB /* Operations */ = {
+			isa = PBXGroup;
+			children = (
+				DB86551F2AB2D88C006905FB /* Queries */,
+			);
+			path = Operations;
+			sourceTree = "<group>";
+		};
+		DB86551F2AB2D88C006905FB /* Queries */ = {
+			isa = PBXGroup;
+			children = (
+				DB8655202AB2D88C006905FB /* GetTrendingQuery.graphql.swift */,
+			);
+			path = Queries;
+			sourceTree = "<group>";
+		};
+		DB8655212AB2D88C006905FB /* Schema */ = {
+			isa = PBXGroup;
+			children = (
+				DB8655222AB2D88C006905FB /* CustomScalars */,
+				DB8655242AB2D88C006905FB /* Objects */,
+				DB8655282AB2D88C006905FB /* SchemaConfiguration.swift */,
+				DB8655292AB2D88C006905FB /* SchemaMetadata.graphql.swift */,
+			);
+			path = Schema;
+			sourceTree = "<group>";
+		};
+		DB8655222AB2D88C006905FB /* CustomScalars */ = {
+			isa = PBXGroup;
+			children = (
+				DB8655232AB2D88C006905FB /* JSONObject.swift */,
+			);
+			path = CustomScalars;
+			sourceTree = "<group>";
+		};
+		DB8655242AB2D88C006905FB /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				DB8655252AB2D88C006905FB /* GenerativeToken.graphql.swift */,
+				DB8655262AB2D88C006905FB /* User.graphql.swift */,
+				DB8655272AB2D88C006905FB /* Query.graphql.swift */,
+			);
+			path = Objects;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -103,6 +187,7 @@
 				DB1DBD192AB1D45A00F74B64 /* Frameworks */,
 				DB1DBD1A2AB1D45A00F74B64 /* Resources */,
 				DB2CFD202AB1E00300D99A15 /* SwiftLint */,
+				345FC2B13D4A06E7826DC811 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -152,6 +237,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB1DBD2C2AB1D45B00F74B64 /* LaunchScreen.storyboard in Resources */,
+				DBAA52F52AB2B7D000FE51FF /* schema.json in Resources */,
+				DBA4787A2AB2B29C0014E825 /* Discover.storyboard in Resources */,
 				DB1DBD292AB1D45B00F74B64 /* Assets.xcassets in Resources */,
 				DB1DBD272AB1D45A00F74B64 /* Main.storyboard in Resources */,
 			);
@@ -160,6 +247,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		345FC2B13D4A06E7826DC811 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Block Canvas/Pods-Block Canvas-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Block Canvas/Pods-Block Canvas-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Block Canvas/Pods-Block Canvas-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		9196706CB5CD4989741EA6D9 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -208,9 +312,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB1DBD242AB1D45A00F74B64 /* ViewController.swift in Sources */,
+				DB86552D2AB2D88C006905FB /* GenerativeToken.graphql.swift in Sources */,
+				DBA478792AB2B29C0014E825 /* BCTabBarController.swift in Sources */,
+				DB86552B2AB2D88C006905FB /* GetTrendingQuery.graphql.swift in Sources */,
+				DB1DBD242AB1D45A00F74B64 /* DiscoverPageViewController.swift in Sources */,
 				DB1DBD202AB1D45A00F74B64 /* AppDelegate.swift in Sources */,
 				DB1DBD222AB1D45A00F74B64 /* SceneDelegate.swift in Sources */,
+				DBA4787B2AB2B29C0014E825 /* UIStoryboard+Extension.swift in Sources */,
+				DB86552F2AB2D88C006905FB /* Query.graphql.swift in Sources */,
+				DB86552C2AB2D88C006905FB /* JSONObject.swift in Sources */,
+				DB86552E2AB2D88C006905FB /* User.graphql.swift in Sources */,
+				DB8655312AB2D88C006905FB /* SchemaMetadata.graphql.swift in Sources */,
+				DB8655302AB2D88C006905FB /* SchemaConfiguration.swift in Sources */,
+				DB8655322AB2D88C006905FB /* GetTrending.graphql.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
