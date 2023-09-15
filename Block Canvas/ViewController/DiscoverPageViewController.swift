@@ -33,7 +33,7 @@ class DiscoverPageViewController: UIViewController {
         
         trendingCollectionView.dataSource = self
         trendingCollectionView.delegate = self
-//        getTrending()
+        getTrending()
         
         
         //        getRecommendationFromGPT()
@@ -396,10 +396,26 @@ extension DiscoverPageViewController: UICollectionViewDelegateFlowLayout, UIColl
     // 指定 item 寬度和數量
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let maxWidth = UIScreen.main.bounds.width
-        let totalSapcing = CGFloat(8 * 2)
-               
+        let totalSapcing = CGFloat(6 * 2)
+        
         let itemWidth = (maxWidth - totalSapcing) / 2
         return CGSize(width: itemWidth, height: itemWidth)
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard
+            let detailVC = UIStoryboard.portfolio.instantiateViewController(
+                withIdentifier: String(describing: DetailPageViewController.self)
+            ) as? DetailPageViewController
+        else {
+            return
+        }
+        detailVC.imageView.loadImage(trendingNFTs[indexPath.row].imageURL)
+        detailVC.artistLabel.text = trendingNFTs[indexPath.row].authorName
+        detailVC.titleLabel.text = trendingNFTs[indexPath.row].title
+        detailVC.descriptionLabel.text = ""
+        show(detailVC, sender: nil)
     }
     
 }

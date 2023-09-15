@@ -9,7 +9,7 @@ import UIKit
 
 class DetailPageViewController: UIViewController {
     
-    var NFTMetadata: EthNFTResult?
+    var NFTMetadata: EthNFTMetadata?
     
     @IBOutlet weak var imageView: UIImageView!
     
@@ -24,9 +24,11 @@ class DetailPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        imageView.loadImage(NFTMetadata?.media?.originalMediaURL)
+        imageView.loadImage(NFTMetadata?.image)
         titleLabel.text = NFTMetadata?.name
-        
+        artistLabel.text = NFTMetadata?.collectionName
+        descriptionLabel.text = NFTMetadata?.description
+        contractLabel.text = NFTMetadata?.contractAddress
     }
     
 

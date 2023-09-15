@@ -8,67 +8,97 @@
 import Foundation
 // MARK: - EthNFT
 struct EthNFT: Codable {
-    let page, pageSize: Int?
-    let cursor: String?
-    let result: [EthNFTResult]?
-    let status: String?
-
-    enum CodingKeys: String, CodingKey {
-        case page
-        case pageSize = "page_size"
-        case cursor, result, status
-    }
+    let total: Int?
+    let assets: [Asset]?
 }
 
-// MARK: - Result
-struct EthNFTResult: Codable {
-    let tokenAddress, tokenID, amount: String?
-    let tokenHash, blockNumberMinted, blockNumber: String?
-    let name, symbol: String?
-    let tokenURI: String?
-    let metadata, lastTokenURISync, lastMetadataSync: String?
-    let minterAddress: String?
-    let media: Media?
-    let verifiedCollection: Bool?
+// MARK: - Asset
+struct Asset: Codable {
+    let nft: EthNFTMetadata?
+    let quantity: Int?
+}
+
+// MARK: - Nft
+struct EthNFTMetadata: Codable {
+    let blockchain, collectionName, collectionSlug, collectionOpenseaSlug: String?
+    let contractType, contractAddress, tokenID, name: String?
+    let description: String?
+    let image: String?
+    let animationURL: String?
+    let ownerAddresses: [String]?
+    let traits: [Trait]?
+    let rarity: Rarity?
+    let suspicious: Bool?
+    let lastSale: LastSale?
 
     enum CodingKeys: String, CodingKey {
-        case tokenAddress = "token_address"
+        case blockchain
+        case collectionName = "collection_name"
+        case collectionSlug = "collection_slug"
+        case collectionOpenseaSlug = "collection_opensea_slug"
+        case contractType = "contract_type"
+        case contractAddress = "contract_address"
         case tokenID = "token_id"
-        case amount
-        case tokenHash = "token_hash"
-        case blockNumberMinted = "block_number_minted"
-        case blockNumber = "block_number"
-        case name, symbol
-        case tokenURI = "token_uri"
-        case metadata
-        case lastTokenURISync = "last_token_uri_sync"
-        case lastMetadataSync = "last_metadata_sync"
-        case minterAddress = "minter_address"
-        case media
-        case verifiedCollection = "verified_collection"
+        case name, description, image
+        case animationURL = "animation_url"
+        case ownerAddresses = "owner_addresses"
+        case traits, rarity, suspicious
+        case lastSale = "last_sale"
     }
 }
 
-// MARK: - Media
-struct Media: Codable {
-    let parentHash: String?
-    let mediaCollection: MediaCollection?
-    let originalMediaURL: String?
+// MARK: - LastSale
+struct LastSale: Codable {
+    let txHash: String?
+    let priceToken: Double?
+    let tokenSymbol, tokenContractAddress: String?
+    let priceUsd: Double?
+    let price: Price?
+    let txURL: String?
+    let time: Int?
 
     enum CodingKeys: String, CodingKey {
-        case parentHash = "parent_hash"
-        case mediaCollection = "media_collection"
-        case originalMediaURL = "original_media_url"
+        case txHash = "tx_hash"
+        case priceToken = "price_token"
+        case tokenSymbol = "token_symbol"
+        case tokenContractAddress = "token_contract_address"
+        case priceUsd = "price_usd"
+        case price
+        case txURL = "tx_url"
+        case time
     }
 }
 
-// MARK: - MediaCollection
-struct MediaCollection: Codable {
-    let low, medium, high: MediaData?
+// MARK: - Price
+struct Price: Codable {
+    let value: Double?
+    let cryptoUnit: String?
+    let usd, ethValue: Double?
+    let paymentToken: PaymentToken?
+
+    enum CodingKeys: String, CodingKey {
+        case value
+        case cryptoUnit = "crypto_unit"
+        case usd
+        case ethValue = "eth_value"
+        case paymentToken = "payment_token"
+    }
 }
 
-// MARK: - High
-struct MediaData: Codable {
-    let height, width: Int?
-    let url: String?
+// MARK: - PaymentToken
+struct PaymentToken: Codable {
+    let address, symbol: String?
+    let decimals: Int?
+}
+
+// MARK: - Rarity
+struct Rarity: Codable {
+    let score: Double?
+    let rank, total: Int?
+}
+
+// MARK: - Trait
+struct Trait: Codable {
+    let type, value: String?
+    let percentage: Double?
 }
