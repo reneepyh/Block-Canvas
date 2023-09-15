@@ -23,6 +23,7 @@
 		DB8655302AB2D88C006905FB /* SchemaConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8655282AB2D88C006905FB /* SchemaConfiguration.swift */; };
 		DB8655312AB2D88C006905FB /* SchemaMetadata.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8655292AB2D88C006905FB /* SchemaMetadata.graphql.swift */; };
 		DB8655322AB2D88C006905FB /* GetTrending.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB86552A2AB2D88C006905FB /* GetTrending.graphql.swift */; };
+		DB8C90F12AB43DCF005D75DF /* TrendingCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8C90F02AB43DCF005D75DF /* TrendingCollectionCell.swift */; };
 		DBA478792AB2B29C0014E825 /* BCTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA478762AB2B29C0014E825 /* BCTabBarController.swift */; };
 		DBA4787A2AB2B29C0014E825 /* Discover.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBA478772AB2B29C0014E825 /* Discover.storyboard */; };
 		DBA4787B2AB2B29C0014E825 /* UIStoryboard+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA478782AB2B29C0014E825 /* UIStoryboard+Extension.swift */; };
@@ -51,6 +52,7 @@
 		DB8655282AB2D88C006905FB /* SchemaConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchemaConfiguration.swift; sourceTree = "<group>"; };
 		DB8655292AB2D88C006905FB /* SchemaMetadata.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchemaMetadata.graphql.swift; sourceTree = "<group>"; };
 		DB86552A2AB2D88C006905FB /* GetTrending.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetTrending.graphql.swift; sourceTree = "<group>"; };
+		DB8C90F02AB43DCF005D75DF /* TrendingCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingCollectionCell.swift; sourceTree = "<group>"; };
 		DBA478762AB2B29C0014E825 /* BCTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BCTabBarController.swift; sourceTree = "<group>"; };
 		DBA478772AB2B29C0014E825 /* Discover.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Discover.storyboard; sourceTree = "<group>"; };
 		DBA478782AB2B29C0014E825 /* UIStoryboard+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+Extension.swift"; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 				DB1DBD2A2AB1D45B00F74B64 /* LaunchScreen.storyboard */,
 				DB1DBD2D2AB1D45B00F74B64 /* Info.plist */,
 				DB6853CF2AB2ECA100895EB9 /* Secrets.xcconfig */,
+				DB8C90F02AB43DCF005D75DF /* TrendingCollectionCell.swift */,
 			);
 			path = "Block Canvas";
 			sourceTree = "<group>";
@@ -333,6 +336,7 @@
 				DB1DBD202AB1D45A00F74B64 /* AppDelegate.swift in Sources */,
 				DB1DBD222AB1D45A00F74B64 /* SceneDelegate.swift in Sources */,
 				DB6853D12AB2F38400895EB9 /* Discover.swift in Sources */,
+				DB8C90F12AB43DCF005D75DF /* TrendingCollectionCell.swift in Sources */,
 				DBA4787B2AB2B29C0014E825 /* UIStoryboard+Extension.swift in Sources */,
 				DB86552F2AB2D88C006905FB /* Query.graphql.swift in Sources */,
 				DB86552C2AB2D88C006905FB /* JSONObject.swift in Sources */,
