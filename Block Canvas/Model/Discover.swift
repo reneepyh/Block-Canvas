@@ -5,6 +5,13 @@
 //  Created by Renee Hsu on 2023/9/14.
 //
 
+struct TrendingNFT {
+    let ipfsURL: String
+    let title: String
+    let authorName: String
+    
+}
+
 struct OpenAIBody: Encodable {
     let model: String = "gpt-4"
     let messages: [[String: String]]

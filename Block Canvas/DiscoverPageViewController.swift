@@ -10,7 +10,15 @@ import Apollo
 
 class DiscoverPageViewController: UIViewController {
     
+    @IBOutlet weak var trendingCollectionView: UICollectionView!
+    
+    private var trendingNFTs: [TrendingNFT] = []
+    
+    private let semaphore = DispatchSemaphore(value: 0)
+    
     private let apolloClient = ApolloClient(url: URL(string: "https://api.fxhash.xyz/graphql")!)
+    
+    private var recommendedResponse: String?
     
     private var recommendedCollections: [ArtCollection] = []
     
@@ -22,17 +30,45 @@ class DiscoverPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //        getTrending()
-        getRecommendationFromGPT()
+                getTrending()
+        
+        trendingCollectionView.dataSource = self
+        trendingCollectionView.delegate = self
+        //        getRecommendationFromGPT()
+//        fetchData()
     }
     
     private func getTrending() {
         apolloClient.fetch(query: GetTrending.GetTrendingQuery()) { result in
             guard let data = try? result.get().data else { return }
-            print(data.randomTopGenerativeToken.displayUri)
+            let imageURL = self.generativeLiveDisplayUrl(uri: data.randomTopGenerativeToken.displayUri ?? "")
             print(data.randomTopGenerativeToken.author.name)
             print(data.randomTopGenerativeToken.name)
         }
+        
+    }
+    
+    private func fetchData() {
+        getRecommendationFromGPT()
+        semaphore.wait()
+        
+        self.formatCollectionName()
+        semaphore.wait()
+
+        for collection in self.recommendedCollections {
+            self.getRecommendedContracts(collectionName: collection.collectionName)
+        }
+
+        semaphore.signal()
+        for contract in self.recommendedContracts {
+            self.getNFTByContract(address: contract)
+        }
+    
+        semaphore.signal()
+        for NFTForFetch in self.recommendedNFTs {
+            self.getNFTMetadata(NFTToFetch: NFTForFetch)
+        }
+        
         
     }
     
@@ -81,38 +117,38 @@ class DiscoverPageViewController: UIViewController {
                 if let data = data {
                     do {
                         let data = try JSONDecoder().decode(OpenAIResponse.self, from: data)
-                        
-                        DispatchQueue.main.async {
-                            if let response = data.choices?[0].message?.content, let self = self {
-                                print(response)
-                                let regexPattern = "Collection Name: \"([^\"]+)\"\\s+Artist Name: (\\w+)"
-                                
-                                do {
-                                    let regex = try NSRegularExpression(pattern: regexPattern, options: [])
-                                    let nsString = response as NSString
-                                    let matches = regex.matches(in: response, options: [], range: NSRange(location: 0, length: nsString.length))
-                                    
-                                    for match in matches {
-                                        if let collectionRange = Range(match.range(at: 1), in: response),
-                                           let artistRange = Range(match.range(at: 2), in: response) {
-                                            
-                                            let collectionName = String(response[collectionRange])
-                                            let trimmedCollection = String(collectionName.filter { !" ".contains($0) })
-                                            self.recommendedCollections.append(ArtCollection(collectionName: trimmedCollection))
-                                        }
-                                    }
-                                    print(self.recommendedCollections)
-                                } catch let error {
-                                    print("Failed to create regex: \(error.localizedDescription)")
-                                }
-                                
-                                // Use extracted data
-                                for collection in self.recommendedCollections {
-                                    self.getRecommendedContracts(collectionName: collection.collectionName)
-                                }
-                            }
-                        }
-                        
+                        self?.recommendedResponse = data.choices?[0].message?.content
+                        print("response: \(self?.recommendedResponse)")
+//                        DispatchQueue.main.async {
+//                            if let response = data.choices?[0].message?.content, let self = self {
+//                                print(response)
+//                                let regexPattern = "Collection Name: \"([^\"]+)\"\\s+Artist Name: (\\w+)"
+//
+//                                do {
+//                                    let regex = try NSRegularExpression(pattern: regexPattern, options: [])
+//                                    let nsString = response as NSString
+//                                    let matches = regex.matches(in: response, options: [], range: NSRange(location: 0, length: nsString.length))
+//
+//                                    for match in matches {
+//                                        if let collectionRange = Range(match.range(at: 1), in: response),
+//                                           let artistRange = Range(match.range(at: 2), in: response) {
+//
+//                                            let collectionName = String(response[collectionRange])
+//                                            let trimmedCollection = String(collectionName.filter { !" ".contains($0) })
+//                                            self.recommendedCollections.append(ArtCollection(collectionName: trimmedCollection))
+//                                        }
+//                                    }
+//                                    print(self.recommendedCollections)
+//                                } catch let error {
+//                                    print("Failed to create regex: \(error.localizedDescription)")
+//                                }
+//
+//                                //                                // Use extracted data
+//                                //                                for collection in self.recommendedCollections {
+//                                //                                    self.getRecommendedContracts(collectionName: collection.collectionName)
+//                                //                                }
+////                            }
+//                        }
                     } catch {
                         print(error.localizedDescription)
                     }
@@ -124,6 +160,7 @@ class DiscoverPageViewController: UIViewController {
                     print("Error when post request to GPT API:\(error)")
                     
                 }
+                self?.semaphore.signal()
             }.resume()
         }
         else {
@@ -131,7 +168,38 @@ class DiscoverPageViewController: UIViewController {
         }
     }
     
+    private func formatCollectionName() {
+        let regexPattern = "Collection Name: \"([^\"]+)\"\\s+Artist Name: (\\w+)"
+        do {
+            let regex = try NSRegularExpression(pattern: regexPattern, options: [])
+            let nsString = recommendedResponse! as NSString
+            let matches = regex.matches(in: recommendedResponse ?? "", options: [], range: NSRange(location: 0, length: nsString.length))
+            
+            for match in matches {
+                if let collectionRange = Range(match.range(at: 1), in: recommendedResponse  ?? ""),
+                   let artistRange = Range(match.range(at: 2), in: recommendedResponse  ?? "") {
+                    
+                    let collectionName = String(recommendedResponse?[collectionRange] ?? "")
+                    let trimmedCollection = String(collectionName.filter { !" ".contains($0) })
+                    self.recommendedCollections.append(ArtCollection(collectionName: trimmedCollection))
+                }
+            }
+            print(self.recommendedCollections)
+            semaphore.signal()
+        } catch let error {
+            print("Failed to create regex: \(error.localizedDescription)")
+        
+        
+        //                                // Use extracted data
+        //                                for collection in self.recommendedCollections {
+        //                                    self.getRecommendedContracts(collectionName: collection.collectionName)
+        //                                }
+//                            }
+}
+    }
+    
     private func getRecommendedContracts(collectionName: String) {
+        semaphore.wait()
         let apiKey = Bundle.main.object(forInfoDictionaryKey: "NFT_GO_API_Key") as? String
         
         guard let key = apiKey, !key.isEmpty else {
@@ -164,21 +232,22 @@ class DiscoverPageViewController: UIViewController {
                 do {
                     let data = try decoder.decode(SearchedNFT.self, from: data)
                     
-                    DispatchQueue.main.async { [weak self] in
+//                    DispatchQueue.main.async { [weak self] in
                         for collection in data.collections ?? [] {
                             if data.total != 0 {
-                                self?.recommendedContracts.append(collection.contracts?[0] ?? "")
+                                self.recommendedContracts.append(collection.contracts?[0] ?? "")
                             }
                         }
-                    }
-                    for contract in self.recommendedContracts {
-                        self.getNFTByContract(address: contract)
-                    }
+//                    }
+                    //                    for contract in self.recommendedContracts {
+                    //                        self.getNFTByContract(address: contract)
+                    //                    }
                     print(self.recommendedContracts)
                 }
                 catch {
                     print("Error in JSON decoding.")
                 }
+                self.semaphore.signal()
             }
             task.resume()
         }
@@ -188,6 +257,7 @@ class DiscoverPageViewController: UIViewController {
     }
     
     private func getNFTByContract(address: String) {
+        semaphore.wait()
         let apiKey = Bundle.main.object(forInfoDictionaryKey: "Moralis_API_Key") as? String
         
         guard let key = apiKey, !key.isEmpty else {
@@ -219,19 +289,20 @@ class DiscoverPageViewController: UIViewController {
                 
                 do {
                     let NFTData = try decoder.decode(GetNFTByContract.self, from: data)
-                    DispatchQueue.main.async { [weak self] in
+//                    DispatchQueue.main.async { [weak self] in
                         for NFT in NFTData.result ?? [] {
-                            self?.recommendedNFTs.append(NFTForFetch(tokenAddress: NFT.tokenAddress ?? "", tokenID: NFT.tokenID ?? ""))
+                            self.recommendedNFTs.append(NFTForFetch(tokenAddress: NFT.tokenAddress ?? "", tokenID: NFT.tokenID ?? ""))
                         }
-                    }
+//                    }
                     print(self.recommendedNFTs)
-                    for NFTMetadata in self.recommendedNFTs {
-                        self.getNFTMetadata(NFTToFetch: NFTMetadata)
-                    }
+                    //                    for NFTMetadata in self.recommendedNFTs {
+                    //                        self.getNFTMetadata(NFTToFetch: NFTMetadata)
+                    //                    }
                 }
                 catch {
                     print("Error in JSON decoding.")
                 }
+                self.semaphore.signal()
             }
             task.resume()
         }
@@ -300,4 +371,51 @@ class DiscoverPageViewController: UIViewController {
             print("Invalid URL.")
         }
     }
+}
+
+
+extension DiscoverPageViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let trendingCollectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: TrendingCollectionCell.reuseIdentifier, for: indexPath) as? TrendingCollectionCell else {
+            fatalError("Cell cannot be created")
+        }
+        
+        trendingCollectionCell.catalogItemImage.kf.setImage(with: URL(string: (catalogProducts?[indexPath.row].mainImage)!))
+        
+        return trendingCollectionCell
+    }
+    
+    // 指定 item 寬度和數量
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let maxWidth = (UIScreen.main.bounds.width - 20 * 2 )
+        let totalSpacing = CGFloat(13 * 2)
+        let itemWidth = (maxWidth - totalSpacing) / 2
+        
+        return CGSize(width: itemWidth, height: itemWidth * 1.72)
+    }
+    
+    // 使用 interItemSpacing
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        
+        return 13
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 23
+    }
+    
+}
+
+extension DiscoverPageViewController {
+    func generativeLiveDisplayUrl(uri: String) -> String {
+        let gateway = "https://gateway.fxhash.xyz/ipfs/"
+        let startIndex = uri.index(uri.startIndex, offsetBy: 7)
+        let newUri = String(uri[startIndex...])
+        return gateway + newUri
+    }
+    
 }
