@@ -119,7 +119,7 @@ iOSInjectionProject/
 
 
 ### API Key ###
-*.xcconfig
+Secrets.xcconfig
 
 ### Xcode ###
 

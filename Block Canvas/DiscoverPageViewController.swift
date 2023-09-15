@@ -384,7 +384,7 @@ extension DiscoverPageViewController: UICollectionViewDelegateFlowLayout, UIColl
             fatalError("Cell cannot be created")
         }
         
-        trendingCollectionCell.catalogItemImage.kf.setImage(with: URL(string: (catalogProducts?[indexPath.row].mainImage)!))
+//        trendingCollectionCell.catalogItemImage.kf.setImage(with: URL(string: (catalogProducts?[indexPath.row].mainImage)!))
         
         return trendingCollectionCell
     }
