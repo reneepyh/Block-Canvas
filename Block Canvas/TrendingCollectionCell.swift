@@ -9,4 +9,7 @@ import UIKit
 
 class TrendingCollectionCell: UICollectionViewCell {
     static let reuseIdentifier = String(describing: TrendingCollectionCell.self)
+    
+    @IBOutlet weak var trendingImageView: UIImageView!
+    
 }

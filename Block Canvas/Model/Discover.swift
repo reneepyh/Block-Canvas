@@ -6,9 +6,9 @@
 //
 
 struct TrendingNFT {
-    let ipfsURL: String
-    let title: String
-    let authorName: String
+    let imageURL: String
+    let title: String?
+    let authorName: String?
     
 }
 

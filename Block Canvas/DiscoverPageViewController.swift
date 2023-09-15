@@ -30,21 +30,30 @@ class DiscoverPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                getTrending()
         
-        trendingCollectionView.dataSource = self
-        trendingCollectionView.delegate = self
+        getTrending()
+        
+        
         //        getRecommendationFromGPT()
-//        fetchData()
+        //        fetchData()
     }
     
     private func getTrending() {
-        apolloClient.fetch(query: GetTrending.GetTrendingQuery()) { result in
-            guard let data = try? result.get().data else { return }
-            let imageURL = self.generativeLiveDisplayUrl(uri: data.randomTopGenerativeToken.displayUri ?? "")
-            print(data.randomTopGenerativeToken.author.name)
-            print(data.randomTopGenerativeToken.name)
+        for _ in 0...9 {
+            apolloClient.fetch(query: GetTrending.GetTrendingQuery()) { [weak self] result in
+                guard let data = try? result.get().data else { return }
+                let imageURL = self?.generativeLiveDisplayUrl(uri: data.randomTopGenerativeToken.displayUri ?? "")
+                self?.trendingNFTs.append(TrendingNFT(imageURL: imageURL ?? "", title: data.randomTopGenerativeToken.name, authorName: data.randomTopGenerativeToken.author.name))
+                print(self?.trendingNFTs)
+                
+                
+                self?.trendingCollectionView.reloadData()
+            }
         }
+        
+        trendingCollectionView.dataSource = self
+        trendingCollectionView.delegate = self
+        
         
     }
     
@@ -54,21 +63,20 @@ class DiscoverPageViewController: UIViewController {
         
         self.formatCollectionName()
         semaphore.wait()
-
+        
         for collection in self.recommendedCollections {
             self.getRecommendedContracts(collectionName: collection.collectionName)
         }
-
+        
         semaphore.signal()
         for contract in self.recommendedContracts {
             self.getNFTByContract(address: contract)
         }
-    
+        
         semaphore.signal()
         for NFTForFetch in self.recommendedNFTs {
             self.getNFTMetadata(NFTToFetch: NFTForFetch)
         }
-        
         
     }
     
@@ -119,36 +127,36 @@ class DiscoverPageViewController: UIViewController {
                         let data = try JSONDecoder().decode(OpenAIResponse.self, from: data)
                         self?.recommendedResponse = data.choices?[0].message?.content
                         print("response: \(self?.recommendedResponse)")
-//                        DispatchQueue.main.async {
-//                            if let response = data.choices?[0].message?.content, let self = self {
-//                                print(response)
-//                                let regexPattern = "Collection Name: \"([^\"]+)\"\\s+Artist Name: (\\w+)"
-//
-//                                do {
-//                                    let regex = try NSRegularExpression(pattern: regexPattern, options: [])
-//                                    let nsString = response as NSString
-//                                    let matches = regex.matches(in: response, options: [], range: NSRange(location: 0, length: nsString.length))
-//
-//                                    for match in matches {
-//                                        if let collectionRange = Range(match.range(at: 1), in: response),
-//                                           let artistRange = Range(match.range(at: 2), in: response) {
-//
-//                                            let collectionName = String(response[collectionRange])
-//                                            let trimmedCollection = String(collectionName.filter { !" ".contains($0) })
-//                                            self.recommendedCollections.append(ArtCollection(collectionName: trimmedCollection))
-//                                        }
-//                                    }
-//                                    print(self.recommendedCollections)
-//                                } catch let error {
-//                                    print("Failed to create regex: \(error.localizedDescription)")
-//                                }
-//
-//                                //                                // Use extracted data
-//                                //                                for collection in self.recommendedCollections {
-//                                //                                    self.getRecommendedContracts(collectionName: collection.collectionName)
-//                                //                                }
-////                            }
-//                        }
+                        //                        DispatchQueue.main.async {
+                        //                            if let response = data.choices?[0].message?.content, let self = self {
+                        //                                print(response)
+                        //                                let regexPattern = "Collection Name: \"([^\"]+)\"\\s+Artist Name: (\\w+)"
+                        //
+                        //                                do {
+                        //                                    let regex = try NSRegularExpression(pattern: regexPattern, options: [])
+                        //                                    let nsString = response as NSString
+                        //                                    let matches = regex.matches(in: response, options: [], range: NSRange(location: 0, length: nsString.length))
+                        //
+                        //                                    for match in matches {
+                        //                                        if let collectionRange = Range(match.range(at: 1), in: response),
+                        //                                           let artistRange = Range(match.range(at: 2), in: response) {
+                        //
+                        //                                            let collectionName = String(response[collectionRange])
+                        //                                            let trimmedCollection = String(collectionName.filter { !" ".contains($0) })
+                        //                                            self.recommendedCollections.append(ArtCollection(collectionName: trimmedCollection))
+                        //                                        }
+                        //                                    }
+                        //                                    print(self.recommendedCollections)
+                        //                                } catch let error {
+                        //                                    print("Failed to create regex: \(error.localizedDescription)")
+                        //                                }
+                        //
+                        //                                //                                // Use extracted data
+                        //                                //                                for collection in self.recommendedCollections {
+                        //                                //                                    self.getRecommendedContracts(collectionName: collection.collectionName)
+                        //                                //                                }
+                        ////                            }
+                        //                        }
                     } catch {
                         print(error.localizedDescription)
                     }
@@ -188,14 +196,14 @@ class DiscoverPageViewController: UIViewController {
             semaphore.signal()
         } catch let error {
             print("Failed to create regex: \(error.localizedDescription)")
-        
-        
-        //                                // Use extracted data
-        //                                for collection in self.recommendedCollections {
-        //                                    self.getRecommendedContracts(collectionName: collection.collectionName)
-        //                                }
-//                            }
-}
+            
+            
+            //                                // Use extracted data
+            //                                for collection in self.recommendedCollections {
+            //                                    self.getRecommendedContracts(collectionName: collection.collectionName)
+            //                                }
+            //                            }
+        }
     }
     
     private func getRecommendedContracts(collectionName: String) {
@@ -232,13 +240,13 @@ class DiscoverPageViewController: UIViewController {
                 do {
                     let data = try decoder.decode(SearchedNFT.self, from: data)
                     
-//                    DispatchQueue.main.async { [weak self] in
-                        for collection in data.collections ?? [] {
-                            if data.total != 0 {
-                                self.recommendedContracts.append(collection.contracts?[0] ?? "")
-                            }
+                    //                    DispatchQueue.main.async { [weak self] in
+                    for collection in data.collections ?? [] {
+                        if data.total != 0 {
+                            self.recommendedContracts.append(collection.contracts?[0] ?? "")
                         }
-//                    }
+                    }
+                    //                    }
                     //                    for contract in self.recommendedContracts {
                     //                        self.getNFTByContract(address: contract)
                     //                    }
@@ -289,11 +297,11 @@ class DiscoverPageViewController: UIViewController {
                 
                 do {
                     let NFTData = try decoder.decode(GetNFTByContract.self, from: data)
-//                    DispatchQueue.main.async { [weak self] in
-                        for NFT in NFTData.result ?? [] {
-                            self.recommendedNFTs.append(NFTForFetch(tokenAddress: NFT.tokenAddress ?? "", tokenID: NFT.tokenID ?? ""))
-                        }
-//                    }
+                    //                    DispatchQueue.main.async { [weak self] in
+                    for NFT in NFTData.result ?? [] {
+                        self.recommendedNFTs.append(NFTForFetch(tokenAddress: NFT.tokenAddress ?? "", tokenID: NFT.tokenID ?? ""))
+                    }
+                    //                    }
                     print(self.recommendedNFTs)
                     //                    for NFTMetadata in self.recommendedNFTs {
                     //                        self.getNFTMetadata(NFTToFetch: NFTMetadata)
@@ -376,36 +384,25 @@ class DiscoverPageViewController: UIViewController {
 
 extension DiscoverPageViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        10
+        return trendingNFTs.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let trendingCollectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: TrendingCollectionCell.reuseIdentifier, for: indexPath) as? TrendingCollectionCell else {
             fatalError("Cell cannot be created")
         }
-        
-//        trendingCollectionCell.catalogItemImage.kf.setImage(with: URL(string: (catalogProducts?[indexPath.row].mainImage)!))
+        trendingCollectionCell.trendingImageView.loadImage(trendingNFTs[indexPath.row].imageURL)
         
         return trendingCollectionCell
     }
     
     // 指定 item 寬度和數量
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let maxWidth = (UIScreen.main.bounds.width - 20 * 2 )
-        let totalSpacing = CGFloat(13 * 2)
-        let itemWidth = (maxWidth - totalSpacing) / 2
-        
-        return CGSize(width: itemWidth, height: itemWidth * 1.72)
-    }
-    
-    // 使用 interItemSpacing
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        
-        return 13
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 23
+        let maxWidth = UIScreen.main.bounds.width
+        let totalSapcing = CGFloat(8 * 2)
+               
+        let itemWidth = (maxWidth - totalSapcing) / 2
+        return CGSize(width: itemWidth, height: itemWidth)
     }
     
 }
