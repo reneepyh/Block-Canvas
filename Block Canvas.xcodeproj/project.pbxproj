@@ -14,6 +14,7 @@
 		DB1DBD272AB1D45A00F74B64 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB1DBD252AB1D45A00F74B64 /* Main.storyboard */; };
 		DB1DBD292AB1D45B00F74B64 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB1DBD282AB1D45B00F74B64 /* Assets.xcassets */; };
 		DB1DBD2C2AB1D45B00F74B64 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB1DBD2A2AB1D45B00F74B64 /* LaunchScreen.storyboard */; };
+		DB6853D12AB2F38400895EB9 /* Discover.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6853D02AB2F38400895EB9 /* Discover.swift */; };
 		DB86552B2AB2D88C006905FB /* GetTrendingQuery.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8655202AB2D88C006905FB /* GetTrendingQuery.graphql.swift */; };
 		DB86552C2AB2D88C006905FB /* JSONObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8655232AB2D88C006905FB /* JSONObject.swift */; };
 		DB86552D2AB2D88C006905FB /* GenerativeToken.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8655252AB2D88C006905FB /* GenerativeToken.graphql.swift */; };
@@ -40,6 +41,8 @@
 		DB1DBD282AB1D45B00F74B64 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DB1DBD2B2AB1D45B00F74B64 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DB1DBD2D2AB1D45B00F74B64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DB6853CF2AB2ECA100895EB9 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
+		DB6853D02AB2F38400895EB9 /* Discover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Discover.swift; sourceTree = "<group>"; };
 		DB8655202AB2D88C006905FB /* GetTrendingQuery.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetTrendingQuery.graphql.swift; sourceTree = "<group>"; };
 		DB8655232AB2D88C006905FB /* JSONObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONObject.swift; sourceTree = "<group>"; };
 		DB8655252AB2D88C006905FB /* GenerativeToken.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenerativeToken.graphql.swift; sourceTree = "<group>"; };
@@ -104,7 +107,7 @@
 		DB1DBD1E2AB1D45A00F74B64 /* Block Canvas */ = {
 			isa = PBXGroup;
 			children = (
-				DB86551D2AB2D88C006905FB /* getTrending */,
+				DB6853D22AB3637A00895EB9 /* Model */,
 				DB1DBD1F2AB1D45A00F74B64 /* AppDelegate.swift */,
 				DB1DBD212AB1D45A00F74B64 /* SceneDelegate.swift */,
 				DBA478762AB2B29C0014E825 /* BCTabBarController.swift */,
@@ -116,8 +119,18 @@
 				DB1DBD282AB1D45B00F74B64 /* Assets.xcassets */,
 				DB1DBD2A2AB1D45B00F74B64 /* LaunchScreen.storyboard */,
 				DB1DBD2D2AB1D45B00F74B64 /* Info.plist */,
+				DB6853CF2AB2ECA100895EB9 /* Secrets.xcconfig */,
 			);
 			path = "Block Canvas";
+			sourceTree = "<group>";
+		};
+		DB6853D22AB3637A00895EB9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DB6853D02AB2F38400895EB9 /* Discover.swift */,
+				DB86551D2AB2D88C006905FB /* getTrending */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		DB86551D2AB2D88C006905FB /* getTrending */ = {
@@ -127,7 +140,8 @@
 				DB8655212AB2D88C006905FB /* Schema */,
 				DB86552A2AB2D88C006905FB /* GetTrending.graphql.swift */,
 			);
-			path = getTrending;
+			name = getTrending;
+			path = "Block Canvas/Model/getTrending";
 			sourceTree = SOURCE_ROOT;
 		};
 		DB86551E2AB2D88C006905FB /* Operations */ = {
@@ -318,6 +332,7 @@
 				DB1DBD242AB1D45A00F74B64 /* DiscoverPageViewController.swift in Sources */,
 				DB1DBD202AB1D45A00F74B64 /* AppDelegate.swift in Sources */,
 				DB1DBD222AB1D45A00F74B64 /* SceneDelegate.swift in Sources */,
+				DB6853D12AB2F38400895EB9 /* Discover.swift in Sources */,
 				DBA4787B2AB2B29C0014E825 /* UIStoryboard+Extension.swift in Sources */,
 				DB86552F2AB2D88C006905FB /* Query.graphql.swift in Sources */,
 				DB86552C2AB2D88C006905FB /* JSONObject.swift in Sources */,
@@ -352,6 +367,7 @@
 /* Begin XCBuildConfiguration section */
 		DB1DBD2E2AB1D45B00F74B64 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DB6853CF2AB2ECA100895EB9 /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -412,6 +428,7 @@
 		};
 		DB1DBD2F2AB1D45B00F74B64 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DB6853CF2AB2ECA100895EB9 /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
