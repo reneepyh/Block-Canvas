@@ -99,43 +99,81 @@ struct Result: Codable {
 }
 
 struct NFTForFetch: Codable {
-    let tokenContract: String
+    let tokenAddress: String
     let tokenID: String
+    
+    enum CodingKeys: String, CodingKey {
+        case tokenAddress = "token_address"
+        case tokenID = "token_id"
+    }
 }
 
+// MARK: - NFTMetadatum
 struct NFTMetadatum: Codable {
-    let tokenAddress, tokenID, contractType, ownerOf: String?
-    let blockNumber, blockNumberMinted: String?
-    let normalizedMetadata: NormalizedMetadata?
-    let amount, name, symbol, tokenHash: String?
-    let lastTokenURISync, lastMetadataSync: String?
+    let tokenAddress, tokenID: String?
+//    let transferIndex: [Int]?
+//    let ownerOf, blockNumber, blockNumberMinted, tokenHash: String?
+//    let amount, updatedAt, contractType: String?
+//    let tokenURI, metadata, lastTokenURISync, lastMetadataSync: String?
+//    let minterAddress: String?
+//    let normalizedMetadata: NormalizedMetadata?
+//    let media: Media?
+//    let possibleSpam, verifiedCollection: Bool?
 
     enum CodingKeys: String, CodingKey {
         case tokenAddress = "token_address"
         case tokenID = "token_id"
-        case contractType = "contract_type"
-        case ownerOf = "owner_of"
-        case blockNumber = "block_number"
-        case blockNumberMinted = "block_number_minted"
-        case normalizedMetadata = "normalized_metadata"
-        case amount, name, symbol
-        case tokenHash = "token_hash"
-        case lastTokenURISync = "last_token_uri_sync"
-        case lastMetadataSync = "last_metadata_sync"
+//        case transferIndex = "transfer_index"
+//        case ownerOf = "owner_of"
+//        case blockNumber = "block_number"
+//        case blockNumberMinted = "block_number_minted"
+//        case tokenHash = "token_hash"
+//        case amount
+//        case updatedAt = "updated_at"
+//        case contractType = "contract_type"
+//        case tokenURI = "token_uri"
+//        case metadata
+//        case lastTokenURISync = "last_token_uri_sync"
+//        case lastMetadataSync = "last_metadata_sync"
+//        case minterAddress = "minter_address"
+//        case normalizedMetadata = "normalized_metadata"
+//        case media
+//        case possibleSpam = "possible_spam"
+//        case verifiedCollection = "verified_collection"
     }
 }
+
+// MARK: - Media
+//struct Media: Codable {
+//    let originalMediaURL: String?
+////    let updatedAt, status: String?
+//
+//    enum CodingKeys: String, CodingKey {
+//        case originalMediaURL = "original_media_url"
+////        case updatedAt, status
+//    }
+//}
 
 // MARK: - NormalizedMetadata
 struct NormalizedMetadata: Codable {
-    let name, description: String?
+//    let name, description: String?
     let image: String?
-    let externalLink, animationURL: String?
-
+    
     enum CodingKeys: String, CodingKey {
-        case name, description, image
-        case externalLink = "external_link"
-        case animationURL = "animation_url"
+//        case name, description
+        case image
     }
+    
+//    typealias NFTMetadata = [NFTMetadatum]
+    
 }
 
-typealias NFTMetadata = [NFTMetadatum]
+struct NFTMetadataRequest: Codable {
+    let tokens: [NFTForFetch]?
+    let normalizeMetadata, mediaItems: Bool?
+    
+    enum CodingKeys: String, CodingKey {
+        case tokens, normalizeMetadata
+        case mediaItems = "media_items"
+    }
+}

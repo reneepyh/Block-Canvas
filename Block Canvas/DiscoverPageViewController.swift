@@ -18,6 +18,8 @@ class DiscoverPageViewController: UIViewController {
     
     private var recommendedNFTs: [NFTForFetch] = []
     
+    private var recommendedNFTMetadatum: [NFTMetadatum] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //        getTrending()
@@ -219,10 +221,13 @@ class DiscoverPageViewController: UIViewController {
                     let NFTData = try decoder.decode(GetNFTByContract.self, from: data)
                     DispatchQueue.main.async { [weak self] in
                         for NFT in NFTData.result ?? [] {
-                            self?.recommendedNFTs.append(NFTForFetch(tokenContract: NFT.tokenAddress ?? "", tokenID: NFT.tokenID ?? ""))
+                            self?.recommendedNFTs.append(NFTForFetch(tokenAddress: NFT.tokenAddress ?? "", tokenID: NFT.tokenID ?? ""))
                         }
                     }
                     print(self.recommendedNFTs)
+                    for NFTMetadata in self.recommendedNFTs {
+                        self.getNFTMetadata(NFTToFetch: NFTMetadata)
+                    }
                 }
                 catch {
                     print("Error in JSON decoding.")
@@ -235,67 +240,64 @@ class DiscoverPageViewController: UIViewController {
         }
     }
     
-//    private func getNFTMetadata(tokenAddress: String, tokenID: String) {
-//        let apiKey = Bundle.main.object(forInfoDictionaryKey: "Moralis_API_Key") as? String
-//
-//        guard let key = apiKey, !key.isEmpty else {
-//            print("Moralis API key does not exist.")
-//            return
-//        }
-//
-//        if let url = URL(string: "https://deep-index.moralis.io/api/v2.2/nft/getMultipleNFTs") {
-//            var request = URLRequest(url: url)
-//            request.setValue("application/json",
-//                             forHTTPHeaderField: "Accept")
-//            request.setValue(key,
-//                             forHTTPHeaderField: "X-API-Key")
-//            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-//            let requestBody = NFTMetadataRequest(tokens: <#T##[Token]?#>, normalizeMetadata: <#T##Bool?#>, mediaItems: <#T##Bool?#>)
-//            request.httpBody = try? JSONEncoder().encode(requestBody)
-//            request.httpMethod = "POST"
-//
-//            if let postData = try? JSONEncoder().encode(requestBody) {
-//                if let jsonString = String(data: postData, encoding: .utf8) {
-//                    print("Request JSON: \(jsonString)")
-//                }
-//                request.httpBody = postData
-//            } else {
-//                print("Failed to encode the JSON data")
-//            }
-//
-//            let session = URLSession.shared
-//
-//            let task = session.dataTask(with: request) { data, response, error in
-//                if let error = error {
-//                    print(error)
-//                    return
-//                }
-//
-//                guard let data = data else {
-//                    print("No data.")
-//                    return
-//                }
-//
-//                let decoder = JSONDecoder()
-//
-//                do {
-//                    let NFTData = try decoder.decode(GetNFTByContract.self, from: data)
-//                    DispatchQueue.main.async { [weak self] in
-//                        for NFT in NFTData.result ?? [] {
-//                            self?.recommendedNFTs.append(NFTForFetch(tokenContract: NFT.tokenAddress ?? "", tokenID: NFT.tokenID ?? ""))
-//                        }
-//                    }
-//                    print(self.recommendedNFTs)
-//                }
-//                catch {
-//                    print("Error in JSON decoding.")
-//                }
-//            }
-//            task.resume()
-//        }
-//        else {
-//            print("Invalid URL.")
-//        }
-//    }
+    private func getNFTMetadata(NFTToFetch: NFTForFetch) {
+        let apiKey = Bundle.main.object(forInfoDictionaryKey: "Moralis_API_Key") as? String
+        
+        guard let key = apiKey, !key.isEmpty else {
+            print("Moralis API key does not exist.")
+            return
+        }
+        
+        if let url = URL(string: "https://deep-index.moralis.io/api/v2.2/nft/getMultipleNFTs") {
+            var request = URLRequest(url: url)
+            request.setValue("application/json",
+                             forHTTPHeaderField: "Accept")
+            request.setValue(key,
+                             forHTTPHeaderField: "X-API-Key")
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            let requestBody = NFTMetadataRequest(tokens: [NFTToFetch], normalizeMetadata: true, mediaItems: true)
+            request.httpBody = try? JSONEncoder().encode(requestBody)
+            request.httpMethod = "POST"
+            
+            if let postData = try? JSONEncoder().encode(requestBody) {
+                if let jsonString = String(data: postData, encoding: .utf8) {
+                    print("Request JSON: \(jsonString)")
+                }
+                request.httpBody = postData
+            } else {
+                print("Failed to encode the JSON data")
+            }
+            
+            let session = URLSession.shared
+            
+            let task = session.dataTask(with: request) { data, response, error in
+                if let error = error {
+                    print(error)
+                    return
+                }
+                
+                guard let data = data else {
+                    print("No data.")
+                    return
+                }
+                
+                let decoder = JSONDecoder()
+                
+                do {
+                    let NFTMetaData = try decoder.decode(NFTMetadatum.self, from: data)
+                    DispatchQueue.main.async { [weak self] in
+                        self?.recommendedNFTMetadatum.append(NFTMetaData)
+                    }
+                    print(self.recommendedNFTMetadatum)
+                }
+                catch {
+                    print("Error in JSON decoding.")
+                }
+            }
+            task.resume()
+        }
+        else {
+            print("Invalid URL.")
+        }
+    }
 }
-
