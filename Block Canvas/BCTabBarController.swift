@@ -8,14 +8,14 @@
 import UIKit
 
 class BCTabBarController: UITabBarController {
-    private let tabs: [Tab] = [.discover]
+    private let tabs: [Tab] = [.discover, .portfolio]
     
     private var orderObserver: NSKeyValueObservation?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewControllers = tabs.map { $0.makeViewController() }
+        self.viewControllers = tabs.map { $0.makeViewController() }
 
     }
 }
@@ -24,11 +24,13 @@ class BCTabBarController: UITabBarController {
 extension BCTabBarController {
     private enum Tab {
         case discover
+        case portfolio
         
         func makeViewController() -> UIViewController {
             let controller: UIViewController
             switch self {
-                case .discover: controller = UIStoryboard.lobby.instantiateInitialViewController()!
+                case .discover: controller = UIStoryboard.discover.instantiateInitialViewController()!
+                case .portfolio: controller = UIStoryboard.portfolio.instantiateInitialViewController()!
             }
             controller.tabBarItem = makeTabBarItem()
             controller.tabBarItem.imageInsets = UIEdgeInsets(top: 6.0, left: 0.0, bottom: -6.0, right: 0.0)
@@ -36,7 +38,7 @@ extension BCTabBarController {
         }
         
         private func makeTabBarItem() -> UITabBarItem {
-            return UITabBarItem(title: nil, image: nil, selectedImage: nil)
+            return UITabBarItem(title: "1", image: nil, selectedImage: nil)
             // TODO: update images
         }
         

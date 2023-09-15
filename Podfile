@@ -5,6 +5,7 @@ target 'Block Canvas' do
 pod 'SwiftLint'
 pod 'Apollo'
 pod 'Kingfisher'
+pod 'SnapKit'
 
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
