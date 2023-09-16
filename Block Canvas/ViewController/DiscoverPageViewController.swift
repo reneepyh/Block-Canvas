@@ -33,7 +33,7 @@ class DiscoverPageViewController: UIViewController {
         
         trendingCollectionView.dataSource = self
         trendingCollectionView.delegate = self
-        getTrending()
+//        getTrending()
         
         //        getRecommendationFromGPT()
         //        fetchData()

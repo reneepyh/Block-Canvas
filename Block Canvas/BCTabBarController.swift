@@ -8,7 +8,7 @@
 import UIKit
 
 class BCTabBarController: UITabBarController {
-    private let tabs: [Tab] = [.discover, .portfolio]
+    private let tabs: [Tab] = [.discover, .portfolio, .crypto]
     
     private var orderObserver: NSKeyValueObservation?
     
@@ -25,12 +25,14 @@ extension BCTabBarController {
     private enum Tab {
         case discover
         case portfolio
+        case crypto
         
         func makeViewController() -> UIViewController {
             let controller: UIViewController
             switch self {
                 case .discover: controller = UIStoryboard.discover.instantiateInitialViewController()!
                 case .portfolio: controller = UIStoryboard.portfolio.instantiateInitialViewController()!
+                case .crypto: controller = UIStoryboard.crypto.instantiateInitialViewController()!
             }
             controller.tabBarItem = makeTabBarItem()
             controller.tabBarItem.imageInsets = UIEdgeInsets(top: 6.0, left: 0.0, bottom: -6.0, right: 0.0)
