@@ -15,6 +15,9 @@
 		DB1DBD292AB1D45B00F74B64 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB1DBD282AB1D45B00F74B64 /* Assets.xcassets */; };
 		DB1DBD2C2AB1D45B00F74B64 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB1DBD2A2AB1D45B00F74B64 /* LaunchScreen.storyboard */; };
 		DB6853D12AB2F38400895EB9 /* Discover.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6853D02AB2F38400895EB9 /* Discover.swift */; };
+		DB69818F2AB4604600BE0036 /* Portfolio.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB69818E2AB4604600BE0036 /* Portfolio.storyboard */; };
+		DB6981912AB4608100BE0036 /* AddressInputPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6981902AB4608100BE0036 /* AddressInputPageViewController.swift */; };
+		DB6981932AB4648500BE0036 /* Portfolio.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6981922AB4648500BE0036 /* Portfolio.swift */; };
 		DB86552B2AB2D88C006905FB /* GetTrendingQuery.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8655202AB2D88C006905FB /* GetTrendingQuery.graphql.swift */; };
 		DB86552C2AB2D88C006905FB /* JSONObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8655232AB2D88C006905FB /* JSONObject.swift */; };
 		DB86552D2AB2D88C006905FB /* GenerativeToken.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8655252AB2D88C006905FB /* GenerativeToken.graphql.swift */; };
@@ -28,6 +31,9 @@
 		DBA4787A2AB2B29C0014E825 /* Discover.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBA478772AB2B29C0014E825 /* Discover.storyboard */; };
 		DBA4787B2AB2B29C0014E825 /* UIStoryboard+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA478782AB2B29C0014E825 /* UIStoryboard+Extension.swift */; };
 		DBAA52F52AB2B7D000FE51FF /* schema.json in Resources */ = {isa = PBXBuildFile; fileRef = DBAA52F42AB2B7D000FE51FF /* schema.json */; };
+		DBB8802E2AB4821400526E40 /* PortfolioPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB8802D2AB4821400526E40 /* PortfolioPageViewController.swift */; };
+		DBB880302AB4888700526E40 /* PortfolioCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB8802F2AB4888700526E40 /* PortfolioCollectionCell.swift */; };
+		DBB880322AB4B33600526E40 /* DetailPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB880312AB4B33600526E40 /* DetailPageViewController.swift */; };
 		DBB9BDBC2AB44E07002A5FBC /* KingfisherWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB9BDBB2AB44E07002A5FBC /* KingfisherWrapper.swift */; };
 /* End PBXBuildFile section */
 
@@ -45,6 +51,9 @@
 		DB1DBD2D2AB1D45B00F74B64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB6853CF2AB2ECA100895EB9 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		DB6853D02AB2F38400895EB9 /* Discover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Discover.swift; sourceTree = "<group>"; };
+		DB69818E2AB4604600BE0036 /* Portfolio.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Portfolio.storyboard; sourceTree = "<group>"; };
+		DB6981902AB4608100BE0036 /* AddressInputPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressInputPageViewController.swift; sourceTree = "<group>"; };
+		DB6981922AB4648500BE0036 /* Portfolio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Portfolio.swift; sourceTree = "<group>"; };
 		DB8655202AB2D88C006905FB /* GetTrendingQuery.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetTrendingQuery.graphql.swift; sourceTree = "<group>"; };
 		DB8655232AB2D88C006905FB /* JSONObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONObject.swift; sourceTree = "<group>"; };
 		DB8655252AB2D88C006905FB /* GenerativeToken.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenerativeToken.graphql.swift; sourceTree = "<group>"; };
@@ -58,6 +67,9 @@
 		DBA478772AB2B29C0014E825 /* Discover.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Discover.storyboard; sourceTree = "<group>"; };
 		DBA478782AB2B29C0014E825 /* UIStoryboard+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+Extension.swift"; sourceTree = "<group>"; };
 		DBAA52F42AB2B7D000FE51FF /* schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schema.json; sourceTree = "<group>"; };
+		DBB8802D2AB4821400526E40 /* PortfolioPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioPageViewController.swift; sourceTree = "<group>"; };
+		DBB8802F2AB4888700526E40 /* PortfolioCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioCollectionCell.swift; sourceTree = "<group>"; };
+		DBB880312AB4B33600526E40 /* DetailPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPageViewController.swift; sourceTree = "<group>"; };
 		DBB9BDBB2AB44E07002A5FBC /* KingfisherWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingfisherWrapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -111,20 +123,18 @@
 		DB1DBD1E2AB1D45A00F74B64 /* Block Canvas */ = {
 			isa = PBXGroup;
 			children = (
+				DB69818D2AB45FE000BE0036 /* ViewController */,
+				DB69818C2AB45FC900BE0036 /* View */,
 				DB6853D22AB3637A00895EB9 /* Model */,
 				DB1DBD1F2AB1D45A00F74B64 /* AppDelegate.swift */,
 				DB1DBD212AB1D45A00F74B64 /* SceneDelegate.swift */,
 				DBA478762AB2B29C0014E825 /* BCTabBarController.swift */,
-				DBA478772AB2B29C0014E825 /* Discover.storyboard */,
 				DBA478782AB2B29C0014E825 /* UIStoryboard+Extension.swift */,
-				DB1DBD232AB1D45A00F74B64 /* DiscoverPageViewController.swift */,
 				DBAA52F42AB2B7D000FE51FF /* schema.json */,
-				DB1DBD252AB1D45A00F74B64 /* Main.storyboard */,
 				DB1DBD282AB1D45B00F74B64 /* Assets.xcassets */,
 				DB1DBD2A2AB1D45B00F74B64 /* LaunchScreen.storyboard */,
 				DB1DBD2D2AB1D45B00F74B64 /* Info.plist */,
 				DB6853CF2AB2ECA100895EB9 /* Secrets.xcconfig */,
-				DB8C90F02AB43DCF005D75DF /* TrendingCollectionCell.swift */,
 				DBB9BDBB2AB44E07002A5FBC /* KingfisherWrapper.swift */,
 			);
 			path = "Block Canvas";
@@ -134,9 +144,33 @@
 			isa = PBXGroup;
 			children = (
 				DB6853D02AB2F38400895EB9 /* Discover.swift */,
+				DB6981922AB4648500BE0036 /* Portfolio.swift */,
 				DB86551D2AB2D88C006905FB /* getTrending */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		DB69818C2AB45FC900BE0036 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DB1DBD252AB1D45A00F74B64 /* Main.storyboard */,
+				DBA478772AB2B29C0014E825 /* Discover.storyboard */,
+				DB8C90F02AB43DCF005D75DF /* TrendingCollectionCell.swift */,
+				DB69818E2AB4604600BE0036 /* Portfolio.storyboard */,
+				DBB8802F2AB4888700526E40 /* PortfolioCollectionCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		DB69818D2AB45FE000BE0036 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				DB1DBD232AB1D45A00F74B64 /* DiscoverPageViewController.swift */,
+				DB6981902AB4608100BE0036 /* AddressInputPageViewController.swift */,
+				DBB8802D2AB4821400526E40 /* PortfolioPageViewController.swift */,
+				DBB880312AB4B33600526E40 /* DetailPageViewController.swift */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		DB86551D2AB2D88C006905FB /* getTrending */ = {
@@ -259,6 +293,7 @@
 				DB1DBD2C2AB1D45B00F74B64 /* LaunchScreen.storyboard in Resources */,
 				DBAA52F52AB2B7D000FE51FF /* schema.json in Resources */,
 				DBA4787A2AB2B29C0014E825 /* Discover.storyboard in Resources */,
+				DB69818F2AB4604600BE0036 /* Portfolio.storyboard in Resources */,
 				DB1DBD292AB1D45B00F74B64 /* Assets.xcassets in Resources */,
 				DB1DBD272AB1D45A00F74B64 /* Main.storyboard in Resources */,
 			);
@@ -334,6 +369,7 @@
 			files = (
 				DB86552D2AB2D88C006905FB /* GenerativeToken.graphql.swift in Sources */,
 				DBA478792AB2B29C0014E825 /* BCTabBarController.swift in Sources */,
+				DBB880302AB4888700526E40 /* PortfolioCollectionCell.swift in Sources */,
 				DB86552B2AB2D88C006905FB /* GetTrendingQuery.graphql.swift in Sources */,
 				DB1DBD242AB1D45A00F74B64 /* DiscoverPageViewController.swift in Sources */,
 				DB1DBD202AB1D45A00F74B64 /* AppDelegate.swift in Sources */,
@@ -344,8 +380,12 @@
 				DB86552F2AB2D88C006905FB /* Query.graphql.swift in Sources */,
 				DB86552C2AB2D88C006905FB /* JSONObject.swift in Sources */,
 				DB86552E2AB2D88C006905FB /* User.graphql.swift in Sources */,
+				DBB8802E2AB4821400526E40 /* PortfolioPageViewController.swift in Sources */,
+				DB6981932AB4648500BE0036 /* Portfolio.swift in Sources */,
+				DB6981912AB4608100BE0036 /* AddressInputPageViewController.swift in Sources */,
 				DB8655312AB2D88C006905FB /* SchemaMetadata.graphql.swift in Sources */,
 				DBB9BDBC2AB44E07002A5FBC /* KingfisherWrapper.swift in Sources */,
+				DBB880322AB4B33600526E40 /* DetailPageViewController.swift in Sources */,
 				DB8655302AB2D88C006905FB /* SchemaConfiguration.swift in Sources */,
 				DB8655322AB2D88C006905FB /* GetTrending.graphql.swift in Sources */,
 			);
