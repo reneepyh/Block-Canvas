@@ -35,7 +35,6 @@ class DiscoverPageViewController: UIViewController {
         trendingCollectionView.delegate = self
         getTrending()
         
-        
         //        getRecommendationFromGPT()
         //        fetchData()
     }
@@ -44,11 +43,13 @@ class DiscoverPageViewController: UIViewController {
         for _ in 0...9 {
             apolloClient.fetch(query: GetTrending.GetTrendingQuery()) { [weak self] result in
                 guard let data = try? result.get().data else { return }
-                let imageURL = self?.generativeLiveDisplayUrl(uri: data.randomTopGenerativeToken.displayUri ?? "")
-                self?.trendingNFTs.append(TrendingNFT(imageURL: imageURL ?? "", title: data.randomTopGenerativeToken.name, authorName: data.randomTopGenerativeToken.author.name))
+                let displayURL = self?.generativeLiveDisplayUrl(uri: data.randomTopGenerativeToken.displayUri ?? "")
+                let authorName = data.randomTopGenerativeToken.author.name
+                let title = data.randomTopGenerativeToken.name
+                let thumbnailURL = self?.generativeLiveDisplayUrl(uri: data.randomTopGenerativeToken.thumbnailUri ?? "")
+                let contract = data.randomTopGenerativeToken.gentkContractAddress
+                self?.trendingNFTs.append(TrendingNFT(thumbnailUri: thumbnailURL ?? "", displayUri: displayURL ?? "", contract: contract, title: title, authorName: authorName))
                 print(self?.trendingNFTs)
-                
-                
                 self?.trendingCollectionView.reloadData()
             }
         }
@@ -388,7 +389,7 @@ extension DiscoverPageViewController: UICollectionViewDelegateFlowLayout, UIColl
         guard let trendingCollectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: TrendingCollectionCell.reuseIdentifier, for: indexPath) as? TrendingCollectionCell else {
             fatalError("Cell cannot be created")
         }
-        trendingCollectionCell.trendingImageView.loadImage(trendingNFTs[indexPath.row].imageURL)
+        trendingCollectionCell.trendingImageView.loadImage(trendingNFTs[indexPath.row].thumbnailUri)
         
         return trendingCollectionCell
     }
@@ -411,10 +412,7 @@ extension DiscoverPageViewController: UICollectionViewDelegateFlowLayout, UIColl
         else {
             return
         }
-        detailVC.imageView.loadImage(trendingNFTs[indexPath.row].imageURL)
-        detailVC.artistLabel.text = trendingNFTs[indexPath.row].authorName
-        detailVC.titleLabel.text = trendingNFTs[indexPath.row].title
-        detailVC.descriptionLabel.text = ""
+        detailVC.trendingNFTMetadata = trendingNFTs[indexPath.row]
         show(detailVC, sender: nil)
     }
     

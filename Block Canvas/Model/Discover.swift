@@ -6,10 +6,11 @@
 //
 
 struct TrendingNFT {
-    let imageURL: String
+    let thumbnailUri: String
+    let displayUri: String
+    let contract: String
     let title: String?
     let authorName: String?
-    
 }
 
 //struct OpenAIBody: Encodable {

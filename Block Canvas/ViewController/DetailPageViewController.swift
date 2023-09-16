@@ -11,6 +11,8 @@ class DetailPageViewController: UIViewController {
     
     var NFTMetadata: EthNFTMetadata?
     
+    var trendingNFTMetadata: TrendingNFT?
+    
     @IBOutlet weak var imageView: UIImageView!
     
     @IBOutlet weak var titleLabel: UILabel!
@@ -24,12 +26,19 @@ class DetailPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        imageView.loadImage(NFTMetadata?.image)
-        titleLabel.text = NFTMetadata?.name
-        artistLabel.text = NFTMetadata?.collectionName
-        descriptionLabel.text = NFTMetadata?.description
-        contractLabel.text = NFTMetadata?.contractAddress
+        if let trendingNFTMetadata = trendingNFTMetadata {
+            imageView.loadImage(trendingNFTMetadata.displayUri)
+            titleLabel.text = trendingNFTMetadata.title
+            artistLabel.text = trendingNFTMetadata.authorName
+            descriptionLabel.text = ""
+            contractLabel.text = trendingNFTMetadata.contract
+        } else {
+            imageView.loadImage(NFTMetadata?.image)
+            titleLabel.text = NFTMetadata?.name
+            artistLabel.text = NFTMetadata?.collectionName
+            descriptionLabel.text = NFTMetadata?.description
+            contractLabel.text = NFTMetadata?.contractAddress
+        }
+       
     }
-    
-
 }
