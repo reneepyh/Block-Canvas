@@ -8,6 +8,7 @@
 import UIKit
 import SwiftUI
 import SnapKit
+import Kingfisher
 
 class PortfolioDisplayViewController: UIViewController {
     
@@ -16,10 +17,10 @@ class PortfolioDisplayViewController: UIViewController {
     var nftInfoForDisplay: [NFTInfoForDisplay]?
     
     var ethAddress: String?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         getEthNFTsByWallet()
     }
     
@@ -83,14 +84,16 @@ class PortfolioDisplayViewController: UIViewController {
         }
         
     }
-
+    
     private func setupDisplay() {
         guard let nftInfoForDisplay = nftInfoForDisplay else {
             print("Cannot create imageURLs.")
             return
         }
         
-        let hostingController = UIHostingController(rootView: PortfolioDisplay(nftInfoForDisplay: nftInfoForDisplay))
+        let hostingController = UIHostingController(rootView: PortfolioDisplay(nftInfoForDisplay: nftInfoForDisplay, onARButtonTap: { selectedImageURL in
+            self.viewInARButtonTapped(with: selectedImageURL)
+        }))
         
         addChild(hostingController)
         view.addSubview(hostingController.view)
@@ -110,5 +113,22 @@ class PortfolioDisplayViewController: UIViewController {
         }
         
         hostingController.didMove(toParent: self)
+    }
+    
+    func viewInARButtonTapped(with url: URL) {
+        let arViewController = ARDisplayViewController()
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if let error = error {
+                print("Error downloading image: \(error)")
+            } else if let data = data, let image = UIImage(data: data) {
+                arViewController.imageToDisplay = image
+                DispatchQueue.main.async {
+                    arViewController.modalPresentationStyle = .overFullScreen
+                    self.present(arViewController, animated: true, completion: nil)
+                }
+            }
+        }
+        task.resume()
+        print(url)
     }
 }
