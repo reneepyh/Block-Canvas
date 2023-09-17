@@ -53,6 +53,8 @@ struct ImageView: View {
 struct PortfolioDisplay: View {
     
     var nftInfoForDisplay: [NFTInfoForDisplay]
+    var onARButtonTap: ((URL) -> Void)?
+    @State private var selectedImageURL: URL?
     
     var body: some View {
         GeometryReader { outerGeometry in
@@ -61,6 +63,11 @@ struct PortfolioDisplay: View {
                     ForEach(nftInfoForDisplay, id: \.url) { nftInfo in
                         GeometryReader { geometry in
                             VStack(alignment: .leading, spacing: 12) {
+                                Button("View in AR") {
+                                                selectedImageURL = nftInfo.url
+                                                onARButtonTap?(nftInfo.url)
+                                }.frame(width: 120, alignment: .center)
+                                    .foregroundColor(.gray)
                                 ImageView(url: nftInfo.url)
                                     .frame(width: 300, height: 450, alignment: .center)
                                     .cornerRadius(16)
@@ -100,7 +107,7 @@ struct PortfolioDisplay: View {
                         .frame(width: (outerGeometry.size.width / 2) - 150)
                 }
                 .padding(.horizontal, 150)
-                .padding(.top, 50)
+                .padding(.top, 10)
             }
         }
     }
