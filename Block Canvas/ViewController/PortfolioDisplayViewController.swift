@@ -13,7 +13,7 @@ class PortfolioDisplayViewController: UIViewController {
     
     var NFTs: EthNFT?
     
-    var imageURLs: [URL]?
+    var nftInfoForDisplay: [NFTInfoForDisplay]?
     
     var ethAddress: String?
 
@@ -62,16 +62,12 @@ class PortfolioDisplayViewController: UIViewController {
                     let NFTData = try decoder.decode(EthNFT.self, from: data)
                     print(NFTData)
                     self?.NFTs = NFTData
-                    self?.imageURLs = NFTData.assets.map({ assets in
+                    self?.nftInfoForDisplay = NFTData.assets.map({ assets in
                         assets.map { asset in
-//                            guard let imageURL = asset.nft?.image else {
-//                                print("Cannot create image URL.")
-//                                return
-//                            }
-                            URL(string: (asset.nft?.image) ?? "")!
+                            NFTInfoForDisplay(url: URL(string: (asset.nft?.image) ?? "")!, title: asset.nft?.name ?? "", artist: asset.nft?.collectionName ?? "", description: asset.nft?.description ?? "", contract: asset.nft?.contractAddress ?? "")
                         }
                     })
-                    print(self?.imageURLs)
+                    print(self?.nftInfoForDisplay)
                 }
                 catch {
                     print("Error in JSON decoding.")
@@ -89,12 +85,12 @@ class PortfolioDisplayViewController: UIViewController {
     }
 
     private func setupDisplay() {
-        guard let imageURLs = imageURLs else {
+        guard let nftInfoForDisplay = nftInfoForDisplay else {
             print("Cannot create imageURLs.")
             return
         }
         
-        let hostingController = UIHostingController(rootView: PortfolioDisplay(imageUrls: imageURLs))
+        let hostingController = UIHostingController(rootView: PortfolioDisplay(nftInfoForDisplay: nftInfoForDisplay))
         
         addChild(hostingController)
         view.addSubview(hostingController.view)
@@ -107,10 +103,10 @@ class PortfolioDisplayViewController: UIViewController {
         }
         
         portfolioDisplayView.snp.makeConstraints { make in
-            make.top.equalTo(view.snp.topMargin)
+            make.top.equalToSuperview()
             make.left.equalToSuperview()
             make.right.equalToSuperview()
-            make.bottom.equalTo(view.snp.centerY).offset(230)
+            make.bottom.equalToSuperview()
         }
         
         hostingController.didMove(toParent: self)

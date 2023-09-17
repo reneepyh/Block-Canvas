@@ -24,11 +24,6 @@ struct EthNFTMetadata: Codable {
     let contractType, contractAddress, tokenID, name: String?
     let description: String?
     let image: String?
-    let animationURL: String?
-    let ownerAddresses: [String]?
-    let traits: [Trait]?
-    let rarity: Rarity?
-    let suspicious: Bool?
     let lastSale: LastSale?
 
     enum CodingKeys: String, CodingKey {
@@ -40,9 +35,6 @@ struct EthNFTMetadata: Codable {
         case contractAddress = "contract_address"
         case tokenID = "token_id"
         case name, description, image
-        case animationURL = "animation_url"
-        case ownerAddresses = "owner_addresses"
-        case traits, rarity, suspicious
         case lastSale = "last_sale"
     }
 }
@@ -91,14 +83,10 @@ struct PaymentToken: Codable {
     let decimals: Int?
 }
 
-// MARK: - Rarity
-struct Rarity: Codable {
-    let score: Double?
-    let rank, total: Int?
-}
-
-// MARK: - Trait
-struct Trait: Codable {
-    let type, value: String?
-    let percentage: Double?
+struct NFTInfoForDisplay {
+    let url: URL
+    let title: String
+    let artist: String
+    let description: String
+    let contract: String
 }
