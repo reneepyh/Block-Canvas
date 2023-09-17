@@ -410,7 +410,7 @@ extension DiscoverPageViewController: UICollectionViewDelegateFlowLayout, UIColl
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard
-            let detailVC = UIStoryboard.portfolio.instantiateViewController(
+            let detailVC = UIStoryboard.discover.instantiateViewController(
                 withIdentifier: String(describing: DetailPageViewController.self)
             ) as? DetailPageViewController
         else {

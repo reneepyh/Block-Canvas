@@ -15,6 +15,8 @@ class PortfolioListViewController: UIViewController {
     
     private var ethWallets: [String] = []
     
+    private var balance: [String] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         portfolioListTableView.delegate = self
@@ -27,6 +29,10 @@ class PortfolioListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         findEthWallets()
+        //TODO: FIX will appear不會重打API; 回應順序不等於錢包順序
+        ethWallets.forEach { address in
+            fetchWalletBalance(address: address)
+        }
     }
     
     private func findEthWallets() {
@@ -43,11 +49,61 @@ class PortfolioListViewController: UIViewController {
             navigationController?.pushViewController(addressInputVC, animated: false)
             addressInputVC.navigationItem.hidesBackButton = true
         } else {
-            portfolioListTableView.reloadData()
+//            portfolioListTableView.reloadData()
         }
     }
 
-   @objc private func addWallet() {
+    private func fetchWalletBalance(address: String) {
+        let apiKey = Bundle.main.object(forInfoDictionaryKey: "Blockdaemon_API_Key") as? String
+        
+        guard let key = apiKey, !key.isEmpty else {
+            print("Blockdaemon API Key does not exist.")
+            return
+        }
+        
+        if let url = URL(string: "https://svc.blockdaemon.com/universal/v1/ethereum/mainnet/account/\(address)") {
+            
+            var request = URLRequest(url: url)
+            request.setValue("application/json", forHTTPHeaderField: "Accept")
+            request.setValue(apiKey, forHTTPHeaderField: "X-API-Key")
+            request.httpMethod = "GET"
+            
+            let session = URLSession.shared
+            
+            let task = session.dataTask(with: request) { [weak self] data, response, error in
+                if let error = error {
+                    print(error)
+                    return
+                }
+                
+                guard let data = data else {
+                    print("No data.")
+                    return
+                }
+                
+                let decoder = JSONDecoder()
+                
+                do {
+                    let balance = try decoder.decode(WalletBalance.self, from: data)
+                    print(balance)
+                    self?.balance.append(balance[0].confirmedBalance ?? "")
+                }
+                catch {
+                    print("Error in JSON decoding.")
+                }
+                DispatchQueue.main.async { [weak self] in
+                    self?.portfolioListTableView.reloadData()
+                }
+            }
+            task.resume()
+        }
+        else {
+            print("Invalid URL.")
+        }
+        
+    }
+    
+    @objc private func addWallet() {
         guard
             let addressInputVC = UIStoryboard.portfolio.instantiateViewController(
                 withIdentifier: String(describing: AddressInputPageViewController.self)
@@ -70,6 +126,11 @@ extension PortfolioListViewController: UITableViewDelegate, UITableViewDataSourc
             fatalError("Cannot create wallet list cell.")
         }
         walletCell.addressLabel.text = ethWallets[indexPath.row]
+        if balance.count != ethWallets.count {
+            walletCell.balanceLabel.text = ""
+        } else {
+            walletCell.balanceLabel.text = balance[indexPath.row]
+        }
         print(ethWallets[indexPath.row])
         
         return walletCell

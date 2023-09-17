@@ -19,6 +19,14 @@ class WalletListCell: UITableViewCell {
         return label
     }()
     
+    let balanceLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 12)
+        label.numberOfLines = 0
+        label.textColor = .darkGray
+        return label
+    }()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
@@ -28,6 +36,13 @@ class WalletListCell: UITableViewCell {
         contentView.addSubview(addressLabel)
         addressLabel.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top).offset(12)
+            make.left.equalTo(contentView.snp.left).offset(16)
+            make.right.equalTo(contentView.snp.right).offset(-16)
+        }
+        
+        contentView.addSubview(balanceLabel)
+        balanceLabel.snp.makeConstraints { make in
+            make.top.equalTo(addressLabel.snp.bottom).offset(8)
             make.left.equalTo(contentView.snp.left).offset(16)
             make.right.equalTo(contentView.snp.right).offset(-16)
             make.bottom.equalTo(contentView.snp.bottom).offset(-12)
