@@ -66,7 +66,8 @@ struct PortfolioDisplay: View {
                                 Button("View in AR") {
                                                 selectedImageURL = nftInfo.url
                                                 onARButtonTap?(nftInfo.url)
-                                }.frame(width: 80, alignment: .center)
+                                }.frame(width: 120, alignment: .center)
+                                    .foregroundColor(.gray)
                                 ImageView(url: nftInfo.url)
                                     .frame(width: 300, height: 450, alignment: .center)
                                     .cornerRadius(16)

@@ -24,10 +24,8 @@ class AddressInputPageViewController: UIViewController {
     private let continueButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Continue", for: .normal)
-        button.tintColor = .black
+        button.tintColor = .systemGray2
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16)
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.black.cgColor
         button.layer.cornerRadius = 10
         return button
     }()
@@ -41,7 +39,9 @@ class AddressInputPageViewController: UIViewController {
         view.addSubview(addressTextField)
         view.addSubview(continueButton)
         addressTextField.snp.makeConstraints { make in
-            make.center.equalTo(view)
+            make.top.equalTo(view.snp.top).offset(100)
+            make.left.equalTo(view.snp.left).offset(16)
+            make.right.equalTo(view.snp.right).offset(-16)
         }
         continueButton.snp.makeConstraints { make in
             make.centerX.equalTo(view)
