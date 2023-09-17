@@ -35,6 +35,10 @@
 		DBB880302AB4888700526E40 /* PortfolioCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB8802F2AB4888700526E40 /* PortfolioCollectionCell.swift */; };
 		DBB880322AB4B33600526E40 /* DetailPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB880312AB4B33600526E40 /* DetailPageViewController.swift */; };
 		DBB9BDBC2AB44E07002A5FBC /* KingfisherWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB9BDBB2AB44E07002A5FBC /* KingfisherWrapper.swift */; };
+		DBF619DB2AB55F6E00687F13 /* CryptoPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF619DA2AB55F6E00687F13 /* CryptoPageViewController.swift */; };
+		DBF619DD2AB55F8600687F13 /* Crypto.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBF619DC2AB55F8600687F13 /* Crypto.storyboard */; };
+		DBF619DF2AB57EA200687F13 /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF619DE2AB57EA200687F13 /* Crypto.swift */; };
+		DBF619E32AB59C8400687F13 /* EthPriceChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF619E22AB59C8400687F13 /* EthPriceChartView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -71,6 +75,10 @@
 		DBB8802F2AB4888700526E40 /* PortfolioCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioCollectionCell.swift; sourceTree = "<group>"; };
 		DBB880312AB4B33600526E40 /* DetailPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPageViewController.swift; sourceTree = "<group>"; };
 		DBB9BDBB2AB44E07002A5FBC /* KingfisherWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingfisherWrapper.swift; sourceTree = "<group>"; };
+		DBF619DA2AB55F6E00687F13 /* CryptoPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoPageViewController.swift; sourceTree = "<group>"; };
+		DBF619DC2AB55F8600687F13 /* Crypto.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Crypto.storyboard; sourceTree = "<group>"; };
+		DBF619DE2AB57EA200687F13 /* Crypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crypto.swift; sourceTree = "<group>"; };
+		DBF619E22AB59C8400687F13 /* EthPriceChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthPriceChartView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +154,7 @@
 				DB6853D02AB2F38400895EB9 /* Discover.swift */,
 				DB6981922AB4648500BE0036 /* Portfolio.swift */,
 				DB86551D2AB2D88C006905FB /* getTrending */,
+				DBF619DE2AB57EA200687F13 /* Crypto.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -156,8 +165,10 @@
 				DB1DBD252AB1D45A00F74B64 /* Main.storyboard */,
 				DBA478772AB2B29C0014E825 /* Discover.storyboard */,
 				DB8C90F02AB43DCF005D75DF /* TrendingCollectionCell.swift */,
+				DBF619E22AB59C8400687F13 /* EthPriceChartView.swift */,
 				DB69818E2AB4604600BE0036 /* Portfolio.storyboard */,
 				DBB8802F2AB4888700526E40 /* PortfolioCollectionCell.swift */,
+				DBF619DC2AB55F8600687F13 /* Crypto.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -169,6 +180,7 @@
 				DB6981902AB4608100BE0036 /* AddressInputPageViewController.swift */,
 				DBB8802D2AB4821400526E40 /* PortfolioPageViewController.swift */,
 				DBB880312AB4B33600526E40 /* DetailPageViewController.swift */,
+				DBF619DA2AB55F6E00687F13 /* CryptoPageViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -294,6 +306,7 @@
 				DBAA52F52AB2B7D000FE51FF /* schema.json in Resources */,
 				DBA4787A2AB2B29C0014E825 /* Discover.storyboard in Resources */,
 				DB69818F2AB4604600BE0036 /* Portfolio.storyboard in Resources */,
+				DBF619DD2AB55F8600687F13 /* Crypto.storyboard in Resources */,
 				DB1DBD292AB1D45B00F74B64 /* Assets.xcassets in Resources */,
 				DB1DBD272AB1D45A00F74B64 /* Main.storyboard in Resources */,
 			);
@@ -375,10 +388,12 @@
 				DB1DBD202AB1D45A00F74B64 /* AppDelegate.swift in Sources */,
 				DB1DBD222AB1D45A00F74B64 /* SceneDelegate.swift in Sources */,
 				DB6853D12AB2F38400895EB9 /* Discover.swift in Sources */,
+				DBF619DB2AB55F6E00687F13 /* CryptoPageViewController.swift in Sources */,
 				DB8C90F12AB43DCF005D75DF /* TrendingCollectionCell.swift in Sources */,
 				DBA4787B2AB2B29C0014E825 /* UIStoryboard+Extension.swift in Sources */,
 				DB86552F2AB2D88C006905FB /* Query.graphql.swift in Sources */,
 				DB86552C2AB2D88C006905FB /* JSONObject.swift in Sources */,
+				DBF619DF2AB57EA200687F13 /* Crypto.swift in Sources */,
 				DB86552E2AB2D88C006905FB /* User.graphql.swift in Sources */,
 				DBB8802E2AB4821400526E40 /* PortfolioPageViewController.swift in Sources */,
 				DB6981932AB4648500BE0036 /* Portfolio.swift in Sources */,
@@ -388,6 +403,7 @@
 				DBB880322AB4B33600526E40 /* DetailPageViewController.swift in Sources */,
 				DB8655302AB2D88C006905FB /* SchemaConfiguration.swift in Sources */,
 				DB8655322AB2D88C006905FB /* GetTrending.graphql.swift in Sources */,
+				DBF619E32AB59C8400687F13 /* EthPriceChartView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -543,9 +559,9 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -573,9 +589,9 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
