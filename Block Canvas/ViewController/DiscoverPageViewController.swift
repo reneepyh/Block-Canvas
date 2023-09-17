@@ -33,14 +33,17 @@ class DiscoverPageViewController: UIViewController {
         
         trendingCollectionView.dataSource = self
         trendingCollectionView.delegate = self
-//        getTrending()
+        getTrending()
         
         //        getRecommendationFromGPT()
         //        fetchData()
     }
     
     private func getTrending() {
+        let group = DispatchGroup()
+        let queue = DispatchQueue(label: "queue", attributes: .concurrent)
         for _ in 0...9 {
+            group.enter()
             apolloClient.fetch(query: GetTrending.GetTrendingQuery()) { [weak self] result in
                 guard let data = try? result.get().data else { return }
                 let displayURL = self?.generativeLiveDisplayUrl(uri: data.randomTopGenerativeToken.displayUri ?? "")
@@ -50,8 +53,11 @@ class DiscoverPageViewController: UIViewController {
                 let contract = data.randomTopGenerativeToken.gentkContractAddress
                 self?.trendingNFTs.append(TrendingNFT(thumbnailUri: thumbnailURL ?? "", displayUri: displayURL ?? "", contract: contract, title: title, authorName: authorName))
                 print(self?.trendingNFTs)
-                self?.trendingCollectionView.reloadData()
+                group.leave()
             }
+        }
+        group.notify(queue: .main) { [weak self] in
+            self?.trendingCollectionView.reloadData()
         }
     }
     
@@ -379,7 +385,6 @@ class DiscoverPageViewController: UIViewController {
 //    }
 }
 
-
 extension DiscoverPageViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return trendingNFTs.count
@@ -402,7 +407,6 @@ extension DiscoverPageViewController: UICollectionViewDelegateFlowLayout, UIColl
         let itemWidth = (maxWidth - totalSapcing) / 2
         return CGSize(width: itemWidth, height: itemWidth)
     }
-    
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard

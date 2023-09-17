@@ -9,6 +9,10 @@ import UIKit
 import SnapKit
 
 class AddressInputPageViewController: UIViewController {
+    private let userDefaults = UserDefaults.standard
+    
+    private var ethWallets: [String] = []
+    
     private let addressTextField: UITextField = {
         let textField = UITextField()
         textField.backgroundColor = .systemGray4
@@ -32,7 +36,9 @@ class AddressInputPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        addressTextField.delegate = self
         layout()
+        findEthWallets()
     }
     
     private func layout() {
@@ -51,18 +57,39 @@ class AddressInputPageViewController: UIViewController {
         continueButton.addTarget(self, action: #selector(continueButtonTapped), for: .touchUpInside)
     }
     
+    private func findEthWallets() {
+        ethWallets = userDefaults.object(forKey: "ethWallets") as? [String] ?? []
+    }
+    
     @objc func continueButtonTapped() {
         guard let address = addressTextField.text, !address.isEmpty else {
             print("User did not enter address")
             return
         }
-        performSegue(withIdentifier: "showPortfolio", sender: address)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showPortfolio" {
-            let portfolioVC = segue.destination as? PortfolioDisplayViewController
-            portfolioVC?.ethAddress = sender as? String
+        
+        ethWallets.append(address)
+        userDefaults.set(ethWallets, forKey: "ethWallets")
+        
+        guard
+            let portfolioListVC = UIStoryboard.portfolio.instantiateViewController(
+                withIdentifier: String(describing: PortfolioListViewController.self)
+            ) as? PortfolioListViewController
+        else {
+            return
         }
+        portfolioListVC.modalPresentationStyle = .overFullScreen
+        navigationController?.pushViewController(portfolioListVC, animated: true)
+        portfolioListVC.navigationItem.hidesBackButton = true
     }
+}
+
+extension AddressInputPageViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+            addressTextField.resignFirstResponder()
+            return true
+        }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+            self.view.endEditing(true)
+        }
 }
