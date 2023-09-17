@@ -46,10 +46,11 @@ class CryptoPageViewController: UIViewController {
         startTimer()
     }
     
-    deinit {
+    override func viewWillDisappear(_ animated: Bool) {
         updateTimer?.invalidate()
+        ethPriceData = []
     }
-    
+        
     private func startTimer() {
         updateTimer?.invalidate()
 

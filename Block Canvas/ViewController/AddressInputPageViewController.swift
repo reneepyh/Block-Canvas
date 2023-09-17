@@ -61,7 +61,7 @@ class AddressInputPageViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showPortfolio" {
-            let portfolioVC = segue.destination as? PortfolioPageViewController
+            let portfolioVC = segue.destination as? PortfolioDisplayViewController
             portfolioVC?.ethAddress = sender as? String
         }
     }
