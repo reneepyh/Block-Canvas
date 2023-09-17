@@ -14,6 +14,8 @@
 		DB1DBD272AB1D45A00F74B64 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB1DBD252AB1D45A00F74B64 /* Main.storyboard */; };
 		DB1DBD292AB1D45B00F74B64 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB1DBD282AB1D45B00F74B64 /* Assets.xcassets */; };
 		DB1DBD2C2AB1D45B00F74B64 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB1DBD2A2AB1D45B00F74B64 /* LaunchScreen.storyboard */; };
+		DB4BFB2D2AB6A31C00187B1C /* PortfolioDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4BFB2C2AB6A31C00187B1C /* PortfolioDisplayViewController.swift */; };
+		DB4BFB2F2AB6AA1300187B1C /* PortfolioDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4BFB2E2AB6AA1300187B1C /* PortfolioDisplayView.swift */; };
 		DB6853D12AB2F38400895EB9 /* Discover.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6853D02AB2F38400895EB9 /* Discover.swift */; };
 		DB69818F2AB4604600BE0036 /* Portfolio.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB69818E2AB4604600BE0036 /* Portfolio.storyboard */; };
 		DB6981912AB4608100BE0036 /* AddressInputPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6981902AB4608100BE0036 /* AddressInputPageViewController.swift */; };
@@ -53,6 +55,8 @@
 		DB1DBD282AB1D45B00F74B64 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DB1DBD2B2AB1D45B00F74B64 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DB1DBD2D2AB1D45B00F74B64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DB4BFB2C2AB6A31C00187B1C /* PortfolioDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioDisplayViewController.swift; sourceTree = "<group>"; };
+		DB4BFB2E2AB6AA1300187B1C /* PortfolioDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioDisplayView.swift; sourceTree = "<group>"; };
 		DB6853CF2AB2ECA100895EB9 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		DB6853D02AB2F38400895EB9 /* Discover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Discover.swift; sourceTree = "<group>"; };
 		DB69818E2AB4604600BE0036 /* Portfolio.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Portfolio.storyboard; sourceTree = "<group>"; };
@@ -169,6 +173,7 @@
 				DB69818E2AB4604600BE0036 /* Portfolio.storyboard */,
 				DBB8802F2AB4888700526E40 /* PortfolioCollectionCell.swift */,
 				DBF619DC2AB55F8600687F13 /* Crypto.storyboard */,
+				DB4BFB2E2AB6AA1300187B1C /* PortfolioDisplayView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -181,6 +186,7 @@
 				DBB8802D2AB4821400526E40 /* PortfolioPageViewController.swift */,
 				DBB880312AB4B33600526E40 /* DetailPageViewController.swift */,
 				DBF619DA2AB55F6E00687F13 /* CryptoPageViewController.swift */,
+				DB4BFB2C2AB6A31C00187B1C /* PortfolioDisplayViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -388,6 +394,7 @@
 				DB1DBD202AB1D45A00F74B64 /* AppDelegate.swift in Sources */,
 				DB1DBD222AB1D45A00F74B64 /* SceneDelegate.swift in Sources */,
 				DB6853D12AB2F38400895EB9 /* Discover.swift in Sources */,
+				DB4BFB2D2AB6A31C00187B1C /* PortfolioDisplayViewController.swift in Sources */,
 				DBF619DB2AB55F6E00687F13 /* CryptoPageViewController.swift in Sources */,
 				DB8C90F12AB43DCF005D75DF /* TrendingCollectionCell.swift in Sources */,
 				DBA4787B2AB2B29C0014E825 /* UIStoryboard+Extension.swift in Sources */,
@@ -397,6 +404,7 @@
 				DB86552E2AB2D88C006905FB /* User.graphql.swift in Sources */,
 				DBB8802E2AB4821400526E40 /* PortfolioPageViewController.swift in Sources */,
 				DB6981932AB4648500BE0036 /* Portfolio.swift in Sources */,
+				DB4BFB2F2AB6AA1300187B1C /* PortfolioDisplayView.swift in Sources */,
 				DB6981912AB4608100BE0036 /* AddressInputPageViewController.swift in Sources */,
 				DB8655312AB2D88C006905FB /* SchemaMetadata.graphql.swift in Sources */,
 				DBB9BDBC2AB44E07002A5FBC /* KingfisherWrapper.swift in Sources */,
