@@ -8,9 +8,6 @@
 import UIKit
 
 class DetailPageViewController: UIViewController {
-    
-    var NFTMetadata: EthNFTMetadata?
-    
     var trendingNFTMetadata: TrendingNFT?
     
     @IBOutlet weak var imageView: UIImageView!
@@ -32,13 +29,6 @@ class DetailPageViewController: UIViewController {
             artistLabel.text = trendingNFTMetadata.authorName
             descriptionLabel.text = ""
             contractLabel.text = trendingNFTMetadata.contract
-        } else {
-            imageView.loadImage(NFTMetadata?.image)
-            titleLabel.text = NFTMetadata?.name
-            artistLabel.text = NFTMetadata?.collectionName
-            descriptionLabel.text = NFTMetadata?.description
-            contractLabel.text = NFTMetadata?.contractAddress
         }
-       
     }
 }

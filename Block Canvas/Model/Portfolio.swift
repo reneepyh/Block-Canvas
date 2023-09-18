@@ -6,81 +6,125 @@
 //
 
 import Foundation
-// MARK: - EthNFT
+
 struct EthNFT: Codable {
-    let total: Int?
-    let assets: [Asset]?
+    let page, pageSize: Int?
+    let result: [EthNFTMetadata]?
+    let status: String?
+
+    enum CodingKeys: String, CodingKey {
+        case page
+        case pageSize = "page_size"
+        case result, status
+    }
 }
 
-// MARK: - Asset
-struct Asset: Codable {
-    let nft: EthNFTMetadata?
-    let quantity: Int?
-}
-
-// MARK: - Nft
 struct EthNFTMetadata: Codable {
-    let blockchain, collectionName, collectionSlug, collectionOpenseaSlug: String?
-    let contractType, contractAddress, tokenID, name: String?
+    let tokenAddress, tokenID: String?
+    let blockNumber, blockNumberMinted, tokenHash, amount: String?
+    let possibleSpam: Bool?
+    let contractType: ContractType?
+    let name, symbol: String?
+    let tokenURI: String?
+    let metadata: String?
+    var metadataObject: Metadata? {
+            get {
+                if let data = metadata?.data(using: .utf8) {
+                    return try? JSONDecoder().decode(Metadata.self, from: data)
+                }
+                return nil
+            }
+        }
+    let lastTokenURISync: String?
+    let lastMetadataSync: String?
+    let normalizedMetadata: NormalizedMetadata?
+    let media: Media?
+    let verifiedCollection: Bool?
+
+    enum CodingKeys: String, CodingKey {
+        case tokenAddress = "token_address"
+        case tokenID = "token_id"
+        case blockNumber = "block_number"
+        case blockNumberMinted = "block_number_minted"
+        case tokenHash = "token_hash"
+        case amount
+        case possibleSpam = "possible_spam"
+        case contractType = "contract_type"
+        case name, symbol
+        case tokenURI = "token_uri"
+        case metadata
+        case lastTokenURISync = "last_token_uri_sync"
+        case lastMetadataSync = "last_metadata_sync"
+        case normalizedMetadata = "normalized_metadata"
+        case media
+        case verifiedCollection = "verified_collection"
+    }
+}
+
+enum ContractType: String, Codable {
+    case erc1155 = "ERC1155"
+    case erc721 = "ERC721"
+}
+
+struct Metadata: Codable {
+    let name: String?
+    let createdBy: String?
     let description: String?
     let image: String?
-    let lastSale: LastSale?
-
+    let imageUrl: String?
+    
     enum CodingKeys: String, CodingKey {
-        case blockchain
-        case collectionName = "collection_name"
-        case collectionSlug = "collection_slug"
-        case collectionOpenseaSlug = "collection_opensea_slug"
-        case contractType = "contract_type"
-        case contractAddress = "contract_address"
-        case tokenID = "token_id"
-        case name, description, image
-        case lastSale = "last_sale"
+        case name, image, description
+        case createdBy = "created_by"
+        case imageUrl = "image_url"
     }
 }
 
-// MARK: - LastSale
-struct LastSale: Codable {
-    let txHash: String?
-    let priceToken: Double?
-    let tokenSymbol, tokenContractAddress: String?
-    let priceUsd: Double?
-    let price: Price?
-    let txURL: String?
-    let time: Int?
+struct Media: Codable {
+    let mimetype: Mimetype?
+    let parentHash: String?
+    let status: Status?
+    let updatedAt: String?
+    let mediaCollection: MediaCollection?
+    let originalMediaURL: String?
 
     enum CodingKeys: String, CodingKey {
-        case txHash = "tx_hash"
-        case priceToken = "price_token"
-        case tokenSymbol = "token_symbol"
-        case tokenContractAddress = "token_contract_address"
-        case priceUsd = "price_usd"
-        case price
-        case txURL = "tx_url"
-        case time
+        case mimetype
+        case parentHash = "parent_hash"
+        case status, updatedAt
+        case mediaCollection = "media_collection"
+        case originalMediaURL = "original_media_url"
     }
 }
 
-// MARK: - Price
-struct Price: Codable {
-    let value: Double?
-    let cryptoUnit: String?
-    let usd, ethValue: Double?
-    let paymentToken: PaymentToken?
-
-    enum CodingKeys: String, CodingKey {
-        case value
-        case cryptoUnit = "crypto_unit"
-        case usd
-        case ethValue = "eth_value"
-        case paymentToken = "payment_token"
-    }
+struct MediaCollection: Codable {
+    let low, medium, high: Size?
 }
 
-// MARK: - PaymentToken
-struct PaymentToken: Codable {
-    let address, symbol: String?
-    let decimals: Int?
+struct Size: Codable {
+    let height, width: Int?
+    let url: String?
+}
+
+enum Mimetype: String, Codable {
+    case imageGIF = "image/gif"
+    case imageJPEG = "image/jpeg"
+    case imagePNG = "image/png"
+}
+
+enum Status: String, Codable {
+    case processing
+    case success
+}
+
+struct NormalizedMetadata: Codable {
+    let name, description: String?
+    let image: String?
+
+    enum CodingKeys: String, CodingKey {
+        case name, description
+        case image
+    }
 }
 
 struct NFTInfoForDisplay {
