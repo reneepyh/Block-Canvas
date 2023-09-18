@@ -88,7 +88,7 @@ class CryptoPageViewController: UIViewController {
                 
                 do {
                     let ethCurrentPrice = try decoder.decode(EthCurrentPriceData.self, from: data)
-                    let doubled = Double(ethCurrentPrice.price ?? "")
+                    let doubled = Double(ethCurrentPrice.price)
                     let floored = floor((doubled ?? 0) * 100) / 100
                     self?.ethCurrentPrice = String(floored)
                 }

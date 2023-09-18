@@ -146,12 +146,12 @@
 				DB1DBD212AB1D45A00F74B64 /* SceneDelegate.swift */,
 				DBA478762AB2B29C0014E825 /* BCTabBarController.swift */,
 				DBA478782AB2B29C0014E825 /* UIStoryboard+Extension.swift */,
+				DBB9BDBB2AB44E07002A5FBC /* KingfisherWrapper.swift */,
 				DBAA52F42AB2B7D000FE51FF /* schema.json */,
 				DB1DBD282AB1D45B00F74B64 /* Assets.xcassets */,
 				DB1DBD2A2AB1D45B00F74B64 /* LaunchScreen.storyboard */,
 				DB1DBD2D2AB1D45B00F74B64 /* Info.plist */,
 				DB6853CF2AB2ECA100895EB9 /* Secrets.xcconfig */,
-				DBB9BDBB2AB44E07002A5FBC /* KingfisherWrapper.swift */,
 			);
 			path = "Block Canvas";
 			sourceTree = "<group>";
@@ -159,11 +159,11 @@
 		DB6853D22AB3637A00895EB9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				DB86551D2AB2D88C006905FB /* getTrending */,
 				DB6853D02AB2F38400895EB9 /* Discover.swift */,
 				DB6981922AB4648500BE0036 /* Portfolio.swift */,
-				DB86551D2AB2D88C006905FB /* getTrending */,
-				DBF619DE2AB57EA200687F13 /* Crypto.swift */,
 				DB9DFB862AB7614C006D6CE1 /* Wallet.swift */,
+				DBF619DE2AB57EA200687F13 /* Crypto.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";

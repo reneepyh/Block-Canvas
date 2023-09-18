@@ -41,8 +41,9 @@ class DiscoverPageViewController: UIViewController {
     
     private func getTrending() {
         let group = DispatchGroup()
-        let queue = DispatchQueue(label: "queue", attributes: .concurrent)
+//        let queue = DispatchQueue(label: "queue", attributes: .concurrent)
         for _ in 0...9 {
+            //TODO: 判斷回應相同NFT
             group.enter()
             apolloClient.fetch(query: GetTrending.GetTrendingQuery()) { [weak self] result in
                 guard let data = try? result.get().data else { return }
@@ -400,6 +401,7 @@ extension DiscoverPageViewController: UICollectionViewDelegateFlowLayout, UIColl
     }
     
     // 指定 item 寬度和數量
+    //TODO: FIX flow layout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let maxWidth = UIScreen.main.bounds.width
         let totalSapcing = CGFloat(6 * 2)

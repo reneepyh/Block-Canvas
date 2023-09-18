@@ -5,17 +5,18 @@
 //  Created by Renee Hsu on 2023/9/17.
 //
 
+import Foundation
 import UIKit
 
 class PortfolioListViewController: UIViewController {
-
+    
     @IBOutlet weak var portfolioListTableView: UITableView!
     
     private let userDefaults = UserDefaults.standard
     
     private var ethWallets: [String] = []
     
-    private var balance: [String] = []
+    private var balance: [String: String] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +30,7 @@ class PortfolioListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         findEthWallets()
-        //TODO: FIX will appear不會重打API; 回應順序不等於錢包順序
+        balance.removeAll()
         ethWallets.forEach { address in
             fetchWalletBalance(address: address)
         }
@@ -48,11 +49,9 @@ class PortfolioListViewController: UIViewController {
             addressInputVC.modalPresentationStyle = .overFullScreen
             navigationController?.pushViewController(addressInputVC, animated: false)
             addressInputVC.navigationItem.hidesBackButton = true
-        } else {
-//            portfolioListTableView.reloadData()
         }
     }
-
+    
     private func fetchWalletBalance(address: String) {
         let apiKey = Bundle.main.object(forInfoDictionaryKey: "Blockdaemon_API_Key") as? String
         
@@ -84,9 +83,17 @@ class PortfolioListViewController: UIViewController {
                 let decoder = JSONDecoder()
                 
                 do {
-                    let balance = try decoder.decode(WalletBalance.self, from: data)
-                    print(balance)
-                    self?.balance.append(balance[0].confirmedBalance ?? "")
+                    let balanceData = try decoder.decode(WalletBalance.self, from: data)
+                    print(balanceData)
+                    let confirmedBalanceInInt = Int(balanceData[0].confirmedBalance ?? "0")
+                    let confirmedBalance = Decimal(confirmedBalanceInInt ?? 0)
+                    let decimals = balanceData[0].currency?.decimals
+                    let divisor = pow(10, decimals ?? 1)
+                    let actualBalance = confirmedBalance / divisor
+                    let formattedBalance = String(format: "%.5f", NSDecimalNumber(decimal: actualBalance).doubleValue)
+                    
+                    self?.balance[address] = formattedBalance
+                    
                 }
                 catch {
                     print("Error in JSON decoding.")
@@ -125,11 +132,15 @@ extension PortfolioListViewController: UITableViewDelegate, UITableViewDataSourc
         guard let walletCell = portfolioListTableView.dequeueReusableCell(withIdentifier: WalletListCell.reuseIdentifier, for: indexPath) as? WalletListCell else {
             fatalError("Cannot create wallet list cell.")
         }
-        walletCell.addressLabel.text = ethWallets[indexPath.row]
+        
+        let address = ethWallets[indexPath.row]
+        walletCell.addressLabel.text = address
         if balance.count != ethWallets.count {
             walletCell.balanceLabel.text = ""
         } else {
-            walletCell.balanceLabel.text = balance[indexPath.row]
+            if let balance = balance[address] {
+                walletCell.balanceLabel.text = "\(balance) ETH"
+            }
         }
         print(ethWallets[indexPath.row])
         

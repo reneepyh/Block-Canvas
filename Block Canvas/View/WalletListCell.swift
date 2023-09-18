@@ -21,9 +21,9 @@ class WalletListCell: UITableViewCell {
     
     let balanceLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 12)
+        label.font = .systemFont(ofSize: 14)
         label.numberOfLines = 0
-        label.textColor = .darkGray
+        label.textColor = .systemGray2
         return label
     }()
     
