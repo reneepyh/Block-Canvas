@@ -76,6 +76,13 @@ class PortfolioDisplayViewController: UIViewController {
                         }
                     })
                     print(self?.nftInfoForDisplay)
+                    let sharedDefaults = UserDefaults(suiteName: "group.reneehsu.Block-Canvas")
+                    let encoder = JSONEncoder()
+                    if let encodedData = try? encoder.encode(self?.nftInfoForDisplay) {
+                        sharedDefaults?.set(encodedData, forKey: "nftInfoForDisplay")
+                    }
+                    print(sharedDefaults?.object(forKey: "nftInfoForDisplay") as? Data)
+
                 }
                 catch {
                     print("Error in JSON decoding.")
