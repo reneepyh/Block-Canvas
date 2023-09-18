@@ -30,14 +30,14 @@ class PortfolioDisplayViewController: UIViewController {
             return
         }
         
-        let apiKey = Bundle.main.object(forInfoDictionaryKey: "NFT_GO_API_Key") as? String
+        let apiKey = Bundle.main.object(forInfoDictionaryKey: "Moralis_API_Key") as? String
         
         guard let key = apiKey, !key.isEmpty else {
-            print("NFTGO API key does not exist.")
+            print("Moralis API key does not exist.")
             return
         }
         
-        if let url = URL(string: "https://data-api.nftgo.io/eth/v1/address/portfolio/collection?address=\(address)&offset=0&limit=50") {
+        if let url = URL(string: "https://deep-index.moralis.io/api/v2.2/\(address)/nft?chain=eth&format=decimal&exclude_spam=true&normalizeMetadata=true&media_items=true") {
             
             var request = URLRequest(url: url)
             request.setValue("application/json", forHTTPHeaderField: "Accept")
@@ -63,9 +63,16 @@ class PortfolioDisplayViewController: UIViewController {
                     let NFTData = try decoder.decode(EthNFT.self, from: data)
                     print(NFTData)
                     self?.NFTs = NFTData
-                    self?.nftInfoForDisplay = NFTData.assets.map({ assets in
-                        assets.map { asset in
-                            NFTInfoForDisplay(url: URL(string: (asset.nft?.image) ?? "")!, title: asset.nft?.name ?? "", artist: asset.nft?.collectionName ?? "", description: asset.nft?.description ?? "", contract: asset.nft?.contractAddress ?? "")
+                    self?.nftInfoForDisplay = NFTData.result.map({ ethNFTMetadata in
+                        ethNFTMetadata.compactMap { ethNFT in
+                            if let image = ethNFT.media?.mediaCollection?.high?.url {
+                                guard let imageUrl = URL(string: ethNFT.media?.mediaCollection?.high?.url ?? "") else {
+                                    fatalError("Cannot get image URL of NFT.")
+                                }
+                                return NFTInfoForDisplay(url: imageUrl, title: ethNFT.normalizedMetadata?.name ?? "", artist: ethNFT.metadataObject?.createdBy ?? "", description: ethNFT.normalizedMetadata?.description ?? "", contract: ethNFT.tokenAddress ?? "")
+                            } else {
+                                return nil
+                            }
                         }
                     })
                     print(self?.nftInfoForDisplay)
