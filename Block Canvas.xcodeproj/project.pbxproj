@@ -29,12 +29,13 @@
 		DB8655312AB2D88C006905FB /* SchemaMetadata.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8655292AB2D88C006905FB /* SchemaMetadata.graphql.swift */; };
 		DB8655322AB2D88C006905FB /* GetTrending.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB86552A2AB2D88C006905FB /* GetTrending.graphql.swift */; };
 		DB8C90F12AB43DCF005D75DF /* TrendingCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8C90F02AB43DCF005D75DF /* TrendingCollectionCell.swift */; };
+		DB9DFB872AB7614C006D6CE1 /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9DFB862AB7614C006D6CE1 /* Wallet.swift */; };
+		DB9E028C2AB7408E00285E63 /* PortfolioListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9E028B2AB7408E00285E63 /* PortfolioListViewController.swift */; };
+		DB9E028E2AB7499100285E63 /* WalletListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9E028D2AB7499100285E63 /* WalletListCell.swift */; };
 		DBA478792AB2B29C0014E825 /* BCTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA478762AB2B29C0014E825 /* BCTabBarController.swift */; };
 		DBA4787A2AB2B29C0014E825 /* Discover.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBA478772AB2B29C0014E825 /* Discover.storyboard */; };
 		DBA4787B2AB2B29C0014E825 /* UIStoryboard+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA478782AB2B29C0014E825 /* UIStoryboard+Extension.swift */; };
 		DBAA52F52AB2B7D000FE51FF /* schema.json in Resources */ = {isa = PBXBuildFile; fileRef = DBAA52F42AB2B7D000FE51FF /* schema.json */; };
-		DBB8802E2AB4821400526E40 /* PortfolioPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB8802D2AB4821400526E40 /* PortfolioPageViewController.swift */; };
-		DBB880302AB4888700526E40 /* PortfolioCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB8802F2AB4888700526E40 /* PortfolioCollectionCell.swift */; };
 		DBB880322AB4B33600526E40 /* DetailPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB880312AB4B33600526E40 /* DetailPageViewController.swift */; };
 		DBB9BDBC2AB44E07002A5FBC /* KingfisherWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB9BDBB2AB44E07002A5FBC /* KingfisherWrapper.swift */; };
 		DBF45F472AB6E870002E5D31 /* ARDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF45F462AB6E870002E5D31 /* ARDisplayViewController.swift */; };
@@ -72,12 +73,13 @@
 		DB8655292AB2D88C006905FB /* SchemaMetadata.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchemaMetadata.graphql.swift; sourceTree = "<group>"; };
 		DB86552A2AB2D88C006905FB /* GetTrending.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetTrending.graphql.swift; sourceTree = "<group>"; };
 		DB8C90F02AB43DCF005D75DF /* TrendingCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingCollectionCell.swift; sourceTree = "<group>"; };
+		DB9DFB862AB7614C006D6CE1 /* Wallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wallet.swift; sourceTree = "<group>"; };
+		DB9E028B2AB7408E00285E63 /* PortfolioListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioListViewController.swift; sourceTree = "<group>"; };
+		DB9E028D2AB7499100285E63 /* WalletListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletListCell.swift; sourceTree = "<group>"; };
 		DBA478762AB2B29C0014E825 /* BCTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BCTabBarController.swift; sourceTree = "<group>"; };
 		DBA478772AB2B29C0014E825 /* Discover.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Discover.storyboard; sourceTree = "<group>"; };
 		DBA478782AB2B29C0014E825 /* UIStoryboard+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+Extension.swift"; sourceTree = "<group>"; };
 		DBAA52F42AB2B7D000FE51FF /* schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schema.json; sourceTree = "<group>"; };
-		DBB8802D2AB4821400526E40 /* PortfolioPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioPageViewController.swift; sourceTree = "<group>"; };
-		DBB8802F2AB4888700526E40 /* PortfolioCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioCollectionCell.swift; sourceTree = "<group>"; };
 		DBB880312AB4B33600526E40 /* DetailPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPageViewController.swift; sourceTree = "<group>"; };
 		DBB9BDBB2AB44E07002A5FBC /* KingfisherWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingfisherWrapper.swift; sourceTree = "<group>"; };
 		DBF45F462AB6E870002E5D31 /* ARDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARDisplayViewController.swift; sourceTree = "<group>"; };
@@ -144,12 +146,12 @@
 				DB1DBD212AB1D45A00F74B64 /* SceneDelegate.swift */,
 				DBA478762AB2B29C0014E825 /* BCTabBarController.swift */,
 				DBA478782AB2B29C0014E825 /* UIStoryboard+Extension.swift */,
+				DBB9BDBB2AB44E07002A5FBC /* KingfisherWrapper.swift */,
 				DBAA52F42AB2B7D000FE51FF /* schema.json */,
 				DB1DBD282AB1D45B00F74B64 /* Assets.xcassets */,
 				DB1DBD2A2AB1D45B00F74B64 /* LaunchScreen.storyboard */,
 				DB1DBD2D2AB1D45B00F74B64 /* Info.plist */,
 				DB6853CF2AB2ECA100895EB9 /* Secrets.xcconfig */,
-				DBB9BDBB2AB44E07002A5FBC /* KingfisherWrapper.swift */,
 			);
 			path = "Block Canvas";
 			sourceTree = "<group>";
@@ -157,9 +159,10 @@
 		DB6853D22AB3637A00895EB9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				DB86551D2AB2D88C006905FB /* getTrending */,
 				DB6853D02AB2F38400895EB9 /* Discover.swift */,
 				DB6981922AB4648500BE0036 /* Portfolio.swift */,
-				DB86551D2AB2D88C006905FB /* getTrending */,
+				DB9DFB862AB7614C006D6CE1 /* Wallet.swift */,
 				DBF619DE2AB57EA200687F13 /* Crypto.swift */,
 			);
 			path = Model;
@@ -170,12 +173,12 @@
 			children = (
 				DB1DBD252AB1D45A00F74B64 /* Main.storyboard */,
 				DBA478772AB2B29C0014E825 /* Discover.storyboard */,
+				DB69818E2AB4604600BE0036 /* Portfolio.storyboard */,
+				DBF619DC2AB55F8600687F13 /* Crypto.storyboard */,
 				DB8C90F02AB43DCF005D75DF /* TrendingCollectionCell.swift */,
 				DBF619E22AB59C8400687F13 /* EthPriceChartView.swift */,
-				DB69818E2AB4604600BE0036 /* Portfolio.storyboard */,
-				DBB8802F2AB4888700526E40 /* PortfolioCollectionCell.swift */,
-				DBF619DC2AB55F8600687F13 /* Crypto.storyboard */,
 				DB4BFB2E2AB6AA1300187B1C /* PortfolioDisplayView.swift */,
+				DB9E028D2AB7499100285E63 /* WalletListCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -185,11 +188,11 @@
 			children = (
 				DB1DBD232AB1D45A00F74B64 /* DiscoverPageViewController.swift */,
 				DB6981902AB4608100BE0036 /* AddressInputPageViewController.swift */,
-				DBB8802D2AB4821400526E40 /* PortfolioPageViewController.swift */,
 				DBB880312AB4B33600526E40 /* DetailPageViewController.swift */,
 				DBF619DA2AB55F6E00687F13 /* CryptoPageViewController.swift */,
 				DB4BFB2C2AB6A31C00187B1C /* PortfolioDisplayViewController.swift */,
 				DBF45F462AB6E870002E5D31 /* ARDisplayViewController.swift */,
+				DB9E028B2AB7408E00285E63 /* PortfolioListViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -391,12 +394,13 @@
 			files = (
 				DB86552D2AB2D88C006905FB /* GenerativeToken.graphql.swift in Sources */,
 				DBA478792AB2B29C0014E825 /* BCTabBarController.swift in Sources */,
-				DBB880302AB4888700526E40 /* PortfolioCollectionCell.swift in Sources */,
+				DB9E028C2AB7408E00285E63 /* PortfolioListViewController.swift in Sources */,
 				DB86552B2AB2D88C006905FB /* GetTrendingQuery.graphql.swift in Sources */,
 				DB1DBD242AB1D45A00F74B64 /* DiscoverPageViewController.swift in Sources */,
 				DB1DBD202AB1D45A00F74B64 /* AppDelegate.swift in Sources */,
 				DB1DBD222AB1D45A00F74B64 /* SceneDelegate.swift in Sources */,
 				DB6853D12AB2F38400895EB9 /* Discover.swift in Sources */,
+				DB9DFB872AB7614C006D6CE1 /* Wallet.swift in Sources */,
 				DB4BFB2D2AB6A31C00187B1C /* PortfolioDisplayViewController.swift in Sources */,
 				DBF619DB2AB55F6E00687F13 /* CryptoPageViewController.swift in Sources */,
 				DB8C90F12AB43DCF005D75DF /* TrendingCollectionCell.swift in Sources */,
@@ -405,7 +409,6 @@
 				DB86552C2AB2D88C006905FB /* JSONObject.swift in Sources */,
 				DBF619DF2AB57EA200687F13 /* Crypto.swift in Sources */,
 				DB86552E2AB2D88C006905FB /* User.graphql.swift in Sources */,
-				DBB8802E2AB4821400526E40 /* PortfolioPageViewController.swift in Sources */,
 				DB6981932AB4648500BE0036 /* Portfolio.swift in Sources */,
 				DB4BFB2F2AB6AA1300187B1C /* PortfolioDisplayView.swift in Sources */,
 				DB6981912AB4608100BE0036 /* AddressInputPageViewController.swift in Sources */,
@@ -415,6 +418,7 @@
 				DB8655302AB2D88C006905FB /* SchemaConfiguration.swift in Sources */,
 				DBF45F472AB6E870002E5D31 /* ARDisplayViewController.swift in Sources */,
 				DB8655322AB2D88C006905FB /* GetTrending.graphql.swift in Sources */,
+				DB9E028E2AB7499100285E63 /* WalletListCell.swift in Sources */,
 				DBF619E32AB59C8400687F13 /* EthPriceChartView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -568,6 +572,7 @@
 				DEVELOPMENT_TEAM = CML8K54JBW;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Block Canvas/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Block Canvas";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -598,6 +603,7 @@
 				DEVELOPMENT_TEAM = CML8K54JBW;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Block Canvas/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Block Canvas";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

@@ -40,7 +40,7 @@ extension BCTabBarController {
         }
         
         private func makeTabBarItem() -> UITabBarItem {
-            return UITabBarItem(title: "1", image: nil, selectedImage: nil)
+            return UITabBarItem(title: "***", image: nil, selectedImage: nil)
             // TODO: update images
         }
         
