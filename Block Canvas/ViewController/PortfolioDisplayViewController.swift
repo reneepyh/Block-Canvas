@@ -96,7 +96,6 @@ class PortfolioDisplayViewController: UIViewController {
         else {
             print("Invalid URL.")
         }
-        
     }
     
     private func setupDisplay() {

@@ -5,12 +5,35 @@
 //  Created by Renee Hsu on 2023/9/14.
 //
 
-struct TrendingNFT {
+struct DiscoverNFT {
     let thumbnailUri: String
     let displayUri: String
     let contract: String
     let title: String?
     let authorName: String?
+}
+
+struct SearchNFT: Codable {
+    let response: String?
+    let searchResults: [SearchResult]?
+
+    enum CodingKeys: String, CodingKey {
+        case response
+        case searchResults = "search_results"
+    }
+}
+
+struct SearchResult: Codable {
+    let contractAddress, tokenID: String?
+    let cachedFileURL: String?
+    let name, description: String?
+
+    enum CodingKeys: String, CodingKey {
+        case contractAddress = "contract_address"
+        case tokenID = "token_id"
+        case cachedFileURL = "cached_file_url"
+        case name, description
+    }
 }
 
 //struct OpenAIBody: Encodable {

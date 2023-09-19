@@ -8,7 +8,7 @@
 import UIKit
 
 class DetailPageViewController: UIViewController {
-    var trendingNFTMetadata: TrendingNFT?
+    var discoverNFTMetadata: DiscoverNFT?
     
     @IBOutlet weak var imageView: UIImageView!
     
@@ -23,12 +23,13 @@ class DetailPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let trendingNFTMetadata = trendingNFTMetadata {
-            imageView.loadImage(trendingNFTMetadata.displayUri)
-            titleLabel.text = trendingNFTMetadata.title
-            artistLabel.text = trendingNFTMetadata.authorName
+        if let discoverNFTMetadata = discoverNFTMetadata {
+            imageView.loadImage(discoverNFTMetadata.displayUri)
+            imageView.contentMode = .scaleAspectFit
+            titleLabel.text = discoverNFTMetadata.title
+            artistLabel.text = discoverNFTMetadata.authorName
             descriptionLabel.text = ""
-            contractLabel.text = trendingNFTMetadata.contract
+            contractLabel.text = discoverNFTMetadata.contract
         }
     }
 }
