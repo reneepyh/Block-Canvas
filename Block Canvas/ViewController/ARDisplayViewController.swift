@@ -80,13 +80,13 @@ extension ARDisplayViewController {
         let instructionLabel = UILabel()
         instructionLabel.text = "Tap where you want to place the image."
         instructionLabel.textColor = .white
+        instructionLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         instructionLabel.numberOfLines = 0
         instructionLabel.textAlignment = .center
         instructionLabel.font = .systemFont(ofSize: 24)
         view.addSubview(instructionLabel)
         
         instructionLabel.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().offset(-60)
             make.width.equalTo(view.window?.windowScene?.screen.bounds.width ?? UIScreen.main.bounds.width)
             make.centerX.equalToSuperview()
         }
@@ -99,6 +99,17 @@ extension ARDisplayViewController {
         closeButton.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(48)
             make.right.equalToSuperview().offset(-32)
+        }
+        
+        let cameraButton = UIButton()
+        cameraButton.setTitle("Shutter", for: .normal)
+        cameraButton.addTarget(self, action: #selector(cameraButtonTapped), for: .touchUpInside)
+        view.addSubview(cameraButton)
+        
+        cameraButton.snp.makeConstraints { make in
+            make.top.equalTo(instructionLabel.snp.bottom).offset(12)
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-30)
         }
     }
     
@@ -115,5 +126,23 @@ extension ARDisplayViewController {
     
     @objc func closeButtonTapped() {
         dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func cameraButtonTapped() {
+        let capturedImage = sceneView.snapshot()
+        UIImageWriteToSavedPhotosAlbum(capturedImage, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+    }
+    
+    @objc func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: UnsafeRawPointer) {
+        if let error = error {
+            let ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
+        } else {
+            //TODO: 打勾動畫
+            let ac = UIAlertController(title: "Saved!", message: "Your picture has been saved to your photos.", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
+        }
     }
 }
