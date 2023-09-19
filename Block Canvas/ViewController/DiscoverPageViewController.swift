@@ -28,7 +28,13 @@ class DiscoverPageViewController: UIViewController {
     
     @IBOutlet weak var nftSearchBar: UISearchBar!
     
-    private var discoverNFTs: [DiscoverNFT] = []
+    private let selectedColor = UIColor(red: 63/256, green: 58/256, blue: 58/256, alpha: 1)
+    
+    private let unselectedColor = UIColor(red: 136/256, green: 136/256, blue: 136/256, alpha: 1)
+    
+    private var trendingNFTs: [DiscoverNFT] = []
+    
+    private var searchedNFTs: [DiscoverNFT] = []
     
     private var isSearching: Bool = false
     
@@ -48,6 +54,8 @@ class DiscoverPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        trendingButton.tintColor = selectedColor
+        forYouButton.tintColor = unselectedColor
         setupButtonTag()
         discoverCollectionView.dataSource = self
         discoverCollectionView.delegate = self
@@ -59,13 +67,13 @@ class DiscoverPageViewController: UIViewController {
     }
     
     private func getTrending() {
-        discoverNFTs.removeAll()
+        trendingNFTs.removeAll()
         let group = DispatchGroup()
         //        let queue = DispatchQueue(label: "queue", attributes: .concurrent)
         for _ in 0...9 {
             //TODO: 判斷回應相同NFT
             group.enter()
-            apolloClient.fetch(query: GetTrending.GetTrendingQuery()) { [weak self] result in
+            apolloClient.fetch(query: GetTrending.GetTrendingQuery(), cachePolicy: .fetchIgnoringCacheCompletely) { [weak self] result in
                 defer { group.leave() }
                 guard let data = try? result.get().data else { return }
                 let displayURL = self?.generativeLiveDisplayUrl(uri: data.randomTopGenerativeToken.displayUri ?? "")
@@ -73,9 +81,7 @@ class DiscoverPageViewController: UIViewController {
                 let title = data.randomTopGenerativeToken.name
                 let thumbnailURL = self?.generativeLiveDisplayUrl(uri: data.randomTopGenerativeToken.thumbnailUri ?? "")
                 let contract = data.randomTopGenerativeToken.gentkContractAddress
-                let newNFT = DiscoverNFT(thumbnailUri: thumbnailURL ?? "", displayUri: displayURL ?? "", contract: contract, title: title, authorName: authorName)
-                self?.discoverNFTs.append(newNFT)
-                print("New NFT: \(newNFT)")
+                self?.trendingNFTs.append(DiscoverNFT(thumbnailUri: thumbnailURL ?? "", displayUri: displayURL ?? "", contract: contract, title: title, authorName: authorName))
             }
         }
         group.notify(queue: .main) { [weak self] in
@@ -84,36 +90,54 @@ class DiscoverPageViewController: UIViewController {
     }
     
     private func searchNFT(keyword: String) {
-        let headers = [
-            "accept": "application/json",
-            "Authorization": "43591976-d52e-4677-bc2f-890d078c9053"
-        ]
+        let apiKey = Bundle.main.object(forInfoDictionaryKey: "NFTPort_API_Key") as? String
         
-        let request = NSMutableURLRequest(url: NSURL(string: "https://api.nftport.xyz/v0/search?text=\(keyword)&chain=ethereum&page_number=1&page_size=15&order_by=relevance&sort_order=desc")! as URL,
-                                          cachePolicy: .useProtocolCachePolicy,
-                                          timeoutInterval: 10.0)
-        request.httpMethod = "GET"
-        request.allHTTPHeaderFields = headers
+        guard let key = apiKey, !key.isEmpty else {
+            print("NFTPort API key does not exist.")
+            return
+        }
         
-        let session = URLSession.shared
-        let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
-            if (error != nil) {
-                print(error as Any)
-            } else {
-                if let data = data {
-                    let decoder = JSONDecoder()
-                    do {
-                        let searchData = try decoder.decode(SearchNFT.self, from: data)
-                        print(searchData)
+        if let url = URL(string: "https://api.nftport.xyz/v0/search?text=\(keyword.lowercased())&chain=ethereum&page_number=1&page_size=10&order_by=relevance&sort_order=desc") {
+            
+            var request = URLRequest(url: url)
+            request.setValue("application/json", forHTTPHeaderField: "Accept")
+            request.setValue(key, forHTTPHeaderField: "Authorization")
+            request.httpMethod = "GET"
+            
+            let session = URLSession.shared
+            
+            let task = session.dataTask(with: request) { [weak self] data, response, error in
+                if let error = error {
+                    print(error)
+                    return
+                }
+                
+                guard let data = data else {
+                    print("No data.")
+                    return
+                }
+                
+                let decoder = JSONDecoder()
+                
+                do {
+                    let searchData = try decoder.decode(SearchNFT.self, from: data)
+                    for searchResult in searchData.searchResults ?? [] {
+                        self?.searchedNFTs.append(DiscoverNFT(thumbnailUri: searchResult.cachedFileURL ?? "", displayUri: searchResult.cachedFileURL ?? "", contract: searchResult.contractAddress ?? "", title: searchResult.name, authorName: ""))
                     }
-                    catch {
-                        print("Error in JSON decoding.")
-                    }
+                    print(self?.searchedNFTs)
+                }
+                catch {
+                    print("Error in JSON decoding.")
+                }
+                DispatchQueue.main.async { [weak self] in
+                    self?.discoverCollectionView.reloadData()
                 }
             }
-        })
-        
-        dataTask.resume()
+            task.resume()
+        }
+        else {
+            print("Invalid URL.")
+        }
     }
     
     //    private func fetchData() {
@@ -442,14 +466,26 @@ class DiscoverPageViewController: UIViewController {
 
 extension DiscoverPageViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return discoverNFTs.count
+        if isSearching {
+            return searchedNFTs.count
+        } else {
+            return trendingNFTs.count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let discoverCollectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: DiscoverCollectionCell.reuseIdentifier, for: indexPath) as? DiscoverCollectionCell else {
             fatalError("Cell cannot be created")
         }
-        discoverCollectionCell.trendingImageView.loadImage(discoverNFTs[indexPath.row].thumbnailUri)
+        if isSearching {
+            discoverCollectionCell.imageView.loadImage(searchedNFTs[indexPath.row].thumbnailUri)
+            discoverCollectionCell.imageView.contentMode = .scaleAspectFit
+            discoverCollectionCell.titleLabel.text = searchedNFTs[indexPath.row].title
+        } else {
+            discoverCollectionCell.imageView.loadImage(trendingNFTs[indexPath.row].thumbnailUri)
+            discoverCollectionCell.imageView.contentMode = .scaleAspectFit
+            discoverCollectionCell.titleLabel.text = trendingNFTs[indexPath.row].title
+        }
         
         return discoverCollectionCell
     }
@@ -457,11 +493,11 @@ extension DiscoverPageViewController: UICollectionViewDelegateFlowLayout, UIColl
     // 指定 item 寬度和數量
     //TODO: FIX flow layout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let maxWidth = UIScreen.main.bounds.width
-        let totalSapcing = CGFloat(6 * 2)
+        let maxWidth = UIScreen.main.bounds.width - 12 * 2
+        let totalSapcing = CGFloat(5 * 2)
         
         let itemWidth = (maxWidth - totalSapcing) / 2
-        return CGSize(width: itemWidth, height: itemWidth)
+        return CGSize(width: itemWidth, height: itemWidth * 1.4)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -472,24 +508,29 @@ extension DiscoverPageViewController: UICollectionViewDelegateFlowLayout, UIColl
         else {
             return
         }
-        detailVC.trendingNFTMetadata = discoverNFTs[indexPath.row]
+        if isSearching {
+            detailVC.discoverNFTMetadata = searchedNFTs[indexPath.row]
+        } else {
+            detailVC.discoverNFTMetadata = trendingNFTs[indexPath.row]
+        }
         show(detailVC, sender: nil)
     }
     
 }
 
 extension DiscoverPageViewController: UISearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchedNFTs.removeAll()
         isSearching = true
-        if searchText.count >= 3 {
-            searchNFT(keyword: searchText)
-        }
+        guard let searchText = nftSearchBar.text, searchText != "" else { return }
+        searchNFT(keyword: searchText)
     }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        isSearching = false
-        nftSearchBar.text = ""
-        discoverCollectionView.reloadData()
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText == "" {
+            isSearching = false
+            getTrending()
+        }
     }
 }
 
@@ -513,12 +554,11 @@ extension DiscoverPageViewController {
     
     @objc func changePage(sender: UIButton) {
         if sender.tag == 0 {
-            print("Hit trending")
+            getTrending()
         } else {
             // TODO: FOR YOU
-            print("Hit For You")
-            //            trendingNFTs.removeAll()
-            //            trendingCollectionView.reloadData()
+            trendingNFTs.removeAll()
+            discoverCollectionView.reloadData()
         }
         
         //先關閉
@@ -541,9 +581,6 @@ extension DiscoverPageViewController {
     }
     
     private func updateButtonColors(for tag: Int) {
-        let selectedColor = UIColor(red: 63/256, green: 58/256, blue: 58/256, alpha: 1)
-        let unselectedColor = UIColor(red: 136/256, green: 136/256, blue: 136/256, alpha: 1)
-        
         trendingButton.tintColor = tag == 0 ? selectedColor : unselectedColor
         forYouButton.tintColor = tag == 1 ? selectedColor : unselectedColor
     }
