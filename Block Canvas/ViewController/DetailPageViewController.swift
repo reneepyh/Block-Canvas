@@ -8,7 +8,7 @@
 import UIKit
 
 class DetailPageViewController: UIViewController {
-    var trendingNFTMetadata: TrendingNFT?
+    var trendingNFTMetadata: DiscoverNFT?
     
     @IBOutlet weak var imageView: UIImageView!
     

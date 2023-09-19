@@ -157,7 +157,6 @@ class CryptoPageViewController: UIViewController {
     
     private func getEthHistoryPrice() {
         if let url = URL(string: "https://api.coincap.io/v2/assets/ethereum/history?interval=m1") {
-            
             var request = URLRequest(url: url)
             request.setValue("deflate", forHTTPHeaderField: "Accept-Encoding")
             request.httpMethod = "GET"

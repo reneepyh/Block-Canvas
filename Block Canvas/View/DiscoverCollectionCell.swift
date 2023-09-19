@@ -7,8 +7,8 @@
 
 import UIKit
 
-class TrendingCollectionCell: UICollectionViewCell {
-    static let reuseIdentifier = String(describing: TrendingCollectionCell.self)
+class DiscoverCollectionCell: UICollectionViewCell {
+    static let reuseIdentifier = String(describing: DiscoverCollectionCell.self)
     
     @IBOutlet weak var trendingImageView: UIImageView!
     
