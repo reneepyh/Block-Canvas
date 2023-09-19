@@ -127,7 +127,7 @@ struct NormalizedMetadata: Codable {
     }
 }
 
-struct NFTInfoForDisplay {
+struct NFTInfoForDisplay: Codable {
     let url: URL
     let title: String
     let artist: String

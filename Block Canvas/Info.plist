@@ -2,16 +2,19 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Blockdaemon_API_Key</key>
-	<string>$(Blockdaemon_API_Key)</string>
-	<key>NSCameraUsageDescription</key>
-	<string>We need access to your camera for augmented reality.</string>
 	<key>Binance_API_Key</key>
 	<string>$(Binance_API_Key)</string>
+	<key>Blockdaemon_API_Key</key>
+	<string>$(Blockdaemon_API_Key)</string>
 	<key>Moralis_API_Key</key>
 	<string>$(Moralis_API_Key)</string>
 	<key>NFT_GO_API_Key</key>
 	<string>$(NFT_GO_API_Key)</string>
+	<key>NSUserActivityTypes</key>
+	<array>
+		<string>ConfigurationIntent</string>
+		<string>SelectNFTIntent</string>
+	</array>
 	<key>OpenAI_API_Key</key>
 	<string>$(OpenAI_API_Key)</string>
 	<key>Opensea_API_Key</key>
