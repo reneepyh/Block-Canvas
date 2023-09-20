@@ -121,6 +121,7 @@ class DiscoverPageViewController: UIViewController {
                 
                 do {
                     let searchData = try decoder.decode(SearchNFT.self, from: data)
+                    print(searchData)
                     for searchResult in searchData.searchResults ?? [] {
                         self?.searchedNFTs.append(DiscoverNFT(thumbnailUri: searchResult.cachedFileURL ?? "", displayUri: searchResult.cachedFileURL ?? "", contract: searchResult.contractAddress ?? "", title: searchResult.name, authorName: ""))
                     }
@@ -521,9 +522,11 @@ extension DiscoverPageViewController: UICollectionViewDelegateFlowLayout, UIColl
 extension DiscoverPageViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchedNFTs.removeAll()
-        isSearching = true
-        guard let searchText = nftSearchBar.text, searchText != "" else { return }
-        searchNFT(keyword: searchText)
+        if let searchText = nftSearchBar.text, searchText != "" {
+            isSearching = true
+            searchNFT(keyword: searchText)
+        }
+        searchBar.resignFirstResponder()
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

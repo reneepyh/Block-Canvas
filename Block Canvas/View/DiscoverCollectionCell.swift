@@ -32,8 +32,8 @@ class DiscoverCollectionCell: UICollectionViewCell {
         contentView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top)
-            make.left.equalTo(contentView.snp.left)
-            make.right.equalTo(contentView.snp.right)
+            make.leading.equalTo(contentView.snp.leading)
+            make.trailing.equalTo(contentView.snp.trailing)
             make.width.equalTo(170)
             make.height.equalTo(170)
         }
@@ -41,8 +41,8 @@ class DiscoverCollectionCell: UICollectionViewCell {
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom).offset(6)
-            make.left.equalTo(contentView.snp.left).offset(12)
-            make.right.equalTo(contentView.snp.right).offset(-12)
+            make.leading.equalTo(contentView.snp.leading).offset(12)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-12)
         }
     }
 }
