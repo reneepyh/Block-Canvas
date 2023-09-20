@@ -14,7 +14,7 @@ class PortfolioListViewController: UIViewController {
     
     private let userDefaults = UserDefaults.standard
     
-    private var ethWallets: [String] = []
+    private var ethWallets: [String] = ["0x423cE4833b42b48611C662cFdc70929E3139b009"]
     
     private var balance: [String: String] = [:]
     
@@ -37,19 +37,21 @@ class PortfolioListViewController: UIViewController {
     }
     
     private func findEthWallets() {
-        ethWallets = userDefaults.object(forKey: "ethWallets") as? [String] ?? []
-        if ethWallets.count == 0 {
-            guard
-                let addressInputVC = UIStoryboard.portfolio.instantiateViewController(
-                    withIdentifier: String(describing: AddressInputPageViewController.self)
-                ) as? AddressInputPageViewController
-            else {
-                return
-            }
-            addressInputVC.modalPresentationStyle = .overFullScreen
-            navigationController?.pushViewController(addressInputVC, animated: false)
-            addressInputVC.navigationItem.hidesBackButton = true
-        }
+        ethWallets = ["0x423cE4833b42b48611C662cFdc70929E3139b009"]
+        ethWallets += UserDefaults.standard.object(forKey: "ethWallets") as? [String] ?? []
+        // 內建一個錢包地址，先拿到以下判斷
+        //        if ethWallets.count == 0 {
+        //            guard
+        //                let addressInputVC = UIStoryboard.portfolio.instantiateViewController(
+        //                    withIdentifier: String(describing: AddressInputPageViewController.self)
+        //                ) as? AddressInputPageViewController
+        //            else {
+        //                return
+        //            }
+        //            addressInputVC.modalPresentationStyle = .overFullScreen
+        //            navigationController?.pushViewController(addressInputVC, animated: false)
+        //            addressInputVC.navigationItem.hidesBackButton = true
+        //        }
     }
     
     private func fetchWalletBalance(address: String) {
