@@ -49,7 +49,7 @@ class WatchlistManager {
         }
     }
     
-    func fetchCartProduct() -> [NSManagedObject]? {
+    func fetchWatchlistItems() -> [NSManagedObject]? {
         let managedContext = WatchlistManager.shared.persistentContainer.viewContext
         
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "WatchlistItem")
@@ -61,5 +61,37 @@ class WatchlistManager {
             print("Could not fetch. \(error), \(error.userInfo)")
             return nil
         }
+    }
+    
+    func deleteWatchlistItem(at indexPath: IndexPath) {
+        let managedContext = WatchlistManager.shared.persistentContainer.viewContext
+        
+        guard let managedObject = fetchWatchlistItems()?[indexPath.row] else {
+            print("Cannot fetch Watchlist item to delete")
+            return
+        }
+        
+        managedContext.delete(managedObject)
+        
+        do {
+            try managedObject.managedObjectContext?.save()
+        } catch let error as NSError {
+            print("Could not delete Watchlist item. \(error), \(error.userInfo)")
+        }
+    }
+    
+    func isInWatchlist(nft: DiscoverNFT) -> Bool {
+        guard let watchlistItems = fetchWatchlistItems() else {
+            print("Could not get Watchlist.")
+            return false
+        }
+        
+        for item in watchlistItems {
+            if let displayURL = item.value(forKey: "displayUri") as? String, displayURL == nft.displayUri {
+                return true
+            }
+        }
+        
+        return false
     }
 }

@@ -33,7 +33,6 @@ class DiscoverCollectionCell: UICollectionViewCell {
         imageView.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top)
             make.leading.equalTo(contentView.snp.leading)
-            make.trailing.equalTo(contentView.snp.trailing)
             make.width.equalTo(170)
             make.height.equalTo(imageView.snp.width).multipliedBy(1.4)
         }

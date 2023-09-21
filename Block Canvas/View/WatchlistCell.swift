@@ -25,9 +25,7 @@ class WatchlistCell: UICollectionViewCell {
         imageView.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top)
             make.leading.equalTo(contentView.snp.leading)
-            make.trailing.equalTo(contentView.snp.trailing)
-            make.width.equalTo(120)
-            make.height.equalTo(imageView.snp.width)
+            make.width.equalTo(160)
         }
     }
 }

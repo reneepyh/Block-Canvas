@@ -8,8 +8,23 @@
 import UIKit
 import SnapKit
 
+protocol DetailPageViewControllerDelegate: AnyObject {
+    func deleteWatchlistItem(at indexPath: IndexPath)
+}
+
 class DetailPageViewController: UIViewController {
     var discoverNFTMetadata: DiscoverNFT?
+    
+    var delegate: DetailPageViewControllerDelegate?
+    
+    var indexPath: IndexPath?
+    
+    var isNFTInWatchlist: Bool {
+        if let discoverNFTMetadata = discoverNFTMetadata {
+            return WatchlistManager.shared.isInWatchlist(nft: discoverNFTMetadata)
+        }
+        return false
+    }
     
     let imageView: UIImageView = {
         let imageView = UIImageView()
@@ -89,9 +104,13 @@ class DetailPageViewController: UIViewController {
         }
     }
     
+    private func watchlistButtonImage() -> UIImage? {
+        return isNFTInWatchlist ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
+    }
+    
     private func setupButtons() {
         navigationItem.hidesBackButton = true
-        let watchlistButton = UIBarButtonItem(image: UIImage(systemName: "heart"), style: .plain, target: self, action: #selector(watchlistButtonTapped))
+        let watchlistButton = UIBarButtonItem(image: watchlistButtonImage(), style: .plain, target: self, action: #selector(watchlistButtonTapped))
         let closeButton = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(closeButtonTapped))
         navigationItem.rightBarButtonItems = [closeButton, watchlistButton]
         
@@ -108,10 +127,21 @@ class DetailPageViewController: UIViewController {
         }
     }
     
+    private func updateWatchlistButtonImage() {
+        if let watchlistButton = navigationItem.rightBarButtonItems?.last {
+            watchlistButton.image = watchlistButtonImage()
+        }
+    }
+    
     @objc func watchlistButtonTapped() {
         if let discoverNFTMetadata = discoverNFTMetadata {
-            WatchlistManager.shared.saveToWatchlist(discoverNFTAdded: discoverNFTMetadata)
+            if isNFTInWatchlist, let indexPath = indexPath {
+                delegate?.deleteWatchlistItem(at: indexPath)
+            } else {
+                WatchlistManager.shared.saveToWatchlist(discoverNFTAdded: discoverNFTMetadata)
+            }
         }
+        updateWatchlistButtonImage()
     }
     
     @objc func closeButtonTapped() {

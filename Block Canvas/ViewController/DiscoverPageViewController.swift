@@ -111,7 +111,6 @@ class DiscoverPageViewController: UIViewController {
                     let title = root.data.randomTopGenerativeToken.metadata.name
                     let description = root.data.randomTopGenerativeToken.metadata.description
                     self?.trendingNFTs.append(DiscoverNFT(thumbnailUri: thumbnailURL ?? "", displayUri: displayURL ?? "", contract: contract, title: title, authorName: authorName, nftDescription: description))
-                    print(self?.trendingNFTs)
                 } catch {
                     print("Error: \(error)")
                 }
