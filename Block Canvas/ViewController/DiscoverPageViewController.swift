@@ -39,8 +39,6 @@ class DiscoverPageViewController: UIViewController {
     
     private let semaphore = DispatchSemaphore(value: 0)
     
-    private let apolloClient = ApolloClient(url: URL(string: "https://api.fxhash.xyz/graphql")!)
-    
     private var recommendedResponse: String?
     
     //    private var recommendedCollections: [ArtCollection] = []
