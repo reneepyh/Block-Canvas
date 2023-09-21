@@ -40,6 +40,7 @@ class CryptoPageViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         getETHCurrentPrice()
         getEthHistoryPrice()
         getETHPriceChange()
@@ -47,6 +48,7 @@ class CryptoPageViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
         updateTimer?.invalidate()
         ethPriceData = []
     }

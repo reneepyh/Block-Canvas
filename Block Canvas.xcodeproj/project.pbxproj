@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		C7F524C7AFBED96AF65C050C /* Pods_Block_Canvas.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3DC6D694CA5A48BE07CB0F /* Pods_Block_Canvas.framework */; };
+		DB08647E2ABC3D04004598D6 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB08647D2ABC3D04004598D6 /* Settings.storyboard */; };
+		DB0864822ABC4063004598D6 /* WatchlistPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0864812ABC4063004598D6 /* WatchlistPageViewController.swift */; };
+		DB0864842ABC435F004598D6 /* WatchlistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0864832ABC435F004598D6 /* WatchlistCell.swift */; };
 		DB1DBD202AB1D45A00F74B64 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DBD1F2AB1D45A00F74B64 /* AppDelegate.swift */; };
 		DB1DBD222AB1D45A00F74B64 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DBD212AB1D45A00F74B64 /* SceneDelegate.swift */; };
 		DB1DBD242AB1D45A00F74B64 /* DiscoverPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DBD232AB1D45A00F74B64 /* DiscoverPageViewController.swift */; };
@@ -77,6 +80,9 @@
 		247A90A7AF780A2101FA113A /* Pods-Block Canvas.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Block Canvas.debug.xcconfig"; path = "Target Support Files/Pods-Block Canvas/Pods-Block Canvas.debug.xcconfig"; sourceTree = "<group>"; };
 		3C3DC6D694CA5A48BE07CB0F /* Pods_Block_Canvas.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Block_Canvas.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D8DDAB147395F8BDF7D4703 /* Pods-Block Canvas.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Block Canvas.release.xcconfig"; path = "Target Support Files/Pods-Block Canvas/Pods-Block Canvas.release.xcconfig"; sourceTree = "<group>"; };
+		DB08647D2ABC3D04004598D6 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
+		DB0864812ABC4063004598D6 /* WatchlistPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistPageViewController.swift; sourceTree = "<group>"; };
+		DB0864832ABC435F004598D6 /* WatchlistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistCell.swift; sourceTree = "<group>"; };
 		DB1DBD1C2AB1D45A00F74B64 /* Block Canvas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Block Canvas.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB1DBD1F2AB1D45A00F74B64 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DB1DBD212AB1D45A00F74B64 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -225,10 +231,12 @@
 				DBA478772AB2B29C0014E825 /* Discover.storyboard */,
 				DB69818E2AB4604600BE0036 /* Portfolio.storyboard */,
 				DBF619DC2AB55F8600687F13 /* Crypto.storyboard */,
+				DB08647D2ABC3D04004598D6 /* Settings.storyboard */,
 				DB8C90F02AB43DCF005D75DF /* DiscoverCollectionCell.swift */,
 				DBF619E22AB59C8400687F13 /* EthPriceChartView.swift */,
 				DB4BFB2E2AB6AA1300187B1C /* PortfolioDisplayView.swift */,
 				DB9E028D2AB7499100285E63 /* WalletListCell.swift */,
+				DB0864832ABC435F004598D6 /* WatchlistCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -243,6 +251,7 @@
 				DB9E028B2AB7408E00285E63 /* PortfolioListViewController.swift */,
 				DB4BFB2C2AB6A31C00187B1C /* PortfolioDisplayViewController.swift */,
 				DBF45F462AB6E870002E5D31 /* ARDisplayViewController.swift */,
+				DB0864812ABC4063004598D6 /* WatchlistPageViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -357,6 +366,7 @@
 				DBF619DD2AB55F8600687F13 /* Crypto.storyboard in Resources */,
 				DB1DBD292AB1D45B00F74B64 /* Assets.xcassets in Resources */,
 				DB1DBD272AB1D45A00F74B64 /* Main.storyboard in Resources */,
+				DB08647E2ABC3D04004598D6 /* Settings.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -457,10 +467,12 @@
 				DB6981932AB4648500BE0036 /* Portfolio.swift in Sources */,
 				DB4BFB2F2AB6AA1300187B1C /* PortfolioDisplayView.swift in Sources */,
 				DB6981912AB4608100BE0036 /* AddressInputPageViewController.swift in Sources */,
+				DB0864842ABC435F004598D6 /* WatchlistCell.swift in Sources */,
 				DBB9BDBC2AB44E07002A5FBC /* KingfisherWrapper.swift in Sources */,
 				DBB880322AB4B33600526E40 /* DetailPageViewController.swift in Sources */,
 				DBF45F472AB6E870002E5D31 /* ARDisplayViewController.swift in Sources */,
 				DB9E028E2AB7499100285E63 /* WalletListCell.swift in Sources */,
+				DB0864822ABC4063004598D6 /* WatchlistPageViewController.swift in Sources */,
 				DBF619E32AB59C8400687F13 /* EthPriceChartView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

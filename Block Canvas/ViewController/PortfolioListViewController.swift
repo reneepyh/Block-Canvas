@@ -29,6 +29,7 @@ class PortfolioListViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         findEthWallets()
         balance.removeAll()
         ethWallets.forEach { address in
