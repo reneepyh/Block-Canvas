@@ -11,7 +11,7 @@ struct DiscoverNFT {
     let contract: String
     let title: String?
     let authorName: String?
-    let description: String?
+    let nftDescription: String?
 }
 
 struct Root: Codable {

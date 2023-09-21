@@ -110,7 +110,7 @@ class DiscoverPageViewController: UIViewController {
                     let authorName = root.data.randomTopGenerativeToken.author?.name
                     let title = root.data.randomTopGenerativeToken.metadata.name
                     let description = root.data.randomTopGenerativeToken.metadata.description
-                    self?.trendingNFTs.append(DiscoverNFT(thumbnailUri: thumbnailURL ?? "", displayUri: displayURL ?? "", contract: contract, title: title, authorName: authorName, description: description))
+                    self?.trendingNFTs.append(DiscoverNFT(thumbnailUri: thumbnailURL ?? "", displayUri: displayURL ?? "", contract: contract, title: title, authorName: authorName, nftDescription: description))
                     print(self?.trendingNFTs)
                 } catch {
                     print("Error: \(error)")
@@ -161,7 +161,7 @@ class DiscoverPageViewController: UIViewController {
                     let searchData = try decoder.decode(SearchNFT.self, from: data)
                     print(searchData)
                     for searchResult in searchData.searchResults ?? [] {
-                        self?.searchedNFTs.append(DiscoverNFT(thumbnailUri: searchResult.cachedFileURL ?? "", displayUri: searchResult.cachedFileURL ?? "", contract: searchResult.contractAddress ?? "", title: searchResult.name, authorName: "", description: searchResult.description))
+                        self?.searchedNFTs.append(DiscoverNFT(thumbnailUri: searchResult.cachedFileURL ?? "", displayUri: searchResult.cachedFileURL ?? "", contract: searchResult.contractAddress ?? "", title: searchResult.name, authorName: "", nftDescription: searchResult.description))
                     }
                     print(self?.searchedNFTs)
                 }

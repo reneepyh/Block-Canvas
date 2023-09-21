@@ -104,12 +104,14 @@ class DetailPageViewController: UIViewController {
             titleLabel.text = discoverNFTMetadata.title
             artistLabel.text = discoverNFTMetadata.authorName
             contractLabel.text = "Contract: \(discoverNFTMetadata.contract)"
-            descriptionLabel.text = discoverNFTMetadata.description
+            descriptionLabel.text = discoverNFTMetadata.nftDescription
         }
     }
     
     @objc func watchlistButtonTapped() {
-        
+        if let discoverNFTMetadata = discoverNFTMetadata {
+            WatchlistManager.shared.saveToWatchlist(discoverNFTAdded: discoverNFTMetadata)
+        }
     }
     
     @objc func closeButtonTapped() {
