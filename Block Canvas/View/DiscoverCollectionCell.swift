@@ -35,14 +35,12 @@ class DiscoverCollectionCell: UICollectionViewCell {
             make.leading.equalTo(contentView.snp.leading)
             make.trailing.equalTo(contentView.snp.trailing)
             make.width.equalTo(170)
-            make.height.equalTo(170)
         }
         
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom).offset(6)
-            make.leading.equalTo(contentView.snp.leading).offset(12)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-12)
+            make.leading.equalTo(contentView.snp.leading)
         }
     }
 }

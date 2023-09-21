@@ -11,6 +11,32 @@ struct DiscoverNFT {
     let contract: String
     let title: String?
     let authorName: String?
+    let description: String?
+}
+
+struct Root: Codable {
+    let data: DataClass
+}
+
+struct DataClass: Codable {
+    let randomTopGenerativeToken: RandomTopGenerativeToken
+}
+
+struct RandomTopGenerativeToken: Codable {
+    let author: Author?
+    let gentkContractAddress, issuerContractAddress: String
+    let metadata: TrendingNFTMetadata
+}
+
+struct Author: Codable {
+    let name: String?
+}
+
+struct TrendingNFTMetadata: Codable {
+    let artifactUri: String
+    let childrenDescription: String
+    let description, displayUri, generativeUri, name: String
+    let thumbnailUri: String
 }
 
 struct SearchNFT: Codable {

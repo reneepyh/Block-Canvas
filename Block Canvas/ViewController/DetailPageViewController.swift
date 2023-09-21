@@ -11,8 +11,6 @@ import SnapKit
 class DetailPageViewController: UIViewController {
     var discoverNFTMetadata: DiscoverNFT?
     
-//    @IBOutlet weak var imageView: UIImageView!
-    
     let imageView: UIImageView = {
         let imageView = UIImageView()
         return imageView
@@ -32,12 +30,12 @@ class DetailPageViewController: UIViewController {
         return label
     }()
     
-//    let descriptionLabel: UILabel = {
-//        let label = UILabel()
-//        label.font = .systemFont(ofSize: 16)
-//        label.numberOfLines = 0
-//        return label
-//    }()
+    let descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 16)
+        label.numberOfLines = 0
+        return label
+    }()
     
     let contractLabel: UILabel = {
         let label = UILabel()
@@ -63,7 +61,7 @@ class DetailPageViewController: UIViewController {
         
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom).offset(20)
+            make.top.equalTo(imageView.snp.bottom).offset(12)
             make.leading.equalTo(view.snp.leading).offset(12)
             make.trailing.equalTo(view.snp.trailing).offset(-12)
         }
@@ -75,9 +73,16 @@ class DetailPageViewController: UIViewController {
             make.trailing.equalTo(view.snp.trailing).offset(-12)
         }
         
+        view.addSubview(descriptionLabel)
+        descriptionLabel.snp.makeConstraints { make in
+            make.top.equalTo(artistLabel.snp.bottom).offset(12)
+            make.leading.equalTo(view.snp.leading).offset(12)
+            make.trailing.equalTo(view.snp.trailing).offset(-12)
+        }
+        
         view.addSubview(contractLabel)
         contractLabel.snp.makeConstraints { make in
-            make.top.equalTo(artistLabel.snp.bottom).offset(12)
+            make.top.equalTo(descriptionLabel.snp.bottom).offset(12)
             make.leading.equalTo(view.snp.leading).offset(12)
             make.trailing.equalTo(view.snp.trailing).offset(-12)
         }
@@ -89,7 +94,8 @@ class DetailPageViewController: UIViewController {
             imageView.contentMode = .scaleAspectFit
             titleLabel.text = discoverNFTMetadata.title
             artistLabel.text = discoverNFTMetadata.authorName
-            contractLabel.text = discoverNFTMetadata.contract
+            contractLabel.text = "Contract: \(discoverNFTMetadata.contract)"
+            descriptionLabel.text = discoverNFTMetadata.description
         }
     }
 }
