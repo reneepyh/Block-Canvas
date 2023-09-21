@@ -48,6 +48,7 @@ class DetailPageViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         setupContent()
+        setupButtons()
     }
     
     private func setupUI() {
@@ -88,6 +89,14 @@ class DetailPageViewController: UIViewController {
         }
     }
     
+    private func setupButtons() {
+        navigationItem.hidesBackButton = true
+        let watchlistButton = UIBarButtonItem(image: UIImage(systemName: "heart"), style: .plain, target: self, action: #selector(watchlistButtonTapped))
+        let closeButton = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(closeButtonTapped))
+        navigationItem.rightBarButtonItems = [closeButton, watchlistButton]
+        
+    }
+    
     private func setupContent() {
         if let discoverNFTMetadata = discoverNFTMetadata {
             imageView.loadImage(discoverNFTMetadata.displayUri)
@@ -97,5 +106,13 @@ class DetailPageViewController: UIViewController {
             contractLabel.text = "Contract: \(discoverNFTMetadata.contract)"
             descriptionLabel.text = discoverNFTMetadata.description
         }
+    }
+    
+    @objc func watchlistButtonTapped() {
+        
+    }
+    
+    @objc func closeButtonTapped() {
+        navigationController?.popViewController(animated: true)
     }
 }
