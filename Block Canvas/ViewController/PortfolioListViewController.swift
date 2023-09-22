@@ -13,7 +13,7 @@ class PortfolioListViewController: UIViewController {
     
     private let userDefaults = UserDefaults.standard
     
-    private var ethWallets: [String] = ["0x423cE4833b42b48611C662cFdc70929E3139b009"]
+    private var ethWallets: [String] = []
     
     private var balance: [String: String] = [:]
     
@@ -37,8 +37,13 @@ class PortfolioListViewController: UIViewController {
     }
     
     private func findEthWallets() {
-        ethWallets = ["0x423cE4833b42b48611C662cFdc70929E3139b009"]
-        ethWallets += UserDefaults.standard.object(forKey: "ethWallets") as? [String] ?? []
+        let savedWallets = UserDefaults.standard.object(forKey: "ethWallets") as? [String] ?? []
+        
+        if savedWallets.isEmpty {
+            ethWallets = ["0x423cE4833b42b48611C662cFdc70929E3139b009"]
+        } else {
+            ethWallets = savedWallets
+        }
         // 內建一個錢包地址，先拿掉以下判斷
         //        if ethWallets.count == 0 {
         //            guard
@@ -158,5 +163,16 @@ extension PortfolioListViewController: UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "showPortfolio", sender: ethWallets[indexPath.row])
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = UIContextualAction(style: .destructive, title: "delete") { [weak self] (action, view, completionHandler) in
+            self?.ethWallets.remove(at: indexPath.row)
+            self?.userDefaults.set(self?.ethWallets, forKey: "ethWallets")
+            self?.portfolioListTableView.deleteRows(at: [indexPath], with: .left)
+            print("delete2 \(indexPath.row)")
+        }
+        let swipe = UISwipeActionsConfiguration(actions: [delete])
+        return swipe
     }
 }
