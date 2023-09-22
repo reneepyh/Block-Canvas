@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 
 class PortfolioListViewController: UIViewController {
-    
     @IBOutlet weak var portfolioListTableView: UITableView!
     
     private let userDefaults = UserDefaults.standard

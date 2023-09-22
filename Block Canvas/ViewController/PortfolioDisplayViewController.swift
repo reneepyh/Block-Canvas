@@ -11,16 +11,18 @@ import SnapKit
 import Kingfisher
 
 class PortfolioDisplayViewController: UIViewController {
-    
     var NFTs: EthNFT?
     
     var nftInfoForDisplay: [NFTInfoForDisplay]?
     
     var ethAddress: String?
     
+    private var userNFTs: [String] = []
+    
+    private let userDefaults = UserDefaults.standard
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         getEthNFTsByWallet()
     }
     
@@ -76,6 +78,13 @@ class PortfolioDisplayViewController: UIViewController {
                         }
                     })
                     print(self?.nftInfoForDisplay)
+                    // for you
+                    self?.nftInfoForDisplay?.forEach({ nft in
+                        self?.userNFTs.append(nft.title)
+                    })
+                    self?.userDefaults.set(self?.userNFTs, forKey: "userNFTs")
+                    
+                    // for widget
                     let sharedDefaults = UserDefaults(suiteName: "group.reneehsu.Block-Canvas")
                     let encoder = JSONEncoder()
                     if let encodedData = try? encoder.encode(self?.nftInfoForDisplay) {
