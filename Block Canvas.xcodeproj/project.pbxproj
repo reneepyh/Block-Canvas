@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		C7F524C7AFBED96AF65C050C /* Pods_Block_Canvas.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3DC6D694CA5A48BE07CB0F /* Pods_Block_Canvas.framework */; };
+		DB08647E2ABC3D04004598D6 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB08647D2ABC3D04004598D6 /* Settings.storyboard */; };
+		DB0864822ABC4063004598D6 /* WatchlistPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0864812ABC4063004598D6 /* WatchlistPageViewController.swift */; };
+		DB0864842ABC435F004598D6 /* WatchlistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0864832ABC435F004598D6 /* WatchlistCell.swift */; };
 		DB1DBD202AB1D45A00F74B64 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DBD1F2AB1D45A00F74B64 /* AppDelegate.swift */; };
 		DB1DBD222AB1D45A00F74B64 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DBD212AB1D45A00F74B64 /* SceneDelegate.swift */; };
 		DB1DBD242AB1D45A00F74B64 /* DiscoverPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DBD232AB1D45A00F74B64 /* DiscoverPageViewController.swift */; };
@@ -20,14 +23,6 @@
 		DB69818F2AB4604600BE0036 /* Portfolio.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB69818E2AB4604600BE0036 /* Portfolio.storyboard */; };
 		DB6981912AB4608100BE0036 /* AddressInputPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6981902AB4608100BE0036 /* AddressInputPageViewController.swift */; };
 		DB6981932AB4648500BE0036 /* Portfolio.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6981922AB4648500BE0036 /* Portfolio.swift */; };
-		DB86552B2AB2D88C006905FB /* GetTrendingQuery.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8655202AB2D88C006905FB /* GetTrendingQuery.graphql.swift */; };
-		DB86552C2AB2D88C006905FB /* JSONObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8655232AB2D88C006905FB /* JSONObject.swift */; };
-		DB86552D2AB2D88C006905FB /* GenerativeToken.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8655252AB2D88C006905FB /* GenerativeToken.graphql.swift */; };
-		DB86552E2AB2D88C006905FB /* User.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8655262AB2D88C006905FB /* User.graphql.swift */; };
-		DB86552F2AB2D88C006905FB /* Query.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8655272AB2D88C006905FB /* Query.graphql.swift */; };
-		DB8655302AB2D88C006905FB /* SchemaConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8655282AB2D88C006905FB /* SchemaConfiguration.swift */; };
-		DB8655312AB2D88C006905FB /* SchemaMetadata.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8655292AB2D88C006905FB /* SchemaMetadata.graphql.swift */; };
-		DB8655322AB2D88C006905FB /* GetTrending.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB86552A2AB2D88C006905FB /* GetTrending.graphql.swift */; };
 		DB8C90F12AB43DCF005D75DF /* DiscoverCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8C90F02AB43DCF005D75DF /* DiscoverCollectionCell.swift */; };
 		DB9DFB872AB7614C006D6CE1 /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9DFB862AB7614C006D6CE1 /* Wallet.swift */; };
 		DB9E028C2AB7408E00285E63 /* PortfolioListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9E028B2AB7408E00285E63 /* PortfolioListViewController.swift */; };
@@ -35,7 +30,10 @@
 		DBA478792AB2B29C0014E825 /* BCTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA478762AB2B29C0014E825 /* BCTabBarController.swift */; };
 		DBA4787A2AB2B29C0014E825 /* Discover.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBA478772AB2B29C0014E825 /* Discover.storyboard */; };
 		DBA4787B2AB2B29C0014E825 /* UIStoryboard+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA478782AB2B29C0014E825 /* UIStoryboard+Extension.swift */; };
-		DBAA52F52AB2B7D000FE51FF /* schema.json in Resources */ = {isa = PBXBuildFile; fileRef = DBAA52F42AB2B7D000FE51FF /* schema.json */; };
+		DBA57DC32ABC2F4200C1CE30 /* WatchlistManager.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DBA57DC12ABC2F4200C1CE30 /* WatchlistManager.xcdatamodeld */; };
+		DBA57DCE2ABC32AF00C1CE30 /* WatchlistItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA57DCC2ABC32AF00C1CE30 /* WatchlistItem+CoreDataClass.swift */; };
+		DBA57DCF2ABC32AF00C1CE30 /* WatchlistItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA57DCD2ABC32AF00C1CE30 /* WatchlistItem+CoreDataProperties.swift */; };
+		DBA57DD22ABC33AB00C1CE30 /* WatchlistManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA57DD12ABC33AB00C1CE30 /* WatchlistManager.swift */; };
 		DBB880322AB4B33600526E40 /* DetailPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB880312AB4B33600526E40 /* DetailPageViewController.swift */; };
 		DBB9BDBC2AB44E07002A5FBC /* KingfisherWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB9BDBB2AB44E07002A5FBC /* KingfisherWrapper.swift */; };
 		DBF45F472AB6E870002E5D31 /* ARDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF45F462AB6E870002E5D31 /* ARDisplayViewController.swift */; };
@@ -82,6 +80,9 @@
 		247A90A7AF780A2101FA113A /* Pods-Block Canvas.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Block Canvas.debug.xcconfig"; path = "Target Support Files/Pods-Block Canvas/Pods-Block Canvas.debug.xcconfig"; sourceTree = "<group>"; };
 		3C3DC6D694CA5A48BE07CB0F /* Pods_Block_Canvas.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Block_Canvas.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D8DDAB147395F8BDF7D4703 /* Pods-Block Canvas.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Block Canvas.release.xcconfig"; path = "Target Support Files/Pods-Block Canvas/Pods-Block Canvas.release.xcconfig"; sourceTree = "<group>"; };
+		DB08647D2ABC3D04004598D6 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
+		DB0864812ABC4063004598D6 /* WatchlistPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistPageViewController.swift; sourceTree = "<group>"; };
+		DB0864832ABC435F004598D6 /* WatchlistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistCell.swift; sourceTree = "<group>"; };
 		DB1DBD1C2AB1D45A00F74B64 /* Block Canvas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Block Canvas.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB1DBD1F2AB1D45A00F74B64 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DB1DBD212AB1D45A00F74B64 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -97,14 +98,6 @@
 		DB69818E2AB4604600BE0036 /* Portfolio.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Portfolio.storyboard; sourceTree = "<group>"; };
 		DB6981902AB4608100BE0036 /* AddressInputPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressInputPageViewController.swift; sourceTree = "<group>"; };
 		DB6981922AB4648500BE0036 /* Portfolio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Portfolio.swift; sourceTree = "<group>"; };
-		DB8655202AB2D88C006905FB /* GetTrendingQuery.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetTrendingQuery.graphql.swift; sourceTree = "<group>"; };
-		DB8655232AB2D88C006905FB /* JSONObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONObject.swift; sourceTree = "<group>"; };
-		DB8655252AB2D88C006905FB /* GenerativeToken.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenerativeToken.graphql.swift; sourceTree = "<group>"; };
-		DB8655262AB2D88C006905FB /* User.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.graphql.swift; sourceTree = "<group>"; };
-		DB8655272AB2D88C006905FB /* Query.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Query.graphql.swift; sourceTree = "<group>"; };
-		DB8655282AB2D88C006905FB /* SchemaConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchemaConfiguration.swift; sourceTree = "<group>"; };
-		DB8655292AB2D88C006905FB /* SchemaMetadata.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchemaMetadata.graphql.swift; sourceTree = "<group>"; };
-		DB86552A2AB2D88C006905FB /* GetTrending.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetTrending.graphql.swift; sourceTree = "<group>"; };
 		DB8C90F02AB43DCF005D75DF /* DiscoverCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverCollectionCell.swift; sourceTree = "<group>"; };
 		DB9DFB862AB7614C006D6CE1 /* Wallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wallet.swift; sourceTree = "<group>"; };
 		DB9E028B2AB7408E00285E63 /* PortfolioListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioListViewController.swift; sourceTree = "<group>"; };
@@ -112,7 +105,10 @@
 		DBA478762AB2B29C0014E825 /* BCTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BCTabBarController.swift; sourceTree = "<group>"; };
 		DBA478772AB2B29C0014E825 /* Discover.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Discover.storyboard; sourceTree = "<group>"; };
 		DBA478782AB2B29C0014E825 /* UIStoryboard+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+Extension.swift"; sourceTree = "<group>"; };
-		DBAA52F42AB2B7D000FE51FF /* schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schema.json; sourceTree = "<group>"; };
+		DBA57DC22ABC2F4200C1CE30 /* WatchlistManager.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WatchlistManager.xcdatamodel; sourceTree = "<group>"; };
+		DBA57DCC2ABC32AF00C1CE30 /* WatchlistItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WatchlistItem+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		DBA57DCD2ABC32AF00C1CE30 /* WatchlistItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WatchlistItem+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		DBA57DD12ABC33AB00C1CE30 /* WatchlistManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistManager.swift; sourceTree = "<group>"; };
 		DBB880312AB4B33600526E40 /* DetailPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPageViewController.swift; sourceTree = "<group>"; };
 		DBB9BDBB2AB44E07002A5FBC /* KingfisherWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingfisherWrapper.swift; sourceTree = "<group>"; };
 		DBF45F462AB6E870002E5D31 /* ARDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARDisplayViewController.swift; sourceTree = "<group>"; };
@@ -196,20 +192,23 @@
 		DB1DBD1E2AB1D45A00F74B64 /* Block Canvas */ = {
 			isa = PBXGroup;
 			children = (
+				DBA57DCC2ABC32AF00C1CE30 /* WatchlistItem+CoreDataClass.swift */,
+				DBA57DCD2ABC32AF00C1CE30 /* WatchlistItem+CoreDataProperties.swift */,
 				DBF567942AB86B55007BFDA1 /* Block Canvas.entitlements */,
 				DB69818D2AB45FE000BE0036 /* ViewController */,
 				DB69818C2AB45FC900BE0036 /* View */,
+				DBA57DD02ABC338F00C1CE30 /* Manager */,
 				DB6853D22AB3637A00895EB9 /* Model */,
 				DB1DBD1F2AB1D45A00F74B64 /* AppDelegate.swift */,
 				DB1DBD212AB1D45A00F74B64 /* SceneDelegate.swift */,
 				DBA478762AB2B29C0014E825 /* BCTabBarController.swift */,
 				DBA478782AB2B29C0014E825 /* UIStoryboard+Extension.swift */,
 				DBB9BDBB2AB44E07002A5FBC /* KingfisherWrapper.swift */,
-				DBAA52F42AB2B7D000FE51FF /* schema.json */,
 				DB1DBD282AB1D45B00F74B64 /* Assets.xcassets */,
 				DB1DBD2A2AB1D45B00F74B64 /* LaunchScreen.storyboard */,
 				DB1DBD2D2AB1D45B00F74B64 /* Info.plist */,
 				DB6853CF2AB2ECA100895EB9 /* Secrets.xcconfig */,
+				DBA57DC12ABC2F4200C1CE30 /* WatchlistManager.xcdatamodeld */,
 			);
 			path = "Block Canvas";
 			sourceTree = "<group>";
@@ -217,7 +216,6 @@
 		DB6853D22AB3637A00895EB9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				DB86551D2AB2D88C006905FB /* getTrending */,
 				DB6853D02AB2F38400895EB9 /* Discover.swift */,
 				DB6981922AB4648500BE0036 /* Portfolio.swift */,
 				DB9DFB862AB7614C006D6CE1 /* Wallet.swift */,
@@ -233,10 +231,12 @@
 				DBA478772AB2B29C0014E825 /* Discover.storyboard */,
 				DB69818E2AB4604600BE0036 /* Portfolio.storyboard */,
 				DBF619DC2AB55F8600687F13 /* Crypto.storyboard */,
+				DB08647D2ABC3D04004598D6 /* Settings.storyboard */,
 				DB8C90F02AB43DCF005D75DF /* DiscoverCollectionCell.swift */,
 				DBF619E22AB59C8400687F13 /* EthPriceChartView.swift */,
 				DB4BFB2E2AB6AA1300187B1C /* PortfolioDisplayView.swift */,
 				DB9E028D2AB7499100285E63 /* WalletListCell.swift */,
+				DB0864832ABC435F004598D6 /* WatchlistCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -251,64 +251,17 @@
 				DB9E028B2AB7408E00285E63 /* PortfolioListViewController.swift */,
 				DB4BFB2C2AB6A31C00187B1C /* PortfolioDisplayViewController.swift */,
 				DBF45F462AB6E870002E5D31 /* ARDisplayViewController.swift */,
+				DB0864812ABC4063004598D6 /* WatchlistPageViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
 		};
-		DB86551D2AB2D88C006905FB /* getTrending */ = {
+		DBA57DD02ABC338F00C1CE30 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
-				DB86551E2AB2D88C006905FB /* Operations */,
-				DB8655212AB2D88C006905FB /* Schema */,
-				DB86552A2AB2D88C006905FB /* GetTrending.graphql.swift */,
+				DBA57DD12ABC33AB00C1CE30 /* WatchlistManager.swift */,
 			);
-			name = getTrending;
-			path = "Block Canvas/Model/getTrending";
-			sourceTree = SOURCE_ROOT;
-		};
-		DB86551E2AB2D88C006905FB /* Operations */ = {
-			isa = PBXGroup;
-			children = (
-				DB86551F2AB2D88C006905FB /* Queries */,
-			);
-			path = Operations;
-			sourceTree = "<group>";
-		};
-		DB86551F2AB2D88C006905FB /* Queries */ = {
-			isa = PBXGroup;
-			children = (
-				DB8655202AB2D88C006905FB /* GetTrendingQuery.graphql.swift */,
-			);
-			path = Queries;
-			sourceTree = "<group>";
-		};
-		DB8655212AB2D88C006905FB /* Schema */ = {
-			isa = PBXGroup;
-			children = (
-				DB8655222AB2D88C006905FB /* CustomScalars */,
-				DB8655242AB2D88C006905FB /* Objects */,
-				DB8655282AB2D88C006905FB /* SchemaConfiguration.swift */,
-				DB8655292AB2D88C006905FB /* SchemaMetadata.graphql.swift */,
-			);
-			path = Schema;
-			sourceTree = "<group>";
-		};
-		DB8655222AB2D88C006905FB /* CustomScalars */ = {
-			isa = PBXGroup;
-			children = (
-				DB8655232AB2D88C006905FB /* JSONObject.swift */,
-			);
-			path = CustomScalars;
-			sourceTree = "<group>";
-		};
-		DB8655242AB2D88C006905FB /* Objects */ = {
-			isa = PBXGroup;
-			children = (
-				DB8655252AB2D88C006905FB /* GenerativeToken.graphql.swift */,
-				DB8655262AB2D88C006905FB /* User.graphql.swift */,
-				DB8655272AB2D88C006905FB /* Query.graphql.swift */,
-			);
-			path = Objects;
+			path = Manager;
 			sourceTree = "<group>";
 		};
 		DBF567822AB85632007BFDA1 /* NFTWidget */ = {
@@ -408,12 +361,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB1DBD2C2AB1D45B00F74B64 /* LaunchScreen.storyboard in Resources */,
-				DBAA52F52AB2B7D000FE51FF /* schema.json in Resources */,
 				DBA4787A2AB2B29C0014E825 /* Discover.storyboard in Resources */,
 				DB69818F2AB4604600BE0036 /* Portfolio.storyboard in Resources */,
 				DBF619DD2AB55F8600687F13 /* Crypto.storyboard in Resources */,
 				DB1DBD292AB1D45B00F74B64 /* Assets.xcassets in Resources */,
 				DB1DBD272AB1D45A00F74B64 /* Main.storyboard in Resources */,
+				DB08647E2ABC3D04004598D6 /* Settings.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -493,13 +446,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB86552D2AB2D88C006905FB /* GenerativeToken.graphql.swift in Sources */,
+				DBA57DC32ABC2F4200C1CE30 /* WatchlistManager.xcdatamodeld in Sources */,
 				DBA478792AB2B29C0014E825 /* BCTabBarController.swift in Sources */,
 				DB9E028C2AB7408E00285E63 /* PortfolioListViewController.swift in Sources */,
-				DB86552B2AB2D88C006905FB /* GetTrendingQuery.graphql.swift in Sources */,
 				DB1DBD242AB1D45A00F74B64 /* DiscoverPageViewController.swift in Sources */,
 				DBF5678C2AB85633007BFDA1 /* NFTWidget.intentdefinition in Sources */,
+				DBA57DCF2ABC32AF00C1CE30 /* WatchlistItem+CoreDataProperties.swift in Sources */,
 				DB1DBD202AB1D45A00F74B64 /* AppDelegate.swift in Sources */,
+				DBA57DCE2ABC32AF00C1CE30 /* WatchlistItem+CoreDataClass.swift in Sources */,
 				DB1DBD222AB1D45A00F74B64 /* SceneDelegate.swift in Sources */,
 				DBF567962AB8AB92007BFDA1 /* NFTWidget.swift in Sources */,
 				DB6853D12AB2F38400895EB9 /* Discover.swift in Sources */,
@@ -508,20 +462,17 @@
 				DBF619DB2AB55F6E00687F13 /* CryptoPageViewController.swift in Sources */,
 				DB8C90F12AB43DCF005D75DF /* DiscoverCollectionCell.swift in Sources */,
 				DBA4787B2AB2B29C0014E825 /* UIStoryboard+Extension.swift in Sources */,
-				DB86552F2AB2D88C006905FB /* Query.graphql.swift in Sources */,
-				DB86552C2AB2D88C006905FB /* JSONObject.swift in Sources */,
 				DBF619DF2AB57EA200687F13 /* Crypto.swift in Sources */,
-				DB86552E2AB2D88C006905FB /* User.graphql.swift in Sources */,
+				DBA57DD22ABC33AB00C1CE30 /* WatchlistManager.swift in Sources */,
 				DB6981932AB4648500BE0036 /* Portfolio.swift in Sources */,
 				DB4BFB2F2AB6AA1300187B1C /* PortfolioDisplayView.swift in Sources */,
 				DB6981912AB4608100BE0036 /* AddressInputPageViewController.swift in Sources */,
-				DB8655312AB2D88C006905FB /* SchemaMetadata.graphql.swift in Sources */,
+				DB0864842ABC435F004598D6 /* WatchlistCell.swift in Sources */,
 				DBB9BDBC2AB44E07002A5FBC /* KingfisherWrapper.swift in Sources */,
 				DBB880322AB4B33600526E40 /* DetailPageViewController.swift in Sources */,
-				DB8655302AB2D88C006905FB /* SchemaConfiguration.swift in Sources */,
 				DBF45F472AB6E870002E5D31 /* ARDisplayViewController.swift in Sources */,
-				DB8655322AB2D88C006905FB /* GetTrending.graphql.swift in Sources */,
 				DB9E028E2AB7499100285E63 /* WalletListCell.swift in Sources */,
+				DB0864822ABC4063004598D6 /* WatchlistPageViewController.swift in Sources */,
 				DBF619E32AB59C8400687F13 /* EthPriceChartView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -845,6 +796,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		DBA57DC12ABC2F4200C1CE30 /* WatchlistManager.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				DBA57DC22ABC2F4200C1CE30 /* WatchlistManager.xcdatamodel */,
+			);
+			currentVersion = DBA57DC22ABC2F4200C1CE30 /* WatchlistManager.xcdatamodel */;
+			path = WatchlistManager.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = DB1DBD142AB1D45A00F74B64 /* Project object */;
 }

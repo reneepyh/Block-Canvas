@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Apollo
 
 class DiscoverPageViewController: UIViewController {
     
@@ -40,8 +39,6 @@ class DiscoverPageViewController: UIViewController {
     
     private let semaphore = DispatchSemaphore(value: 0)
     
-    private let apolloClient = ApolloClient(url: URL(string: "https://api.fxhash.xyz/graphql")!)
-    
     private var recommendedResponse: String?
     
     //    private var recommendedCollections: [ArtCollection] = []
@@ -70,20 +67,60 @@ class DiscoverPageViewController: UIViewController {
         trendingNFTs.removeAll()
         let group = DispatchGroup()
         //        let queue = DispatchQueue(label: "queue", attributes: .concurrent)
-        for _ in 0...9 {
+        func fetchToken() {
             //TODO: 判斷回應相同NFT
             group.enter()
-            apolloClient.fetch(query: GetTrending.GetTrendingQuery(), cachePolicy: .fetchIgnoringCacheCompletely) { [weak self] result in
-                defer { group.leave() }
-                guard let data = try? result.get().data else { return }
-                let displayURL = self?.generativeLiveDisplayUrl(uri: data.randomTopGenerativeToken.displayUri ?? "")
-                let authorName = data.randomTopGenerativeToken.author.name
-                let title = data.randomTopGenerativeToken.name
-                let thumbnailURL = self?.generativeLiveDisplayUrl(uri: data.randomTopGenerativeToken.thumbnailUri ?? "")
-                let contract = data.randomTopGenerativeToken.gentkContractAddress
-                self?.trendingNFTs.append(DiscoverNFT(thumbnailUri: thumbnailURL ?? "", displayUri: displayURL ?? "", contract: contract, title: title, authorName: authorName))
+            let url = URL(string: "https://api.fxhash.xyz/graphql")!
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            
+            let query = """
+            {
+               randomTopGenerativeToken {
+                  author {
+                    name
+                  }
+                  gentkContractAddress
+                  issuerContractAddress
+                  metadata
+                }
             }
+            """
+            
+            let json: [String: Any] = ["query": query]
+            let jsonData = try? JSONSerialization.data(withJSONObject: json)
+            
+            request.httpBody = jsonData
+            
+            let task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
+                defer { group.leave() }
+                guard let data = data else { return }
+                do {
+                    let decoder = JSONDecoder()
+                    let root = try decoder.decode(Root.self, from: data)
+                    if self?.trendingNFTs.contains(where: { $0.title == root.data.randomTopGenerativeToken.metadata.name }) == true {
+                        fetchToken()
+                        return
+                    }
+                    
+                    let contract = root.data.randomTopGenerativeToken.gentkContractAddress
+                    let thumbnailURL = self?.generativeLiveDisplayUrl(uri: root.data.randomTopGenerativeToken.metadata.thumbnailUri)
+                    let displayURL = self?.generativeLiveDisplayUrl(uri: root.data.randomTopGenerativeToken.metadata.displayUri)
+                    let authorName = root.data.randomTopGenerativeToken.author?.name
+                    let title = root.data.randomTopGenerativeToken.metadata.name
+                    let description = root.data.randomTopGenerativeToken.metadata.description
+                    self?.trendingNFTs.append(DiscoverNFT(thumbnailUri: thumbnailURL ?? "", displayUri: displayURL ?? "", contract: contract, title: title, authorName: authorName, nftDescription: description))
+                } catch {
+                    print("Error: \(error)")
+                }
+            }
+            task.resume()
         }
+        for _ in 0..<8 {
+            fetchToken()
+        }
+        
         group.notify(queue: .main) { [weak self] in
             self?.discoverCollectionView.reloadData()
         }
@@ -121,8 +158,9 @@ class DiscoverPageViewController: UIViewController {
                 
                 do {
                     let searchData = try decoder.decode(SearchNFT.self, from: data)
+                    print(searchData)
                     for searchResult in searchData.searchResults ?? [] {
-                        self?.searchedNFTs.append(DiscoverNFT(thumbnailUri: searchResult.cachedFileURL ?? "", displayUri: searchResult.cachedFileURL ?? "", contract: searchResult.contractAddress ?? "", title: searchResult.name, authorName: ""))
+                        self?.searchedNFTs.append(DiscoverNFT(thumbnailUri: searchResult.cachedFileURL ?? "", displayUri: searchResult.cachedFileURL ?? "", contract: searchResult.contractAddress ?? "", title: searchResult.name, authorName: "", nftDescription: searchResult.description))
                     }
                     print(self?.searchedNFTs)
                 }
@@ -491,13 +529,12 @@ extension DiscoverPageViewController: UICollectionViewDelegateFlowLayout, UIColl
     }
     
     // 指定 item 寬度和數量
-    //TODO: FIX flow layout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let maxWidth = UIScreen.main.bounds.width - 12 * 2
         let totalSapcing = CGFloat(5 * 2)
         
         let itemWidth = (maxWidth - totalSapcing) / 2
-        return CGSize(width: itemWidth, height: itemWidth * 1.4)
+        return CGSize(width: itemWidth, height: itemWidth * 1.8)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -521,11 +558,13 @@ extension DiscoverPageViewController: UICollectionViewDelegateFlowLayout, UIColl
 extension DiscoverPageViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchedNFTs.removeAll()
-        isSearching = true
-        guard let searchText = nftSearchBar.text, searchText != "" else { return }
-        searchNFT(keyword: searchText)
+        if let searchText = nftSearchBar.text, searchText != "" {
+            isSearching = true
+            searchNFT(keyword: searchText)
+        }
+        searchBar.resignFirstResponder()
     }
-
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText == "" {
             isSearching = false

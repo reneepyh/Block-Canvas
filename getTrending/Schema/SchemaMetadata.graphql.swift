@@ -2,7 +2,7 @@
 // This file was automatically generated and should not be edited.
 
 import Apollo
-// swiftlint:disable all
+// swiftlint: disable all
 protocol GetTrending_SelectionSet: Apollo.SelectionSet & Apollo.RootSelectionSet
 where Schema == GetTrending.SchemaMetadata {}
 
@@ -44,4 +44,4 @@ extension GetTrending {
   enum Unions {}
 
 }
-// swiftlint:enable all
+// swiftlint: enable all

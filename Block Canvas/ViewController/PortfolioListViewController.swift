@@ -29,6 +29,7 @@ class PortfolioListViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         findEthWallets()
         balance.removeAll()
         ethWallets.forEach { address in
@@ -39,7 +40,7 @@ class PortfolioListViewController: UIViewController {
     private func findEthWallets() {
         ethWallets = ["0x423cE4833b42b48611C662cFdc70929E3139b009"]
         ethWallets += UserDefaults.standard.object(forKey: "ethWallets") as? [String] ?? []
-        // 內建一個錢包地址，先拿到以下判斷
+        // 內建一個錢包地址，先拿掉以下判斷
         //        if ethWallets.count == 0 {
         //            guard
         //                let addressInputVC = UIStoryboard.portfolio.instantiateViewController(

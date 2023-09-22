@@ -12,6 +12,7 @@ extension UIStoryboard {
     static var discover: UIStoryboard { return bcStoryboard(name: "Discover") }
     static var portfolio: UIStoryboard { return bcStoryboard(name: "Portfolio") }
     static var crypto: UIStoryboard { return bcStoryboard(name: "Crypto") }
+    static var settings: UIStoryboard { return bcStoryboard(name: "Settings") }
  
     private static func bcStoryboard(name: String) -> UIStoryboard {
         return UIStoryboard(name: name, bundle: nil)
