@@ -366,15 +366,15 @@ extension DiscoverPageViewController: UICollectionViewDelegateFlowLayout, UIColl
             fatalError("Cell cannot be created")
         }
         if isSearching {
-            discoverCollectionCell.imageView.loadImage(searchedNFTs[indexPath.row].thumbnailUri)
+            discoverCollectionCell.imageView.loadImage(searchedNFTs[indexPath.row].thumbnailUri, placeHolder: UIImage(systemName: "circle.dotted"))
             discoverCollectionCell.imageView.contentMode = .scaleAspectFit
             discoverCollectionCell.titleLabel.text = searchedNFTs[indexPath.row].title
         } else if selectedPage == 0 {
-            discoverCollectionCell.imageView.loadImage(trendingNFTs[indexPath.row].thumbnailUri)
+            discoverCollectionCell.imageView.loadImage(trendingNFTs[indexPath.row].thumbnailUri, placeHolder: UIImage(systemName: "circle.dotted"))
             discoverCollectionCell.imageView.contentMode = .scaleAspectFit
             discoverCollectionCell.titleLabel.text = trendingNFTs[indexPath.row].title
         } else {
-            discoverCollectionCell.imageView.loadImage(recommendedNFTs[indexPath.row].thumbnailUri)
+            discoverCollectionCell.imageView.loadImage(recommendedNFTs[indexPath.row].thumbnailUri, placeHolder: UIImage(systemName: "circle.dotted"))
             discoverCollectionCell.imageView.contentMode = .scaleAspectFit
             discoverCollectionCell.titleLabel.text = recommendedNFTs[indexPath.row].title
         }

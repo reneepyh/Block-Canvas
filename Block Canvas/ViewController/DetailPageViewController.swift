@@ -118,7 +118,7 @@ class DetailPageViewController: UIViewController {
     
     private func setupContent() {
         if let discoverNFTMetadata = discoverNFTMetadata {
-            imageView.loadImage(discoverNFTMetadata.displayUri)
+            imageView.loadImage(discoverNFTMetadata.displayUri, placeHolder: UIImage(systemName: "circle.dotted"))
             imageView.contentMode = .scaleAspectFit
             titleLabel.text = discoverNFTMetadata.title
             artistLabel.text = discoverNFTMetadata.authorName
