@@ -17,6 +17,8 @@ class CryptoPageViewController: UIViewController {
     
     private var ethPriceChange: String?
     
+    private var ethGasFee: String?
+    
     private var updateTimer: Timer?
     
     private let hostingController = UIHostingController(rootView: EthPriceChart())
@@ -33,6 +35,12 @@ class CryptoPageViewController: UIViewController {
         return label
     }()
     
+    private let gasFeeLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 20)
+        return label
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLabelUI()
@@ -44,6 +52,7 @@ class CryptoPageViewController: UIViewController {
         getETHCurrentPrice()
         getEthHistoryPrice()
         getETHPriceChange()
+        getEthGasFee()
         startTimer()
     }
     
@@ -139,15 +148,61 @@ class CryptoPageViewController: UIViewController {
                 
                 do {
                     let ethCurrentPrice = try decoder.decode(EthPriceChange.self, from: data)
-                    self?.ethPriceChange = String(ethCurrentPrice.priceChangePercent)
-                    print(self?.ethPriceChange)
+                    let doubled = Double(ethCurrentPrice.priceChangePercent)
+                    let floored = floor((doubled ?? 0) * 100) / 100
+                    self?.ethPriceChange = String(floored)
                 }
                 catch {
                     print("Error in JSON decoding.")
                 }
                 DispatchQueue.main.async { [weak self] in
-                    self?.priceLabel.text = self?.ethCurrentPrice
                     self?.priceChangeLabel.text = self?.ethPriceChange
+                }
+            }
+            task.resume()
+        }
+        else {
+            print("Invalid URL.")
+        }
+    }
+    
+    private func getEthGasFee() {
+        let apiKey = Bundle.main.object(forInfoDictionaryKey: "Etherscan_API_Key") as? String
+        
+        guard let key = apiKey, !key.isEmpty else {
+            print("Etherscan API Key does not exist.")
+            return
+        }
+        
+        if let url = URL(string: "https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey=\(key)") {
+            
+            var request = URLRequest(url: url)
+            request.httpMethod = "GET"
+            
+            let session = URLSession.shared
+            
+            let task = session.dataTask(with: request) { [weak self] data, response, error in
+                if let error = error {
+                    print(error)
+                    return
+                }
+                
+                guard let data = data else {
+                    print("No data.")
+                    return
+                }
+                
+                let decoder = JSONDecoder()
+                
+                do {
+                    let ethGasFee = try decoder.decode(EthGasFee.self, from: data)
+                    self?.ethGasFee = "\(ethGasFee.result?.proposeGasPrice ?? "") gwei"
+                }
+                catch {
+                    print("Error in JSON decoding.")
+                }
+                DispatchQueue.main.async { [weak self] in
+                    self?.gasFeeLabel.text = self?.ethGasFee
                 }
             }
             task.resume()
@@ -215,13 +270,19 @@ class CryptoPageViewController: UIViewController {
         priceLabel.snp.makeConstraints { make in
             make.top.equalTo(view.snp.top).offset(100)
             make.left.equalTo(view.snp.left).offset(16)
-            make.bottom.equalTo(view.snp.top).offset(200)
         }
         
         view.addSubview(priceChangeLabel)
         priceChangeLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(priceLabel).offset(-20)
+            make.bottom.equalTo(priceLabel)
             make.right.equalTo(view.snp.right).offset(-16)
+        }
+        
+        view.addSubview(gasFeeLabel)
+        gasFeeLabel.snp.makeConstraints { make in
+            make.top.equalTo(priceLabel.snp.bottom).offset(-4)
+            make.left.equalTo(view.snp.left).offset(18)
+            make.bottom.equalTo(view.snp.top).offset(200)
         }
     }
     
@@ -237,7 +298,7 @@ class CryptoPageViewController: UIViewController {
         view.addSubview(ethPriceChart)
         
         ethPriceChart.snp.makeConstraints { make in
-            make.top.equalTo(priceLabel.snp.bottom)
+            make.top.equalTo(gasFeeLabel.snp.bottom)
             make.left.equalTo(view.snp.left)
             make.right.equalTo(view.snp.right)
             make.bottom.equalTo(view.snp.bottom).offset(-100)
@@ -250,6 +311,7 @@ class CryptoPageViewController: UIViewController {
         print("4秒重抓")
         getETHCurrentPrice()
         getETHPriceChange()
+        getEthGasFee()
     }
     
 }
