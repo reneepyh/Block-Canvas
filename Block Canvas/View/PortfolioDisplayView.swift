@@ -30,6 +30,11 @@ struct PortfolioDisplay: View {
                                     .foregroundColor(.gray)
                                 
                                 KFImage(nftInfo.url)
+                                    .placeholder {
+                                        Image(systemName: "circle.dotted")
+                                            .font(.largeTitle)
+                                            .opacity(0.5)
+                                    }
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 300, height: 450, alignment: .center)

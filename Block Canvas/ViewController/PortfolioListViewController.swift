@@ -40,7 +40,7 @@ class PortfolioListViewController: UIViewController {
         let savedWallets = UserDefaults.standard.object(forKey: "ethWallets") as? [[String: String]] ?? []
         
         if savedWallets.isEmpty {
-            ethWallets = [["address" : "0x423cE4833b42b48611C662cFdc70929E3139b009", "name": "My Wallet"]]
+            ethWallets = [["address": "0x423cE4833b42b48611C662cFdc70929E3139b009", "name": "My Wallet"]]
         } else {
             ethWallets = savedWallets
         }

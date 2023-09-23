@@ -8,7 +8,6 @@
 import UIKit
 import SwiftUI
 import SnapKit
-import Kingfisher
 
 class PortfolioDisplayViewController: UIViewController {
     var NFTs: EthNFT?
