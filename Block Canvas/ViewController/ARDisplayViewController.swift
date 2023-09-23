@@ -139,10 +139,7 @@ extension ARDisplayViewController {
             ac.addAction(UIAlertAction(title: "OK", style: .default))
             present(ac, animated: true)
         } else {
-            //TODO: 打勾動畫
-            let ac = UIAlertController(title: "Saved!", message: "Your picture has been saved to your photos.", preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "OK", style: .default))
-            present(ac, animated: true)
+            BCProgressHUD.showSuccess(text: "Saved Successfully", view: sceneView)
         }
     }
 }

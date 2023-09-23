@@ -27,8 +27,10 @@ class PortfolioDisplayViewController: UIViewController {
     }
     
     private func getEthNFTsByWallet() {
+        BCProgressHUD.show()
         guard let address = ethAddress else {
             print("No address.")
+            BCProgressHUD.showFailure(text: "No address.")
             return
         }
         
@@ -51,11 +53,13 @@ class PortfolioDisplayViewController: UIViewController {
             let task = session.dataTask(with: request) { [weak self] data, response, error in
                 if let error = error {
                     print(error)
+                    BCProgressHUD.showFailure()
                     return
                 }
                 
                 guard let data = data else {
                     print("No data.")
+                    BCProgressHUD.showFailure()
                     return
                 }
                 
@@ -99,6 +103,7 @@ class PortfolioDisplayViewController: UIViewController {
                 DispatchQueue.main.async { [weak self] in
                     self?.setupDisplay()
                 }
+                BCProgressHUD.dismiss()
             }
             task.resume()
         }
@@ -138,6 +143,7 @@ class PortfolioDisplayViewController: UIViewController {
     }
     
     func viewInARButtonTapped(with url: URL) {
+        BCProgressHUD.show()
         let arViewController = ARDisplayViewController()
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let error = error {
@@ -146,6 +152,7 @@ class PortfolioDisplayViewController: UIViewController {
                 arViewController.imageToDisplay = image
                 DispatchQueue.main.async {
                     arViewController.modalPresentationStyle = .overFullScreen
+                    BCProgressHUD.dismiss()
                     self.present(arViewController, animated: true, completion: nil)
                 }
             }

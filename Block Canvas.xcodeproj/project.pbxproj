@@ -11,6 +11,7 @@
 		DB08647E2ABC3D04004598D6 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB08647D2ABC3D04004598D6 /* Settings.storyboard */; };
 		DB0864822ABC4063004598D6 /* WatchlistPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0864812ABC4063004598D6 /* WatchlistPageViewController.swift */; };
 		DB0864842ABC435F004598D6 /* WatchlistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0864832ABC435F004598D6 /* WatchlistCell.swift */; };
+		DB0FA4C72ABEB9AF00272E7A /* JGProgressHUDWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0FA4C62ABEB9AF00272E7A /* JGProgressHUDWrapper.swift */; };
 		DB1DBD202AB1D45A00F74B64 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DBD1F2AB1D45A00F74B64 /* AppDelegate.swift */; };
 		DB1DBD222AB1D45A00F74B64 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DBD212AB1D45A00F74B64 /* SceneDelegate.swift */; };
 		DB1DBD242AB1D45A00F74B64 /* DiscoverPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DBD232AB1D45A00F74B64 /* DiscoverPageViewController.swift */; };
@@ -83,6 +84,7 @@
 		DB08647D2ABC3D04004598D6 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		DB0864812ABC4063004598D6 /* WatchlistPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistPageViewController.swift; sourceTree = "<group>"; };
 		DB0864832ABC435F004598D6 /* WatchlistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistCell.swift; sourceTree = "<group>"; };
+		DB0FA4C62ABEB9AF00272E7A /* JGProgressHUDWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JGProgressHUDWrapper.swift; sourceTree = "<group>"; };
 		DB1DBD1C2AB1D45A00F74B64 /* Block Canvas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Block Canvas.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB1DBD1F2AB1D45A00F74B64 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DB1DBD212AB1D45A00F74B64 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -168,6 +170,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		DB0FA4C52ABEB97F00272E7A /* Third Party Wrappers */ = {
+			isa = PBXGroup;
+			children = (
+				DBB9BDBB2AB44E07002A5FBC /* KingfisherWrapper.swift */,
+				DB0FA4C62ABEB9AF00272E7A /* JGProgressHUDWrapper.swift */,
+			);
+			path = "Third Party Wrappers";
+			sourceTree = "<group>";
+		};
 		DB1DBD132AB1D45A00F74B64 = {
 			isa = PBXGroup;
 			children = (
@@ -192,6 +203,7 @@
 		DB1DBD1E2AB1D45A00F74B64 /* Block Canvas */ = {
 			isa = PBXGroup;
 			children = (
+				DB0FA4C52ABEB97F00272E7A /* Third Party Wrappers */,
 				DBA57DCC2ABC32AF00C1CE30 /* WatchlistItem+CoreDataClass.swift */,
 				DBA57DCD2ABC32AF00C1CE30 /* WatchlistItem+CoreDataProperties.swift */,
 				DBF567942AB86B55007BFDA1 /* Block Canvas.entitlements */,
@@ -203,7 +215,6 @@
 				DB1DBD212AB1D45A00F74B64 /* SceneDelegate.swift */,
 				DBA478762AB2B29C0014E825 /* BCTabBarController.swift */,
 				DBA478782AB2B29C0014E825 /* UIStoryboard+Extension.swift */,
-				DBB9BDBB2AB44E07002A5FBC /* KingfisherWrapper.swift */,
 				DB1DBD282AB1D45B00F74B64 /* Assets.xcassets */,
 				DB1DBD2A2AB1D45B00F74B64 /* LaunchScreen.storyboard */,
 				DB1DBD2D2AB1D45B00F74B64 /* Info.plist */,
@@ -470,6 +481,7 @@
 				DB0864842ABC435F004598D6 /* WatchlistCell.swift in Sources */,
 				DBB9BDBC2AB44E07002A5FBC /* KingfisherWrapper.swift in Sources */,
 				DBB880322AB4B33600526E40 /* DetailPageViewController.swift in Sources */,
+				DB0FA4C72ABEB9AF00272E7A /* JGProgressHUDWrapper.swift in Sources */,
 				DBF45F472AB6E870002E5D31 /* ARDisplayViewController.swift in Sources */,
 				DB9E028E2AB7499100285E63 /* WalletListCell.swift in Sources */,
 				DB0864822ABC4063004598D6 /* WatchlistPageViewController.swift in Sources */,

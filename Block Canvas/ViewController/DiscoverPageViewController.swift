@@ -61,8 +61,13 @@ class DiscoverPageViewController: UIViewController {
         getTrending()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+    }
+    
     private func getTrending() {
         trendingNFTs.removeAll()
+        BCProgressHUD.show()
         let group = DispatchGroup()
         func fetchToken() {
             group.enter()
@@ -90,7 +95,9 @@ class DiscoverPageViewController: UIViewController {
             request.httpBody = jsonData
             
             let task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
-                defer { group.leave() }
+                defer {
+                    group.leave()
+                }
                 guard let data = data else { return }
                 do {
                     let decoder = JSONDecoder()
@@ -119,10 +126,12 @@ class DiscoverPageViewController: UIViewController {
         
         group.notify(queue: .main) { [weak self] in
             self?.discoverCollectionView.reloadData()
+            BCProgressHUD.dismiss()
         }
     }
     
     private func searchNFT(keyword: String) {
+        BCProgressHUD.show(text: "Searching")
         let apiKey = Bundle.main.object(forInfoDictionaryKey: "NFTPort_API_Key") as? String
         
         guard let key = apiKey, !key.isEmpty else {
@@ -142,11 +151,13 @@ class DiscoverPageViewController: UIViewController {
             let task = session.dataTask(with: request) { [weak self] data, response, error in
                 if let error = error {
                     print(error)
+                    BCProgressHUD.showFailure()
                     return
                 }
                 
                 guard let data = data else {
                     print("No data.")
+                    BCProgressHUD.showFailure(text: "No NFT found.")
                     return
                 }
                 
@@ -166,6 +177,7 @@ class DiscoverPageViewController: UIViewController {
                 DispatchQueue.main.async { [weak self] in
                     self?.discoverCollectionView.reloadData()
                 }
+                BCProgressHUD.dismiss()
             }
             task.resume()
         }
@@ -175,8 +187,10 @@ class DiscoverPageViewController: UIViewController {
     }
     
     private func fetchRecommendation() {
+        BCProgressHUD.show(text: "AI calculating...")
         findUserNFTs()
         trendingNFTs.removeAll()
+        searchedNFTs.removeAll()
         recommendedNFTs.removeAll()
         getRecommendationFromGPT()
         semaphore.wait()
@@ -215,7 +229,7 @@ class DiscoverPageViewController: UIViewController {
            Collection Name: \(randomNFTs)
            Hosted blockchain: Ethereum
            
-           Please suggest NFT collections that share similarities with the provided collection. Suggest NFT collections should be on Ethereum blockchain. Please suggest 5 NFT collections. Provide only the collection names in bullet points and not any other responses. Please not to mention the artist's name. Please do not include double quotes for the response. Please also do not include symbols such as colon, semicolon or dash.
+           Please suggest NFT collections that share similarities with the provided collection. Suggest NFT collections should be on Ethereum blockchain. Please suggest 5 NFT collections. Provide only the collection names in bullet pointsc (not numbered lists) and not any other responses. Please not to mention the artist's name. Please do not include double quotes for the response. Please also do not include symbols such as colon, semicolon or dash.
            """]
             ])
             request.httpBody = try? JSONEncoder().encode(openAIBody)
@@ -293,11 +307,13 @@ class DiscoverPageViewController: UIViewController {
             let task = session.dataTask(with: request) { [weak self] data, response, error in
                 if let error = error {
                     print(error)
+                    BCProgressHUD.showFailure()
                     return
                 }
                 
                 guard let data = data else {
                     print("No data.")
+                    BCProgressHUD.showFailure()
                     return
                 }
                 
@@ -318,6 +334,7 @@ class DiscoverPageViewController: UIViewController {
                 DispatchQueue.main.async { [weak self] in
                     self?.discoverCollectionView.reloadData()
                 }
+                BCProgressHUD.dismiss()
             }
             task.resume()
         }
@@ -407,7 +424,10 @@ extension DiscoverPageViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText == "" {
             isSearching = false
-            getTrending()
+            searchedNFTs.removeAll()
+            DispatchQueue.main.async {
+                self.discoverCollectionView.reloadData()
+            }
         }
     }
 }
