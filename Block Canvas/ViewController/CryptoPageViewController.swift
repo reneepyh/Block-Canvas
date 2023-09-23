@@ -158,6 +158,7 @@ class CryptoPageViewController: UIViewController {
     }
     
     private func getEthHistoryPrice() {
+        BCProgressHUD.show()
         if let url = URL(string: "https://api.coincap.io/v2/assets/ethereum/history?interval=m1") {
             var request = URLRequest(url: url)
             request.setValue("deflate", forHTTPHeaderField: "Accept-Encoding")
@@ -168,11 +169,13 @@ class CryptoPageViewController: UIViewController {
             let task = session.dataTask(with: request) { [weak self] data, response, error in
                 if let error = error {
                     print(error)
+                    BCProgressHUD.showFailure()
                     return
                 }
                 
                 guard let data = data else {
                     print("No data.")
+                    BCProgressHUD.showFailure()
                     return
                 }
                 
@@ -192,9 +195,11 @@ class CryptoPageViewController: UIViewController {
                 DispatchQueue.main.async { [weak self] in
                     guard let ethPriceData = self?.ethPriceData else {
                         print("Cannot fetch ethPriceData.")
+                        BCProgressHUD.showFailure()
                         return
                     }
                     self?.hostingController.rootView = EthPriceChart(ethPriceData: ethPriceData)
+                    BCProgressHUD.dismiss()
                 }
             }
             task.resume()
