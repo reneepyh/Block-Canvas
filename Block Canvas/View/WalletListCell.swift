@@ -9,14 +9,11 @@ import UIKit
 import SnapKit
 
 class WalletListCell: UITableViewCell {
-
     static let reuseIdentifier = String(describing: WalletListCell.self)
     
-    let addressLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 16)
-        label.numberOfLines = 0
-        return label
+    let walletNameTextField: UITextField = {
+        let textField = UITextField()
+        return textField
     }()
     
     let balanceLabel: UILabel = {
@@ -27,14 +24,21 @@ class WalletListCell: UITableViewCell {
         return label
     }()
     
+    let addressLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 16)
+        label.numberOfLines = 0
+        return label
+    }()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
     }
     
     private func setupUI() {
-        contentView.addSubview(addressLabel)
-        addressLabel.snp.makeConstraints { make in
+        contentView.addSubview(walletNameTextField)
+        walletNameTextField.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top).offset(12)
             make.left.equalTo(contentView.snp.left).offset(16)
             make.right.equalTo(contentView.snp.right).offset(-16)
@@ -42,7 +46,14 @@ class WalletListCell: UITableViewCell {
         
         contentView.addSubview(balanceLabel)
         balanceLabel.snp.makeConstraints { make in
-            make.top.equalTo(addressLabel.snp.bottom).offset(8)
+            make.top.equalTo(walletNameTextField.snp.bottom).offset(8)
+            make.left.equalTo(contentView.snp.left).offset(16)
+            make.right.equalTo(contentView.snp.right).offset(-16)
+        }
+        
+        contentView.addSubview(addressLabel)
+        addressLabel.snp.makeConstraints { make in
+            make.top.equalTo(balanceLabel.snp.bottom).offset(8)
             make.left.equalTo(contentView.snp.left).offset(16)
             make.right.equalTo(contentView.snp.right).offset(-16)
             make.bottom.equalTo(contentView.snp.bottom).offset(-12)

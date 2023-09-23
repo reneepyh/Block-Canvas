@@ -281,7 +281,7 @@ class DiscoverPageViewController: UIViewController {
             return
         }
         
-        if let url = URL(string: "https://api.nftport.xyz/v0/search?text=\(collectionName)&chain=ethereum&page_number=1&page_size=5&order_by=mint_date&sort_order=asc") {
+        if let url = URL(string: "https://api.nftport.xyz/v0/search?text=\(collectionName)&chain=ethereum&page_number=1&page_size=5&order_by=mint_date&sort_order=desc") {
             
             var request = URLRequest(url: url)
             request.setValue("application/json", forHTTPHeaderField: "Accept")
@@ -431,12 +431,17 @@ extension DiscoverPageViewController {
     }
     
     @objc func changePage(sender: UIButton) {
+        let queue = DispatchQueue(label: "concurrentQueue", attributes: .concurrent)
         if sender.tag == 0 {
             selectedPage = 0
-            getTrending()
+            queue.async { [weak self] in
+                self?.getTrending()
+            }
         } else {
             selectedPage = 1
-            fetchRecommendation()
+            queue.async { [weak self] in
+                self?.fetchRecommendation()
+            }
         }
         // 動畫
         underlineViewWidthConstraint.isActive = false

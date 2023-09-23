@@ -13,7 +13,7 @@ class PortfolioListViewController: UIViewController {
     
     private let userDefaults = UserDefaults.standard
     
-    private var ethWallets: [String] = ["0x423cE4833b42b48611C662cFdc70929E3139b009"]
+    private var ethWallets: [[String: String]] = []
     
     private var balance: [String: String] = [:]
     
@@ -31,14 +31,19 @@ class PortfolioListViewController: UIViewController {
         super.viewWillAppear(true)
         findEthWallets()
         balance.removeAll()
-        ethWallets.forEach { address in
-            fetchWalletBalance(address: address)
+        ethWallets.forEach { wallet in
+            fetchWalletBalance(address: wallet["address"] ?? "")
         }
     }
     
     private func findEthWallets() {
-        ethWallets = ["0x423cE4833b42b48611C662cFdc70929E3139b009"]
-        ethWallets += UserDefaults.standard.object(forKey: "ethWallets") as? [String] ?? []
+        let savedWallets = UserDefaults.standard.object(forKey: "ethWallets") as? [[String: String]] ?? []
+        
+        if savedWallets.isEmpty {
+            ethWallets = [["address" : "0x423cE4833b42b48611C662cFdc70929E3139b009", "name": "My Wallet"]]
+        } else {
+            ethWallets = savedWallets
+        }
         // 內建一個錢包地址，先拿掉以下判斷
         //        if ethWallets.count == 0 {
         //            guard
@@ -135,12 +140,15 @@ extension PortfolioListViewController: UITableViewDelegate, UITableViewDataSourc
             fatalError("Cannot create wallet list cell.")
         }
         
-        let address = ethWallets[indexPath.row]
+        let address = ethWallets[indexPath.row]["address"]
         walletCell.addressLabel.text = address
+        walletCell.walletNameTextField.delegate = self
+        walletCell.walletNameTextField.text = ethWallets[indexPath.row]["name"]
+        walletCell.walletNameTextField.isUserInteractionEnabled = false
         if balance.count != ethWallets.count {
             walletCell.balanceLabel.text = ""
         } else {
-            if let balance = balance[address] {
+            if let balance = balance[address ?? ""] {
                 walletCell.balanceLabel.text = "\(balance) ETH"
             }
         }
@@ -157,6 +165,43 @@ extension PortfolioListViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "showPortfolio", sender: ethWallets[indexPath.row])
+        performSegue(withIdentifier: "showPortfolio", sender: ethWallets[indexPath.row]["address"])
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = UIContextualAction(style: .destructive, title: "") { [weak self] (action, view, completionHandler) in
+            self?.ethWallets.remove(at: indexPath.row)
+            self?.userDefaults.set(self?.ethWallets, forKey: "ethWallets")
+            self?.portfolioListTableView.deleteRows(at: [indexPath], with: .left)
+        }
+        delete.image = UIImage(systemName: "trash")
+        
+        let modify = UIContextualAction(style: .normal, title: "") { [weak self] (action, view, completionHandler) in
+            completionHandler(true)
+            if let walletListCell = self?.portfolioListTableView.cellForRow(at: indexPath) as? WalletListCell {
+                walletListCell.walletNameTextField.isUserInteractionEnabled = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    walletListCell.walletNameTextField.becomeFirstResponder()
+                }
+            }
+        }
+        modify.backgroundColor = .systemTeal
+        modify.image = UIImage(systemName: "pencil")
+        
+        let swipe = UISwipeActionsConfiguration(actions: [delete, modify])
+        swipe.performsFirstActionWithFullSwipe = false
+        return swipe
+    }
+}
+
+extension PortfolioListViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if let newName = textField.text, !newName.isEmpty, let walletListCell = textField.superview?.superview as? WalletListCell, let indexPath = portfolioListTableView.indexPath(for: walletListCell) {
+            ethWallets[indexPath.row]["name"] = newName
+            userDefaults.set(ethWallets, forKey: "ethWallets")
+        }
+        textField.resignFirstResponder()
+        textField.isUserInteractionEnabled = false
+        return true
     }
 }
