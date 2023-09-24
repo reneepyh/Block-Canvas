@@ -13,12 +13,14 @@ class DiscoverCollectionCell: UICollectionViewCell {
     
     let imageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
     let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16)
+        label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
         return label
     }()
@@ -39,7 +41,7 @@ class DiscoverCollectionCell: UICollectionViewCell {
         
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom).offset(6)
+            make.top.equalTo(imageView.snp.bottom).offset(8)
             make.leading.equalTo(contentView.snp.leading)
         }
     }

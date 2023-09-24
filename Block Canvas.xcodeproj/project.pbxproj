@@ -37,6 +37,7 @@
 		DBA57DD22ABC33AB00C1CE30 /* WatchlistManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA57DD12ABC33AB00C1CE30 /* WatchlistManager.swift */; };
 		DBB880322AB4B33600526E40 /* DetailPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB880312AB4B33600526E40 /* DetailPageViewController.swift */; };
 		DBB9BDBC2AB44E07002A5FBC /* KingfisherWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB9BDBB2AB44E07002A5FBC /* KingfisherWrapper.swift */; };
+		DBC6E31A2AC036E200B40514 /* WaterFallFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC6E3192AC036E200B40514 /* WaterFallFlowLayout.swift */; };
 		DBF45F472AB6E870002E5D31 /* ARDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF45F462AB6E870002E5D31 /* ARDisplayViewController.swift */; };
 		DBF5677F2AB85632007BFDA1 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBF5677E2AB85632007BFDA1 /* WidgetKit.framework */; };
 		DBF567812AB85632007BFDA1 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBF567802AB85632007BFDA1 /* SwiftUI.framework */; };
@@ -113,6 +114,7 @@
 		DBA57DD12ABC33AB00C1CE30 /* WatchlistManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistManager.swift; sourceTree = "<group>"; };
 		DBB880312AB4B33600526E40 /* DetailPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPageViewController.swift; sourceTree = "<group>"; };
 		DBB9BDBB2AB44E07002A5FBC /* KingfisherWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingfisherWrapper.swift; sourceTree = "<group>"; };
+		DBC6E3192AC036E200B40514 /* WaterFallFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterFallFlowLayout.swift; sourceTree = "<group>"; };
 		DBF45F462AB6E870002E5D31 /* ARDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARDisplayViewController.swift; sourceTree = "<group>"; };
 		DBF5677D2AB85632007BFDA1 /* NFTWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NFTWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBF5677E2AB85632007BFDA1 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
@@ -248,6 +250,7 @@
 				DB4BFB2E2AB6AA1300187B1C /* PortfolioDisplayView.swift */,
 				DB9E028D2AB7499100285E63 /* WalletListCell.swift */,
 				DB0864832ABC435F004598D6 /* WatchlistCell.swift */,
+				DBC6E3192AC036E200B40514 /* WaterFallFlowLayout.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -457,6 +460,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DBC6E31A2AC036E200B40514 /* WaterFallFlowLayout.swift in Sources */,
 				DBA57DC32ABC2F4200C1CE30 /* WatchlistManager.xcdatamodeld in Sources */,
 				DBA478792AB2B29C0014E825 /* BCTabBarController.swift in Sources */,
 				DB9E028C2AB7408E00285E63 /* PortfolioListViewController.swift in Sources */,
