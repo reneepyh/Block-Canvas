@@ -10,7 +10,6 @@ import SwiftUI
 import SnapKit
 
 class CryptoPageViewController: UIViewController {
-    
     private var ethPriceData: [EthHistoryPriceData] = []
     
     private var ethCurrentPrice: String?
@@ -19,25 +18,38 @@ class CryptoPageViewController: UIViewController {
     
     private var ethGasFee: String?
     
+    private var previousEthPrice: Double?
+    
     private var updateTimer: Timer?
     
     private let hostingController = UIHostingController(rootView: EthPriceChart())
     
-    private let priceLabel: UILabel = {
+    private let ethLabel: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 48)
+        label.font = .boldSystemFont(ofSize: 20)
+        label.text = "Ethereum"
         return label
     }()
     
-    private let priceChangeLabel: UILabel = {
+    private let priceLabel: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 20)
+        label.font = .boldSystemFont(ofSize: 38)
         return label
+    }()
+    
+    private let priceChangeButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
+        button.setTitleColor(.white, for: .normal)
+        button.layer.cornerRadius = 8
+        button.isUserInteractionEnabled = false
+        button.clipsToBounds = true
+        return button
     }()
     
     private let gasFeeLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 20)
+        label.font = .systemFont(ofSize: 14)
         return label
     }()
     
@@ -61,10 +73,9 @@ class CryptoPageViewController: UIViewController {
         updateTimer?.invalidate()
         ethPriceData = []
     }
-        
+    
     private func startTimer() {
         updateTimer?.invalidate()
-
         updateTimer = Timer.scheduledTimer(timeInterval: 4.0, target: self, selector: #selector(updatePriceLabel), userInfo: nil, repeats: true)
     }
     
@@ -99,9 +110,20 @@ class CryptoPageViewController: UIViewController {
                 
                 do {
                     let ethCurrentPrice = try decoder.decode(EthCurrentPriceData.self, from: data)
-                    let doubled = Double(ethCurrentPrice.price)
-                    let floored = floor((doubled ?? 0) * 100) / 100
-                    self?.ethCurrentPrice = String(floored)
+                    let doubledCurrentPrice = Double(ethCurrentPrice.price)
+                    let floored = floor((doubledCurrentPrice ?? 0) * 100) / 100
+                    self?.ethCurrentPrice = "US$\(String(floored))"
+                    
+                    if let previousEthPrice = self?.previousEthPrice {
+                        if let doubledCurrentPrice = doubledCurrentPrice {
+                            if doubledCurrentPrice > previousEthPrice {
+                                self?.animatePriceLabelColor(to: .systemGreen)
+                            } else if doubledCurrentPrice < previousEthPrice {
+                                self?.animatePriceLabelColor(to: .systemPink)
+                            }
+                        }
+                    }
+                    self?.previousEthPrice = doubledCurrentPrice
                 }
                 catch {
                     print("Error in JSON decoding.")
@@ -156,7 +178,36 @@ class CryptoPageViewController: UIViewController {
                     print("Error in JSON decoding.")
                 }
                 DispatchQueue.main.async { [weak self] in
-                    self?.priceChangeLabel.text = self?.ethPriceChange
+                    if let priceChange = self?.ethPriceChange, let change = Double(priceChange) {
+                        if change > 0 {
+                            var config = UIButton.Configuration.filled()
+                            config.title = "\(priceChange)%"
+                            let size = UIImage.SymbolConfiguration(pointSize: 8)
+                            config.image = UIImage(systemName: "arrowtriangle.up.fill", withConfiguration: size)
+                            config.titlePadding = 4
+                            config.imagePadding = 4
+                            config.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 6, bottom: 4, trailing: 6)
+                            config.background.backgroundColor = .systemGreen
+                            self?.priceChangeButton.configuration = config
+                        } else if change < 0 {
+                            var config = UIButton.Configuration.filled()
+                            config.title = "\(priceChange)%"
+                            let size = UIImage.SymbolConfiguration(pointSize: 8)
+                            config.image = UIImage(systemName: "arrowtriangle.up.fill", withConfiguration: size)
+                            config.titlePadding = 4
+                            config.imagePadding = 4
+                            config.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 6, bottom: 4, trailing: 6)
+                            config.background.backgroundColor = .systemRed
+                            self?.priceChangeButton.configuration = config
+                        } else {
+                            var config = UIButton.Configuration.filled()
+                            config.title = "\(priceChange)%"
+                            config.titlePadding = 4
+                            config.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4)
+                            config.background.backgroundColor = .black
+                            self?.priceChangeButton.configuration = config
+                        }
+                    }
                 }
             }
             task.resume()
@@ -266,23 +317,28 @@ class CryptoPageViewController: UIViewController {
     }
     
     private func setupLabelUI() {
-        view.addSubview(priceLabel)
-        priceLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.snp.top).offset(100)
+        view.addSubview(ethLabel)
+        ethLabel.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(4)
             make.left.equalTo(view.snp.left).offset(16)
         }
         
-        view.addSubview(priceChangeLabel)
-        priceChangeLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(priceLabel)
+        view.addSubview(priceLabel)
+        priceLabel.snp.makeConstraints { make in
+            make.top.equalTo(ethLabel.snp.bottom).offset(4)
+            make.left.equalTo(view.snp.left).offset(16)
+        }
+        
+        view.addSubview(priceChangeButton)
+        priceChangeButton.snp.makeConstraints { make in
+            make.bottom.equalTo(priceLabel.snp.bottom)
             make.right.equalTo(view.snp.right).offset(-16)
         }
         
         view.addSubview(gasFeeLabel)
         gasFeeLabel.snp.makeConstraints { make in
-            make.top.equalTo(priceLabel.snp.bottom).offset(-4)
+            make.top.equalTo(priceLabel.snp.bottom).offset(4)
             make.left.equalTo(view.snp.left).offset(18)
-            make.bottom.equalTo(view.snp.top).offset(200)
         }
     }
     
@@ -298,13 +354,28 @@ class CryptoPageViewController: UIViewController {
         view.addSubview(ethPriceChart)
         
         ethPriceChart.snp.makeConstraints { make in
-            make.top.equalTo(gasFeeLabel.snp.bottom)
-            make.left.equalTo(view.snp.left)
-            make.right.equalTo(view.snp.right)
+            make.top.equalTo(gasFeeLabel.snp.bottom).offset(8)
+            make.left.equalTo(view.snp.left).offset(8)
+            make.right.equalTo(view.snp.right).offset(-8)
             make.bottom.equalTo(view.snp.bottom).offset(-100)
+            make.height.greaterThanOrEqualTo(350)
         }
         
         hostingController.didMove(toParent: self)
+    }
+    
+    private func animatePriceLabelColor(to color: UIColor) {
+        DispatchQueue.main.async {
+            // Change the color immediately to the new value
+            self.priceLabel.textColor = color
+            
+            // After a delay, fade back to black
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                UIView.transition(with: self.priceLabel, duration: 0.5, options: .transitionCrossDissolve, animations: {
+                    self.priceLabel.textColor = .label
+                }, completion: nil)
+            }
+        }
     }
     
     @objc func updatePriceLabel() {
