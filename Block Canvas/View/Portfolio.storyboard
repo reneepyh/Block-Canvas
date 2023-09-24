@@ -25,7 +25,7 @@
             </objects>
             <point key="canvasLocation" x="3463" y="710"/>
         </scene>
-        <!--Portfolio-->
+        <!--portfolio.-->
         <scene sceneID="dpr-bJ-s8y">
             <objects>
                 <viewController storyboardIdentifier="PortfolioListViewController" id="KYF-Ir-Lcb" customClass="PortfolioListViewController" customModule="Block_Canvas" customModuleProvider="target" sceneMemberID="viewController">
@@ -57,7 +57,7 @@
                             <constraint firstItem="pwT-bE-kcw" firstAttribute="top" secondItem="VD9-hi-fQR" secondAttribute="top" id="uev-2w-AzC"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Portfolio" id="eCi-bw-7iG"/>
+                    <navigationItem key="navigationItem" title="portfolio." id="eCi-bw-7iG"/>
                     <connections>
                         <outlet property="portfolioListTableView" destination="pwT-bE-kcw" id="EPW-xr-z2H"/>
                         <segue destination="60a-Rn-P4F" kind="show" identifier="showPortfolio" id="rIf-tY-VtM"/>

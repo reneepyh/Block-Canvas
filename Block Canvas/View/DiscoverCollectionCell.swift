@@ -19,8 +19,9 @@ class DiscoverCollectionCell: UICollectionViewCell {
     
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 16)
+        label.font = .systemFont(ofSize: 14)
         label.lineBreakMode = .byWordWrapping
+        label.textColor = .secondary
         label.numberOfLines = 0
         return label
     }()
@@ -44,5 +45,11 @@ class DiscoverCollectionCell: UICollectionViewCell {
             make.top.equalTo(imageView.snp.bottom).offset(8)
             make.leading.equalTo(contentView.snp.leading)
         }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.image = nil
+        titleLabel.text = nil
     }
 }

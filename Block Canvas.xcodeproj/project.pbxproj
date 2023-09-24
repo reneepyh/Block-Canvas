@@ -25,6 +25,7 @@
 		DB6981912AB4608100BE0036 /* AddressInputPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6981902AB4608100BE0036 /* AddressInputPageViewController.swift */; };
 		DB6981932AB4648500BE0036 /* Portfolio.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6981922AB4648500BE0036 /* Portfolio.swift */; };
 		DB8C90F12AB43DCF005D75DF /* DiscoverCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8C90F02AB43DCF005D75DF /* DiscoverCollectionCell.swift */; };
+		DB98912F2AC0891700E41967 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB98912E2AC0891700E41967 /* UIColor+Extension.swift */; };
 		DB9DFB872AB7614C006D6CE1 /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9DFB862AB7614C006D6CE1 /* Wallet.swift */; };
 		DB9E028C2AB7408E00285E63 /* PortfolioListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9E028B2AB7408E00285E63 /* PortfolioListViewController.swift */; };
 		DB9E028E2AB7499100285E63 /* WalletListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9E028D2AB7499100285E63 /* WalletListCell.swift */; };
@@ -102,6 +103,7 @@
 		DB6981902AB4608100BE0036 /* AddressInputPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressInputPageViewController.swift; sourceTree = "<group>"; };
 		DB6981922AB4648500BE0036 /* Portfolio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Portfolio.swift; sourceTree = "<group>"; };
 		DB8C90F02AB43DCF005D75DF /* DiscoverCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverCollectionCell.swift; sourceTree = "<group>"; };
+		DB98912E2AC0891700E41967 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		DB9DFB862AB7614C006D6CE1 /* Wallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wallet.swift; sourceTree = "<group>"; };
 		DB9E028B2AB7408E00285E63 /* PortfolioListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioListViewController.swift; sourceTree = "<group>"; };
 		DB9E028D2AB7499100285E63 /* WalletListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletListCell.swift; sourceTree = "<group>"; };
@@ -217,6 +219,7 @@
 				DB1DBD212AB1D45A00F74B64 /* SceneDelegate.swift */,
 				DBA478762AB2B29C0014E825 /* BCTabBarController.swift */,
 				DBA478782AB2B29C0014E825 /* UIStoryboard+Extension.swift */,
+				DB98912E2AC0891700E41967 /* UIColor+Extension.swift */,
 				DB1DBD282AB1D45B00F74B64 /* Assets.xcassets */,
 				DB1DBD2A2AB1D45B00F74B64 /* LaunchScreen.storyboard */,
 				DB1DBD2D2AB1D45B00F74B64 /* Info.plist */,
@@ -468,6 +471,7 @@
 				DBF5678C2AB85633007BFDA1 /* NFTWidget.intentdefinition in Sources */,
 				DBA57DCF2ABC32AF00C1CE30 /* WatchlistItem+CoreDataProperties.swift in Sources */,
 				DB1DBD202AB1D45A00F74B64 /* AppDelegate.swift in Sources */,
+				DB98912F2AC0891700E41967 /* UIColor+Extension.swift in Sources */,
 				DBA57DCE2ABC32AF00C1CE30 /* WatchlistItem+CoreDataClass.swift in Sources */,
 				DB1DBD222AB1D45A00F74B64 /* SceneDelegate.swift in Sources */,
 				DBF567962AB8AB92007BFDA1 /* NFTWidget.swift in Sources */,

@@ -28,10 +28,6 @@ class DiscoverPageViewController: UIViewController {
     
     private var selectedPage: Int = 0
     
-    private let selectedColor = UIColor(red: 63/256, green: 58/256, blue: 58/256, alpha: 1)
-    
-    private let unselectedColor = UIColor(red: 136/256, green: 136/256, blue: 136/256, alpha: 1)
-    
     private let userDefaults = UserDefaults.standard
     
     private var userNFTs: [String] = []
@@ -54,21 +50,30 @@ class DiscoverPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        trendingButton.tintColor = selectedColor
-        forYouButton.tintColor = unselectedColor
+        setupUI()
         setupButtonTag()
         discoverCollectionView.dataSource = self
         discoverCollectionView.delegate = self
         nftSearchBar.delegate = self
         getTrending()
+    }
+    
+    private func setupUI() {
+        view.backgroundColor = .primary
+        underlineView.backgroundColor = .secondary
+        trendingButton.tintColor = .secondary
+        forYouButton.tintColor = .secondaryBlur
+        nftSearchBar.searchTextField.backgroundColor = .tertiary
+        nftSearchBar.searchTextField.textColor = .primary
+        discoverCollectionView.backgroundColor = .primary
+        
         let layout = WaterFallFlowLayout()
         layout.delegate = self
         layout.cols = 2
         discoverCollectionView.collectionViewLayout = layout
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+        
+        let navigationExtendHeight: UIEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
+        navigationController?.additionalSafeAreaInsets = navigationExtendHeight
     }
     
     private func getTrending() {
@@ -331,7 +336,11 @@ class DiscoverPageViewController: UIViewController {
             request.setValue(key, forHTTPHeaderField: "Authorization")
             request.httpMethod = "GET"
             
-            let session = URLSession.shared
+            let configuration = URLSessionConfiguration.default
+            configuration.timeoutIntervalForRequest = 2.0
+            configuration.timeoutIntervalForResource = 2.0
+            
+            let session = URLSession(configuration: configuration)
             
             let task = session.dataTask(with: request) { [weak self] data, response, error in
                 defer { self?.group.leave() }
@@ -406,7 +415,7 @@ extension DiscoverPageViewController: UICollectionViewDelegateFlowLayout, UIColl
     }
     
     func waterFlowLayout(_ waterFlowLayout: WaterFallFlowLayout, itemHeight indexPath: IndexPath) -> CGFloat {
-        return CGFloat.random(in: 260...420)
+        return CGFloat.random(in: 260...410)
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -511,7 +520,7 @@ extension DiscoverPageViewController {
     }
     
     private func updateButtonColors(for tag: Int) {
-        trendingButton.tintColor = tag == 0 ? selectedColor : unselectedColor
-        forYouButton.tintColor = tag == 1 ? selectedColor : unselectedColor
+        trendingButton.tintColor = tag == 0 ? .secondary : .secondaryBlur
+        forYouButton.tintColor = tag == 1 ? .secondary : .secondaryBlur
     }
 }
