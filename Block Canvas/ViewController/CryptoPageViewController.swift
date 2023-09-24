@@ -19,13 +19,15 @@ class CryptoPageViewController: UIViewController {
     
     private var ethGasFee: String?
     
+    private var previousEthPrice: Double?
+    
     private var updateTimer: Timer?
     
     private let hostingController = UIHostingController(rootView: EthPriceChart())
     
     private let priceLabel: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 48)
+        label.font = .boldSystemFont(ofSize: 38)
         return label
     }()
     
@@ -64,7 +66,6 @@ class CryptoPageViewController: UIViewController {
         
     private func startTimer() {
         updateTimer?.invalidate()
-
         updateTimer = Timer.scheduledTimer(timeInterval: 4.0, target: self, selector: #selector(updatePriceLabel), userInfo: nil, repeats: true)
     }
     
@@ -99,9 +100,20 @@ class CryptoPageViewController: UIViewController {
                 
                 do {
                     let ethCurrentPrice = try decoder.decode(EthCurrentPriceData.self, from: data)
-                    let doubled = Double(ethCurrentPrice.price)
-                    let floored = floor((doubled ?? 0) * 100) / 100
-                    self?.ethCurrentPrice = String(floored)
+                    let doubledCurrentPrice = Double(ethCurrentPrice.price)
+                    let floored = floor((doubledCurrentPrice ?? 0) * 100) / 100
+                    self?.ethCurrentPrice = "US$\(String(floored))"
+                    
+                    if let previousEthPrice = self?.previousEthPrice {
+                        if let doubledCurrentPrice = doubledCurrentPrice {
+                            if doubledCurrentPrice > previousEthPrice {
+                                self?.animatePriceLabelColor(to: .systemGreen)
+                            } else if doubledCurrentPrice < previousEthPrice {
+                                self?.animatePriceLabelColor(to: .systemPink)
+                            }
+                        }
+                    }
+                    self?.previousEthPrice = doubledCurrentPrice
                 }
                 catch {
                     print("Error in JSON decoding.")
@@ -305,6 +317,20 @@ class CryptoPageViewController: UIViewController {
         }
         
         hostingController.didMove(toParent: self)
+    }
+    
+    private func animatePriceLabelColor(to color: UIColor) {
+        DispatchQueue.main.async {
+            // Change the color immediately to the new value
+            self.priceLabel.textColor = color
+            
+            // After a delay, fade back to black
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                UIView.transition(with: self.priceLabel, duration: 0.5, options: .transitionCrossDissolve, animations: {
+                    self.priceLabel.textColor = .black
+                }, completion: nil)
+            }
+        }
     }
     
     @objc func updatePriceLabel() {
