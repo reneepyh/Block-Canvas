@@ -32,6 +32,12 @@ struct EthPriceChart: View {
                         .interpolationMethod(.monotone)
                     }
                 }
+                .chartXAxis {
+                    AxisMarks(preset: .aligned, values: .stride(by: .hour, count: 6)) { _ in
+                        AxisValueLabel(format: .dateTime.hour(.defaultDigits(amPM: .abbreviated)))
+                        AxisGridLine()
+                    }
+                }
                 .chartYAxis {
                     AxisMarks(position: .leading)
                  }
