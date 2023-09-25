@@ -67,7 +67,7 @@
             </objects>
             <point key="canvasLocation" x="1417.5572519083969" y="709.85915492957747"/>
         </scene>
-        <!--Portfolio-->
+        <!--add Wallet.-->
         <scene sceneID="hdx-Wu-3Cg">
             <objects>
                 <viewController id="60a-Rn-P4F" customClass="PortfolioDisplayViewController" customModule="Block_Canvas" customModuleProvider="target" sceneMemberID="viewController">
@@ -77,7 +77,7 @@
                         <viewLayoutGuide key="safeArea" id="Qfj-tY-feF"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Portfolio" id="5qQ-8l-NBi"/>
+                    <navigationItem key="navigationItem" title="add Wallet." id="5qQ-8l-NBi"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="waX-xU-n45" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
