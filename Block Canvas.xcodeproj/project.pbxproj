@@ -21,6 +21,9 @@
 		DB4422792AC2712C0038E34C /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4422782AC2712C0038E34C /* UIFont+Extension.swift */; };
 		DB4BFB2D2AB6A31C00187B1C /* PortfolioDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4BFB2C2AB6A31C00187B1C /* PortfolioDisplayViewController.swift */; };
 		DB4BFB2F2AB6AA1300187B1C /* PortfolioDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4BFB2E2AB6AA1300187B1C /* PortfolioDisplayView.swift */; };
+		DB5386A92AC2B4700077672B /* DetailMetadataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5386A82AC2B4700077672B /* DetailMetadataCell.swift */; };
+		DB5386AB2AC2BC170077672B /* DetailMetadataCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5386AA2AC2BC170077672B /* DetailMetadataCellView.swift */; };
+		DB5386AD2AC2C10F0077672B /* DetailImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5386AC2AC2C10F0077672B /* DetailImageCell.swift */; };
 		DB6853D12AB2F38400895EB9 /* Discover.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6853D02AB2F38400895EB9 /* Discover.swift */; };
 		DB69818F2AB4604600BE0036 /* Portfolio.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB69818E2AB4604600BE0036 /* Portfolio.storyboard */; };
 		DB6981912AB4608100BE0036 /* AddressInputPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6981902AB4608100BE0036 /* AddressInputPageViewController.swift */; };
@@ -99,6 +102,9 @@
 		DB4422782AC2712C0038E34C /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		DB4BFB2C2AB6A31C00187B1C /* PortfolioDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioDisplayViewController.swift; sourceTree = "<group>"; };
 		DB4BFB2E2AB6AA1300187B1C /* PortfolioDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioDisplayView.swift; sourceTree = "<group>"; };
+		DB5386A82AC2B4700077672B /* DetailMetadataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMetadataCell.swift; sourceTree = "<group>"; };
+		DB5386AA2AC2BC170077672B /* DetailMetadataCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMetadataCellView.swift; sourceTree = "<group>"; };
+		DB5386AC2AC2C10F0077672B /* DetailImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailImageCell.swift; sourceTree = "<group>"; };
 		DB6853CF2AB2ECA100895EB9 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		DB6853D02AB2F38400895EB9 /* Discover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Discover.swift; sourceTree = "<group>"; };
 		DB69818E2AB4604600BE0036 /* Portfolio.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Portfolio.storyboard; sourceTree = "<group>"; };
@@ -257,6 +263,9 @@
 				DB9E028D2AB7499100285E63 /* WalletListCell.swift */,
 				DB0864832ABC435F004598D6 /* WatchlistCell.swift */,
 				DBC6E3192AC036E200B40514 /* WaterFallFlowLayout.swift */,
+				DB5386A82AC2B4700077672B /* DetailMetadataCell.swift */,
+				DB5386AA2AC2BC170077672B /* DetailMetadataCellView.swift */,
+				DB5386AC2AC2C10F0077672B /* DetailImageCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -469,6 +478,7 @@
 				DBC6E31A2AC036E200B40514 /* WaterFallFlowLayout.swift in Sources */,
 				DBA57DC32ABC2F4200C1CE30 /* WatchlistManager.xcdatamodeld in Sources */,
 				DBA478792AB2B29C0014E825 /* BCTabBarController.swift in Sources */,
+				DB5386AD2AC2C10F0077672B /* DetailImageCell.swift in Sources */,
 				DB9E028C2AB7408E00285E63 /* PortfolioListViewController.swift in Sources */,
 				DB1DBD242AB1D45A00F74B64 /* DiscoverPageViewController.swift in Sources */,
 				DBF5678C2AB85633007BFDA1 /* NFTWidget.intentdefinition in Sources */,
@@ -492,12 +502,14 @@
 				DB6981912AB4608100BE0036 /* AddressInputPageViewController.swift in Sources */,
 				DB0864842ABC435F004598D6 /* WatchlistCell.swift in Sources */,
 				DBB9BDBC2AB44E07002A5FBC /* KingfisherWrapper.swift in Sources */,
+				DB5386AB2AC2BC170077672B /* DetailMetadataCellView.swift in Sources */,
 				DBB880322AB4B33600526E40 /* DetailPageViewController.swift in Sources */,
 				DB0FA4C72ABEB9AF00272E7A /* JGProgressHUDWrapper.swift in Sources */,
 				DBF45F472AB6E870002E5D31 /* ARDisplayViewController.swift in Sources */,
 				DB9E028E2AB7499100285E63 /* WalletListCell.swift in Sources */,
 				DB0864822ABC4063004598D6 /* WatchlistPageViewController.swift in Sources */,
 				DBF619E32AB59C8400687F13 /* EthPriceChartView.swift in Sources */,
+				DB5386A92AC2B4700077672B /* DetailMetadataCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

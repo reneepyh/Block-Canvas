@@ -25,6 +25,17 @@ class PortfolioDisplayViewController: UIViewController {
         getEthNFTsByWallet()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        setupUI()
+    }
+    
+    private func setupUI() {
+        view.backgroundColor = .primary
+        self.title = ""
+        let navigationExtendHeight: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        navigationController?.additionalSafeAreaInsets = navigationExtendHeight
+    }
+    
     private func getEthNFTsByWallet() {
         BCProgressHUD.show()
         guard let address = ethAddress else {

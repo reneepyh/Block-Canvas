@@ -35,6 +35,7 @@ class PortfolioListViewController: UIViewController {
     }
     
     private func setupUI() {
+        navigationController?.navigationBar.isHidden = false
         let navigationBar = self.navigationController?.navigationBar
         let navigationBarAppearance = UINavigationBarAppearance()
         navigationBarAppearance.configureWithOpaqueBackground()

@@ -49,24 +49,28 @@ struct PortfolioDisplay: View {
                                             .font(.headline)
                                             .font(.system(size: 20))
                                             .lineLimit(nil)
+                                            .foregroundColor(Color(uiColor: .tertiary))
                                         
                                         Text(nftInfo.artist)
                                             .frame(width: 300, alignment: .leading)
                                             .font(.subheadline)
                                             .font(.system(size: 16))
                                             .lineLimit(nil)
+                                            .foregroundColor(Color(uiColor: .secondary))
                                         
                                         Text(nftInfo.description)
                                             .frame(width: 300, alignment: .leading)
                                             .font(.caption)
-                                            .font(.system(size: 12))
+                                            .font(.system(size: 14))
                                             .lineLimit(nil)
+                                            .foregroundColor(Color(uiColor: .secondary))
                                         
                                         Text("Contract: \(nftInfo.contract)")
                                             .frame(width: 300, alignment: .leading)
                                             .font(.footnote)
-                                            .font(.system(size: 12))
+                                            .font(.system(size: 14))
                                             .lineLimit(nil)
+                                            .foregroundColor(Color(uiColor: .secondary))
                                     }
                                 }
                             }
@@ -78,6 +82,7 @@ struct PortfolioDisplay: View {
                 .padding(.horizontal, 150)
                 .padding(.top, 10)
             }
+            .background(Color.init(uiColor: .primary))
         }
     }
 }

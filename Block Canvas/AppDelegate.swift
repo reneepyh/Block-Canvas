@@ -27,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tabBarAppearance.backgroundColor = .primary
         UITabBar.appearance().standardAppearance = tabBarAppearance
         UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
+        tabBarAppearance.shadowColor = .clear
         
         return true
     }

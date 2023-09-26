@@ -26,6 +26,15 @@ class DetailPageViewController: UIViewController {
         return false
     }
     
+    private let detailTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.register(DetailImageCell.self, forCellReuseIdentifier: DetailImageCell.reuseIdentifier)
+        tableView.register(DetailMetadataCell.self, forCellReuseIdentifier: DetailMetadataCell.reuseIdentifier)
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 500
+        return tableView
+    }()
+    
     private let titleStackViewTitleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
@@ -49,83 +58,26 @@ class DetailPageViewController: UIViewController {
         return stackView
     }()
     
-    let imageView: UIImageView = {
-        let imageView = UIImageView()
-        return imageView
-    }()
-    
-    let titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 16)
-        label.numberOfLines = 0
-        return label
-    }()
-    
-    let artistLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 16)
-        label.numberOfLines = 0
-        return label
-    }()
-    
-    let descriptionLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 16)
-        label.numberOfLines = 0
-        return label
-    }()
-    
-    let contractLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 16)
-        label.numberOfLines = 0
-        return label
-    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        detailTableView.delegate = self
+        detailTableView.dataSource = self
         setupUI()
-        setupContent()
+        setupNavBarTitle()
         setupButtons()
     }
     
     private func setupUI() {
+        view.backgroundColor = .primary
+        detailTableView.backgroundColor = .primary
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleStackView)
         
-        view.addSubview(imageView)
-        imageView.snp.makeConstraints { make in
+        view.addSubview(detailTableView)
+        detailTableView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             make.leading.equalTo(view.snp.leading)
             make.trailing.equalTo(view.snp.trailing)
-            make.height.equalTo(550)
-        }
-        
-        view.addSubview(titleLabel)
-        titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom).offset(12)
-            make.leading.equalTo(view.snp.leading).offset(12)
-            make.trailing.equalTo(view.snp.trailing).offset(-12)
-        }
-        
-        view.addSubview(artistLabel)
-        artistLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(12)
-            make.leading.equalTo(view.snp.leading).offset(12)
-            make.trailing.equalTo(view.snp.trailing).offset(-12)
-        }
-        
-        view.addSubview(descriptionLabel)
-        descriptionLabel.snp.makeConstraints { make in
-            make.top.equalTo(artistLabel.snp.bottom).offset(12)
-            make.leading.equalTo(view.snp.leading).offset(12)
-            make.trailing.equalTo(view.snp.trailing).offset(-12)
-        }
-        
-        view.addSubview(contractLabel)
-        contractLabel.snp.makeConstraints { make in
-            make.top.equalTo(descriptionLabel.snp.bottom).offset(12)
-            make.leading.equalTo(view.snp.leading).offset(12)
-            make.trailing.equalTo(view.snp.trailing).offset(-12)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-12)
         }
     }
     
@@ -140,15 +92,8 @@ class DetailPageViewController: UIViewController {
         navigationItem.rightBarButtonItems = [closeButton, watchlistButton]
     }
     
-    private func setupContent() {
+    private func setupNavBarTitle() {
         if let discoverNFTMetadata = discoverNFTMetadata {
-            imageView.loadImage(discoverNFTMetadata.displayUri, placeHolder: UIImage(systemName: "circle.dotted"))
-            imageView.contentMode = .scaleAspectFit
-            titleLabel.text = discoverNFTMetadata.title
-            artistLabel.text = discoverNFTMetadata.authorName
-            contractLabel.text = "Contract: \(discoverNFTMetadata.contract)"
-            descriptionLabel.text = discoverNFTMetadata.nftDescription
-            
             titleStackViewTitleLabel.text = discoverNFTMetadata.title
             titleStackViewArtistLabel.text = discoverNFTMetadata.authorName
         }
@@ -173,5 +118,48 @@ class DetailPageViewController: UIViewController {
     
     @objc func closeButtonTapped() {
         navigationController?.popViewController(animated: true)
+    }
+}
+
+extension DetailPageViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        2
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.row == 0 {
+            guard let detailImageCell = detailTableView.dequeueReusableCell(withIdentifier: DetailImageCell.reuseIdentifier, for: indexPath) as? DetailImageCell else {
+                fatalError("Cannot create detail image cell.")
+            }
+            if let discoverNFTMetadata = discoverNFTMetadata {
+                detailImageCell.detailImageView.loadImage(discoverNFTMetadata.displayUri, placeHolder: UIImage(systemName: "circle.dotted"))
+                detailImageCell.detailImageView.contentMode = .scaleAspectFit
+                detailImageCell.descriptionLabel.text = discoverNFTMetadata.nftDescription
+            }
+            return detailImageCell
+            
+        } else {
+            guard let detailMetadataCell = detailTableView.dequeueReusableCell(withIdentifier: DetailMetadataCell.reuseIdentifier, for: indexPath) as? DetailMetadataCell else {
+                fatalError("Cannot create detail metadata cell.")
+            }
+            if let discoverNFTMetadata = discoverNFTMetadata {
+                detailMetadataCell.detailView.titleLabel.text = discoverNFTMetadata.title
+                detailMetadataCell.detailView.artistLabel.text = discoverNFTMetadata.authorName
+                detailMetadataCell.detailView.contractLabel.text = discoverNFTMetadata.contract
+            }
+            return detailMetadataCell
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        UIView.animate(withDuration: 0.3) {
+            self.detailTableView.performBatchUpdates(nil)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        if let cell = self.detailTableView.cellForRow(at: indexPath) as? DetailMetadataCell {
+            cell.hideDetailView()
+        }
     }
 }
