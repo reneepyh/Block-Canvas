@@ -37,7 +37,7 @@ class DiscoverCollectionCell: UICollectionViewCell {
             make.top.equalTo(contentView.snp.top)
             make.leading.equalTo(contentView.snp.leading)
             make.width.equalTo(170)
-            make.height.equalTo(contentView.snp.height).multipliedBy(0.9)
+            make.height.equalTo(contentView.snp.height).multipliedBy(0.86)
         }
         
         contentView.addSubview(titleLabel)

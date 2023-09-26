@@ -25,7 +25,7 @@ extension UIColor {
         self.init(red: red, green: green, blue: blue, alpha: alpha)
     }
     
-    static let primary = UIColor(hex: "332627", alpha: 1)
+    static let primary = UIColor(hex: "192200", alpha: 1)
     
     static let secondary = UIColor(hex: "EEE9D4", alpha: 1)
     

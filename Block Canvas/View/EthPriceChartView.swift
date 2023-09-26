@@ -38,9 +38,8 @@ struct EthPriceChart: View {
                 }
                 .chartXAxis {
                     AxisMarks(preset: .aligned, values: .stride(by: .hour, count: 6)) { _ in
-                        AxisValueLabel(format: .dateTime.hour(.defaultDigits(amPM: .abbreviated)))
+                        AxisValueLabel(format: .dateTime.hour(.defaultDigits(amPM: .abbreviated))).foregroundStyle(Color.init(uiColor: .secondaryBlur))
                         AxisGridLine().foregroundStyle(Color.init(uiColor: .secondaryBlur))
-                        AxisValueLabel().foregroundStyle(Color.init(uiColor: .secondaryBlur))
                     }
                 }
                 .chartYAxis {

@@ -26,6 +26,29 @@ class DetailPageViewController: UIViewController {
         return false
     }
     
+    private let titleStackViewTitleLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .left
+        label.textColor = .secondary
+        label.font = UIFont.main(ofSize: 16)
+        return label
+    }()
+    
+    private let titleStackViewArtistLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .left
+        label.textColor = .tertiary
+        label.font = UIFont.main(ofSize: 14)
+        return label
+    }()
+    
+    lazy var titleStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [self.titleStackViewTitleLabel, self.titleStackViewArtistLabel])
+        stackView.axis = .vertical
+        stackView.spacing = 4
+        return stackView
+    }()
+    
     let imageView: UIImageView = {
         let imageView = UIImageView()
         return imageView
@@ -67,6 +90,8 @@ class DetailPageViewController: UIViewController {
     }
     
     private func setupUI() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleStackView)
+        
         view.addSubview(imageView)
         imageView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
@@ -105,7 +130,7 @@ class DetailPageViewController: UIViewController {
     }
     
     private func watchlistButtonImage() -> UIImage? {
-        return isNFTInWatchlist ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
+        return isNFTInWatchlist ? UIImage(systemName: "heart.fill")?.withTintColor(.tertiary, renderingMode: .alwaysOriginal) : UIImage(systemName: "heart")
     }
     
     private func setupButtons() {
@@ -113,7 +138,6 @@ class DetailPageViewController: UIViewController {
         let watchlistButton = UIBarButtonItem(image: watchlistButtonImage(), style: .plain, target: self, action: #selector(watchlistButtonTapped))
         let closeButton = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(closeButtonTapped))
         navigationItem.rightBarButtonItems = [closeButton, watchlistButton]
-        
     }
     
     private func setupContent() {
@@ -124,6 +148,9 @@ class DetailPageViewController: UIViewController {
             artistLabel.text = discoverNFTMetadata.authorName
             contractLabel.text = "Contract: \(discoverNFTMetadata.contract)"
             descriptionLabel.text = discoverNFTMetadata.nftDescription
+            
+            titleStackViewTitleLabel.text = discoverNFTMetadata.title
+            titleStackViewArtistLabel.text = discoverNFTMetadata.authorName
         }
     }
     

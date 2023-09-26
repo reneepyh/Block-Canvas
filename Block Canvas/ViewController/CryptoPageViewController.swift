@@ -26,7 +26,7 @@ class CryptoPageViewController: UIViewController {
     
     private let ethLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Arial Rounded MT Bold", size: 20)
+        label.font = UIFont.main(ofSize: 20)
         label.text = "Ethereum"
         label.textColor = .tertiary
         return label
@@ -34,14 +34,14 @@ class CryptoPageViewController: UIViewController {
     
     private let priceLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Arial Rounded MT Bold", size: 38)
+        label.font = UIFont.main(ofSize: 38)
         label.textColor = .secondary
         return label
     }()
     
     private let priceChangeButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.titleLabel?.font = UIFont(name: "Arial Rounded MT Bold", size: 22)
+        button.titleLabel?.font = UIFont.main(ofSize: 22)
         button.setTitleColor(.secondary, for: .normal)
         button.layer.cornerRadius = 8
         button.isUserInteractionEnabled = false

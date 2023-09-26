@@ -39,7 +39,7 @@ class PortfolioListViewController: UIViewController {
         let navigationBarAppearance = UINavigationBarAppearance()
         navigationBarAppearance.configureWithOpaqueBackground()
         navigationBarAppearance.backgroundColor = .primary
-        navigationBarAppearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.tertiary, NSAttributedString.Key.font: UIFont(name: "Arial Rounded MT Bold", size: 32) ?? UIFont.systemFont(ofSize: 32, weight: .heavy)]
+        navigationBarAppearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.tertiary, NSAttributedString.Key.font: UIFont.main(ofSize: 28)]
         navigationBarAppearance.shadowColor = .clear
         navigationBar?.standardAppearance = navigationBarAppearance
         navigationBar?.scrollEdgeAppearance = navigationBarAppearance

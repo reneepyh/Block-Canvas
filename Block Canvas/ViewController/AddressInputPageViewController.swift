@@ -43,9 +43,8 @@ class AddressInputPageViewController: UIViewController {
         let button = UIButton(type: .custom)
         button.setTitle("Continue", for: .normal)
         button.setTitleColor(.primary, for: .normal)
-        button.titleLabel?.font = UIFont(name: "Arial Rounded MT Bold", size: 16)
+        button.titleLabel?.font = UIFont.main(ofSize: 16)
         var config = UIButton.Configuration.filled()
-//        config.contentInsets = NSDirectionalEdgeInsets(top: 6, leading: 20, bottom: 6, trailing: 20)
         config.cornerStyle = .capsule
         config.background.backgroundColor = .tertiary
         button.configuration = config
@@ -72,7 +71,7 @@ class AddressInputPageViewController: UIViewController {
         let navigationBarAppearance = UINavigationBarAppearance()
         navigationBarAppearance.configureWithOpaqueBackground()
         navigationBarAppearance.backgroundColor = .primary
-        navigationBarAppearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.secondary, NSAttributedString.Key.font: UIFont(name: "Arial Rounded MT Bold", size: 16) ?? UIFont.systemFont(ofSize: 16)]
+        navigationBarAppearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.secondary, NSAttributedString.Key.font: UIFont.main(ofSize: 16)]
         navigationBarAppearance.shadowColor = .clear
         navigationBar?.standardAppearance = navigationBarAppearance
         navigationBar?.scrollEdgeAppearance = navigationBarAppearance
@@ -83,7 +82,7 @@ class AddressInputPageViewController: UIViewController {
         view.addSubview(continueButton)
         view.addSubview(nameTextField)
         addressTextField.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(60)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(50)
             make.left.equalTo(view.snp.left).offset(16)
             make.right.equalTo(view.snp.right).offset(-16)
             make.height.equalTo(40)

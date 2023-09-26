@@ -14,13 +14,21 @@ class WatchlistPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        watchlistCollectionView.dataSource = self
-        watchlistCollectionView.delegate = self
+        setupUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         fetchWatchlist()
+    }
+    
+    private func setupUI() {
+        view.backgroundColor = .primary
+        watchlistCollectionView.dataSource = self
+        watchlistCollectionView.delegate = self
+        watchlistCollectionView.backgroundColor = .primary
+        let navigationExtendHeight: UIEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
+        navigationController?.additionalSafeAreaInsets = navigationExtendHeight
     }
     
     private func fetchWatchlist() {
