@@ -36,3 +36,21 @@ struct EthCurrentPriceData: Codable {
 struct EthPriceChange: Codable {
     let priceChangePercent: String
 }
+
+struct EthGasFee: Codable {
+    let status, message: String?
+    let result: Result?
+}
+
+struct Result: Codable {
+    let lastBlock, safeGasPrice, proposeGasPrice, fastGasPrice: String?
+    let suggestBaseFee, gasUsedRatio: String?
+
+    enum CodingKeys: String, CodingKey {
+        case lastBlock = "LastBlock"
+        case safeGasPrice = "SafeGasPrice"
+        case proposeGasPrice = "ProposeGasPrice"
+        case fastGasPrice = "FastGasPrice"
+        case suggestBaseFee, gasUsedRatio
+    }
+}

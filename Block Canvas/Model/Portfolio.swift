@@ -23,7 +23,6 @@ struct EthNFTMetadata: Codable {
     let tokenAddress, tokenID: String?
     let blockNumber, blockNumberMinted, tokenHash, amount: String?
     let possibleSpam: Bool?
-    let contractType: ContractType?
     let name, symbol: String?
     let tokenURI: String?
     let metadata: String?
@@ -49,7 +48,6 @@ struct EthNFTMetadata: Codable {
         case tokenHash = "token_hash"
         case amount
         case possibleSpam = "possible_spam"
-        case contractType = "contract_type"
         case name, symbol
         case tokenURI = "token_uri"
         case metadata
@@ -59,11 +57,6 @@ struct EthNFTMetadata: Codable {
         case media
         case verifiedCollection = "verified_collection"
     }
-}
-
-enum ContractType: String, Codable {
-    case erc1155 = "ERC1155"
-    case erc721 = "ERC721"
 }
 
 struct Metadata: Codable {
@@ -81,19 +74,10 @@ struct Metadata: Codable {
 }
 
 struct Media: Codable {
-    let mimetype: Mimetype?
-    let parentHash: String?
-    let status: Status?
-    let updatedAt: String?
     let mediaCollection: MediaCollection?
-    let originalMediaURL: String?
 
     enum CodingKeys: String, CodingKey {
-        case mimetype
-        case parentHash = "parent_hash"
-        case status, updatedAt
         case mediaCollection = "media_collection"
-        case originalMediaURL = "original_media_url"
     }
 }
 
@@ -104,17 +88,6 @@ struct MediaCollection: Codable {
 struct Size: Codable {
     let height, width: Int?
     let url: String?
-}
-
-enum Mimetype: String, Codable {
-    case imageGIF = "image/gif"
-    case imageJPEG = "image/jpeg"
-    case imagePNG = "image/png"
-}
-
-enum Status: String, Codable {
-    case processing
-    case success
 }
 
 struct NormalizedMetadata: Codable {

@@ -13,12 +13,15 @@ class DiscoverCollectionCell: UICollectionViewCell {
     
     let imageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 16)
+        label.font = .systemFont(ofSize: 14)
+        label.lineBreakMode = .byWordWrapping
+        label.textColor = .secondary
         label.numberOfLines = 0
         return label
     }()
@@ -32,17 +35,22 @@ class DiscoverCollectionCell: UICollectionViewCell {
         contentView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top)
-            make.left.equalTo(contentView.snp.left)
-            make.right.equalTo(contentView.snp.right)
+            make.leading.equalTo(contentView.snp.leading)
             make.width.equalTo(170)
-            make.height.equalTo(170)
+            make.height.equalTo(contentView.snp.height).multipliedBy(0.86)
         }
         
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom).offset(6)
-            make.left.equalTo(contentView.snp.left).offset(12)
-            make.right.equalTo(contentView.snp.right).offset(-12)
+            make.top.equalTo(imageView.snp.bottom).offset(4)
+            make.leading.equalTo(contentView.snp.leading)
+            make.bottom.equalTo(contentView.snp.bottom)
         }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.image = nil
+        titleLabel.text = nil
     }
 }

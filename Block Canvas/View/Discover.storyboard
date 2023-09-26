@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Discover-->
+        <!--discover.-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
                 <viewController id="Y6W-OH-hqX" customClass="DiscoverPageViewController" customModule="Block_Canvas" customModuleProvider="target" sceneMemberID="viewController">
@@ -18,10 +18,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="1e4-6t-pfN">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="1e4-6t-pfN">
                                 <rect key="frame" x="12" y="202" width="369" height="616"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="IWb-Ch-YrI">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="IWb-Ch-YrI">
                                     <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -58,10 +58,10 @@
                                 </subviews>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sva-xc-3V2">
-                                <rect key="frame" x="0.0" y="134" width="393" height="1"/>
-                                <color key="backgroundColor" systemColor="systemGray3Color"/>
+                                <rect key="frame" x="0.0" y="134" width="393" height="2"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="1" id="yUW-42-UsE"/>
+                                    <constraint firstAttribute="height" constant="2" id="yUW-42-UsE"/>
                                 </constraints>
                             </view>
                             <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="tgM-fE-V8e">
@@ -76,10 +76,10 @@
                                 </connections>
                             </searchBar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bxv-NV-mVj">
-                                <rect key="frame" x="0.0" y="134" width="191" height="1"/>
+                                <rect key="frame" x="0.0" y="134" width="191" height="2"/>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="1" id="FuT-u9-rmA"/>
+                                    <constraint firstAttribute="height" constant="2" id="FuT-u9-rmA"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -105,7 +105,7 @@
                             <constraint firstItem="Bxv-NV-mVj" firstAttribute="width" secondItem="V97-69-p9h" secondAttribute="width" id="zxN-Zq-fRs"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Discover" id="VBb-j7-1zM"/>
+                    <navigationItem key="navigationItem" title="discover." id="VBb-j7-1zM"/>
                     <connections>
                         <outlet property="buttonStackView" destination="wme-wN-5x0" id="Qni-Oh-Mdg"/>
                         <outlet property="discoverCollectionView" destination="1e4-6t-pfN" id="oOR-0C-J6P"/>
@@ -147,62 +147,10 @@
                     <view key="view" contentMode="scaleToFill" id="D31-5O-GDP">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ve8-Zt-pRb">
-                                <rect key="frame" x="0.0" y="59" width="393" height="550"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="550" id="9Gk-IE-hHg"/>
-                                </constraints>
-                            </imageView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="e5e-Wf-Yll">
-                                <rect key="frame" x="12" y="621" width="369" height="108.33333333333337"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U9h-hh-A9T">
-                                        <rect key="frame" x="0.0" y="0.0" width="33" height="20.333333333333332"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z8K-WI-WRM">
-                                        <rect key="frame" x="0.0" y="29.333333333333371" width="41" height="20.333333333333329"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LWI-8T-9bX">
-                                        <rect key="frame" x="0.0" y="58.666666666666636" width="87.333333333333329" height="20.333333333333336"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contract" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZKW-cP-VQM">
-                                        <rect key="frame" x="0.0" y="88" width="66.666666666666671" height="20.333333333333329"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                            </stackView>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="nxL-OO-bUd"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="e5e-Wf-Yll" firstAttribute="top" secondItem="ve8-Zt-pRb" secondAttribute="bottom" constant="12" id="IXB-Bn-Qak"/>
-                            <constraint firstItem="e5e-Wf-Yll" firstAttribute="leading" secondItem="D31-5O-GDP" secondAttribute="leading" constant="12" id="S7s-91-6eT"/>
-                            <constraint firstItem="ve8-Zt-pRb" firstAttribute="leading" secondItem="D31-5O-GDP" secondAttribute="leading" id="bcF-WX-wOq"/>
-                            <constraint firstAttribute="trailing" secondItem="ve8-Zt-pRb" secondAttribute="trailing" id="eof-v6-TX0"/>
-                            <constraint firstAttribute="trailing" secondItem="e5e-Wf-Yll" secondAttribute="trailing" constant="12" id="fpI-iK-0o3"/>
-                            <constraint firstItem="ve8-Zt-pRb" firstAttribute="top" secondItem="nxL-OO-bUd" secondAttribute="top" id="uSJ-pO-pdi"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="O3Q-U2-sDZ"/>
-                    <connections>
-                        <outlet property="artistLabel" destination="Z8K-WI-WRM" id="ona-hT-gJj"/>
-                        <outlet property="contractLabel" destination="ZKW-cP-VQM" id="QVl-pz-RvA"/>
-                        <outlet property="descriptionLabel" destination="LWI-8T-9bX" id="CuO-56-ibx"/>
-                        <outlet property="imageView" destination="ve8-Zt-pRb" id="xqt-Kr-LhF"/>
-                        <outlet property="titleLabel" destination="U9h-hh-A9T" id="SkV-If-c28"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RSL-hI-f2K" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -212,9 +160,6 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGray3Color">
-            <color red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

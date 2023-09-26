@@ -8,25 +8,39 @@
 import UIKit
 import SwiftUI
 import SnapKit
-import Kingfisher
 
 class PortfolioDisplayViewController: UIViewController {
-    
     var NFTs: EthNFT?
     
     var nftInfoForDisplay: [NFTInfoForDisplay]?
     
     var ethAddress: String?
     
+    private var userNFTs: [String] = []
+    
+    private let userDefaults = UserDefaults.standard
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         getEthNFTsByWallet()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        setupUI()
+    }
+    
+    private func setupUI() {
+        view.backgroundColor = .primary
+        self.title = ""
+        let navigationExtendHeight: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        navigationController?.additionalSafeAreaInsets = navigationExtendHeight
+    }
+    
     private func getEthNFTsByWallet() {
+        BCProgressHUD.show()
         guard let address = ethAddress else {
             print("No address.")
+            BCProgressHUD.showFailure(text: "No address.")
             return
         }
         
@@ -49,11 +63,13 @@ class PortfolioDisplayViewController: UIViewController {
             let task = session.dataTask(with: request) { [weak self] data, response, error in
                 if let error = error {
                     print(error)
+                    BCProgressHUD.showFailure()
                     return
                 }
                 
                 guard let data = data else {
                     print("No data.")
+                    BCProgressHUD.showFailure()
                     return
                 }
                 
@@ -76,6 +92,13 @@ class PortfolioDisplayViewController: UIViewController {
                         }
                     })
                     print(self?.nftInfoForDisplay)
+                    // for you
+                    self?.nftInfoForDisplay?.forEach({ nft in
+                        self?.userNFTs.append(nft.title)
+                    })
+                    self?.userDefaults.set(self?.userNFTs, forKey: "userNFTs")
+                    
+                    // for widget
                     let sharedDefaults = UserDefaults(suiteName: "group.reneehsu.Block-Canvas")
                     let encoder = JSONEncoder()
                     if let encodedData = try? encoder.encode(self?.nftInfoForDisplay) {
@@ -90,6 +113,7 @@ class PortfolioDisplayViewController: UIViewController {
                 DispatchQueue.main.async { [weak self] in
                     self?.setupDisplay()
                 }
+                BCProgressHUD.dismiss()
             }
             task.resume()
         }
@@ -129,6 +153,7 @@ class PortfolioDisplayViewController: UIViewController {
     }
     
     func viewInARButtonTapped(with url: URL) {
+        BCProgressHUD.show()
         let arViewController = ARDisplayViewController()
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let error = error {
@@ -137,6 +162,7 @@ class PortfolioDisplayViewController: UIViewController {
                 arViewController.imageToDisplay = image
                 DispatchQueue.main.async {
                     arViewController.modalPresentationStyle = .overFullScreen
+                    BCProgressHUD.dismiss()
                     self.present(arViewController, animated: true, completion: nil)
                 }
             }

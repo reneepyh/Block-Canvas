@@ -6,10 +6,8 @@
 //
 
 import UIKit
-import Apollo
-
+// swiftlint: disable type_body_length
 class DiscoverPageViewController: UIViewController {
-    
     @IBOutlet weak var discoverCollectionView: UICollectionView!
     
     @IBOutlet weak var buttonStackView: UIStackView!
@@ -28,9 +26,11 @@ class DiscoverPageViewController: UIViewController {
     
     @IBOutlet weak var nftSearchBar: UISearchBar!
     
-    private let selectedColor = UIColor(red: 63/256, green: 58/256, blue: 58/256, alpha: 1)
+    private var selectedPage: Int = 0
     
-    private let unselectedColor = UIColor(red: 136/256, green: 136/256, blue: 136/256, alpha: 1)
+    private let userDefaults = UserDefaults.standard
+    
+    private var userNFTs: [String] = []
     
     private var trendingNFTs: [DiscoverNFT] = []
     
@@ -40,56 +40,118 @@ class DiscoverPageViewController: UIViewController {
     
     private let semaphore = DispatchSemaphore(value: 0)
     
-    private let apolloClient = ApolloClient(url: URL(string: "https://api.fxhash.xyz/graphql")!)
-    
     private var recommendedResponse: String?
     
-    //    private var recommendedCollections: [ArtCollection] = []
+    private var recommendedCollections: [String] = []
     
-    private var recommendedContracts: [String] = []
+    private var recommendedNFTs: [DiscoverNFT] = []
     
-    //    private var recommendedNFTs: [NFTForFetch] = []
-    //
-    //    private var recommendedNFTMetadatum: [NFTMetadatum] = []
+    private let group = DispatchGroup()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        trendingButton.tintColor = selectedColor
-        forYouButton.tintColor = unselectedColor
+        setupUI()
         setupButtonTag()
         discoverCollectionView.dataSource = self
         discoverCollectionView.delegate = self
         nftSearchBar.delegate = self
         getTrending()
+    }
+    
+    private func setupUI() {
+        view.backgroundColor = .primary
+        underlineView.backgroundColor = .secondary
+        trendingButton.tintColor = .secondary
+        forYouButton.tintColor = .secondaryBlur
+        nftSearchBar.searchTextField.backgroundColor = .tertiary
+        nftSearchBar.searchTextField.textColor = .primary
+        discoverCollectionView.backgroundColor = .primary
         
-        //        getRecommendationFromGPT()
-        //        fetchData()
+        let layout = WaterFallFlowLayout()
+        layout.delegate = self
+        layout.cols = 2
+        discoverCollectionView.collectionViewLayout = layout
+        
+        let navigationExtendHeight: UIEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
+        navigationController?.additionalSafeAreaInsets = navigationExtendHeight
     }
     
     private func getTrending() {
         trendingNFTs.removeAll()
-        let group = DispatchGroup()
-        //        let queue = DispatchQueue(label: "queue", attributes: .concurrent)
-        for _ in 0...9 {
-            //TODO: 判斷回應相同NFT
-            group.enter()
-            apolloClient.fetch(query: GetTrending.GetTrendingQuery(), cachePolicy: .fetchIgnoringCacheCompletely) { [weak self] result in
-                defer { group.leave() }
-                guard let data = try? result.get().data else { return }
-                let displayURL = self?.generativeLiveDisplayUrl(uri: data.randomTopGenerativeToken.displayUri ?? "")
-                let authorName = data.randomTopGenerativeToken.author.name
-                let title = data.randomTopGenerativeToken.name
-                let thumbnailURL = self?.generativeLiveDisplayUrl(uri: data.randomTopGenerativeToken.thumbnailUri ?? "")
-                let contract = data.randomTopGenerativeToken.gentkContractAddress
-                self?.trendingNFTs.append(DiscoverNFT(thumbnailUri: thumbnailURL ?? "", displayUri: displayURL ?? "", contract: contract, title: title, authorName: authorName))
+        searchedNFTs.removeAll()
+        recommendedNFTs.removeAll()
+        DispatchQueue.main.async { [weak self] in
+            if let layout = self?.discoverCollectionView.collectionViewLayout as? WaterFallFlowLayout {
+                layout.clearCache()
             }
+            self?.discoverCollectionView.collectionViewLayout.invalidateLayout()
+            self?.discoverCollectionView.reloadData()
         }
+        BCProgressHUD.show()
+        let group = DispatchGroup()
+        func fetchToken() {
+            group.enter()
+            let url = URL(string: "https://api.fxhash.xyz/graphql")!
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            
+            let query = """
+            {
+               randomTopGenerativeToken {
+                  author {
+                    name
+                  }
+                  gentkContractAddress
+                  issuerContractAddress
+                  metadata
+                }
+            }
+            """
+            
+            let json: [String: Any] = ["query": query]
+            let jsonData = try? JSONSerialization.data(withJSONObject: json)
+            
+            request.httpBody = jsonData
+            
+            let task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
+                defer {
+                    group.leave()
+                }
+                guard let data = data else { return }
+                do {
+                    let decoder = JSONDecoder()
+                    let root = try decoder.decode(Root.self, from: data)
+                    if self?.trendingNFTs.contains(where: { $0.title == root.data.randomTopGenerativeToken.metadata.name }) == true {
+                        fetchToken()
+                        return
+                    }
+                    
+                    let contract = root.data.randomTopGenerativeToken.gentkContractAddress
+                    let thumbnailURL = self?.generativeLiveDisplayUrl(uri: root.data.randomTopGenerativeToken.metadata.thumbnailUri)
+                    let displayURL = self?.generativeLiveDisplayUrl(uri: root.data.randomTopGenerativeToken.metadata.displayUri)
+                    let authorName = root.data.randomTopGenerativeToken.author?.name
+                    let title = root.data.randomTopGenerativeToken.metadata.name
+                    let description = root.data.randomTopGenerativeToken.metadata.description
+                    self?.trendingNFTs.append(DiscoverNFT(thumbnailUri: thumbnailURL ?? "", displayUri: displayURL ?? "", contract: contract, title: title, authorName: authorName, nftDescription: description))
+                } catch {
+                    print("Error: \(error)")
+                }
+            }
+            task.resume()
+        }
+        for _ in 0..<10 {
+            fetchToken()
+        }
+        
         group.notify(queue: .main) { [weak self] in
             self?.discoverCollectionView.reloadData()
+            BCProgressHUD.dismiss()
         }
     }
     
     private func searchNFT(keyword: String) {
+        BCProgressHUD.show(text: "Searching")
         let apiKey = Bundle.main.object(forInfoDictionaryKey: "NFTPort_API_Key") as? String
         
         guard let key = apiKey, !key.isEmpty else {
@@ -109,11 +171,13 @@ class DiscoverPageViewController: UIViewController {
             let task = session.dataTask(with: request) { [weak self] data, response, error in
                 if let error = error {
                     print(error)
+                    BCProgressHUD.showFailure()
                     return
                 }
                 
                 guard let data = data else {
                     print("No data.")
+                    BCProgressHUD.showFailure(text: "No NFT found.")
                     return
                 }
                 
@@ -121,8 +185,9 @@ class DiscoverPageViewController: UIViewController {
                 
                 do {
                     let searchData = try decoder.decode(SearchNFT.self, from: data)
+                    print(searchData)
                     for searchResult in searchData.searchResults ?? [] {
-                        self?.searchedNFTs.append(DiscoverNFT(thumbnailUri: searchResult.cachedFileURL ?? "", displayUri: searchResult.cachedFileURL ?? "", contract: searchResult.contractAddress ?? "", title: searchResult.name, authorName: ""))
+                        self?.searchedNFTs.append(DiscoverNFT(thumbnailUri: searchResult.cachedFileURL ?? "", displayUri: searchResult.cachedFileURL ?? "", contract: searchResult.contractAddress ?? "", title: searchResult.name, authorName: "", nftDescription: searchResult.description))
                     }
                     print(self?.searchedNFTs)
                 }
@@ -132,6 +197,7 @@ class DiscoverPageViewController: UIViewController {
                 DispatchQueue.main.async { [weak self] in
                     self?.discoverCollectionView.reloadData()
                 }
+                BCProgressHUD.dismiss()
             }
             task.resume()
         }
@@ -140,336 +206,193 @@ class DiscoverPageViewController: UIViewController {
         }
     }
     
-    //    private func fetchData() {
-    //        getRecommendationFromGPT()
-    //        semaphore.wait()
-    //
-    //        self.formatCollectionName()
-    //        semaphore.wait()
-    //
-    //        for collection in self.recommendedCollections {
-    //            self.getRecommendedContracts(collectionName: collection.collectionName)
-    //        }
-    //
-    //        semaphore.signal()
-    //        for contract in self.recommendedContracts {
-    //            self.getNFTByContract(address: contract)
-    //        }
-    //
-    //        semaphore.signal()
-    //        for NFTForFetch in self.recommendedNFTs {
-    //            self.getNFTMetadata(NFTToFetch: NFTForFetch)
-    //        }
-    //
-    //    }
+    private func fetchRecommendation() {
+        BCProgressHUD.show(text: "AI calculating...")
+        findUserNFTs()
+        trendingNFTs.removeAll()
+        searchedNFTs.removeAll()
+        recommendedNFTs.removeAll()
+        DispatchQueue.main.async { [weak self] in
+            if let layout = self?.discoverCollectionView.collectionViewLayout as? WaterFallFlowLayout {
+                layout.clearCache()
+            }
+            self?.discoverCollectionView.collectionViewLayout.invalidateLayout()
+            self?.discoverCollectionView.reloadData()
+        }
+        getRecommendationFromGPT()
+        semaphore.wait()
+        
+        self.formatCollectionName()
+        
+        for collection in recommendedCollections {
+            group.enter()
+            self.getRecommendedNFTs(collectionName: collection)
+        }
+        group.notify(queue: .main) {
+            DispatchQueue.main.async { [weak self] in
+                self?.discoverCollectionView.reloadData()
+                BCProgressHUD.dismiss()
+            }
+        }
+    }
     
-    //    private func getRecommendationFromGPT() {
-    //        //TODO: error handle不遵照格式
-    //        let apiKey = Bundle.main.object(forInfoDictionaryKey: "OpenAI_API_Key") as? String
-    //
-    //        guard let key = apiKey, !key.isEmpty else {
-    //            print("OpenAI API key does not exist.")
-    //            return
-    //        }
-    //
-    //        if let url = URL(string: "https://api.openai.com/v1/chat/completions") {
-    //            var request = URLRequest(url: url)
-    //            request.setValue("application/json",
-    //                             forHTTPHeaderField: "Content-Type")
-    //            request.setValue("Bearer \(key)",
-    //                             forHTTPHeaderField: "Authorization")
-    //            let openAIBody = OpenAIBody(messages: [
-    //                ["role": "user", "content": """
-    //       Generate recommendations for NFT collections similar to the following:
-    //
-    //       Collection Name: The Art of Seasons
-    //       Artist Name: Dirty Robot
-    //       Hosted blockchain: Ethereum
-    //       Collection Contract Address: 0x5bd815fd6c096bab38b4c6553cfce3585194dff9
-    //
-    //       Please suggest NFT collections that share similarities with the provided collection. Suggest NFT collections should be on Ethereum blockchain. Consider factors such as the artist's style, theme, or genre of artwork. Please suggest 5 NFT collections. Provide only the collection names and artist names in bullet points and not any other responses.
-    //
-    //       Ensure the recommendations are art NFT collections.
-    //       """]
-    //            ])
-    //            request.httpBody = try? JSONEncoder().encode(openAIBody)
-    //            request.httpMethod = "POST"
-    //
-    //            if let postData = try? JSONEncoder().encode(openAIBody) {
-    //                if let jsonString = String(data: postData, encoding: .utf8) {
-    //                    print("Request JSON: \(jsonString)")
-    //                }
-    //                request.httpBody = postData
-    //            } else {
-    //                print("Failed to encode the JSON data")
-    //            }
-    //
-    //            URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
-    //                if let data = data {
-    //                    do {
-    //                        let data = try JSONDecoder().decode(OpenAIResponse.self, from: data)
-    //                        self?.recommendedResponse = data.choices?[0].message?.content
-    //                        print("response: \(self?.recommendedResponse)")
-    //                        //                        DispatchQueue.main.async {
-    //                        //                            if let response = data.choices?[0].message?.content, let self = self {
-    //                        //                                print(response)
-    //                        //                                let regexPattern = "Collection Name: \"([^\"]+)\"\\s+Artist Name: (\\w+)"
-    //                        //
-    //                        //                                do {
-    //                        //                                    let regex = try NSRegularExpression(pattern: regexPattern, options: [])
-    //                        //                                    let nsString = response as NSString
-    //                        //                                    let matches = regex.matches(in: response, options: [], range: NSRange(location: 0, length: nsString.length))
-    //                        //
-    //                        //                                    for match in matches {
-    //                        //                                        if let collectionRange = Range(match.range(at: 1), in: response),
-    //                        //                                           let artistRange = Range(match.range(at: 2), in: response) {
-    //                        //
-    //                        //                                            let collectionName = String(response[collectionRange])
-    //                        //                                            let trimmedCollection = String(collectionName.filter { !" ".contains($0) })
-    //                        //                                            self.recommendedCollections.append(ArtCollection(collectionName: trimmedCollection))
-    //                        //                                        }
-    //                        //                                    }
-    //                        //                                    print(self.recommendedCollections)
-    //                        //                                } catch let error {
-    //                        //                                    print("Failed to create regex: \(error.localizedDescription)")
-    //                        //                                }
-    //                        //
-    //                        //                                //                                // Use extracted data
-    //                        //                                //                                for collection in self.recommendedCollections {
-    //                        //                                //                                    self.getRecommendedContracts(collectionName: collection.collectionName)
-    //                        //                                //                                }
-    //                        ////                            }
-    //                        //                        }
-    //                    } catch {
-    //                        print(error.localizedDescription)
-    //                    }
-    //                }
-    //                if let httpResponse = response as? HTTPURLResponse {
-    //                    print("HTTP Status Code: \(httpResponse.statusCode)")
-    //                }
-    //                if let error = error {
-    //                    print("Error when post request to GPT API:\(error)")
-    //
-    //                }
-    //                self?.semaphore.signal()
-    //            }.resume()
-    //        }
-    //        else {
-    //            print("Invalid URL.")
-    //        }
-    //    }
+    private func getRecommendationFromGPT() {
+        //TODO: error handle不遵照格式
+        let apiKey = Bundle.main.object(forInfoDictionaryKey: "OpenAI_API_Key") as? String
+        
+        guard let key = apiKey, !key.isEmpty else {
+            print("OpenAI API key does not exist.")
+            return
+        }
+        
+        var randomNFTs: [String] = []
+        randomNFTs.append(userNFTs.randomElement() ?? "")
+        randomNFTs.append(userNFTs.randomElement() ?? "")
+        randomNFTs.append(userNFTs.randomElement() ?? "")
+        print(randomNFTs)
+        
+        if let url = URL(string: "https://api.openai.com/v1/chat/completions") {
+            var request = URLRequest(url: url)
+            request.setValue("application/json",
+                             forHTTPHeaderField: "Content-Type")
+            request.setValue("Bearer \(key)",
+                             forHTTPHeaderField: "Authorization")
+            let openAIBody = OpenAIBody(messages: [
+                ["role": "user", "content": """
+           Generate recommendations for NFT collections similar to the following:
+           
+           Collection Name: \(randomNFTs)
+           Hosted blockchain: Ethereum
+           
+           Please suggest NFT collections that share similarities with the provided collection. Suggest NFT collections should be on Ethereum blockchain. Please suggest 5 NFT collections. Provide only the collection names in bullet pointsc (not numbered lists) and not any other responses. Please not to mention the artist's name. Please do not include double quotes for the response. Please also do not include symbols such as colon, semicolon or dash.
+           """]
+            ])
+            request.httpBody = try? JSONEncoder().encode(openAIBody)
+            request.httpMethod = "POST"
+            
+            if let postData = try? JSONEncoder().encode(openAIBody) {
+                if let jsonString = String(data: postData, encoding: .utf8) {
+                    print("Request JSON: \(jsonString)")
+                }
+                request.httpBody = postData
+            } else {
+                print("Failed to encode the JSON data")
+            }
+            
+            URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
+                if let data = data {
+                    do {
+                        let data = try JSONDecoder().decode(OpenAIResponse.self, from: data)
+                        self?.recommendedResponse = data.choices?[0].message?.content
+                        print("response: \(self?.recommendedResponse)")
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+                if let httpResponse = response as? HTTPURLResponse {
+                    print("HTTP Status Code: \(httpResponse.statusCode)")
+                }
+                if let error = error {
+                    print("Error when post request to GPT API:\(error)")
+                    
+                }
+                self?.semaphore.signal()
+            }.resume()
+        }
+        else {
+            print("Invalid URL.")
+        }
+    }
     
-    //    private func formatCollectionName() {
-    //        let regexPattern = "Collection Name: \"([^\"]+)\"\\s+Artist Name: (\\w+)"
-    //        do {
-    //            let regex = try NSRegularExpression(pattern: regexPattern, options: [])
-    //            let nsString = recommendedResponse! as NSString
-    //            let matches = regex.matches(in: recommendedResponse ?? "", options: [], range: NSRange(location: 0, length: nsString.length))
-    //
-    //            for match in matches {
-    //                if let collectionRange = Range(match.range(at: 1), in: recommendedResponse  ?? ""),
-    //                   let artistRange = Range(match.range(at: 2), in: recommendedResponse  ?? "") {
-    //
-    //                    let collectionName = String(recommendedResponse?[collectionRange] ?? "")
-    //                    let trimmedCollection = String(collectionName.filter { !" ".contains($0) })
-    //                    self.recommendedCollections.append(ArtCollection(collectionName: trimmedCollection))
-    //                }
-    //            }
-    //            print(self.recommendedCollections)
-    //            semaphore.signal()
-    //        } catch let error {
-    //            print("Failed to create regex: \(error.localizedDescription)")
-    //
-    //
-    //            //                                // Use extracted data
-    //            //                                for collection in self.recommendedCollections {
-    //            //                                    self.getRecommendedContracts(collectionName: collection.collectionName)
-    //            //                                }
-    //            //                            }
-    //        }
-    //    }
+    private func formatCollectionName() {
+        guard let recommendedResponse = recommendedResponse else {
+            print("No response from GPT.")
+            return
+        }
+        self.recommendedCollections = recommendedResponse.split(separator: "\n").map { line -> String in
+            let trimmedLine = line.trimmingCharacters(in: .whitespacesAndNewlines)
+            if trimmedLine.hasPrefix("-") {
+                let collectionName = String(trimmedLine.dropFirst().trimmingCharacters(in: .whitespaces))
+                return collectionName.replacingOccurrences(of: " ", with: "")
+            } else {
+                return trimmedLine.replacingOccurrences(of: " ", with: "")
+            }
+        }
+        print(recommendedCollections)
+    }
     
-    //    private func getRecommendedContracts(collectionName: String) {
-    //        semaphore.wait()
-    //        let apiKey = Bundle.main.object(forInfoDictionaryKey: "NFT_GO_API_Key") as? String
-    //
-    //        guard let key = apiKey, !key.isEmpty else {
-    //            print("NFTGo API key does not exist.")
-    //            return
-    //        }
-    //
-    //        if let url = URL(string: "https://data-api.nftgo.io/eth/v1/collection/name/\(collectionName)") {
-    //
-    //            var request = URLRequest(url: url)
-    //            request.setValue("application/json", forHTTPHeaderField: "Accept")
-    //            request.setValue(key, forHTTPHeaderField: "X-API-Key")
-    //            request.httpMethod = "GET"
-    //
-    //            let session = URLSession.shared
-    //
-    //            let task = session.dataTask(with: request) { data, response, error in
-    //                if let error = error {
-    //                    print(error)
-    //                    return
-    //                }
-    //
-    //                guard let data = data else {
-    //                    print("No data.")
-    //                    return
-    //                }
-    //
-    //                let decoder = JSONDecoder()
-    //
-    //                do {
-    //                    let data = try decoder.decode(SearchedNFT.self, from: data)
-    //
-    //                    //                    DispatchQueue.main.async { [weak self] in
-    //                    for collection in data.collections ?? [] {
-    //                        if data.total != 0 {
-    //                            self.recommendedContracts.append(collection.contracts?[0] ?? "")
-    //                        }
-    //                    }
-    //                    //                    }
-    //                    //                    for contract in self.recommendedContracts {
-    //                    //                        self.getNFTByContract(address: contract)
-    //                    //                    }
-    //                    print(self.recommendedContracts)
-    //                }
-    //                catch {
-    //                    print("Error in JSON decoding.")
-    //                }
-    //                self.semaphore.signal()
-    //            }
-    //            task.resume()
-    //        }
-    //        else {
-    //            print("Invalid URL.")
-    //        }
-    //    }
+    private func getRecommendedNFTs(collectionName: String) {
+        let apiKey = Bundle.main.object(forInfoDictionaryKey: "NFTPort_API_Key") as? String
+        
+        guard let key = apiKey, !key.isEmpty else {
+            print("NFTPort API key does not exist.")
+            return
+        }
+        
+        if let url = URL(string: "https://api.nftport.xyz/v0/search?text=\(collectionName)&chain=ethereum&page_number=1&page_size=5&order_by=mint_date&sort_order=desc") {
+            
+            var request = URLRequest(url: url)
+            request.setValue("application/json", forHTTPHeaderField: "Accept")
+            request.setValue(key, forHTTPHeaderField: "Authorization")
+            request.httpMethod = "GET"
+            
+            let configuration = URLSessionConfiguration.default
+            configuration.timeoutIntervalForRequest = 2.0
+            configuration.timeoutIntervalForResource = 2.0
+            
+            let session = URLSession(configuration: configuration)
+            
+            let task = session.dataTask(with: request) { [weak self] data, response, error in
+                defer { self?.group.leave() }
+                
+                if let error = error {
+                    print(error)
+                    BCProgressHUD.showFailure()
+                    return
+                }
+                
+                guard let data = data else {
+                    print("No data.")
+                    BCProgressHUD.showFailure()
+                    return
+                }
+                
+                let decoder = JSONDecoder()
+                
+                do {
+                    let searchData = try decoder.decode(SearchNFT.self, from: data)
+                    print(searchData)
+                    for searchResult in searchData.searchResults ?? [] {
+                        self?.recommendedNFTs.append(DiscoverNFT(thumbnailUri: searchResult.cachedFileURL ?? "", displayUri: searchResult.cachedFileURL ?? "", contract: searchResult.contractAddress ?? "", title: searchResult.name, authorName: "", nftDescription: searchResult.description))
+                    }
+                    print(self?.recommendedNFTs)
+                }
+                catch {
+                    print("Error in JSON decoding.")
+                }
+            }
+            task.resume()
+        }
+        else {
+            print("Invalid URL.")
+        }
+    }
     
-    //    private func getNFTByContract(address: String) {
-    //        semaphore.wait()
-    //        let apiKey = Bundle.main.object(forInfoDictionaryKey: "Moralis_API_Key") as? String
-    //
-    //        guard let key = apiKey, !key.isEmpty else {
-    //            print("Moralis API key does not exist.")
-    //            return
-    //        }
-    //
-    //        if let url = URL(string: "https://deep-index.moralis.io/api/v2.2/nft/\(address)?chain=eth&format=decimal&limit=1") {
-    //
-    //            var request = URLRequest(url: url)
-    //            request.setValue("application/json", forHTTPHeaderField: "Accept")
-    //            request.setValue(key, forHTTPHeaderField: "X-API-Key")
-    //            request.httpMethod = "GET"
-    //
-    //            let session = URLSession.shared
-    //
-    //            let task = session.dataTask(with: request) { data, response, error in
-    //                if let error = error {
-    //                    print(error)
-    //                    return
-    //                }
-    //
-    //                guard let data = data else {
-    //                    print("No data.")
-    //                    return
-    //                }
-    //
-    //                let decoder = JSONDecoder()
-    //
-    //                do {
-    //                    let NFTData = try decoder.decode(GetNFTByContract.self, from: data)
-    //                    //                    DispatchQueue.main.async { [weak self] in
-    //                    for NFT in NFTData.result ?? [] {
-    //                        self.recommendedNFTs.append(NFTForFetch(tokenAddress: NFT.tokenAddress ?? "", tokenID: NFT.tokenID ?? ""))
-    //                    }
-    //                    //                    }
-    //                    print(self.recommendedNFTs)
-    //                    //                    for NFTMetadata in self.recommendedNFTs {
-    //                    //                        self.getNFTMetadata(NFTToFetch: NFTMetadata)
-    //                    //                    }
-    //                }
-    //                catch {
-    //                    print("Error in JSON decoding.")
-    //                }
-    //                self.semaphore.signal()
-    //            }
-    //            task.resume()
-    //        }
-    //        else {
-    //            print("Invalid URL.")
-    //        }
-    //    }
-    
-    //    private func getNFTMetadata(NFTToFetch: NFTForFetch) {
-    //        let apiKey = Bundle.main.object(forInfoDictionaryKey: "Moralis_API_Key") as? String
-    //
-    //        guard let key = apiKey, !key.isEmpty else {
-    //            print("Moralis API key does not exist.")
-    //            return
-    //        }
-    //
-    //        if let url = URL(string: "https://deep-index.moralis.io/api/v2.2/nft/getMultipleNFTs") {
-    //            var request = URLRequest(url: url)
-    //            request.setValue("application/json",
-    //                             forHTTPHeaderField: "Accept")
-    //            request.setValue(key,
-    //                             forHTTPHeaderField: "X-API-Key")
-    //            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-    //            let requestBody = NFTMetadataRequest(tokens: [NFTToFetch], normalizeMetadata: true, mediaItems: true)
-    //            request.httpBody = try? JSONEncoder().encode(requestBody)
-    //            request.httpMethod = "POST"
-    //
-    //            if let postData = try? JSONEncoder().encode(requestBody) {
-    //                if let jsonString = String(data: postData, encoding: .utf8) {
-    //                    print("Request JSON: \(jsonString)")
-    //                }
-    //                request.httpBody = postData
-    //            } else {
-    //                print("Failed to encode the JSON data")
-    //            }
-    //
-    //            let session = URLSession.shared
-    //
-    //            let task = session.dataTask(with: request) { data, response, error in
-    //                if let error = error {
-    //                    print(error)
-    //                    return
-    //                }
-    //
-    //                guard let data = data else {
-    //                    print("No data.")
-    //                    return
-    //                }
-    //
-    //                let decoder = JSONDecoder()
-    //
-    //                do {
-    //                    let NFTMetaData = try decoder.decode(NFTMetadatum.self, from: data)
-    //                    DispatchQueue.main.async { [weak self] in
-    //                        self?.recommendedNFTMetadatum.append(NFTMetaData)
-    //                    }
-    //                    print(self.recommendedNFTMetadatum)
-    //                }
-    //                catch {
-    //                    print("Error in JSON decoding.")
-    //                }
-    //            }
-    //            task.resume()
-    //        }
-    //        else {
-    //            print("Invalid URL.")
-    //        }
-    //    }
+    private func findUserNFTs() {
+        userNFTs = userDefaults.object(forKey: "userNFTs") as? [String] ?? []
+    }
 }
 
-extension DiscoverPageViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+extension DiscoverPageViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, WaterFallLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if isSearching {
             return searchedNFTs.count
         } else {
-            return trendingNFTs.count
+            if selectedPage == 0 {
+                return trendingNFTs.count
+            } else {
+                return recommendedNFTs.count
+            }
         }
     }
     
@@ -478,28 +401,23 @@ extension DiscoverPageViewController: UICollectionViewDelegateFlowLayout, UIColl
             fatalError("Cell cannot be created")
         }
         if isSearching {
-            discoverCollectionCell.imageView.loadImage(searchedNFTs[indexPath.row].thumbnailUri)
-            discoverCollectionCell.imageView.contentMode = .scaleAspectFit
+            discoverCollectionCell.imageView.loadImage(searchedNFTs[indexPath.row].thumbnailUri, placeHolder: UIImage(systemName: "circle.dotted"))
             discoverCollectionCell.titleLabel.text = searchedNFTs[indexPath.row].title
-        } else {
-            discoverCollectionCell.imageView.loadImage(trendingNFTs[indexPath.row].thumbnailUri)
-            discoverCollectionCell.imageView.contentMode = .scaleAspectFit
+        } else if selectedPage == 0 {
+            discoverCollectionCell.imageView.loadImage(trendingNFTs[indexPath.row].thumbnailUri, placeHolder: UIImage(systemName: "circle.dotted"))
             discoverCollectionCell.titleLabel.text = trendingNFTs[indexPath.row].title
+        } else {
+            discoverCollectionCell.imageView.loadImage(recommendedNFTs[indexPath.row].thumbnailUri, placeHolder: UIImage(systemName: "circle.dotted"))
+            discoverCollectionCell.titleLabel.text = recommendedNFTs[indexPath.row].title
         }
         
         return discoverCollectionCell
     }
     
-    // 指定 item 寬度和數量
-    //TODO: FIX flow layout
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let maxWidth = UIScreen.main.bounds.width - 12 * 2
-        let totalSapcing = CGFloat(5 * 2)
-        
-        let itemWidth = (maxWidth - totalSapcing) / 2
-        return CGSize(width: itemWidth, height: itemWidth * 1.4)
+    func waterFlowLayout(_ waterFlowLayout: WaterFallFlowLayout, itemHeight indexPath: IndexPath) -> CGFloat {
+        return CGFloat.random(in: 230...400)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard
             let detailVC = UIStoryboard.discover.instantiateViewController(
@@ -510,8 +428,10 @@ extension DiscoverPageViewController: UICollectionViewDelegateFlowLayout, UIColl
         }
         if isSearching {
             detailVC.discoverNFTMetadata = searchedNFTs[indexPath.row]
-        } else {
+        } else if selectedPage == 0 {
             detailVC.discoverNFTMetadata = trendingNFTs[indexPath.row]
+        } else {
+            detailVC.discoverNFTMetadata = recommendedNFTs[indexPath.row]
         }
         show(detailVC, sender: nil)
     }
@@ -521,15 +441,32 @@ extension DiscoverPageViewController: UICollectionViewDelegateFlowLayout, UIColl
 extension DiscoverPageViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchedNFTs.removeAll()
-        isSearching = true
-        guard let searchText = nftSearchBar.text, searchText != "" else { return }
-        searchNFT(keyword: searchText)
-    }
+        DispatchQueue.main.async { [weak self] in
+            if let layout = self?.discoverCollectionView.collectionViewLayout as? WaterFallFlowLayout {
+                layout.clearCache()
+            }
+            self?.discoverCollectionView.collectionViewLayout.invalidateLayout()
+            self?.discoverCollectionView.reloadData()
+        }
 
+        if let searchText = nftSearchBar.text, searchText != "" {
+            isSearching = true
+            searchNFT(keyword: searchText)
+        }
+        searchBar.resignFirstResponder()
+    }
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText == "" {
             isSearching = false
-            getTrending()
+            searchedNFTs.removeAll()
+            DispatchQueue.main.async { [weak self] in
+                if let layout = self?.discoverCollectionView.collectionViewLayout as? WaterFallFlowLayout {
+                    layout.clearCache()
+                }
+                self?.discoverCollectionView.collectionViewLayout.invalidateLayout()
+                self?.discoverCollectionView.reloadData()
+            }
         }
     }
 }
@@ -553,23 +490,25 @@ extension DiscoverPageViewController {
     }
     
     @objc func changePage(sender: UIButton) {
+        let queue = DispatchQueue(label: "concurrentQueue", attributes: .concurrent)
         if sender.tag == 0 {
-            getTrending()
+            selectedPage = 0
+            queue.async { [weak self] in
+                self?.getTrending()
+            }
         } else {
-            // TODO: FOR YOU
-            trendingNFTs.removeAll()
-            discoverCollectionView.reloadData()
+            selectedPage = 1
+            queue.async { [weak self] in
+                self?.fetchRecommendation()
+            }
         }
-        
-        //先關閉
+        // 動畫
         underlineViewWidthConstraint.isActive = false
         underlineViewCenterXConstraint.isActive = false
         underlineViewTopConstraint.isActive = false
-        //改值
         underlineViewWidthConstraint = underlineView.widthAnchor.constraint(equalTo: sender.widthAnchor)
         underlineViewCenterXConstraint = underlineView.centerXAnchor.constraint(equalTo: sender.centerXAnchor)
         underlineViewTopConstraint = underlineView.topAnchor.constraint(equalTo: sender.bottomAnchor)
-        //再Active
         underlineViewWidthConstraint.isActive = true
         underlineViewCenterXConstraint.isActive = true
         underlineViewTopConstraint.isActive = true
@@ -581,7 +520,7 @@ extension DiscoverPageViewController {
     }
     
     private func updateButtonColors(for tag: Int) {
-        trendingButton.tintColor = tag == 0 ? selectedColor : unselectedColor
-        forYouButton.tintColor = tag == 1 ? selectedColor : unselectedColor
+        trendingButton.tintColor = tag == 0 ? .secondary : .secondaryBlur
+        forYouButton.tintColor = tag == 1 ? .secondary : .secondaryBlur
     }
 }
