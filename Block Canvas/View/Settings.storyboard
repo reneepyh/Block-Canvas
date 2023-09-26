@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Watchlist-->
+        <!--watchlist.-->
         <scene sceneID="Kgx-Nf-jlp">
             <objects>
                 <viewController id="fA2-bA-Duf" customClass="WatchlistPageViewController" customModule="Block_Canvas" customModuleProvider="target" sceneMemberID="viewController">
@@ -48,7 +48,7 @@
                             <constraint firstAttribute="trailing" secondItem="Zkk-en-a2F" secondAttribute="trailing" id="zOV-Sd-neT"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Watchlist" id="myr-wi-BYK"/>
+                    <navigationItem key="navigationItem" title="watchlist." id="myr-wi-BYK"/>
                     <connections>
                         <outlet property="watchlistCollectionView" destination="Zkk-en-a2F" id="ATA-MA-Qn3"/>
                     </connections>

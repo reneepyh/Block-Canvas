@@ -30,16 +30,23 @@ struct EthPriceChart: View {
                             y: .value("Price", $0.price)
                         )
                         .interpolationMethod(.monotone)
+                        .foregroundStyle(Color(uiColor: .tertiary))
                     }
+                }
+                .chartBackground { chartProxy in
+                    Color.init(uiColor: .primary)
                 }
                 .chartXAxis {
                     AxisMarks(preset: .aligned, values: .stride(by: .hour, count: 6)) { _ in
-                        AxisValueLabel(format: .dateTime.hour(.defaultDigits(amPM: .abbreviated)))
-                        AxisGridLine()
+                        AxisValueLabel(format: .dateTime.hour(.defaultDigits(amPM: .abbreviated))).foregroundStyle(Color.init(uiColor: .secondaryBlur))
+                        AxisGridLine().foregroundStyle(Color.init(uiColor: .secondaryBlur))
                     }
                 }
                 .chartYAxis {
-                    AxisMarks(position: .leading)
+                    AxisMarks(position: .leading) { _ in
+                        AxisGridLine().foregroundStyle(Color.init(uiColor: .secondaryBlur))
+                        AxisValueLabel().foregroundStyle(Color.init(uiColor: .secondaryBlur))
+                    }
                  }
                 .chartYScale(domain: (minPrice - 10)...(maxPrice + 10))
                 .padding()
@@ -52,6 +59,6 @@ struct EthPriceChart: View {
 struct BlankGroupBoxStyle: GroupBoxStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.content
-            .background(.clear)
+            .background(Color.init(uiColor: .primary))
     }
 }

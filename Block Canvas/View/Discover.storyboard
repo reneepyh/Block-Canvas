@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Discover-->
+        <!--discover.-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
                 <viewController id="Y6W-OH-hqX" customClass="DiscoverPageViewController" customModule="Block_Canvas" customModuleProvider="target" sceneMemberID="viewController">
@@ -58,10 +58,10 @@
                                 </subviews>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sva-xc-3V2">
-                                <rect key="frame" x="0.0" y="134" width="393" height="1"/>
-                                <color key="backgroundColor" systemColor="systemGray3Color"/>
+                                <rect key="frame" x="0.0" y="134" width="393" height="2"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="1" id="yUW-42-UsE"/>
+                                    <constraint firstAttribute="height" constant="2" id="yUW-42-UsE"/>
                                 </constraints>
                             </view>
                             <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="tgM-fE-V8e">
@@ -76,10 +76,10 @@
                                 </connections>
                             </searchBar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bxv-NV-mVj">
-                                <rect key="frame" x="0.0" y="134" width="191" height="1"/>
+                                <rect key="frame" x="0.0" y="134" width="191" height="2"/>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="1" id="FuT-u9-rmA"/>
+                                    <constraint firstAttribute="height" constant="2" id="FuT-u9-rmA"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -105,7 +105,7 @@
                             <constraint firstItem="Bxv-NV-mVj" firstAttribute="width" secondItem="V97-69-p9h" secondAttribute="width" id="zxN-Zq-fRs"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Discover" id="VBb-j7-1zM"/>
+                    <navigationItem key="navigationItem" title="discover." id="VBb-j7-1zM"/>
                     <connections>
                         <outlet property="buttonStackView" destination="wme-wN-5x0" id="Qni-Oh-Mdg"/>
                         <outlet property="discoverCollectionView" destination="1e4-6t-pfN" id="oOR-0C-J6P"/>
@@ -160,9 +160,6 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGray3Color">
-            <color red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

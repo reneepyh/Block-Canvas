@@ -21,19 +21,38 @@ class PortfolioListViewController: UIViewController {
         super.viewDidLoad()
         portfolioListTableView.delegate = self
         portfolioListTableView.dataSource = self
-        portfolioListTableView.rowHeight = UITableView.automaticDimension
-        portfolioListTableView.estimatedRowHeight = 200
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add", style: .plain, target: self, action: #selector(addWallet))
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        setupUI()
         findEthWallets()
         balance.removeAll()
         ethWallets.forEach { wallet in
             fetchWalletBalance(address: wallet["address"] ?? "")
         }
+        tabBarController?.tabBar.isHidden = false
+    }
+    
+    private func setupUI() {
+        navigationController?.navigationBar.isHidden = false
+        let navigationBar = self.navigationController?.navigationBar
+        let navigationBarAppearance = UINavigationBarAppearance()
+        navigationBarAppearance.configureWithOpaqueBackground()
+        navigationBarAppearance.backgroundColor = .primary
+        navigationBarAppearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.tertiary, NSAttributedString.Key.font: UIFont.main(ofSize: 28)]
+        navigationBarAppearance.shadowColor = .clear
+        navigationBar?.standardAppearance = navigationBarAppearance
+        navigationBar?.scrollEdgeAppearance = navigationBarAppearance
+        navigationItem.backButtonTitle = ""
+        
+        view.backgroundColor = .primary
+        portfolioListTableView.backgroundColor = .primary
+        portfolioListTableView.rowHeight = UITableView.automaticDimension
+        portfolioListTableView.estimatedRowHeight = 200
+        let navigationExtendHeight: UIEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
+        navigationController?.additionalSafeAreaInsets = navigationExtendHeight
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "", image: UIImage(systemName: "plus.circle.fill")?.withTintColor(.secondary, renderingMode: .alwaysOriginal), target: self, action: #selector(addWallet))
     }
     
     private func findEthWallets() {
@@ -140,6 +159,7 @@ extension PortfolioListViewController: UITableViewDelegate, UITableViewDataSourc
             fatalError("Cannot create wallet list cell.")
         }
         
+        walletCell.walletImageView.image = UIImage(named: "ethereum")
         let address = ethWallets[indexPath.row]["address"]
         walletCell.addressLabel.text = address
         walletCell.walletNameTextField.delegate = self

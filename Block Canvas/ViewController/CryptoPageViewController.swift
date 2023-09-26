@@ -26,21 +26,23 @@ class CryptoPageViewController: UIViewController {
     
     private let ethLabel: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 20)
+        label.font = UIFont.main(ofSize: 20)
         label.text = "Ethereum"
+        label.textColor = .tertiary
         return label
     }()
     
     private let priceLabel: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 38)
+        label.font = UIFont.main(ofSize: 38)
+        label.textColor = .secondary
         return label
     }()
     
     private let priceChangeButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
-        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.main(ofSize: 22)
+        button.setTitleColor(.secondary, for: .normal)
         button.layer.cornerRadius = 8
         button.isUserInteractionEnabled = false
         button.clipsToBounds = true
@@ -49,18 +51,19 @@ class CryptoPageViewController: UIViewController {
     
     private let gasFeeLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 14)
+        label.font = .systemFont(ofSize: 16)
+        label.textColor = .secondary
         return label
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupLabelUI()
-        setupChartUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        setupLabelUI()
+        setupChartUI()
         getETHCurrentPrice()
         getEthHistoryPrice()
         getETHPriceChange()
@@ -197,7 +200,7 @@ class CryptoPageViewController: UIViewController {
                             config.titlePadding = 4
                             config.imagePadding = 4
                             config.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 6, bottom: 4, trailing: 6)
-                            config.background.backgroundColor = .systemRed
+                            config.background.backgroundColor = .systemPink
                             self?.priceChangeButton.configuration = config
                         } else {
                             var config = UIButton.Configuration.filled()
@@ -317,6 +320,8 @@ class CryptoPageViewController: UIViewController {
     }
     
     private func setupLabelUI() {
+        navigationController?.navigationBar.isHidden = true
+        view.backgroundColor = .primary
         view.addSubview(ethLabel)
         ethLabel.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(4)
@@ -372,7 +377,7 @@ class CryptoPageViewController: UIViewController {
             // After a delay, fade back to black
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                 UIView.transition(with: self.priceLabel, duration: 0.5, options: .transitionCrossDissolve, animations: {
-                    self.priceLabel.textColor = .label
+                    self.priceLabel.textColor = .secondary
                 }, completion: nil)
             }
         }

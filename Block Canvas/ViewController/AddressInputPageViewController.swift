@@ -15,10 +15,11 @@ class AddressInputPageViewController: UIViewController {
     
     private let addressTextField: UITextField = {
         let textField = UITextField()
-        textField.backgroundColor = .systemGray4
-        textField.font = UIFont(name: "PingFang TC", size: CGFloat(16))
-        textField.textColor = UIColor.black
-        textField.placeholder = "Enter wallet address"
+        textField.backgroundColor = .secondaryBlur
+        textField.font = UIFont.systemFont(ofSize: 16)
+        textField.textColor = .primary
+        textField.tintColor = .primary
+        textField.attributedPlaceholder = NSAttributedString(string: "Enter wallet address", attributes: [NSAttributedString.Key.foregroundColor: UIColor.primary])
         textField.borderStyle = .roundedRect
         textField.clearButtonMode = .whileEditing
         textField.returnKeyType = .done
@@ -27,10 +28,11 @@ class AddressInputPageViewController: UIViewController {
     
     private let nameTextField: UITextField = {
         let textField = UITextField()
-        textField.backgroundColor = .systemGray4
-        textField.font = UIFont(name: "PingFang TC", size: CGFloat(16))
-        textField.textColor = UIColor.black
-        textField.placeholder = "Give this wallet a name"
+        textField.backgroundColor = .secondaryBlur
+        textField.font = UIFont.systemFont(ofSize: 16)
+        textField.textColor = .primary
+        textField.tintColor = .primary
+        textField.attributedPlaceholder = NSAttributedString(string: "Give this wallet a name", attributes: [NSAttributedString.Key.foregroundColor: UIColor.primary])
         textField.borderStyle = .roundedRect
         textField.clearButtonMode = .whileEditing
         textField.returnKeyType = .done
@@ -38,11 +40,14 @@ class AddressInputPageViewController: UIViewController {
     }()
     
     private let continueButton: UIButton = {
-        let button = UIButton(type: .system)
+        let button = UIButton(type: .custom)
         button.setTitle("Continue", for: .normal)
-        button.tintColor = .systemGray2
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 16)
-        button.layer.cornerRadius = 10
+        button.setTitleColor(.primary, for: .normal)
+        button.titleLabel?.font = UIFont.main(ofSize: 16)
+        var config = UIButton.Configuration.filled()
+        config.cornerStyle = .capsule
+        config.background.backgroundColor = .tertiary
+        button.configuration = config
         return button
     }()
     
@@ -50,27 +55,48 @@ class AddressInputPageViewController: UIViewController {
         super.viewDidLoad()
         addressTextField.delegate = self
         nameTextField.delegate = self
-        layout()
         findEthWallets()
     }
     
-    private func layout() {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupUI()
+    }
+    
+    private func setupUI() {
+        view.backgroundColor = .primary
+        self.title = "add Wallet."
+        let navigationBar = self.navigationController?.navigationBar
+        navigationController?.additionalSafeAreaInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        let navigationBarAppearance = UINavigationBarAppearance()
+        navigationBarAppearance.configureWithOpaqueBackground()
+        navigationBarAppearance.backgroundColor = .primary
+        navigationBarAppearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.secondary, NSAttributedString.Key.font: UIFont.main(ofSize: 16)]
+        navigationBarAppearance.shadowColor = .clear
+        navigationBar?.standardAppearance = navigationBarAppearance
+        navigationBar?.scrollEdgeAppearance = navigationBarAppearance
+        
+        tabBarController?.tabBar.isHidden = true
+        
         view.addSubview(addressTextField)
         view.addSubview(continueButton)
         view.addSubview(nameTextField)
         addressTextField.snp.makeConstraints { make in
-            make.top.equalTo(view.snp.top).offset(100)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(50)
             make.left.equalTo(view.snp.left).offset(16)
             make.right.equalTo(view.snp.right).offset(-16)
+            make.height.equalTo(40)
         }
         nameTextField.snp.makeConstraints { make in
-            make.top.equalTo(addressTextField.snp.bottom).offset(12)
+            make.top.equalTo(addressTextField.snp.bottom).offset(16)
             make.left.equalTo(view.snp.left).offset(16)
             make.right.equalTo(view.snp.right).offset(-16)
+            make.height.equalTo(40)
         }
         continueButton.snp.makeConstraints { make in
             make.centerX.equalTo(view)
-            make.top.equalTo(nameTextField.snp.bottom).offset(30)
+            make.bottom.equalTo(view.snp.bottom).offset(-70)
+            make.width.equalTo(view.snp.width).multipliedBy(0.9)
         }
         continueButton.addTarget(self, action: #selector(continueButtonTapped), for: .touchUpInside)
     }

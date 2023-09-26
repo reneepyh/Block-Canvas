@@ -27,7 +27,6 @@ class WatchlistCell: UICollectionViewCell {
             make.leading.equalTo(contentView.snp.leading)
             make.trailing.equalTo(contentView.snp.trailing)
             make.bottom.equalTo(contentView.snp.bottom)
-//            make.width.equalTo(160)
         }
     }
 }
