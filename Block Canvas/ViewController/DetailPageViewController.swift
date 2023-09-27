@@ -19,12 +19,7 @@ class DetailPageViewController: UIViewController {
     
     var indexPath: IndexPath?
     
-    var isNFTInWatchlist: Bool {
-        if let discoverNFTMetadata = discoverNFTMetadata {
-            return WatchlistManager.shared.isInWatchlist(nft: discoverNFTMetadata)
-        }
-        return false
-    }
+    var isWatchlistButtonSelected: Bool = false
     
     private let detailTableView: UITableView = {
         let tableView = UITableView()
@@ -60,6 +55,7 @@ class DetailPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        checkIfInWatchlist()
         detailTableView.delegate = self
         detailTableView.dataSource = self
         setupUI()
@@ -82,7 +78,7 @@ class DetailPageViewController: UIViewController {
     }
     
     private func watchlistButtonImage() -> UIImage? {
-        return isNFTInWatchlist ? UIImage(systemName: "heart.fill")?.withTintColor(.tertiary, renderingMode: .alwaysOriginal) : UIImage(systemName: "heart")
+        return isWatchlistButtonSelected ? UIImage(systemName: "heart.fill")?.withTintColor(.tertiary, renderingMode: .alwaysOriginal) : UIImage(systemName: "heart")
     }
     
     private func setupButtons() {
@@ -99,18 +95,34 @@ class DetailPageViewController: UIViewController {
         }
     }
     
+    private func checkIfInWatchlist() {
+        if let discoverNFTMetadata = discoverNFTMetadata {
+            isWatchlistButtonSelected = WatchlistManager.shared.isInWatchlist(nft: discoverNFTMetadata)
+        }
+    }
+    
     private func updateWatchlistButtonImage() {
         if let watchlistButton = navigationItem.rightBarButtonItems?.last {
-            watchlistButton.image = watchlistButtonImage()
+            DispatchQueue.main.async { [weak self] in
+                watchlistButton.image = self?.watchlistButtonImage()
+            }
         }
     }
     
     @objc func watchlistButtonTapped() {
+        isWatchlistButtonSelected.toggle()
+        
         if let discoverNFTMetadata = discoverNFTMetadata {
-            if isNFTInWatchlist, let indexPath = indexPath {
-                delegate?.deleteWatchlistItem(at: indexPath)
-            } else {
+            if isWatchlistButtonSelected {
                 WatchlistManager.shared.saveToWatchlist(discoverNFTAdded: discoverNFTMetadata)
+            } else {
+                if let indexPath = indexPath {
+                    if let delegate = delegate {
+                        delegate.deleteWatchlistItem(at: indexPath)
+                    } else {
+                        WatchlistManager.shared.deleteWatchlistItem(at: indexPath)
+                    }
+                }
             }
         }
         updateWatchlistButtonImage()

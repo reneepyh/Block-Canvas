@@ -81,17 +81,17 @@ class WatchlistManager {
     }
     
     func isInWatchlist(nft: DiscoverNFT) -> Bool {
-        guard let watchlistItems = fetchWatchlistItems() else {
-            print("Could not get Watchlist.")
+        let managedContext = WatchlistManager.shared.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "WatchlistItem")
+        fetchRequest.predicate = NSPredicate(format: "displayUri == %@", nft.displayUri)
+        
+        do {
+            let matchingItems = try managedContext.fetch(fetchRequest)
+            return matchingItems.count > 0
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
             return false
         }
-        
-        for item in watchlistItems {
-            if let displayURL = item.value(forKey: "displayUri") as? String, displayURL == nft.displayUri {
-                return true
-            }
-        }
-        
-        return false
     }
+
 }

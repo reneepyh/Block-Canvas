@@ -415,7 +415,7 @@ extension DiscoverPageViewController: UICollectionViewDelegateFlowLayout, UIColl
     }
     
     func waterFlowLayout(_ waterFlowLayout: WaterFallFlowLayout, itemHeight indexPath: IndexPath) -> CGFloat {
-        return CGFloat.random(in: 230...400)
+        return CGFloat.random(in: 250...380)
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -428,10 +428,13 @@ extension DiscoverPageViewController: UICollectionViewDelegateFlowLayout, UIColl
         }
         if isSearching {
             detailVC.discoverNFTMetadata = searchedNFTs[indexPath.row]
+            detailVC.indexPath = indexPath
         } else if selectedPage == 0 {
             detailVC.discoverNFTMetadata = trendingNFTs[indexPath.row]
+            detailVC.indexPath = indexPath
         } else {
             detailVC.discoverNFTMetadata = recommendedNFTs[indexPath.row]
+            detailVC.indexPath = indexPath
         }
         show(detailVC, sender: nil)
     }
