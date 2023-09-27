@@ -21,6 +21,8 @@ class DetailPageViewController: UIViewController {
     
     var isWatchlistButtonSelected: Bool = false
     
+    var isProcessing: Bool = false
+    
     private let detailTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(DetailImageCell.self, forCellReuseIdentifier: DetailImageCell.reuseIdentifier)
@@ -110,22 +112,21 @@ class DetailPageViewController: UIViewController {
     }
     
     @objc func watchlistButtonTapped() {
+        if isProcessing { return }
+        isProcessing = true
+        
         isWatchlistButtonSelected.toggle()
         
         if let discoverNFTMetadata = discoverNFTMetadata {
             if isWatchlistButtonSelected {
                 WatchlistManager.shared.saveToWatchlist(discoverNFTAdded: discoverNFTMetadata)
             } else {
-                if let indexPath = indexPath {
-                    if let delegate = delegate {
-                        delegate.deleteWatchlistItem(at: indexPath)
-                    } else {
-                        WatchlistManager.shared.deleteWatchlistItem(at: indexPath)
-                    }
-                }
+                WatchlistManager.shared.deleteWatchlistItem(with: discoverNFTMetadata.displayUri)
             }
         }
         updateWatchlistButtonImage()
+        
+        isProcessing = false
     }
     
     @objc func closeButtonTapped() {

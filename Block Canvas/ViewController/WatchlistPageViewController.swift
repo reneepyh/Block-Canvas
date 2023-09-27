@@ -82,9 +82,9 @@ extension WatchlistPageViewController: UICollectionViewDelegateFlowLayout, UICol
 
 extension WatchlistPageViewController: DetailPageViewControllerDelegate {
     func deleteWatchlistItem(at indexPath: IndexPath) {
-        WatchlistManager.shared.deleteWatchlistItem(at: indexPath)
+        let nftToDelete = watchlistNFTs[indexPath.row]
+        WatchlistManager.shared.deleteWatchlistItem(with: nftToDelete.displayUri)
         watchlistNFTs.remove(at: indexPath.row)
         watchlistCollectionView.deleteItems(at: [indexPath])
-        watchlistCollectionView.reloadData()
     }
 }

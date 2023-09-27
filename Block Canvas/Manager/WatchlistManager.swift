@@ -63,18 +63,18 @@ class WatchlistManager {
         }
     }
     
-    func deleteWatchlistItem(at indexPath: IndexPath) {
+    func deleteWatchlistItem(with displayUri: String) {
         let managedContext = WatchlistManager.shared.persistentContainer.viewContext
-        
-        guard let managedObject = fetchWatchlistItems()?[indexPath.row] else {
-            print("Cannot fetch Watchlist item to delete")
-            return
-        }
-        
-        managedContext.delete(managedObject)
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "WatchlistItem")
+        fetchRequest.predicate = NSPredicate(format: "displayUri == %@", displayUri)
         
         do {
-            try managedObject.managedObjectContext?.save()
+            if let managedObject = try managedContext.fetch(fetchRequest).first {
+                managedContext.delete(managedObject)
+                try managedContext.save()
+            } else {
+                print("Item with displayUri \(displayUri) not found in watchlist.")
+            }
         } catch let error as NSError {
             print("Could not delete Watchlist item. \(error), \(error.userInfo)")
         }
