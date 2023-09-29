@@ -40,6 +40,7 @@ class DetailPageViewController: UIViewController {
         let label = UILabel()
         label.textAlignment = .left
         label.textColor = .secondary
+        label.numberOfLines = 0
         label.font = UIFont.main(ofSize: 16)
         return label
     }()

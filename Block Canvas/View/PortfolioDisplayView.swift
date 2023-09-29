@@ -23,11 +23,14 @@ struct PortfolioDisplay: View {
                     ForEach(nftInfoForDisplay, id: \.url) { nftInfo in
                         GeometryReader { geometry in
                             VStack(alignment: .leading, spacing: 12) {
-                                Button("View in AR") {
+                                Button {
                                     selectedImageURL = nftInfo.url
                                     onARButtonTap?(nftInfo.url)
-                                }.frame(width: 120, alignment: .center)
-                                    .foregroundColor(.gray)
+                                } label: {
+                                    Label("AR", image: "AR")
+                                }
+                                .frame(width: 120, alignment: .leading)
+                                .foregroundColor(Color(uiColor: .secondary))
                                 
                                 KFImage(nftInfo.url)
                                     .placeholder {
@@ -37,7 +40,7 @@ struct PortfolioDisplay: View {
                                     }
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(width: 300, height: 450, alignment: .center)
+                                    .frame(width: 300, height: 400, alignment: .center)
                                     .cornerRadius(16)
                                     .shadow(color: Color.black.opacity(0.2), radius: 20, x: 0, y: 0)
                                     .rotation3DEffect(Angle(degrees: (Double(geometry.frame(in: .global).minX) - 210) / -18), axis: (x: 0, y: 1.0, z: 0))
@@ -54,9 +57,9 @@ struct PortfolioDisplay: View {
                                         Text(nftInfo.artist)
                                             .frame(width: 300, alignment: .leading)
                                             .font(.subheadline)
-                                            .font(.system(size: 16))
+                                            .font(.system(size: 18))
                                             .lineLimit(nil)
-                                            .foregroundColor(Color(uiColor: .secondary))
+                                            .foregroundColor(Color(uiColor: .secondaryBlur))
                                         
                                         Text(nftInfo.description)
                                             .frame(width: 300, alignment: .leading)
@@ -65,7 +68,7 @@ struct PortfolioDisplay: View {
                                             .lineLimit(nil)
                                             .foregroundColor(Color(uiColor: .secondary))
                                         
-                                        Text("Contract: \(nftInfo.contract)")
+                                        Text(nftInfo.contract)
                                             .frame(width: 300, alignment: .leading)
                                             .font(.footnote)
                                             .font(.system(size: 14))

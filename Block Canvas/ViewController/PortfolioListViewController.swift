@@ -166,7 +166,7 @@ extension PortfolioListViewController: UITableViewDelegate, UITableViewDataSourc
         walletCell.walletNameTextField.text = ethWallets[indexPath.row]["name"]
         walletCell.walletNameTextField.isUserInteractionEnabled = false
         if balance.count != ethWallets.count {
-            walletCell.balanceLabel.text = ""
+            walletCell.balanceLabel.text = "-- ETH"
         } else {
             if let balance = balance[address ?? ""] {
                 walletCell.balanceLabel.text = "\(balance) ETH"
