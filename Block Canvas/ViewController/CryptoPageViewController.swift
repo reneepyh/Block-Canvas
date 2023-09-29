@@ -53,6 +53,7 @@ class CryptoPageViewController: UIViewController {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16)
         label.textColor = .secondary
+        label.text = "-- gwei"
         return label
     }()
     

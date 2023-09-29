@@ -50,12 +50,15 @@ class DiscoverPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
         setupButtonTag()
         discoverCollectionView.dataSource = self
         discoverCollectionView.delegate = self
         nftSearchBar.delegate = self
         getTrending()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        setupUI()
     }
     
     private func setupUI() {
@@ -74,6 +77,8 @@ class DiscoverPageViewController: UIViewController {
         
         let navigationExtendHeight: UIEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
         navigationController?.additionalSafeAreaInsets = navigationExtendHeight
+        
+        tabBarController?.tabBar.isHidden = false
     }
     
     private func getTrending() {
@@ -130,7 +135,7 @@ class DiscoverPageViewController: UIViewController {
                     let contract = root.data.randomTopGenerativeToken.gentkContractAddress
                     let thumbnailURL = self?.generativeLiveDisplayUrl(uri: root.data.randomTopGenerativeToken.metadata.thumbnailUri)
                     let displayURL = self?.generativeLiveDisplayUrl(uri: root.data.randomTopGenerativeToken.metadata.displayUri)
-                    let authorName = root.data.randomTopGenerativeToken.author?.name
+                    let authorName = root.data.randomTopGenerativeToken.author?.name ?? " "
                     let title = root.data.randomTopGenerativeToken.metadata.name
                     let description = root.data.randomTopGenerativeToken.metadata.description
                     self?.trendingNFTs.append(DiscoverNFT(thumbnailUri: thumbnailURL ?? "", displayUri: displayURL ?? "", contract: contract, title: title, authorName: authorName, nftDescription: description))
@@ -415,7 +420,7 @@ extension DiscoverPageViewController: UICollectionViewDelegateFlowLayout, UIColl
     }
     
     func waterFlowLayout(_ waterFlowLayout: WaterFallFlowLayout, itemHeight indexPath: IndexPath) -> CGFloat {
-        return CGFloat.random(in: 230...400)
+        return CGFloat.random(in: 260...390)
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -428,10 +433,13 @@ extension DiscoverPageViewController: UICollectionViewDelegateFlowLayout, UIColl
         }
         if isSearching {
             detailVC.discoverNFTMetadata = searchedNFTs[indexPath.row]
+            detailVC.indexPath = indexPath
         } else if selectedPage == 0 {
             detailVC.discoverNFTMetadata = trendingNFTs[indexPath.row]
+            detailVC.indexPath = indexPath
         } else {
             detailVC.discoverNFTMetadata = recommendedNFTs[indexPath.row]
+            detailVC.indexPath = indexPath
         }
         show(detailVC, sender: nil)
     }

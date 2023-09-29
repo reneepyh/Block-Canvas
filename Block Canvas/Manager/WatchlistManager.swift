@@ -63,35 +63,35 @@ class WatchlistManager {
         }
     }
     
-    func deleteWatchlistItem(at indexPath: IndexPath) {
+    func deleteWatchlistItem(with displayUri: String) {
         let managedContext = WatchlistManager.shared.persistentContainer.viewContext
-        
-        guard let managedObject = fetchWatchlistItems()?[indexPath.row] else {
-            print("Cannot fetch Watchlist item to delete")
-            return
-        }
-        
-        managedContext.delete(managedObject)
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "WatchlistItem")
+        fetchRequest.predicate = NSPredicate(format: "displayUri == %@", displayUri)
         
         do {
-            try managedObject.managedObjectContext?.save()
+            if let managedObject = try managedContext.fetch(fetchRequest).first {
+                managedContext.delete(managedObject)
+                try managedContext.save()
+            } else {
+                print("Item with displayUri \(displayUri) not found in watchlist.")
+            }
         } catch let error as NSError {
             print("Could not delete Watchlist item. \(error), \(error.userInfo)")
         }
     }
     
     func isInWatchlist(nft: DiscoverNFT) -> Bool {
-        guard let watchlistItems = fetchWatchlistItems() else {
-            print("Could not get Watchlist.")
+        let managedContext = WatchlistManager.shared.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "WatchlistItem")
+        fetchRequest.predicate = NSPredicate(format: "displayUri == %@", nft.displayUri)
+        
+        do {
+            let matchingItems = try managedContext.fetch(fetchRequest)
+            return matchingItems.count > 0
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
             return false
         }
-        
-        for item in watchlistItems {
-            if let displayURL = item.value(forKey: "displayUri") as? String, displayURL == nft.displayUri {
-                return true
-            }
-        }
-        
-        return false
     }
+
 }
