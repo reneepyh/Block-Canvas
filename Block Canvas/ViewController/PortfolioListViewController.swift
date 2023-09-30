@@ -45,14 +45,14 @@ class PortfolioListViewController: UIViewController {
         navigationBar?.standardAppearance = navigationBarAppearance
         navigationBar?.scrollEdgeAppearance = navigationBarAppearance
         navigationItem.backButtonTitle = ""
+        let navigationExtendHeight: UIEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
+        navigationController?.additionalSafeAreaInsets = navigationExtendHeight
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "", image: UIImage(systemName: "plus.circle.fill")?.withTintColor(.secondary, renderingMode: .alwaysOriginal), target: self, action: #selector(addWallet))
         
         view.backgroundColor = .primary
         portfolioListTableView.backgroundColor = .primary
         portfolioListTableView.rowHeight = UITableView.automaticDimension
         portfolioListTableView.estimatedRowHeight = 200
-        let navigationExtendHeight: UIEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
-        navigationController?.additionalSafeAreaInsets = navigationExtendHeight
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "", image: UIImage(systemName: "plus.circle.fill")?.withTintColor(.secondary, renderingMode: .alwaysOriginal), target: self, action: #selector(addWallet))
     }
     
     private func findEthWallets() {
