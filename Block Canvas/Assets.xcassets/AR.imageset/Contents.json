@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "AR.png",
+      "filename" : "vision.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "AR 1.png",
+      "filename" : "vision 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "AR 2.png",
+      "filename" : "vision 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

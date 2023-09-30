@@ -23,13 +23,17 @@ struct PortfolioDisplay: View {
                     ForEach(nftInfoForDisplay, id: \.url) { nftInfo in
                         GeometryReader { geometry in
                             VStack(alignment: .leading, spacing: 12) {
-                                Button {
+                                Button(action: {
                                     selectedImageURL = nftInfo.url
                                     onARButtonTap?(nftInfo.url)
-                                } label: {
-                                    Label("AR", image: "AR")
+                                }) {
+                                    HStack {
+                                        Image(systemName: "eye.fill")
+                                        Text("View in AR")
+                                            .font(.body)
+                                    }
                                 }
-                                .frame(width: 120, alignment: .leading)
+                                .frame(width: 140, height: 16, alignment: .center)
                                 .foregroundColor(Color(uiColor: .secondary))
                                 
                                 KFImage(nftInfo.url)

@@ -8,12 +8,40 @@
 import UIKit
 import ARKit
 import SnapKit
+import Lottie
 
 class ARDisplayViewController: UIViewController, ARSCNViewDelegate {
     
-    var sceneView: ARSCNView!
+    private var sceneView: ARSCNView!
     var imageToDisplay: UIImage?
-    var lastAddedNode: SCNNode?
+    private var lastAddedNode: SCNNode?
+    private var tapAnimationView: LottieAnimationView?
+    private var pinchAnimationView: LottieAnimationView?
+    
+    private let instructionButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.titleLabel?.numberOfLines = 0
+        button.layer.cornerRadius = 8
+        button.isUserInteractionEnabled = false
+        button.clipsToBounds = true
+        return button
+    }()
+    
+    private let closeButton: UIButton = {
+        let button = UIButton(type: .custom)
+        var config = UIButton.Configuration.plain()
+        config.background.image = UIImage(systemName: "xmark.circle.fill")?.withTintColor(.secondary, renderingMode: .alwaysOriginal)
+        button.configuration = config
+        return button
+    }()
+    
+    private let cameraButton: UIButton = {
+        let button = UIButton(type: .custom)
+        var config = UIButton.Configuration.plain()
+        config.background.image = UIImage(systemName: "camera.viewfinder")?.withTintColor(.secondary, renderingMode: .alwaysOriginal)
+        button.configuration = config
+        return button
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,39 +105,85 @@ class ARDisplayViewController: UIViewController, ARSCNViewDelegate {
 
 extension ARDisplayViewController {
     private func setupUI() {
-        let instructionLabel = UILabel()
-        instructionLabel.text = "Tap where you want to place the image."
-        instructionLabel.textColor = .white
-        instructionLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-        instructionLabel.numberOfLines = 0
-        instructionLabel.textAlignment = .center
-        instructionLabel.font = .systemFont(ofSize: 24)
-        view.addSubview(instructionLabel)
+        view.addSubview(instructionButton)
+        var config = UIButton.Configuration.plain()
+        config.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 16, bottom: 20, trailing: 16)
+        config.background.backgroundColor = UIColor(hex: "192200", alpha: 0.6)
+        config.attributedTitle = AttributedString("Tap where you want to place the image. Pinch to zoom.", attributes: AttributeContainer([NSAttributedString.Key.font: UIFont.main(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.secondary]))
+        instructionButton.configuration = config
         
-        instructionLabel.snp.makeConstraints { make in
-            make.width.equalTo(view.window?.windowScene?.screen.bounds.width ?? UIScreen.main.bounds.width)
+        instructionButton.snp.makeConstraints { make in
+            make.leading.equalTo(view.snp.leading).offset(20)
+            make.trailing.equalTo(view.snp.trailing).offset(-20)
             make.centerX.equalToSuperview()
         }
         
-        let closeButton = UIButton()
-        closeButton.setTitle("Close", for: .normal)
         closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
         view.addSubview(closeButton)
         
         closeButton.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(48)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(12)
             make.right.equalToSuperview().offset(-32)
+            make.width.equalTo(28)
+            make.height.equalTo(28)
         }
         
-        let cameraButton = UIButton()
-        cameraButton.setTitle("Shutter", for: .normal)
         cameraButton.addTarget(self, action: #selector(cameraButtonTapped), for: .touchUpInside)
         view.addSubview(cameraButton)
         
         cameraButton.snp.makeConstraints { make in
-            make.top.equalTo(instructionLabel.snp.bottom).offset(12)
+            make.top.equalTo(instructionButton.snp.bottom).offset(12)
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-30)
+            make.bottom.equalToSuperview().offset(-42)
+            make.width.equalTo(58)
+            make.height.equalTo(48)
+        }
+        
+        // MARK: Lottie
+        tapAnimationView = .init(name: "tap")
+        tapAnimationView!.contentMode = .scaleAspectFit
+        tapAnimationView!.loopMode = .repeat(2)
+        tapAnimationView!.animationSpeed = 0.9
+        view.addSubview(tapAnimationView!)
+        tapAnimationView?.snp.makeConstraints({ make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(40)
+            make.centerX.equalTo(view.snp.centerX)
+            make.width.equalTo(150)
+            make.bottom.equalTo(view.snp.bottom).offset(-200)
+        })
+        tapAnimationView!.play { (finished) in
+            if finished {
+                UIView.animate(withDuration: 0.5, animations: {
+                    self.tapAnimationView?.alpha = 0
+                }) { (completed) in
+                    if completed {
+                        self.tapAnimationView?.removeFromSuperview()
+                        
+                        self.pinchAnimationView = .init(name: "pinch to zoom")
+                        self.pinchAnimationView!.contentMode = .scaleAspectFit
+                        self.pinchAnimationView!.loopMode = .repeat(2)
+                        self.pinchAnimationView!.animationSpeed = 0.5
+                        self.view.addSubview(self.pinchAnimationView!)
+                        self.pinchAnimationView?.snp.makeConstraints({ make in
+                            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(40)
+                            make.centerX.equalTo(self.view.snp.centerX)
+                            make.width.equalTo(150)
+                            make.bottom.equalTo(self.view.snp.bottom).offset(-200)
+                        })
+                        self.pinchAnimationView!.play { (finished) in
+                            if finished {
+                                UIView.animate(withDuration: 0.5, animations: {
+                                    self.pinchAnimationView?.alpha = 0
+                                }) { (completed) in
+                                    if completed {
+                                        self.pinchAnimationView?.removeFromSuperview()
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
     

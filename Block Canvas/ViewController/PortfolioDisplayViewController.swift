@@ -10,6 +10,12 @@ import SwiftUI
 import SnapKit
 
 class PortfolioDisplayViewController: UIViewController {
+    private let backButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(systemName: "chevron.backward")?.withTintColor(.secondary, renderingMode: .alwaysOriginal), for: .normal)
+        return button
+    }()
+    
     var NFTs: EthNFT?
     
     var nftInfoForDisplay: [NFTInfoForDisplay]?
@@ -30,10 +36,16 @@ class PortfolioDisplayViewController: UIViewController {
     }
     
     private func setupUI() {
+        navigationController?.navigationBar.isHidden = true
         view.backgroundColor = .primary
-        self.title = ""
-        let navigationExtendHeight: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        navigationController?.additionalSafeAreaInsets = navigationExtendHeight
+        tabBarController?.tabBar.isHidden = true
+        
+        view.addSubview(backButton)
+        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        backButton.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.leading.equalToSuperview().offset(20)
+        }
     }
     
     private func getEthNFTsByWallet() {
@@ -143,7 +155,7 @@ class PortfolioDisplayViewController: UIViewController {
         }
         
         portfolioDisplayView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
+            make.top.equalTo(backButton.snp.bottom).offset(8)
             make.left.equalToSuperview()
             make.right.equalToSuperview()
             make.bottom.equalToSuperview()
@@ -169,5 +181,9 @@ class PortfolioDisplayViewController: UIViewController {
         }
         task.resume()
         print(url)
+    }
+    
+    @objc func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
     }
 }

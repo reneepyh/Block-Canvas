@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		C7F524C7AFBED96AF65C050C /* Pods_Block_Canvas.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3DC6D694CA5A48BE07CB0F /* Pods_Block_Canvas.framework */; };
+		DB00B65F2AC6C72100AE8164 /* tap.json in Resources */ = {isa = PBXBuildFile; fileRef = DB00B65E2AC6C72100AE8164 /* tap.json */; };
+		DB00B6632AC7F78B00AE8164 /* pinch to zoom.json in Resources */ = {isa = PBXBuildFile; fileRef = DB00B6622AC7F78B00AE8164 /* pinch to zoom.json */; };
 		DB08647E2ABC3D04004598D6 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB08647D2ABC3D04004598D6 /* Settings.storyboard */; };
 		DB0864822ABC4063004598D6 /* WatchlistPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0864812ABC4063004598D6 /* WatchlistPageViewController.swift */; };
 		DB0864842ABC435F004598D6 /* WatchlistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0864832ABC435F004598D6 /* WatchlistCell.swift */; };
@@ -87,6 +89,8 @@
 		247A90A7AF780A2101FA113A /* Pods-Block Canvas.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Block Canvas.debug.xcconfig"; path = "Target Support Files/Pods-Block Canvas/Pods-Block Canvas.debug.xcconfig"; sourceTree = "<group>"; };
 		3C3DC6D694CA5A48BE07CB0F /* Pods_Block_Canvas.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Block_Canvas.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D8DDAB147395F8BDF7D4703 /* Pods-Block Canvas.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Block Canvas.release.xcconfig"; path = "Target Support Files/Pods-Block Canvas/Pods-Block Canvas.release.xcconfig"; sourceTree = "<group>"; };
+		DB00B65E2AC6C72100AE8164 /* tap.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tap.json; sourceTree = "<group>"; };
+		DB00B6622AC7F78B00AE8164 /* pinch to zoom.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "pinch to zoom.json"; sourceTree = "<group>"; };
 		DB08647D2ABC3D04004598D6 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		DB0864812ABC4063004598D6 /* WatchlistPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistPageViewController.swift; sourceTree = "<group>"; };
 		DB0864832ABC435F004598D6 /* WatchlistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistCell.swift; sourceTree = "<group>"; };
@@ -229,6 +233,8 @@
 				DBA478782AB2B29C0014E825 /* UIStoryboard+Extension.swift */,
 				DB98912E2AC0891700E41967 /* UIColor+Extension.swift */,
 				DB1DBD282AB1D45B00F74B64 /* Assets.xcassets */,
+				DB00B65E2AC6C72100AE8164 /* tap.json */,
+				DB00B6622AC7F78B00AE8164 /* pinch to zoom.json */,
 				DB1DBD2A2AB1D45B00F74B64 /* LaunchScreen.storyboard */,
 				DB1DBD2D2AB1D45B00F74B64 /* Info.plist */,
 				DB6853CF2AB2ECA100895EB9 /* Secrets.xcconfig */,
@@ -394,7 +400,9 @@
 				DB69818F2AB4604600BE0036 /* Portfolio.storyboard in Resources */,
 				DBF619DD2AB55F8600687F13 /* Crypto.storyboard in Resources */,
 				DB1DBD292AB1D45B00F74B64 /* Assets.xcassets in Resources */,
+				DB00B65F2AC6C72100AE8164 /* tap.json in Resources */,
 				DB1DBD272AB1D45A00F74B64 /* Main.storyboard in Resources */,
+				DB00B6632AC7F78B00AE8164 /* pinch to zoom.json in Resources */,
 				DB08647E2ABC3D04004598D6 /* Settings.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
