@@ -44,6 +44,8 @@
 		DBB880322AB4B33600526E40 /* DetailPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB880312AB4B33600526E40 /* DetailPageViewController.swift */; };
 		DBB9BDBC2AB44E07002A5FBC /* KingfisherWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB9BDBB2AB44E07002A5FBC /* KingfisherWrapper.swift */; };
 		DBC6E31A2AC036E200B40514 /* WaterFallFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC6E3192AC036E200B40514 /* WaterFallFlowLayout.swift */; };
+		DBE3CE552AC7FD1C00A85FB2 /* SettingsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE3CE542AC7FD1C00A85FB2 /* SettingsPageViewController.swift */; };
+		DBE3CE572AC80E2E00A85FB2 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE3CE562AC80E2E00A85FB2 /* SettingsCell.swift */; };
 		DBF329F22AC55DBB009DE67C /* DetailMetadataInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF329F12AC55DBB009DE67C /* DetailMetadataInfoCell.swift */; };
 		DBF45F472AB6E870002E5D31 /* ARDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF45F462AB6E870002E5D31 /* ARDisplayViewController.swift */; };
 		DBF5677F2AB85632007BFDA1 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBF5677E2AB85632007BFDA1 /* WidgetKit.framework */; };
@@ -128,6 +130,8 @@
 		DBB880312AB4B33600526E40 /* DetailPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPageViewController.swift; sourceTree = "<group>"; };
 		DBB9BDBB2AB44E07002A5FBC /* KingfisherWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingfisherWrapper.swift; sourceTree = "<group>"; };
 		DBC6E3192AC036E200B40514 /* WaterFallFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterFallFlowLayout.swift; sourceTree = "<group>"; };
+		DBE3CE542AC7FD1C00A85FB2 /* SettingsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPageViewController.swift; sourceTree = "<group>"; };
+		DBE3CE562AC80E2E00A85FB2 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		DBF329F12AC55DBB009DE67C /* DetailMetadataInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMetadataInfoCell.swift; sourceTree = "<group>"; };
 		DBF45F462AB6E870002E5D31 /* ARDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARDisplayViewController.swift; sourceTree = "<group>"; };
 		DBF5677D2AB85632007BFDA1 /* NFTWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NFTWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -272,6 +276,7 @@
 				DB5386AC2AC2C10F0077672B /* DetailImageCell.swift */,
 				DB5386A82AC2B4700077672B /* DetailMetadataCell.swift */,
 				DBF329F12AC55DBB009DE67C /* DetailMetadataInfoCell.swift */,
+				DBE3CE562AC80E2E00A85FB2 /* SettingsCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -287,6 +292,7 @@
 				DB4BFB2C2AB6A31C00187B1C /* PortfolioDisplayViewController.swift */,
 				DBF45F462AB6E870002E5D31 /* ARDisplayViewController.swift */,
 				DB0864812ABC4063004598D6 /* WatchlistPageViewController.swift */,
+				DBE3CE542AC7FD1C00A85FB2 /* SettingsPageViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -487,6 +493,7 @@
 				DBA57DC32ABC2F4200C1CE30 /* WatchlistManager.xcdatamodeld in Sources */,
 				DBA478792AB2B29C0014E825 /* BCTabBarController.swift in Sources */,
 				DB5386AD2AC2C10F0077672B /* DetailImageCell.swift in Sources */,
+				DBE3CE572AC80E2E00A85FB2 /* SettingsCell.swift in Sources */,
 				DB9E028C2AB7408E00285E63 /* PortfolioListViewController.swift in Sources */,
 				DB1DBD242AB1D45A00F74B64 /* DiscoverPageViewController.swift in Sources */,
 				DBF5678C2AB85633007BFDA1 /* NFTWidget.intentdefinition in Sources */,
@@ -515,6 +522,7 @@
 				DB0FA4C72ABEB9AF00272E7A /* JGProgressHUDWrapper.swift in Sources */,
 				DBF45F472AB6E870002E5D31 /* ARDisplayViewController.swift in Sources */,
 				DB9E028E2AB7499100285E63 /* WalletListCell.swift in Sources */,
+				DBE3CE552AC7FD1C00A85FB2 /* SettingsPageViewController.swift in Sources */,
 				DB0864822ABC4063004598D6 /* WatchlistPageViewController.swift in Sources */,
 				DBF619E32AB59C8400687F13 /* EthPriceChartView.swift in Sources */,
 				DB5386A92AC2B4700077672B /* DetailMetadataCell.swift in Sources */,
