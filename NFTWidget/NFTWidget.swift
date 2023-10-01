@@ -31,22 +31,16 @@ struct Provider: IntentTimelineProvider {
     }
     
     func getTimeline(for configuration: SelectNFTIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        let sharedDefaults = UserDefaults(suiteName: "group.reneehsu.Block-Canvas")
+        let sharedDefaults = UserDefaults(suiteName: "group.CML8K54JBW.reneehsu.Block-Canvas")
         print(sharedDefaults?.object(forKey: "nftInfoForDisplay") as? Data)
         if let savedData = sharedDefaults?.object(forKey: "nftInfoForDisplay") as? Data {
             print(savedData)
             let decoder = JSONDecoder()
             if let loadedNFTInfo = try? decoder.decode([NFTInfoForWidget].self, from: savedData) {
-                let filteredNFTInfo: [NFTInfoForWidget]
-                print(loadedNFTInfo)
-                if let nftName = configuration.NFTName {
-                    filteredNFTInfo = loadedNFTInfo.filter { $0.title == nftName }
-                } else {
-                    filteredNFTInfo = []
-                }
+                let selectedNFT = configuration.NFTName?.identifier
+                let filteredNFTInfo = loadedNFTInfo.filter { String(describing: $0.url) == selectedNFT }
                 
                 let entry = SimpleEntry(date: Date(), configuration: configuration, nftInfo: filteredNFTInfo.first)
-                print(configuration)
                 let timeline = Timeline(entries: [entry], policy: .never)
                 completion(timeline)
             }

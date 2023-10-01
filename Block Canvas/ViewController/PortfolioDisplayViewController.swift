@@ -111,7 +111,7 @@ class PortfolioDisplayViewController: UIViewController {
                     self?.userDefaults.set(self?.userNFTs, forKey: "userNFTs")
                     
                     // for widget
-                    let sharedDefaults = UserDefaults(suiteName: "group.reneehsu.Block-Canvas")
+                    let sharedDefaults = UserDefaults(suiteName: "group.CML8K54JBW.reneehsu.Block-Canvas")
                     let encoder = JSONEncoder()
                     if let encodedData = try? encoder.encode(self?.nftInfoForDisplay) {
                         sharedDefaults?.set(encodedData, forKey: "nftInfoForDisplay")

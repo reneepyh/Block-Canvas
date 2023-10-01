@@ -25,6 +25,14 @@
 		DB4BFB2F2AB6AA1300187B1C /* PortfolioDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4BFB2E2AB6AA1300187B1C /* PortfolioDisplayView.swift */; };
 		DB5386A92AC2B4700077672B /* DetailMetadataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5386A82AC2B4700077672B /* DetailMetadataCell.swift */; };
 		DB5386AD2AC2C10F0077672B /* DetailImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5386AC2AC2C10F0077672B /* DetailImageCell.swift */; };
+		DB58ED7B2AC948B20053AAB6 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB58ED7A2AC948B20053AAB6 /* Intents.framework */; };
+		DB58ED7E2AC948B20053AAB6 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB58ED7D2AC948B20053AAB6 /* IntentHandler.swift */; };
+		DB58ED862AC948B20053AAB6 /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB58ED852AC948B20053AAB6 /* IntentsUI.framework */; };
+		DB58ED892AC948B20053AAB6 /* IntentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB58ED882AC948B20053AAB6 /* IntentViewController.swift */; };
+		DB58ED8C2AC948B20053AAB6 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB58ED8A2AC948B20053AAB6 /* MainInterface.storyboard */; };
+		DB58ED902AC948B20053AAB6 /* NFTIntentExtensionUI.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = DB58ED842AC948B20053AAB6 /* NFTIntentExtensionUI.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		DB58ED932AC948B20053AAB6 /* NFTIntentExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = DB58ED792AC948B20053AAB6 /* NFTIntentExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		DB58ED9A2AC94B670053AAB6 /* NFTWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = DBF567872AB85632007BFDA1 /* NFTWidget.intentdefinition */; };
 		DB6853D12AB2F38400895EB9 /* Discover.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6853D02AB2F38400895EB9 /* Discover.swift */; };
 		DB69818F2AB4604600BE0036 /* Portfolio.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB69818E2AB4604600BE0036 /* Portfolio.storyboard */; };
 		DB6981912AB4608100BE0036 /* AddressInputPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6981902AB4608100BE0036 /* AddressInputPageViewController.swift */; };
@@ -64,6 +72,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		DB58ED8E2AC948B20053AAB6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DB1DBD142AB1D45A00F74B64 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DB58ED832AC948B20053AAB6;
+			remoteInfo = NFTIntentExtensionUI;
+		};
+		DB58ED912AC948B20053AAB6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DB1DBD142AB1D45A00F74B64 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DB58ED782AC948B20053AAB6;
+			remoteInfo = NFTIntentExtension;
+		};
 		DBF5678D2AB85633007BFDA1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DB1DBD142AB1D45A00F74B64 /* Project object */;
@@ -81,6 +103,8 @@
 			dstSubfolderSpec = 13;
 			files = (
 				DBF5678F2AB85633007BFDA1 /* NFTWidgetExtension.appex in Embed Foundation Extensions */,
+				DB58ED932AC948B20053AAB6 /* NFTIntentExtension.appex in Embed Foundation Extensions */,
+				DB58ED902AC948B20053AAB6 /* NFTIntentExtensionUI.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -110,6 +134,17 @@
 		DB4BFB2E2AB6AA1300187B1C /* PortfolioDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioDisplayView.swift; sourceTree = "<group>"; };
 		DB5386A82AC2B4700077672B /* DetailMetadataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMetadataCell.swift; sourceTree = "<group>"; };
 		DB5386AC2AC2C10F0077672B /* DetailImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailImageCell.swift; sourceTree = "<group>"; };
+		DB58ED792AC948B20053AAB6 /* NFTIntentExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NFTIntentExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB58ED7A2AC948B20053AAB6 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
+		DB58ED7D2AC948B20053AAB6 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
+		DB58ED7F2AC948B20053AAB6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DB58ED842AC948B20053AAB6 /* NFTIntentExtensionUI.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NFTIntentExtensionUI.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB58ED852AC948B20053AAB6 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
+		DB58ED882AC948B20053AAB6 /* IntentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentViewController.swift; sourceTree = "<group>"; };
+		DB58ED8B2AC948B20053AAB6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		DB58ED8D2AC948B20053AAB6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DB58ED9C2AC956B50053AAB6 /* NFTIntentExtensionRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NFTIntentExtensionRelease.entitlements; sourceTree = "<group>"; };
+		DB58ED9D2AC95FA20053AAB6 /* NFTIntentExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NFTIntentExtension.entitlements; sourceTree = "<group>"; };
 		DB6853CF2AB2ECA100895EB9 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		DB6853D02AB2F38400895EB9 /* Discover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Discover.swift; sourceTree = "<group>"; };
 		DB69818E2AB4604600BE0036 /* Portfolio.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Portfolio.storyboard; sourceTree = "<group>"; };
@@ -159,6 +194,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DB58ED762AC948B20053AAB6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB58ED7B2AC948B20053AAB6 /* Intents.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DB58ED812AC948B20053AAB6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB58ED862AC948B20053AAB6 /* IntentsUI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DBF5677A2AB85632007BFDA1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -186,6 +237,8 @@
 				3C3DC6D694CA5A48BE07CB0F /* Pods_Block_Canvas.framework */,
 				DBF5677E2AB85632007BFDA1 /* WidgetKit.framework */,
 				DBF567802AB85632007BFDA1 /* SwiftUI.framework */,
+				DB58ED7A2AC948B20053AAB6 /* Intents.framework */,
+				DB58ED852AC948B20053AAB6 /* IntentsUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -205,6 +258,8 @@
 				DBF567952AB8844F007BFDA1 /* NFTWidgetExtension.entitlements */,
 				DB1DBD1E2AB1D45A00F74B64 /* Block Canvas */,
 				DBF567822AB85632007BFDA1 /* NFTWidget */,
+				DB58ED7C2AC948B20053AAB6 /* NFTIntentExtension */,
+				DB58ED872AC948B20053AAB6 /* NFTIntentExtensionUI */,
 				DB1DBD1D2AB1D45A00F74B64 /* Products */,
 				3DFA27E93D793B7A7BF83901 /* Pods */,
 				7C8272E813E1BE556C8BD678 /* Frameworks */,
@@ -216,6 +271,8 @@
 			children = (
 				DB1DBD1C2AB1D45A00F74B64 /* Block Canvas.app */,
 				DBF5677D2AB85632007BFDA1 /* NFTWidgetExtension.appex */,
+				DB58ED792AC948B20053AAB6 /* NFTIntentExtension.appex */,
+				DB58ED842AC948B20053AAB6 /* NFTIntentExtensionUI.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -246,6 +303,27 @@
 				DB4422782AC2712C0038E34C /* UIFont+Extension.swift */,
 			);
 			path = "Block Canvas";
+			sourceTree = "<group>";
+		};
+		DB58ED7C2AC948B20053AAB6 /* NFTIntentExtension */ = {
+			isa = PBXGroup;
+			children = (
+				DB58ED9D2AC95FA20053AAB6 /* NFTIntentExtension.entitlements */,
+				DB58ED9C2AC956B50053AAB6 /* NFTIntentExtensionRelease.entitlements */,
+				DB58ED7D2AC948B20053AAB6 /* IntentHandler.swift */,
+				DB58ED7F2AC948B20053AAB6 /* Info.plist */,
+			);
+			path = NFTIntentExtension;
+			sourceTree = "<group>";
+		};
+		DB58ED872AC948B20053AAB6 /* NFTIntentExtensionUI */ = {
+			isa = PBXGroup;
+			children = (
+				DB58ED882AC948B20053AAB6 /* IntentViewController.swift */,
+				DB58ED8A2AC948B20053AAB6 /* MainInterface.storyboard */,
+				DB58ED8D2AC948B20053AAB6 /* Info.plist */,
+			);
+			path = NFTIntentExtensionUI;
 			sourceTree = "<group>";
 		};
 		DB6853D22AB3637A00895EB9 /* Model */ = {
@@ -336,11 +414,47 @@
 			);
 			dependencies = (
 				DBF5678E2AB85633007BFDA1 /* PBXTargetDependency */,
+				DB58ED8F2AC948B20053AAB6 /* PBXTargetDependency */,
+				DB58ED922AC948B20053AAB6 /* PBXTargetDependency */,
 			);
 			name = "Block Canvas";
 			productName = "Block Canvas";
 			productReference = DB1DBD1C2AB1D45A00F74B64 /* Block Canvas.app */;
 			productType = "com.apple.product-type.application";
+		};
+		DB58ED782AC948B20053AAB6 /* NFTIntentExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DB58ED992AC948B30053AAB6 /* Build configuration list for PBXNativeTarget "NFTIntentExtension" */;
+			buildPhases = (
+				DB58ED752AC948B20053AAB6 /* Sources */,
+				DB58ED762AC948B20053AAB6 /* Frameworks */,
+				DB58ED772AC948B20053AAB6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NFTIntentExtension;
+			productName = NFTIntentExtension;
+			productReference = DB58ED792AC948B20053AAB6 /* NFTIntentExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		DB58ED832AC948B20053AAB6 /* NFTIntentExtensionUI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DB58ED982AC948B30053AAB6 /* Build configuration list for PBXNativeTarget "NFTIntentExtensionUI" */;
+			buildPhases = (
+				DB58ED802AC948B20053AAB6 /* Sources */,
+				DB58ED812AC948B20053AAB6 /* Frameworks */,
+				DB58ED822AC948B20053AAB6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NFTIntentExtensionUI;
+			productName = NFTIntentExtensionUI;
+			productReference = DB58ED842AC948B20053AAB6 /* NFTIntentExtensionUI.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 		DBF5677C2AB85632007BFDA1 /* NFTWidgetExtension */ = {
 			isa = PBXNativeTarget;
@@ -372,6 +486,12 @@
 					DB1DBD1B2AB1D45A00F74B64 = {
 						CreatedOnToolsVersion = 14.3.1;
 					};
+					DB58ED782AC948B20053AAB6 = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
+					DB58ED832AC948B20053AAB6 = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
 					DBF5677C2AB85632007BFDA1 = {
 						CreatedOnToolsVersion = 14.3.1;
 					};
@@ -392,6 +512,8 @@
 			targets = (
 				DB1DBD1B2AB1D45A00F74B64 /* Block Canvas */,
 				DBF5677C2AB85632007BFDA1 /* NFTWidgetExtension */,
+				DB58ED782AC948B20053AAB6 /* NFTIntentExtension */,
+				DB58ED832AC948B20053AAB6 /* NFTIntentExtensionUI */,
 			);
 		};
 /* End PBXProject section */
@@ -410,6 +532,21 @@
 				DB1DBD272AB1D45A00F74B64 /* Main.storyboard in Resources */,
 				DB00B6632AC7F78B00AE8164 /* pinch to zoom.json in Resources */,
 				DB08647E2ABC3D04004598D6 /* Settings.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DB58ED772AC948B20053AAB6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DB58ED822AC948B20053AAB6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB58ED8C2AC948B20053AAB6 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -529,6 +666,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DB58ED752AC948B20053AAB6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB58ED7E2AC948B20053AAB6 /* IntentHandler.swift in Sources */,
+				DB58ED9A2AC94B670053AAB6 /* NFTWidget.intentdefinition in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DB58ED802AC948B20053AAB6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB58ED892AC948B20053AAB6 /* IntentViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DBF567792AB85632007BFDA1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -542,6 +696,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		DB58ED8F2AC948B20053AAB6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DB58ED832AC948B20053AAB6 /* NFTIntentExtensionUI */;
+			targetProxy = DB58ED8E2AC948B20053AAB6 /* PBXContainerItemProxy */;
+		};
+		DB58ED922AC948B20053AAB6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DB58ED782AC948B20053AAB6 /* NFTIntentExtension */;
+			targetProxy = DB58ED912AC948B20053AAB6 /* PBXContainerItemProxy */;
+		};
 		DBF5678E2AB85633007BFDA1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = DBF5677C2AB85632007BFDA1 /* NFTWidgetExtension */;
@@ -564,6 +728,14 @@
 				DB1DBD2B2AB1D45B00F74B64 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		DB58ED8A2AC948B20053AAB6 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DB58ED8B2AC948B20053AAB6 /* Base */,
+			);
+			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -761,6 +933,108 @@
 			};
 			name = Release;
 		};
+		DB58ED942AC948B30053AAB6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = NFTIntentExtension/NFTIntentExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CML8K54JBW;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NFTIntentExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NFTIntentExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "reneehsu.Block-Canvas.NFTIntentExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DB58ED952AC948B30053AAB6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = NFTIntentExtension/NFTIntentExtensionRelease.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CML8K54JBW;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NFTIntentExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NFTIntentExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "reneehsu.Block-Canvas.NFTIntentExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		DB58ED962AC948B30053AAB6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CML8K54JBW;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NFTIntentExtensionUI/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NFTIntentExtensionUI;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "reneehsu.Block-Canvas.NFTIntentExtensionUI";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DB58ED972AC948B30053AAB6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CML8K54JBW;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NFTIntentExtensionUI/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NFTIntentExtensionUI;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "reneehsu.Block-Canvas.NFTIntentExtensionUI";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		DBF567912AB85633007BFDA1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -834,6 +1108,24 @@
 			buildConfigurations = (
 				DB1DBD312AB1D45B00F74B64 /* Debug */,
 				DB1DBD322AB1D45B00F74B64 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DB58ED982AC948B30053AAB6 /* Build configuration list for PBXNativeTarget "NFTIntentExtensionUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DB58ED962AC948B30053AAB6 /* Debug */,
+				DB58ED972AC948B30053AAB6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DB58ED992AC948B30053AAB6 /* Build configuration list for PBXNativeTarget "NFTIntentExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DB58ED942AC948B30053AAB6 /* Debug */,
+				DB58ED952AC948B30053AAB6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
