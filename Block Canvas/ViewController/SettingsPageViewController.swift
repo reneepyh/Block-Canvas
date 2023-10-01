@@ -16,6 +16,7 @@ class SettingsPageViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         setupUI()
     }
     
@@ -29,6 +30,15 @@ class SettingsPageViewController: UIViewController {
     
     private func setupUI() {
         view.backgroundColor = .primary
+        let navigationBar = self.navigationController?.navigationBar
+        let navigationBarAppearance = UINavigationBarAppearance()
+        navigationBarAppearance.configureWithOpaqueBackground()
+        navigationBarAppearance.backgroundColor = .primary
+        navigationBarAppearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.tertiary, NSAttributedString.Key.font: UIFont.main(ofSize: 28)]
+        navigationBarAppearance.shadowColor = .clear
+        navigationBar?.standardAppearance = navigationBarAppearance
+        navigationBar?.scrollEdgeAppearance = navigationBarAppearance
+        navigationItem.backButtonTitle = ""
         let navigationExtendHeight: UIEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
         navigationController?.additionalSafeAreaInsets = navigationExtendHeight
         navigationItem.backButtonTitle = ""
@@ -70,6 +80,16 @@ extension SettingsPageViewController: UITableViewDelegate, UITableViewDataSource
             }
             watchlistVC.modalPresentationStyle = .overFullScreen
             navigationController?.pushViewController(watchlistVC, animated: true)
+        } else if indexPath.row == 1 {
+            guard
+                let widgetVC = UIStoryboard.settings.instantiateViewController(
+                    withIdentifier: String(describing: WidgetPageViewController.self)
+                ) as? WidgetPageViewController
+            else {
+                return
+            }
+            widgetVC.modalPresentationStyle = .overFullScreen
+            navigationController?.pushViewController(widgetVC, animated: true)
         }
     }
 }
