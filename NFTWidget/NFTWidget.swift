@@ -65,7 +65,7 @@ struct NFTWidgetEntryView: View {
                 .resizable()
                 .scaledToFill()
         } else {
-            Text("Please select an NFT to display")
+            Text("Choose an NFT to display")
         }
     }
 }
@@ -78,7 +78,7 @@ struct NFTWidget: Widget {
             NFTWidgetEntryView(entry: entry)
         }
         .configurationDisplayName("NFT Widget")
-        .description("This widget shows NFTs.")
+        .description("Choose an NFT to display.")
     }
 }
 

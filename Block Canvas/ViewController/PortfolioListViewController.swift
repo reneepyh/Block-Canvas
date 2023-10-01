@@ -19,14 +19,13 @@ class PortfolioListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        portfolioListTableView.delegate = self
-        portfolioListTableView.dataSource = self
+        setupTableView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         setupUI()
-        findEthWallets()
+        fetchEthWallets()
         balance.removeAll()
         ethWallets.forEach { wallet in
             fetchWalletBalance(address: wallet["address"] ?? "")
@@ -34,7 +33,16 @@ class PortfolioListViewController: UIViewController {
         tabBarController?.tabBar.isHidden = false
     }
     
+    private func setupTableView() {
+        portfolioListTableView.delegate = self
+        portfolioListTableView.dataSource = self
+        portfolioListTableView.backgroundColor = .primary
+        portfolioListTableView.rowHeight = UITableView.automaticDimension
+        portfolioListTableView.estimatedRowHeight = 200
+    }
+    
     private func setupUI() {
+        view.backgroundColor = .primary
         navigationController?.navigationBar.isHidden = false
         let navigationBar = self.navigationController?.navigationBar
         let navigationBarAppearance = UINavigationBarAppearance()
@@ -48,14 +56,9 @@ class PortfolioListViewController: UIViewController {
         let navigationExtendHeight: UIEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
         navigationController?.additionalSafeAreaInsets = navigationExtendHeight
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "", image: UIImage(systemName: "plus.circle.fill")?.withTintColor(.secondary, renderingMode: .alwaysOriginal), target: self, action: #selector(addWallet))
-        
-        view.backgroundColor = .primary
-        portfolioListTableView.backgroundColor = .primary
-        portfolioListTableView.rowHeight = UITableView.automaticDimension
-        portfolioListTableView.estimatedRowHeight = 200
     }
     
-    private func findEthWallets() {
+    private func fetchEthWallets() {
         let savedWallets = UserDefaults.standard.object(forKey: "ethWallets") as? [[String: String]] ?? []
         
         if savedWallets.isEmpty {
@@ -194,6 +197,7 @@ extension PortfolioListViewController: UITableViewDelegate, UITableViewDataSourc
             self?.userDefaults.set(self?.ethWallets, forKey: "ethWallets")
             self?.portfolioListTableView.deleteRows(at: [indexPath], with: .left)
         }
+        delete.backgroundColor = .systemPink
         delete.image = UIImage(systemName: "trash")
         
         let modify = UIContextualAction(style: .normal, title: "") { [weak self] (action, view, completionHandler) in
@@ -205,7 +209,7 @@ extension PortfolioListViewController: UITableViewDelegate, UITableViewDataSourc
                 }
             }
         }
-        modify.backgroundColor = .systemTeal
+        modify.backgroundColor = .secondaryBlur
         modify.image = UIImage(systemName: "pencil")
         
         let swipe = UISwipeActionsConfiguration(actions: [delete, modify])

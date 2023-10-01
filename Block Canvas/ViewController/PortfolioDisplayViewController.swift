@@ -16,8 +16,6 @@ class PortfolioDisplayViewController: UIViewController {
         return button
     }()
     
-    var NFTs: EthNFT?
-    
     var nftInfoForDisplay: [NFTInfoForDisplay]?
     
     var ethAddress: String?
@@ -90,7 +88,6 @@ class PortfolioDisplayViewController: UIViewController {
                 do {
                     let NFTData = try decoder.decode(EthNFT.self, from: data)
                     print(NFTData)
-                    self?.NFTs = NFTData
                     self?.nftInfoForDisplay = NFTData.result.map({ ethNFTMetadata in
                         ethNFTMetadata.compactMap { ethNFT in
                             if let image = ethNFT.media?.mediaCollection?.high?.url {
@@ -109,15 +106,6 @@ class PortfolioDisplayViewController: UIViewController {
                         self?.userNFTs.append(nft.title)
                     })
                     self?.userDefaults.set(self?.userNFTs, forKey: "userNFTs")
-                    
-                    // for widget
-                    let sharedDefaults = UserDefaults(suiteName: "group.CML8K54JBW.reneehsu.Block-Canvas")
-                    let encoder = JSONEncoder()
-                    if let encodedData = try? encoder.encode(self?.nftInfoForDisplay) {
-                        sharedDefaults?.set(encodedData, forKey: "nftInfoForDisplay")
-                    }
-                    print(sharedDefaults?.object(forKey: "nftInfoForDisplay") as? Data)
-
                 }
                 catch {
                     print("Error in JSON decoding.")

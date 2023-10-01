@@ -19,7 +19,7 @@ class SettingsCell: UITableViewCell {
     
     let settingsLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 20)
+        label.font = .systemFont(ofSize: 18)
         label.textColor = .secondary
         return label
     }()

@@ -57,6 +57,62 @@
             </objects>
             <point key="canvasLocation" x="2943" y="-27"/>
         </scene>
+        <!--Widget Page View Controller-->
+        <scene sceneID="vfk-mM-zfj">
+            <objects>
+                <viewController storyboardIdentifier="WidgetPageViewController" id="Cct-wR-FII" customClass="WidgetPageViewController" customModule="Block_Canvas" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dHy-pX-FyR">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="hQQ-A2-ndO">
+                                <rect key="frame" x="0.0" y="79" width="393" height="773"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="WalletListCell" id="88q-KC-vko" customClass="WalletListCell" customModule="Block_Canvas" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="393" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="88q-KC-vko" id="oOc-Q6-shj">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="KtR-EM-CG8"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="hQQ-A2-ndO" firstAttribute="top" secondItem="KtR-EM-CG8" secondAttribute="top" constant="20" id="64D-Qe-Dsx"/>
+                            <constraint firstItem="hQQ-A2-ndO" firstAttribute="leading" secondItem="dHy-pX-FyR" secondAttribute="leading" id="BUs-AW-4g9"/>
+                            <constraint firstAttribute="trailing" secondItem="hQQ-A2-ndO" secondAttribute="trailing" id="fdf-ib-Pfr"/>
+                            <constraint firstAttribute="bottom" secondItem="hQQ-A2-ndO" secondAttribute="bottom" id="kVd-DN-Lsr"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="walletListTableView" destination="hQQ-A2-ndO" id="8dc-3V-h1R"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KKA-LT-vtb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3880" y="-27"/>
+        </scene>
+        <!--Widget Wallet Selected View Controller-->
+        <scene sceneID="ZA1-hl-doq">
+            <objects>
+                <viewController storyboardIdentifier="WidgetWalletSelectedViewController" id="JvS-T3-Yxt" customClass="WidgetWalletSelectedViewController" customModule="Block_Canvas" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dK6-Yh-0XO">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="6Wd-am-R88"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="bz3-UE-58G"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pnK-Ff-94o" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4798" y="-27"/>
+        </scene>
         <!--settings.-->
         <scene sceneID="7QQ-Ss-VzJ">
             <objects>

@@ -40,7 +40,7 @@ class WalletListCell: UITableViewCell {
         return label
     }()
     
-    private let arrowImageView: UIImageView = {
+    let arrowImageView: UIImageView = {
         let imageView = UIImageView()
         return imageView
     }()

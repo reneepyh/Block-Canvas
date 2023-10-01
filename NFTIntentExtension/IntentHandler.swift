@@ -30,7 +30,6 @@ class IntentHandler: INExtension, SelectNFTIntentHandling {
                 }
                 
                 let collections = INObjectCollection(items: nftDisplayOptions)
-                print(collections)
                 completion(collections, nil)
             }
         }
