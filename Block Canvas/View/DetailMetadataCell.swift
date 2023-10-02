@@ -43,14 +43,13 @@ class DetailMetadataCell: UITableViewCell {
         addSubview(metadataLabel)
         metadataLabel.text = "Metadata"
         metadataLabel.snp.makeConstraints { make in
-            make.top.equalTo(snp.top).offset(16)
             make.leading.equalTo(snp.leading).offset(16)
             make.bottom.equalTo(snp.bottom)
         }
         
         addSubview(arrowImageView)
         arrowImageView.snp.makeConstraints { make in
-            make.top.equalTo(snp.top).offset(16)
+            make.top.equalTo(metadataLabel.snp.top)
             make.trailing.equalTo(snp.trailing).offset(-16)
         }
         
@@ -59,7 +58,7 @@ class DetailMetadataCell: UITableViewCell {
             make.height.equalTo(1)
             make.leading.equalTo(metadataLabel.snp.leading)
             make.trailing.equalTo(arrowImageView.snp.trailing)
-            make.bottom.equalTo(metadataLabel.snp.top).offset(-8)
+            make.bottom.equalTo(metadataLabel.snp.top).offset(-16)
         }
     }
 }

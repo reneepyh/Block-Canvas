@@ -168,7 +168,6 @@ class PortfolioDisplayViewController: UIViewController {
             }
         }
         task.resume()
-        print(url)
     }
     
     @objc func backButtonTapped() {

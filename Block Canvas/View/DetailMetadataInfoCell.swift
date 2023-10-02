@@ -72,39 +72,39 @@ class DetailMetadataInfoCell: UITableViewCell {
         selectionStyle = .none
         addSubview(titleFieldLabel)
         titleFieldLabel.snp.makeConstraints { make in
-            make.top.equalTo(snp.top).offset(12)
+            make.top.equalTo(snp.top).offset(16)
             make.leading.equalTo(snp.leading).offset(16)
         }
         
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(snp.top).offset(12)
+            make.top.equalTo(snp.top).offset(16)
             make.leading.equalTo(snp.centerX).offset(-60)
             make.trailing.equalTo(snp.trailing).offset(-16)
         }
         
         addSubview(artistFieldLabel)
         artistFieldLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(12)
+            make.top.equalTo(titleLabel.snp.bottom).offset(16)
             make.leading.equalTo(snp.leading).offset(16)
         }
         
         addSubview(artistLabel)
         artistLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(12)
+            make.top.equalTo(titleLabel.snp.bottom).offset(16)
             make.leading.equalTo(snp.centerX).offset(-60)
             make.trailing.equalTo(snp.trailing).offset(-16)
         }
         
         addSubview(contractFieldLabel)
         contractFieldLabel.snp.makeConstraints { make in
-            make.top.equalTo(artistLabel.snp.bottom).offset(12)
+            make.top.equalTo(artistLabel.snp.bottom).offset(16)
             make.leading.equalTo(snp.leading).offset(16)
         }
         
         addSubview(contractLabel)
         contractLabel.snp.makeConstraints { make in
-            make.top.equalTo(artistLabel.snp.bottom).offset(12)
+            make.top.equalTo(artistLabel.snp.bottom).offset(16)
             make.leading.equalTo(snp.centerX).offset(-60)
             make.trailing.equalTo(snp.trailing).offset(-16)
             make.bottom.equalTo(snp.bottom).offset(-32)
