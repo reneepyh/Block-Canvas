@@ -94,7 +94,8 @@ class DetailPageViewController: UIViewController {
         navigationItem.hidesBackButton = true
         let watchlistButton = UIBarButtonItem(image: watchlistButtonImage(), style: .plain, target: self, action: #selector(watchlistButtonTapped))
         let closeButton = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(closeButtonTapped))
-        navigationItem.rightBarButtonItems = [closeButton, watchlistButton]
+        let arButton = UIBarButtonItem(image: UIImage(systemName: "eye.fill"), style: .plain, target: self, action: #selector(arButtonTapped))
+        navigationItem.rightBarButtonItems = [closeButton, watchlistButton, arButton]
     }
     
     private func setupNavBarTitle() {
@@ -111,7 +112,7 @@ class DetailPageViewController: UIViewController {
     }
     
     private func updateWatchlistButtonImage() {
-        if let watchlistButton = navigationItem.rightBarButtonItems?.last {
+        if let watchlistButton = navigationItem.rightBarButtonItems?[1] {
             DispatchQueue.main.async { [weak self] in
                 watchlistButton.image = self?.watchlistButtonImage()
             }
@@ -138,6 +139,34 @@ class DetailPageViewController: UIViewController {
     
     @objc func closeButtonTapped() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func arButtonTapped() {
+        BCProgressHUD.show()
+        let arViewController = ARDisplayViewController()
+        guard let displayUri = discoverNFTMetadata?.displayUri else {
+            print("Cannot find display Uri.")
+            return
+        }
+        
+        guard let imageURL = URL(string: displayUri) else {
+            print("Cannot create image URL.")
+            return
+        }
+        
+        let task = URLSession.shared.dataTask(with: imageURL) { (data, response, error) in
+            if let error = error {
+                print("Error downloading image: \(error)")
+            } else if let data = data, let image = UIImage(data: data) {
+                arViewController.imageToDisplay = image
+                DispatchQueue.main.async {
+                    arViewController.modalPresentationStyle = .overFullScreen
+                    BCProgressHUD.dismiss()
+                    self.present(arViewController, animated: true, completion: nil)
+                }
+            }
+        }
+        task.resume()
     }
 }
 

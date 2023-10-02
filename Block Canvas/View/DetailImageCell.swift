@@ -49,7 +49,7 @@ class DetailImageCell: UITableViewCell {
             make.top.equalTo(detailImageView.snp.bottom).offset(12)
             make.leading.equalTo(contentView.snp.leading).offset(16)
             make.trailing.equalTo(contentView.snp.trailing).offset(-16)
-            make.bottom.equalTo(contentView.snp.bottom).offset(-12)
+            make.bottom.equalTo(contentView.snp.bottom).offset(-60)
         }
     }
 }
