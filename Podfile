@@ -3,11 +3,11 @@
 
 target 'Block Canvas' do
 pod 'SwiftLint'
-pod 'Apollo'
 pod 'Kingfisher'
 pod 'SnapKit'
 pod 'JGProgressHUD'
 pod 'lottie-ios'
+pod 'MJRefresh'
 
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!

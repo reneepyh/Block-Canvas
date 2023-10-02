@@ -1,38 +1,36 @@
 PODS:
-  - Apollo (1.5.0):
-    - Apollo/Core (= 1.5.0)
-  - Apollo/Core (1.5.0)
   - JGProgressHUD (2.2)
   - Kingfisher (7.8.1)
   - lottie-ios (4.3.2)
+  - MJRefresh (3.7.5)
   - SnapKit (5.6.0)
   - SwiftLint (0.52.4)
 
 DEPENDENCIES:
-  - Apollo
   - JGProgressHUD
   - Kingfisher
   - lottie-ios
+  - MJRefresh
   - SnapKit
   - SwiftLint
 
 SPEC REPOS:
   trunk:
-    - Apollo
     - JGProgressHUD
     - Kingfisher
     - lottie-ios
+    - MJRefresh
     - SnapKit
     - SwiftLint
 
 SPEC CHECKSUMS:
-  Apollo: 1e0ce95366a1c408fd7d053456c9dc048a6d7334
   JGProgressHUD: d83d7a981b85d11205e19ff8ad5bb9c40571c847
   Kingfisher: 63f677311d36a3473f6b978584f8a3845d023dc5
   lottie-ios: 48af491639ba6e8bb7cfaf7649b8a339487da935
+  MJRefresh: fdf5e979eb406a0341468932d1dfc8b7f9fce961
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   SwiftLint: 1cc5cd61ba9bacb2194e340aeb47a2a37fda00b3
 
-PODFILE CHECKSUM: 3859ac181e47557270cad5b0f84ee51b2834c65c
+PODFILE CHECKSUM: 9ae3173aa194fe075d873e058b0cf4cee8c03636
 
 COCOAPODS: 1.12.1
