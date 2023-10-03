@@ -14,9 +14,7 @@ class BCTabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.viewControllers = tabs.map { $0.makeViewController() }
-
     }
 }
 

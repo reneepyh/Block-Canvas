@@ -50,6 +50,7 @@
 		DBAACF122AC96D0B001C7E76 /* WidgetPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAACF112AC96D0B001C7E76 /* WidgetPageViewController.swift */; };
 		DBB880322AB4B33600526E40 /* DetailPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB880312AB4B33600526E40 /* DetailPageViewController.swift */; };
 		DBB9BDBC2AB44E07002A5FBC /* KingfisherWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB9BDBB2AB44E07002A5FBC /* KingfisherWrapper.swift */; };
+		DBC2CDE02ACC3BEA0000974B /* LaunchAnimationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC2CDDF2ACC3BEA0000974B /* LaunchAnimationViewController.swift */; };
 		DBC6E31A2AC036E200B40514 /* WaterFallFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC6E3192AC036E200B40514 /* WaterFallFlowLayout.swift */; };
 		DBE3CE552AC7FD1C00A85FB2 /* SettingsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE3CE542AC7FD1C00A85FB2 /* SettingsPageViewController.swift */; };
 		DBE3CE572AC80E2E00A85FB2 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE3CE562AC80E2E00A85FB2 /* SettingsCell.swift */; };
@@ -155,6 +156,7 @@
 		DBAACF112AC96D0B001C7E76 /* WidgetPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetPageViewController.swift; sourceTree = "<group>"; };
 		DBB880312AB4B33600526E40 /* DetailPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPageViewController.swift; sourceTree = "<group>"; };
 		DBB9BDBB2AB44E07002A5FBC /* KingfisherWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingfisherWrapper.swift; sourceTree = "<group>"; };
+		DBC2CDDF2ACC3BEA0000974B /* LaunchAnimationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAnimationViewController.swift; sourceTree = "<group>"; };
 		DBC6E3192AC036E200B40514 /* WaterFallFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterFallFlowLayout.swift; sourceTree = "<group>"; };
 		DBE3CE542AC7FD1C00A85FB2 /* SettingsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPageViewController.swift; sourceTree = "<group>"; };
 		DBE3CE562AC80E2E00A85FB2 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
@@ -363,6 +365,7 @@
 				DBE3CE542AC7FD1C00A85FB2 /* SettingsPageViewController.swift */,
 				DBAACF112AC96D0B001C7E76 /* WidgetPageViewController.swift */,
 				DB0C67942AC9B892007C960A /* WidgetWalletSelectedViewController.swift */,
+				DBC2CDDF2ACC3BEA0000974B /* LaunchAnimationViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -604,6 +607,7 @@
 				DBA57DCE2ABC32AF00C1CE30 /* WatchlistItem+CoreDataClass.swift in Sources */,
 				DB0C67952AC9B892007C960A /* WidgetWalletSelectedViewController.swift in Sources */,
 				DB1DBD222AB1D45A00F74B64 /* SceneDelegate.swift in Sources */,
+				DBC2CDE02ACC3BEA0000974B /* LaunchAnimationViewController.swift in Sources */,
 				DBF567962AB8AB92007BFDA1 /* NFTWidget.swift in Sources */,
 				DB6853D12AB2F38400895EB9 /* Discover.swift in Sources */,
 				DBAACF122AC96D0B001C7E76 /* WidgetPageViewController.swift in Sources */,
@@ -820,7 +824,7 @@
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera for augmented reality.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We need access to save photos.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = Main.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -858,7 +862,7 @@
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera for augmented reality.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We need access to save photos.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = Main.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;

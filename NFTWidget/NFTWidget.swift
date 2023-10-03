@@ -22,11 +22,11 @@ struct Provider: IntentTimelineProvider {
     typealias Entry = SimpleEntry
     
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: SelectNFTIntent(), nftInfo: NFTInfoForWidget(url: URL(string: "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=1024x1024&w=is&k=20&c=5aen6wD1rsiMZSaVeJ9BWM4GGh5LE_9h97haNpUQN5I=")!, title: "", artist: "", description: "", contract: ""))
+        SimpleEntry(date: Date(), configuration: SelectNFTIntent(), nftInfo: NFTInfoForWidget(url: URL(string: "https://lh3.googleusercontent.com/drive-viewer/AK7aPaB3Q7j_pird_rD3nzFuOtELd7OerT1BVQKMA5qA2t7S-KKJOheKCEnmnC4pOwPWOV2UliQX2PG14hokApqFt-DQXoNI=s1600")!, title: "", artist: "", description: "", contract: ""))
     }
     
     func getSnapshot(for configuration: SelectNFTIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), configuration: configuration, nftInfo: NFTInfoForWidget(url: URL(string: "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=1024x1024&w=is&k=20&c=5aen6wD1rsiMZSaVeJ9BWM4GGh5LE_9h97haNpUQN5I=")!, title: "", artist: "", description: "", contract: ""))
+        let entry = SimpleEntry(date: Date(), configuration: configuration, nftInfo: NFTInfoForWidget(url: URL(string: "https://lh3.googleusercontent.com/drive-viewer/AK7aPaB3Q7j_pird_rD3nzFuOtELd7OerT1BVQKMA5qA2t7S-KKJOheKCEnmnC4pOwPWOV2UliQX2PG14hokApqFt-DQXoNI=s1600")!, title: "", artist: "", description: "", contract: ""))
         completion(entry)
     }
     
@@ -84,7 +84,7 @@ struct NFTWidget: Widget {
 
 struct NFTWidget_Previews: PreviewProvider {
     static var previews: some View {
-        NFTWidgetEntryView(entry: SimpleEntry(date: Date(), configuration: SelectNFTIntent(), nftInfo: NFTInfoForWidget(url: URL(string: "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=1024x1024&w=is&k=20&c=5aen6wD1rsiMZSaVeJ9BWM4GGh5LE_9h97haNpUQN5I=")!, title: "", artist: "", description: "", contract: "")))
+        NFTWidgetEntryView(entry: SimpleEntry(date: Date(), configuration: SelectNFTIntent(), nftInfo: NFTInfoForWidget(url: URL(string: "https://lh3.googleusercontent.com/drive-viewer/AK7aPaB3Q7j_pird_rD3nzFuOtELd7OerT1BVQKMA5qA2t7S-KKJOheKCEnmnC4pOwPWOV2UliQX2PG14hokApqFt-DQXoNI=s1600")!, title: "", artist: "", description: "", contract: "")))
             .previewContext(WidgetPreviewContext(family: .systemSmall))
     }
 }
