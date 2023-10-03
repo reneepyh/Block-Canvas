@@ -46,6 +46,8 @@ class DiscoverPageViewController: UIViewController {
     
     private var recommendedNFTs: [DiscoverNFT] = []
     
+    private var recommendationCache: [DiscoverNFT]?
+    
     private let group = DispatchGroup()
     
     override func viewDidLoad() {
@@ -54,6 +56,7 @@ class DiscoverPageViewController: UIViewController {
         setupButtonTag()
         nftSearchBar.delegate = self
         getTrending()
+        fetchRecommendationInBackground()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -74,7 +77,8 @@ class DiscoverPageViewController: UIViewController {
             if self?.selectedPage == 0 {
                 self?.getTrending()
             } else if self?.selectedPage == 1 {
-                self?.fetchRecommendation()
+                BCProgressHUD.show(text: "AI calculating...")
+                self?.fetchRecommendationData()
             }
         })
     }
@@ -167,6 +171,12 @@ class DiscoverPageViewController: UIViewController {
         }
     }
     
+    private func fetchRecommendationInBackground() {
+        DispatchQueue.global(qos: .background).async { [weak self] in
+            self?.fetchRecommendationData(isBackground: true)
+        }
+    }
+    
     private func searchNFT(keyword: String) {
         BCProgressHUD.show(text: "Searching")
         let apiKey = Bundle.main.object(forInfoDictionaryKey: "NFTPort_API_Key") as? String
@@ -223,18 +233,11 @@ class DiscoverPageViewController: UIViewController {
         }
     }
     
-    private func fetchRecommendation() {
-        BCProgressHUD.show(text: "AI calculating...")
+    private func fetchRecommendationData(isBackground: Bool = false) {
         findUserNFTs()
         searchedNFTs.removeAll()
         recommendedNFTs.removeAll()
-        DispatchQueue.main.async { [weak self] in
-            if let layout = self?.discoverCollectionView.collectionViewLayout as? WaterFallFlowLayout {
-                layout.clearCache()
-            }
-            self?.discoverCollectionView.collectionViewLayout.invalidateLayout()
-            self?.discoverCollectionView.reloadData()
-        }
+        
         getRecommendationFromGPT()
         semaphore.wait()
         
@@ -244,12 +247,24 @@ class DiscoverPageViewController: UIViewController {
             group.enter()
             self.getRecommendedNFTs(collectionName: collection)
         }
-        group.notify(queue: .main) {
-            DispatchQueue.main.async { [weak self] in
-                self?.discoverCollectionView.reloadData()
-                self?.discoverCollectionView.endHeaderRefreshing()
-                BCProgressHUD.dismiss()
+        
+        group.notify(queue: .main) { [weak self] in
+            self?.recommendationCache = self?.recommendedNFTs
+            if !isBackground {
+                self?.updateRecommendationUI()
             }
+        }
+    }
+
+    private func updateRecommendationUI() {
+        DispatchQueue.main.async { [weak self] in
+            if let layout = self?.discoverCollectionView.collectionViewLayout as? WaterFallFlowLayout {
+                layout.clearCache()
+            }
+            self?.discoverCollectionView.collectionViewLayout.invalidateLayout()
+            self?.discoverCollectionView.reloadData()
+            self?.discoverCollectionView.endHeaderRefreshing()
+            BCProgressHUD.dismiss()
         }
     }
     
@@ -354,8 +369,8 @@ class DiscoverPageViewController: UIViewController {
             request.httpMethod = "GET"
             
             let configuration = URLSessionConfiguration.default
-            configuration.timeoutIntervalForRequest = 2.0
-            configuration.timeoutIntervalForResource = 2.0
+            configuration.timeoutIntervalForRequest = 4.0
+            configuration.timeoutIntervalForResource = 4.0
             
             let session = URLSession(configuration: configuration)
             
@@ -530,18 +545,12 @@ extension DiscoverPageViewController {
         } else {
             if selectedPage == 1 { return }
             selectedPage = 1
-            if recommendedNFTs.count == 0 {
-                queue.async { [weak self] in
-                    self?.fetchRecommendation()
-                }
+            if let cachedData = recommendationCache, !cachedData.isEmpty {
+                self.recommendedNFTs = cachedData
+                self.updateRecommendationUI()
             } else {
-                DispatchQueue.main.async { [weak self] in
-                    if let layout = self?.discoverCollectionView.collectionViewLayout as? WaterFallFlowLayout {
-                        layout.clearCache()
-                    }
-                    self?.discoverCollectionView.collectionViewLayout.invalidateLayout()
-                    self?.discoverCollectionView.reloadData()
-                }
+                BCProgressHUD.show(text: "AI calculating...")
+                fetchRecommendationData()
             }
         }
         // 動畫
