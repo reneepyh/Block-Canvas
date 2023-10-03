@@ -9,7 +9,6 @@ import UIKit
 import MJRefresh
 
 extension UICollectionView {
-
     func addRefreshHeader(refreshingBlock: @escaping () -> Void) {
         mj_header = MJRefreshNormalHeader(refreshingBlock: refreshingBlock)
     }
@@ -17,9 +16,4 @@ extension UICollectionView {
     func endHeaderRefreshing() {
         mj_header?.endRefreshing()
     }
-
-    func beginHeaderRefreshing() {
-        mj_header?.beginRefreshing()
-    }
 }
-
