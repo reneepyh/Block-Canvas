@@ -19,8 +19,6 @@
 	</array>
 	<key>OpenAI_API_Key</key>
 	<string>$(OpenAI_API_Key)</string>
-	<key>Opensea_API_Key</key>
-	<string>$(Opensea_API_Key)</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

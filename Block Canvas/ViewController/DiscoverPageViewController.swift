@@ -30,6 +30,8 @@ class DiscoverPageViewController: UIViewController {
     
     private let userDefaults = UserDefaults.standard
     
+    private var openAIBody: OpenAIBody?
+    
     private var userNFTs: [String] = []
     
     private var trendingNFTs: [DiscoverNFT] = []
@@ -277,28 +279,38 @@ class DiscoverPageViewController: UIViewController {
             return
         }
         
-        var randomNFTs: [String] = []
-        randomNFTs.append(userNFTs.randomElement() ?? "")
-        randomNFTs.append(userNFTs.randomElement() ?? "")
-        randomNFTs.append(userNFTs.randomElement() ?? "")
-        print(randomNFTs)
-        
         if let url = URL(string: "https://api.openai.com/v1/chat/completions") {
             var request = URLRequest(url: url)
             request.setValue("application/json",
                              forHTTPHeaderField: "Content-Type")
             request.setValue("Bearer \(key)",
                              forHTTPHeaderField: "Authorization")
-            let openAIBody = OpenAIBody(messages: [
-                ["role": "user", "content": """
-           Generate recommendations for NFT collections similar to the following:
+            if userNFTs.isEmpty {
+                openAIBody = OpenAIBody(messages: [
+                    ["role": "user", "content": """
+               Please suggest art NFT collections. Suggest NFT collections should be on Ethereum blockchain. Please suggest 5 NFT collections. Provide only the collection names in bullet pointsc (not numbered lists) and not any other responses. Please do not mention the artist's name. Please do not include double quotes for the response. Please also do not include symbols such as colon, semicolon or dash.
+               """]
+                ])
+                
+            } else {
+                var randomNFTs: [String] = []
+                randomNFTs.append(userNFTs.randomElement() ?? "")
+                randomNFTs.append(userNFTs.randomElement() ?? "")
+                randomNFTs.append(userNFTs.randomElement() ?? "")
+                print(randomNFTs)
+                
+                openAIBody = OpenAIBody(messages: [
+                    ["role": "user", "content": """
+               Generate recommendations for NFT collections similar to the following:
+               
+               Collection Name: \(randomNFTs)
+               Hosted blockchain: Ethereum
+               
+               Please suggest NFT collections that share similarities with the provided collection. Suggest NFT collections should be on Ethereum blockchain. Please suggest 5 NFT collections. Provide only the collection names in bullet pointsc (not numbered lists) and not any other responses. Please do not mention the artist's name. Please do not include double quotes for the response. Please also do not include symbols such as colon, semicolon or dash.
+               """]
+                ])
+            }
            
-           Collection Name: \(randomNFTs)
-           Hosted blockchain: Ethereum
-           
-           Please suggest NFT collections that share similarities with the provided collection. Suggest NFT collections should be on Ethereum blockchain. Please suggest 5 NFT collections. Provide only the collection names in bullet pointsc (not numbered lists) and not any other responses. Please not to mention the artist's name. Please do not include double quotes for the response. Please also do not include symbols such as colon, semicolon or dash.
-           """]
-            ])
             request.httpBody = try? JSONEncoder().encode(openAIBody)
             request.httpMethod = "POST"
             
