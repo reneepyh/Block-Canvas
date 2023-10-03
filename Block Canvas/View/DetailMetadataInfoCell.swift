@@ -98,13 +98,13 @@ class DetailMetadataInfoCell: UITableViewCell {
         
         addSubview(contractFieldLabel)
         contractFieldLabel.snp.makeConstraints { make in
-            make.top.equalTo(artistLabel.snp.bottom).offset(16)
+            make.top.equalTo(artistFieldLabel.snp.bottom).offset(16)
             make.leading.equalTo(snp.leading).offset(16)
         }
         
         addSubview(contractLabel)
         contractLabel.snp.makeConstraints { make in
-            make.top.equalTo(artistLabel.snp.bottom).offset(16)
+            make.top.equalTo(contractFieldLabel.snp.top)
             make.leading.equalTo(snp.centerX).offset(-60)
             make.trailing.equalTo(snp.trailing).offset(-16)
             make.bottom.equalTo(snp.bottom).offset(-32)

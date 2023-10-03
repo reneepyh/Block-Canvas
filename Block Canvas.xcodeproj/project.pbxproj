@@ -53,6 +53,7 @@
 		DBC6E31A2AC036E200B40514 /* WaterFallFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC6E3192AC036E200B40514 /* WaterFallFlowLayout.swift */; };
 		DBE3CE552AC7FD1C00A85FB2 /* SettingsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE3CE542AC7FD1C00A85FB2 /* SettingsPageViewController.swift */; };
 		DBE3CE572AC80E2E00A85FB2 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE3CE562AC80E2E00A85FB2 /* SettingsCell.swift */; };
+		DBE93E262ACAC49B00ECF9E0 /* MJRefreshWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE93E252ACAC49B00ECF9E0 /* MJRefreshWrapper.swift */; };
 		DBF329F22AC55DBB009DE67C /* DetailMetadataInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF329F12AC55DBB009DE67C /* DetailMetadataInfoCell.swift */; };
 		DBF45F472AB6E870002E5D31 /* ARDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF45F462AB6E870002E5D31 /* ARDisplayViewController.swift */; };
 		DBF5677F2AB85632007BFDA1 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBF5677E2AB85632007BFDA1 /* WidgetKit.framework */; };
@@ -157,6 +158,7 @@
 		DBC6E3192AC036E200B40514 /* WaterFallFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterFallFlowLayout.swift; sourceTree = "<group>"; };
 		DBE3CE542AC7FD1C00A85FB2 /* SettingsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPageViewController.swift; sourceTree = "<group>"; };
 		DBE3CE562AC80E2E00A85FB2 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
+		DBE93E252ACAC49B00ECF9E0 /* MJRefreshWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MJRefreshWrapper.swift; sourceTree = "<group>"; };
 		DBF329F12AC55DBB009DE67C /* DetailMetadataInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMetadataInfoCell.swift; sourceTree = "<group>"; };
 		DBF45F462AB6E870002E5D31 /* ARDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARDisplayViewController.swift; sourceTree = "<group>"; };
 		DBF5677D2AB85632007BFDA1 /* NFTWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NFTWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -251,6 +253,7 @@
 			children = (
 				DBB9BDBB2AB44E07002A5FBC /* KingfisherWrapper.swift */,
 				DB0FA4C62ABEB9AF00272E7A /* JGProgressHUDWrapper.swift */,
+				DBE93E252ACAC49B00ECF9E0 /* MJRefreshWrapper.swift */,
 			);
 			path = "Third Party Wrappers";
 			sourceTree = "<group>";
@@ -594,6 +597,7 @@
 				DB9E028C2AB7408E00285E63 /* PortfolioListViewController.swift in Sources */,
 				DB1DBD242AB1D45A00F74B64 /* DiscoverPageViewController.swift in Sources */,
 				DBF5678C2AB85633007BFDA1 /* NFTWidget.intentdefinition in Sources */,
+				DBE93E262ACAC49B00ECF9E0 /* MJRefreshWrapper.swift in Sources */,
 				DBA57DCF2ABC32AF00C1CE30 /* WatchlistItem+CoreDataProperties.swift in Sources */,
 				DB1DBD202AB1D45A00F74B64 /* AppDelegate.swift in Sources */,
 				DB98912F2AC0891700E41967 /* UIColor+Extension.swift in Sources */,

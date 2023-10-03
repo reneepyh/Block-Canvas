@@ -197,7 +197,7 @@ class CryptoPageViewController: UIViewController {
                             var config = UIButton.Configuration.filled()
                             config.title = "\(priceChange)%"
                             let size = UIImage.SymbolConfiguration(pointSize: 8)
-                            config.image = UIImage(systemName: "arrowtriangle.up.fill", withConfiguration: size)
+                            config.image = UIImage(systemName: "arrowtriangle.down.fill", withConfiguration: size)
                             config.titlePadding = 4
                             config.imagePadding = 4
                             config.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 6, bottom: 4, trailing: 6)
