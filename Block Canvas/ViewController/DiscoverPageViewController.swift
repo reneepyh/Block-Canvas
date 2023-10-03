@@ -58,11 +58,25 @@ class DiscoverPageViewController: UIViewController {
         setupButtonTag()
         nftSearchBar.delegate = self
         getTrending()
+//        presentLaunchAnimation()
         fetchRecommendationInBackground()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         setupUI()
+    }
+    
+    private func presentLaunchAnimation() {
+        guard
+            let launchVC = UIStoryboard.discover.instantiateViewController(
+                withIdentifier: String(describing: LaunchAnimationViewController.self)
+            ) as? LaunchAnimationViewController
+        else {
+            return
+        }
+        launchVC.modalPresentationStyle = .overFullScreen
+        launchVC.tabBarController?.tabBar.isHidden = true
+        present(launchVC, animated: false)
     }
     
     private func setupCollectionView() {
@@ -391,13 +405,11 @@ class DiscoverPageViewController: UIViewController {
                 
                 if let error = error {
                     print(error)
-                    BCProgressHUD.showFailure()
                     return
                 }
                 
                 guard let data = data else {
                     print("No data.")
-                    BCProgressHUD.showFailure()
                     return
                 }
                 
@@ -445,13 +457,13 @@ extension DiscoverPageViewController: UICollectionViewDelegateFlowLayout, UIColl
             fatalError("Cell cannot be created")
         }
         if isSearching {
-            discoverCollectionCell.imageView.loadImage(searchedNFTs[indexPath.row].thumbnailUri, placeHolder: UIImage(systemName: "circle.dotted"))
+            discoverCollectionCell.imageView.loadImage(searchedNFTs[indexPath.row].thumbnailUri, placeHolder: UIImage(named: "AppIcon"))
             discoverCollectionCell.titleLabel.text = searchedNFTs[indexPath.row].title
         } else if selectedPage == 0 {
-            discoverCollectionCell.imageView.loadImage(trendingNFTs[indexPath.row].thumbnailUri, placeHolder: UIImage(systemName: "circle.dotted"))
+            discoverCollectionCell.imageView.loadImage(trendingNFTs[indexPath.row].thumbnailUri, placeHolder: UIImage(named: "AppIcon"))
             discoverCollectionCell.titleLabel.text = trendingNFTs[indexPath.row].title
         } else {
-            discoverCollectionCell.imageView.loadImage(recommendedNFTs[indexPath.row].thumbnailUri, placeHolder: UIImage(systemName: "circle.dotted"))
+            discoverCollectionCell.imageView.loadImage(recommendedNFTs[indexPath.row].thumbnailUri, placeHolder: UIImage(named: "AppIcon"))
             discoverCollectionCell.titleLabel.text = recommendedNFTs[indexPath.row].title
         }
         
@@ -565,6 +577,8 @@ extension DiscoverPageViewController {
                 fetchRecommendationData()
             }
         }
+        discoverCollectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
+        
         // 動畫
         underlineViewWidthConstraint.isActive = false
         underlineViewCenterXConstraint.isActive = false

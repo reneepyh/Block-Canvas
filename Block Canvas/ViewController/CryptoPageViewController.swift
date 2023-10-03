@@ -325,13 +325,13 @@ class CryptoPageViewController: UIViewController {
         view.backgroundColor = .primary
         view.addSubview(ethLabel)
         ethLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(4)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(6)
             make.left.equalTo(view.snp.left).offset(16)
         }
         
         view.addSubview(priceLabel)
         priceLabel.snp.makeConstraints { make in
-            make.top.equalTo(ethLabel.snp.bottom).offset(4)
+            make.top.equalTo(ethLabel.snp.bottom).offset(6)
             make.left.equalTo(view.snp.left).offset(16)
         }
         
@@ -343,7 +343,7 @@ class CryptoPageViewController: UIViewController {
         
         view.addSubview(gasFeeLabel)
         gasFeeLabel.snp.makeConstraints { make in
-            make.top.equalTo(priceLabel.snp.bottom).offset(4)
+            make.top.equalTo(priceLabel.snp.bottom).offset(6)
             make.left.equalTo(view.snp.left).offset(18)
         }
     }
@@ -360,7 +360,7 @@ class CryptoPageViewController: UIViewController {
         view.addSubview(ethPriceChart)
         
         ethPriceChart.snp.makeConstraints { make in
-            make.top.equalTo(gasFeeLabel.snp.bottom).offset(8)
+            make.top.equalTo(gasFeeLabel.snp.bottom).offset(4)
             make.left.equalTo(view.snp.left).offset(8)
             make.right.equalTo(view.snp.right).offset(-8)
             make.bottom.equalTo(view.snp.bottom).offset(-100)

@@ -38,7 +38,7 @@ struct PortfolioDisplay: View {
                                 
                                 KFImage(nftInfo.url)
                                     .placeholder {
-                                        Image(systemName: "circle.dotted")
+                                        Image("AppIcon")
                                             .font(.largeTitle)
                                             .opacity(0.5)
                                     }
