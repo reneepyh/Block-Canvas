@@ -8,9 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		C7F524C7AFBED96AF65C050C /* Pods_Block_Canvas.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3DC6D694CA5A48BE07CB0F /* Pods_Block_Canvas.framework */; };
+		DB00B65F2AC6C72100AE8164 /* tap.json in Resources */ = {isa = PBXBuildFile; fileRef = DB00B65E2AC6C72100AE8164 /* tap.json */; };
+		DB00B6632AC7F78B00AE8164 /* pinch to zoom.json in Resources */ = {isa = PBXBuildFile; fileRef = DB00B6622AC7F78B00AE8164 /* pinch to zoom.json */; };
 		DB08647E2ABC3D04004598D6 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB08647D2ABC3D04004598D6 /* Settings.storyboard */; };
 		DB0864822ABC4063004598D6 /* WatchlistPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0864812ABC4063004598D6 /* WatchlistPageViewController.swift */; };
 		DB0864842ABC435F004598D6 /* WatchlistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0864832ABC435F004598D6 /* WatchlistCell.swift */; };
+		DB0C67932AC9B591007C960A /* widget.json in Resources */ = {isa = PBXBuildFile; fileRef = DB0C67922AC9B591007C960A /* widget.json */; };
+		DB0C67952AC9B892007C960A /* WidgetWalletSelectedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0C67942AC9B892007C960A /* WidgetWalletSelectedViewController.swift */; };
 		DB0FA4C72ABEB9AF00272E7A /* JGProgressHUDWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0FA4C62ABEB9AF00272E7A /* JGProgressHUDWrapper.swift */; };
 		DB1DBD202AB1D45A00F74B64 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DBD1F2AB1D45A00F74B64 /* AppDelegate.swift */; };
 		DB1DBD222AB1D45A00F74B64 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DBD212AB1D45A00F74B64 /* SceneDelegate.swift */; };
@@ -22,8 +26,11 @@
 		DB4BFB2D2AB6A31C00187B1C /* PortfolioDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4BFB2C2AB6A31C00187B1C /* PortfolioDisplayViewController.swift */; };
 		DB4BFB2F2AB6AA1300187B1C /* PortfolioDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4BFB2E2AB6AA1300187B1C /* PortfolioDisplayView.swift */; };
 		DB5386A92AC2B4700077672B /* DetailMetadataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5386A82AC2B4700077672B /* DetailMetadataCell.swift */; };
-		DB5386AB2AC2BC170077672B /* DetailMetadataCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5386AA2AC2BC170077672B /* DetailMetadataCellView.swift */; };
 		DB5386AD2AC2C10F0077672B /* DetailImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5386AC2AC2C10F0077672B /* DetailImageCell.swift */; };
+		DB58ED7B2AC948B20053AAB6 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB58ED7A2AC948B20053AAB6 /* Intents.framework */; };
+		DB58ED7E2AC948B20053AAB6 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB58ED7D2AC948B20053AAB6 /* IntentHandler.swift */; };
+		DB58ED932AC948B20053AAB6 /* NFTIntentExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = DB58ED792AC948B20053AAB6 /* NFTIntentExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		DB58ED9A2AC94B670053AAB6 /* NFTWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = DBF567872AB85632007BFDA1 /* NFTWidget.intentdefinition */; };
 		DB6853D12AB2F38400895EB9 /* Discover.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6853D02AB2F38400895EB9 /* Discover.swift */; };
 		DB69818F2AB4604600BE0036 /* Portfolio.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB69818E2AB4604600BE0036 /* Portfolio.storyboard */; };
 		DB6981912AB4608100BE0036 /* AddressInputPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6981902AB4608100BE0036 /* AddressInputPageViewController.swift */; };
@@ -40,9 +47,15 @@
 		DBA57DCE2ABC32AF00C1CE30 /* WatchlistItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA57DCC2ABC32AF00C1CE30 /* WatchlistItem+CoreDataClass.swift */; };
 		DBA57DCF2ABC32AF00C1CE30 /* WatchlistItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA57DCD2ABC32AF00C1CE30 /* WatchlistItem+CoreDataProperties.swift */; };
 		DBA57DD22ABC33AB00C1CE30 /* WatchlistManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA57DD12ABC33AB00C1CE30 /* WatchlistManager.swift */; };
+		DBAACF122AC96D0B001C7E76 /* WidgetPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAACF112AC96D0B001C7E76 /* WidgetPageViewController.swift */; };
 		DBB880322AB4B33600526E40 /* DetailPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB880312AB4B33600526E40 /* DetailPageViewController.swift */; };
 		DBB9BDBC2AB44E07002A5FBC /* KingfisherWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB9BDBB2AB44E07002A5FBC /* KingfisherWrapper.swift */; };
+		DBC2CDE02ACC3BEA0000974B /* LaunchAnimationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC2CDDF2ACC3BEA0000974B /* LaunchAnimationViewController.swift */; };
 		DBC6E31A2AC036E200B40514 /* WaterFallFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC6E3192AC036E200B40514 /* WaterFallFlowLayout.swift */; };
+		DBE3CE552AC7FD1C00A85FB2 /* SettingsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE3CE542AC7FD1C00A85FB2 /* SettingsPageViewController.swift */; };
+		DBE3CE572AC80E2E00A85FB2 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE3CE562AC80E2E00A85FB2 /* SettingsCell.swift */; };
+		DBE93E262ACAC49B00ECF9E0 /* MJRefreshWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE93E252ACAC49B00ECF9E0 /* MJRefreshWrapper.swift */; };
+		DBF329F22AC55DBB009DE67C /* DetailMetadataInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF329F12AC55DBB009DE67C /* DetailMetadataInfoCell.swift */; };
 		DBF45F472AB6E870002E5D31 /* ARDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF45F462AB6E870002E5D31 /* ARDisplayViewController.swift */; };
 		DBF5677F2AB85632007BFDA1 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBF5677E2AB85632007BFDA1 /* WidgetKit.framework */; };
 		DBF567812AB85632007BFDA1 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBF567802AB85632007BFDA1 /* SwiftUI.framework */; };
@@ -60,6 +73,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		DB58ED912AC948B20053AAB6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DB1DBD142AB1D45A00F74B64 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DB58ED782AC948B20053AAB6;
+			remoteInfo = NFTIntentExtension;
+		};
 		DBF5678D2AB85633007BFDA1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DB1DBD142AB1D45A00F74B64 /* Project object */;
@@ -77,6 +97,7 @@
 			dstSubfolderSpec = 13;
 			files = (
 				DBF5678F2AB85633007BFDA1 /* NFTWidgetExtension.appex in Embed Foundation Extensions */,
+				DB58ED932AC948B20053AAB6 /* NFTIntentExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -87,9 +108,13 @@
 		247A90A7AF780A2101FA113A /* Pods-Block Canvas.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Block Canvas.debug.xcconfig"; path = "Target Support Files/Pods-Block Canvas/Pods-Block Canvas.debug.xcconfig"; sourceTree = "<group>"; };
 		3C3DC6D694CA5A48BE07CB0F /* Pods_Block_Canvas.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Block_Canvas.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D8DDAB147395F8BDF7D4703 /* Pods-Block Canvas.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Block Canvas.release.xcconfig"; path = "Target Support Files/Pods-Block Canvas/Pods-Block Canvas.release.xcconfig"; sourceTree = "<group>"; };
+		DB00B65E2AC6C72100AE8164 /* tap.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tap.json; sourceTree = "<group>"; };
+		DB00B6622AC7F78B00AE8164 /* pinch to zoom.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "pinch to zoom.json"; sourceTree = "<group>"; };
 		DB08647D2ABC3D04004598D6 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		DB0864812ABC4063004598D6 /* WatchlistPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistPageViewController.swift; sourceTree = "<group>"; };
 		DB0864832ABC435F004598D6 /* WatchlistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistCell.swift; sourceTree = "<group>"; };
+		DB0C67922AC9B591007C960A /* widget.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = widget.json; sourceTree = "<group>"; };
+		DB0C67942AC9B892007C960A /* WidgetWalletSelectedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetWalletSelectedViewController.swift; sourceTree = "<group>"; };
 		DB0FA4C62ABEB9AF00272E7A /* JGProgressHUDWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JGProgressHUDWrapper.swift; sourceTree = "<group>"; };
 		DB1DBD1C2AB1D45A00F74B64 /* Block Canvas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Block Canvas.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB1DBD1F2AB1D45A00F74B64 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -103,8 +128,14 @@
 		DB4BFB2C2AB6A31C00187B1C /* PortfolioDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioDisplayViewController.swift; sourceTree = "<group>"; };
 		DB4BFB2E2AB6AA1300187B1C /* PortfolioDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioDisplayView.swift; sourceTree = "<group>"; };
 		DB5386A82AC2B4700077672B /* DetailMetadataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMetadataCell.swift; sourceTree = "<group>"; };
-		DB5386AA2AC2BC170077672B /* DetailMetadataCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMetadataCellView.swift; sourceTree = "<group>"; };
 		DB5386AC2AC2C10F0077672B /* DetailImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailImageCell.swift; sourceTree = "<group>"; };
+		DB58ED792AC948B20053AAB6 /* NFTIntentExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NFTIntentExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB58ED7A2AC948B20053AAB6 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
+		DB58ED7D2AC948B20053AAB6 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
+		DB58ED7F2AC948B20053AAB6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DB58ED852AC948B20053AAB6 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
+		DB58ED9C2AC956B50053AAB6 /* NFTIntentExtensionRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NFTIntentExtensionRelease.entitlements; sourceTree = "<group>"; };
+		DB58ED9D2AC95FA20053AAB6 /* NFTIntentExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NFTIntentExtension.entitlements; sourceTree = "<group>"; };
 		DB6853CF2AB2ECA100895EB9 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		DB6853D02AB2F38400895EB9 /* Discover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Discover.swift; sourceTree = "<group>"; };
 		DB69818E2AB4604600BE0036 /* Portfolio.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Portfolio.storyboard; sourceTree = "<group>"; };
@@ -122,9 +153,15 @@
 		DBA57DCC2ABC32AF00C1CE30 /* WatchlistItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WatchlistItem+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		DBA57DCD2ABC32AF00C1CE30 /* WatchlistItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WatchlistItem+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		DBA57DD12ABC33AB00C1CE30 /* WatchlistManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistManager.swift; sourceTree = "<group>"; };
+		DBAACF112AC96D0B001C7E76 /* WidgetPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetPageViewController.swift; sourceTree = "<group>"; };
 		DBB880312AB4B33600526E40 /* DetailPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPageViewController.swift; sourceTree = "<group>"; };
 		DBB9BDBB2AB44E07002A5FBC /* KingfisherWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingfisherWrapper.swift; sourceTree = "<group>"; };
+		DBC2CDDF2ACC3BEA0000974B /* LaunchAnimationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAnimationViewController.swift; sourceTree = "<group>"; };
 		DBC6E3192AC036E200B40514 /* WaterFallFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterFallFlowLayout.swift; sourceTree = "<group>"; };
+		DBE3CE542AC7FD1C00A85FB2 /* SettingsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPageViewController.swift; sourceTree = "<group>"; };
+		DBE3CE562AC80E2E00A85FB2 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
+		DBE93E252ACAC49B00ECF9E0 /* MJRefreshWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MJRefreshWrapper.swift; sourceTree = "<group>"; };
+		DBF329F12AC55DBB009DE67C /* DetailMetadataInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMetadataInfoCell.swift; sourceTree = "<group>"; };
 		DBF45F462AB6E870002E5D31 /* ARDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARDisplayViewController.swift; sourceTree = "<group>"; };
 		DBF5677D2AB85632007BFDA1 /* NFTWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NFTWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBF5677E2AB85632007BFDA1 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
@@ -148,6 +185,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				C7F524C7AFBED96AF65C050C /* Pods_Block_Canvas.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DB58ED762AC948B20053AAB6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB58ED7B2AC948B20053AAB6 /* Intents.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -178,8 +223,31 @@
 				3C3DC6D694CA5A48BE07CB0F /* Pods_Block_Canvas.framework */,
 				DBF5677E2AB85632007BFDA1 /* WidgetKit.framework */,
 				DBF567802AB85632007BFDA1 /* SwiftUI.framework */,
+				DB58ED7A2AC948B20053AAB6 /* Intents.framework */,
+				DB58ED852AC948B20053AAB6 /* IntentsUI.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DB0C67912AC9B560007C960A /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				DB0C67922AC9B591007C960A /* widget.json */,
+				DB1DBD282AB1D45B00F74B64 /* Assets.xcassets */,
+				DB00B65E2AC6C72100AE8164 /* tap.json */,
+				DB00B6622AC7F78B00AE8164 /* pinch to zoom.json */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		DB0C67962AC9BB7B007C960A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				DBA478782AB2B29C0014E825 /* UIStoryboard+Extension.swift */,
+				DB98912E2AC0891700E41967 /* UIColor+Extension.swift */,
+				DB4422782AC2712C0038E34C /* UIFont+Extension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		DB0FA4C52ABEB97F00272E7A /* Third Party Wrappers */ = {
@@ -187,6 +255,7 @@
 			children = (
 				DBB9BDBB2AB44E07002A5FBC /* KingfisherWrapper.swift */,
 				DB0FA4C62ABEB9AF00272E7A /* JGProgressHUDWrapper.swift */,
+				DBE93E252ACAC49B00ECF9E0 /* MJRefreshWrapper.swift */,
 			);
 			path = "Third Party Wrappers";
 			sourceTree = "<group>";
@@ -196,7 +265,9 @@
 			children = (
 				DBF567952AB8844F007BFDA1 /* NFTWidgetExtension.entitlements */,
 				DB1DBD1E2AB1D45A00F74B64 /* Block Canvas */,
+				DB0C67912AC9B560007C960A /* Assets */,
 				DBF567822AB85632007BFDA1 /* NFTWidget */,
+				DB58ED7C2AC948B20053AAB6 /* NFTIntentExtension */,
 				DB1DBD1D2AB1D45A00F74B64 /* Products */,
 				3DFA27E93D793B7A7BF83901 /* Pods */,
 				7C8272E813E1BE556C8BD678 /* Frameworks */,
@@ -208,6 +279,7 @@
 			children = (
 				DB1DBD1C2AB1D45A00F74B64 /* Block Canvas.app */,
 				DBF5677D2AB85632007BFDA1 /* NFTWidgetExtension.appex */,
+				DB58ED792AC948B20053AAB6 /* NFTIntentExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -215,6 +287,7 @@
 		DB1DBD1E2AB1D45A00F74B64 /* Block Canvas */ = {
 			isa = PBXGroup;
 			children = (
+				DB0C67962AC9BB7B007C960A /* Extensions */,
 				DB0FA4C52ABEB97F00272E7A /* Third Party Wrappers */,
 				DBA57DCC2ABC32AF00C1CE30 /* WatchlistItem+CoreDataClass.swift */,
 				DBA57DCD2ABC32AF00C1CE30 /* WatchlistItem+CoreDataProperties.swift */,
@@ -226,16 +299,23 @@
 				DB1DBD1F2AB1D45A00F74B64 /* AppDelegate.swift */,
 				DB1DBD212AB1D45A00F74B64 /* SceneDelegate.swift */,
 				DBA478762AB2B29C0014E825 /* BCTabBarController.swift */,
-				DBA478782AB2B29C0014E825 /* UIStoryboard+Extension.swift */,
-				DB98912E2AC0891700E41967 /* UIColor+Extension.swift */,
-				DB1DBD282AB1D45B00F74B64 /* Assets.xcassets */,
 				DB1DBD2A2AB1D45B00F74B64 /* LaunchScreen.storyboard */,
 				DB1DBD2D2AB1D45B00F74B64 /* Info.plist */,
 				DB6853CF2AB2ECA100895EB9 /* Secrets.xcconfig */,
 				DBA57DC12ABC2F4200C1CE30 /* WatchlistManager.xcdatamodeld */,
-				DB4422782AC2712C0038E34C /* UIFont+Extension.swift */,
 			);
 			path = "Block Canvas";
+			sourceTree = "<group>";
+		};
+		DB58ED7C2AC948B20053AAB6 /* NFTIntentExtension */ = {
+			isa = PBXGroup;
+			children = (
+				DB58ED9D2AC95FA20053AAB6 /* NFTIntentExtension.entitlements */,
+				DB58ED9C2AC956B50053AAB6 /* NFTIntentExtensionRelease.entitlements */,
+				DB58ED7D2AC948B20053AAB6 /* IntentHandler.swift */,
+				DB58ED7F2AC948B20053AAB6 /* Info.plist */,
+			);
+			path = NFTIntentExtension;
 			sourceTree = "<group>";
 		};
 		DB6853D22AB3637A00895EB9 /* Model */ = {
@@ -263,9 +343,10 @@
 				DB9E028D2AB7499100285E63 /* WalletListCell.swift */,
 				DB0864832ABC435F004598D6 /* WatchlistCell.swift */,
 				DBC6E3192AC036E200B40514 /* WaterFallFlowLayout.swift */,
-				DB5386A82AC2B4700077672B /* DetailMetadataCell.swift */,
-				DB5386AA2AC2BC170077672B /* DetailMetadataCellView.swift */,
 				DB5386AC2AC2C10F0077672B /* DetailImageCell.swift */,
+				DB5386A82AC2B4700077672B /* DetailMetadataCell.swift */,
+				DBF329F12AC55DBB009DE67C /* DetailMetadataInfoCell.swift */,
+				DBE3CE562AC80E2E00A85FB2 /* SettingsCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -281,6 +362,10 @@
 				DB4BFB2C2AB6A31C00187B1C /* PortfolioDisplayViewController.swift */,
 				DBF45F462AB6E870002E5D31 /* ARDisplayViewController.swift */,
 				DB0864812ABC4063004598D6 /* WatchlistPageViewController.swift */,
+				DBE3CE542AC7FD1C00A85FB2 /* SettingsPageViewController.swift */,
+				DBAACF112AC96D0B001C7E76 /* WidgetPageViewController.swift */,
+				DB0C67942AC9B892007C960A /* WidgetWalletSelectedViewController.swift */,
+				DBC2CDDF2ACC3BEA0000974B /* LaunchAnimationViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -324,11 +409,29 @@
 			);
 			dependencies = (
 				DBF5678E2AB85633007BFDA1 /* PBXTargetDependency */,
+				DB58ED922AC948B20053AAB6 /* PBXTargetDependency */,
 			);
 			name = "Block Canvas";
 			productName = "Block Canvas";
 			productReference = DB1DBD1C2AB1D45A00F74B64 /* Block Canvas.app */;
 			productType = "com.apple.product-type.application";
+		};
+		DB58ED782AC948B20053AAB6 /* NFTIntentExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DB58ED992AC948B30053AAB6 /* Build configuration list for PBXNativeTarget "NFTIntentExtension" */;
+			buildPhases = (
+				DB58ED752AC948B20053AAB6 /* Sources */,
+				DB58ED762AC948B20053AAB6 /* Frameworks */,
+				DB58ED772AC948B20053AAB6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NFTIntentExtension;
+			productName = NFTIntentExtension;
+			productReference = DB58ED792AC948B20053AAB6 /* NFTIntentExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 		DBF5677C2AB85632007BFDA1 /* NFTWidgetExtension */ = {
 			isa = PBXNativeTarget;
@@ -360,6 +463,9 @@
 					DB1DBD1B2AB1D45A00F74B64 = {
 						CreatedOnToolsVersion = 14.3.1;
 					};
+					DB58ED782AC948B20053AAB6 = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
 					DBF5677C2AB85632007BFDA1 = {
 						CreatedOnToolsVersion = 14.3.1;
 					};
@@ -380,6 +486,7 @@
 			targets = (
 				DB1DBD1B2AB1D45A00F74B64 /* Block Canvas */,
 				DBF5677C2AB85632007BFDA1 /* NFTWidgetExtension */,
+				DB58ED782AC948B20053AAB6 /* NFTIntentExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -394,8 +501,18 @@
 				DB69818F2AB4604600BE0036 /* Portfolio.storyboard in Resources */,
 				DBF619DD2AB55F8600687F13 /* Crypto.storyboard in Resources */,
 				DB1DBD292AB1D45B00F74B64 /* Assets.xcassets in Resources */,
+				DB00B65F2AC6C72100AE8164 /* tap.json in Resources */,
 				DB1DBD272AB1D45A00F74B64 /* Main.storyboard in Resources */,
+				DB0C67932AC9B591007C960A /* widget.json in Resources */,
+				DB00B6632AC7F78B00AE8164 /* pinch to zoom.json in Resources */,
 				DB08647E2ABC3D04004598D6 /* Settings.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DB58ED772AC948B20053AAB6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -479,16 +596,21 @@
 				DBA57DC32ABC2F4200C1CE30 /* WatchlistManager.xcdatamodeld in Sources */,
 				DBA478792AB2B29C0014E825 /* BCTabBarController.swift in Sources */,
 				DB5386AD2AC2C10F0077672B /* DetailImageCell.swift in Sources */,
+				DBE3CE572AC80E2E00A85FB2 /* SettingsCell.swift in Sources */,
 				DB9E028C2AB7408E00285E63 /* PortfolioListViewController.swift in Sources */,
 				DB1DBD242AB1D45A00F74B64 /* DiscoverPageViewController.swift in Sources */,
 				DBF5678C2AB85633007BFDA1 /* NFTWidget.intentdefinition in Sources */,
+				DBE93E262ACAC49B00ECF9E0 /* MJRefreshWrapper.swift in Sources */,
 				DBA57DCF2ABC32AF00C1CE30 /* WatchlistItem+CoreDataProperties.swift in Sources */,
 				DB1DBD202AB1D45A00F74B64 /* AppDelegate.swift in Sources */,
 				DB98912F2AC0891700E41967 /* UIColor+Extension.swift in Sources */,
 				DBA57DCE2ABC32AF00C1CE30 /* WatchlistItem+CoreDataClass.swift in Sources */,
+				DB0C67952AC9B892007C960A /* WidgetWalletSelectedViewController.swift in Sources */,
 				DB1DBD222AB1D45A00F74B64 /* SceneDelegate.swift in Sources */,
+				DBC2CDE02ACC3BEA0000974B /* LaunchAnimationViewController.swift in Sources */,
 				DBF567962AB8AB92007BFDA1 /* NFTWidget.swift in Sources */,
 				DB6853D12AB2F38400895EB9 /* Discover.swift in Sources */,
+				DBAACF122AC96D0B001C7E76 /* WidgetPageViewController.swift in Sources */,
 				DB9DFB872AB7614C006D6CE1 /* Wallet.swift in Sources */,
 				DB4422792AC2712C0038E34C /* UIFont+Extension.swift in Sources */,
 				DB4BFB2D2AB6A31C00187B1C /* PortfolioDisplayViewController.swift in Sources */,
@@ -498,18 +620,28 @@
 				DBF619DF2AB57EA200687F13 /* Crypto.swift in Sources */,
 				DBA57DD22ABC33AB00C1CE30 /* WatchlistManager.swift in Sources */,
 				DB6981932AB4648500BE0036 /* Portfolio.swift in Sources */,
+				DBF329F22AC55DBB009DE67C /* DetailMetadataInfoCell.swift in Sources */,
 				DB4BFB2F2AB6AA1300187B1C /* PortfolioDisplayView.swift in Sources */,
 				DB6981912AB4608100BE0036 /* AddressInputPageViewController.swift in Sources */,
 				DB0864842ABC435F004598D6 /* WatchlistCell.swift in Sources */,
 				DBB9BDBC2AB44E07002A5FBC /* KingfisherWrapper.swift in Sources */,
-				DB5386AB2AC2BC170077672B /* DetailMetadataCellView.swift in Sources */,
 				DBB880322AB4B33600526E40 /* DetailPageViewController.swift in Sources */,
 				DB0FA4C72ABEB9AF00272E7A /* JGProgressHUDWrapper.swift in Sources */,
 				DBF45F472AB6E870002E5D31 /* ARDisplayViewController.swift in Sources */,
 				DB9E028E2AB7499100285E63 /* WalletListCell.swift in Sources */,
+				DBE3CE552AC7FD1C00A85FB2 /* SettingsPageViewController.swift in Sources */,
 				DB0864822ABC4063004598D6 /* WatchlistPageViewController.swift in Sources */,
 				DBF619E32AB59C8400687F13 /* EthPriceChartView.swift in Sources */,
 				DB5386A92AC2B4700077672B /* DetailMetadataCell.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DB58ED752AC948B20053AAB6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB58ED7E2AC948B20053AAB6 /* IntentHandler.swift in Sources */,
+				DB58ED9A2AC94B670053AAB6 /* NFTWidget.intentdefinition in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -526,6 +658,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		DB58ED922AC948B20053AAB6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DB58ED782AC948B20053AAB6 /* NFTIntentExtension */;
+			targetProxy = DB58ED912AC948B20053AAB6 /* PBXContainerItemProxy */;
+		};
 		DBF5678E2AB85633007BFDA1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = DBF5677C2AB85632007BFDA1 /* NFTWidgetExtension */;
@@ -687,7 +824,7 @@
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera for augmented reality.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We need access to save photos.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = Main.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -725,7 +862,7 @@
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera for augmented reality.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We need access to save photos.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = Main.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -742,6 +879,58 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		DB58ED942AC948B30053AAB6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = NFTIntentExtension/NFTIntentExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CML8K54JBW;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NFTIntentExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NFTIntentExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "reneehsu.Block-Canvas.NFTIntentExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DB58ED952AC948B30053AAB6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = NFTIntentExtension/NFTIntentExtensionRelease.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CML8K54JBW;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NFTIntentExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NFTIntentExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "reneehsu.Block-Canvas.NFTIntentExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -818,6 +1007,15 @@
 			buildConfigurations = (
 				DB1DBD312AB1D45B00F74B64 /* Debug */,
 				DB1DBD322AB1D45B00F74B64 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DB58ED992AC948B30053AAB6 /* Build configuration list for PBXNativeTarget "NFTIntentExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DB58ED942AC948B30053AAB6 /* Debug */,
+				DB58ED952AC948B30053AAB6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

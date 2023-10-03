@@ -19,6 +19,7 @@ class DetailImageCell: UITableViewCell {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16)
         label.numberOfLines = 0
+        label.textAlignment = .justified
         label.textColor = .secondary
         return label
     }()
@@ -46,9 +47,9 @@ class DetailImageCell: UITableViewCell {
         contentView.addSubview(descriptionLabel)
         descriptionLabel.snp.makeConstraints { make in
             make.top.equalTo(detailImageView.snp.bottom).offset(12)
-            make.leading.equalTo(contentView.snp.leading).offset(12)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-12)
-            make.bottom.equalTo(contentView.snp.bottom).offset(-12)
+            make.leading.equalTo(contentView.snp.leading).offset(16)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-16)
+            make.bottom.equalTo(contentView.snp.bottom).offset(-60)
         }
     }
 }

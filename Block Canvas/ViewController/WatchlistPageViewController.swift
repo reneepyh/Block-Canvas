@@ -14,12 +14,12 @@ class WatchlistPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         fetchWatchlist()
+        setupUI()
     }
     
     private func setupUI() {
@@ -29,6 +29,7 @@ class WatchlistPageViewController: UIViewController {
         watchlistCollectionView.backgroundColor = .primary
         let navigationExtendHeight: UIEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
         navigationController?.additionalSafeAreaInsets = navigationExtendHeight
+        tabBarController?.tabBar.isHidden = true
     }
     
     private func fetchWatchlist() {
@@ -50,7 +51,7 @@ extension WatchlistPageViewController: UICollectionViewDelegateFlowLayout, UICol
         guard let watchlistCell = collectionView.dequeueReusableCell(withReuseIdentifier: WatchlistCell.reuseIdentifier, for: indexPath) as? WatchlistCell else {
             fatalError("Cell cannot be created")
         }
-        watchlistCell.imageView.loadImage(watchlistNFTs[indexPath.row].thumbnailUri, placeHolder: UIImage(systemName: "circle.dotted"))
+        watchlistCell.imageView.loadImage(watchlistNFTs[indexPath.row].thumbnailUri, placeHolder: UIImage(named: "AppIcon"))
         watchlistCell.imageView.contentMode = .scaleAspectFill
         
         return watchlistCell
@@ -82,9 +83,9 @@ extension WatchlistPageViewController: UICollectionViewDelegateFlowLayout, UICol
 
 extension WatchlistPageViewController: DetailPageViewControllerDelegate {
     func deleteWatchlistItem(at indexPath: IndexPath) {
-        WatchlistManager.shared.deleteWatchlistItem(at: indexPath)
+        let nftToDelete = watchlistNFTs[indexPath.row]
+        WatchlistManager.shared.deleteWatchlistItem(with: nftToDelete.displayUri)
         watchlistNFTs.remove(at: indexPath.row)
         watchlistCollectionView.deleteItems(at: [indexPath])
-        watchlistCollectionView.reloadData()
     }
 }

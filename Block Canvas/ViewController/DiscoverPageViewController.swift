@@ -30,6 +30,8 @@ class DiscoverPageViewController: UIViewController {
     
     private let userDefaults = UserDefaults.standard
     
+    private var openAIBody: OpenAIBody?
+    
     private var userNFTs: [String] = []
     
     private var trendingNFTs: [DiscoverNFT] = []
@@ -46,16 +48,55 @@ class DiscoverPageViewController: UIViewController {
     
     private var recommendedNFTs: [DiscoverNFT] = []
     
+    private var recommendationCache: [DiscoverNFT]?
+    
     private let group = DispatchGroup()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
+        setupCollectionView()
         setupButtonTag()
-        discoverCollectionView.dataSource = self
-        discoverCollectionView.delegate = self
         nftSearchBar.delegate = self
         getTrending()
+//        presentLaunchAnimation()
+        fetchRecommendationInBackground()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        setupUI()
+    }
+    
+    private func presentLaunchAnimation() {
+        guard
+            let launchVC = UIStoryboard.discover.instantiateViewController(
+                withIdentifier: String(describing: LaunchAnimationViewController.self)
+            ) as? LaunchAnimationViewController
+        else {
+            return
+        }
+        launchVC.modalPresentationStyle = .overFullScreen
+        launchVC.tabBarController?.tabBar.isHidden = true
+        present(launchVC, animated: false)
+    }
+    
+    private func setupCollectionView() {
+        discoverCollectionView.dataSource = self
+        discoverCollectionView.delegate = self
+        discoverCollectionView.backgroundColor = .primary
+        
+        let layout = WaterFallFlowLayout()
+        layout.delegate = self
+        layout.cols = 2
+        discoverCollectionView.collectionViewLayout = layout
+        
+        discoverCollectionView.addRefreshHeader(refreshingBlock: { [weak self] in
+            if self?.selectedPage == 0 {
+                self?.getTrending()
+            } else if self?.selectedPage == 1 {
+                BCProgressHUD.show(text: "AI calculating...")
+                self?.fetchRecommendationData()
+            }
+        })
     }
     
     private func setupUI() {
@@ -65,21 +106,16 @@ class DiscoverPageViewController: UIViewController {
         forYouButton.tintColor = .secondaryBlur
         nftSearchBar.searchTextField.backgroundColor = .tertiary
         nftSearchBar.searchTextField.textColor = .primary
-        discoverCollectionView.backgroundColor = .primary
-        
-        let layout = WaterFallFlowLayout()
-        layout.delegate = self
-        layout.cols = 2
-        discoverCollectionView.collectionViewLayout = layout
         
         let navigationExtendHeight: UIEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
         navigationController?.additionalSafeAreaInsets = navigationExtendHeight
+        
+        tabBarController?.tabBar.isHidden = false
     }
     
     private func getTrending() {
         trendingNFTs.removeAll()
         searchedNFTs.removeAll()
-        recommendedNFTs.removeAll()
         DispatchQueue.main.async { [weak self] in
             if let layout = self?.discoverCollectionView.collectionViewLayout as? WaterFallFlowLayout {
                 layout.clearCache()
@@ -130,7 +166,7 @@ class DiscoverPageViewController: UIViewController {
                     let contract = root.data.randomTopGenerativeToken.gentkContractAddress
                     let thumbnailURL = self?.generativeLiveDisplayUrl(uri: root.data.randomTopGenerativeToken.metadata.thumbnailUri)
                     let displayURL = self?.generativeLiveDisplayUrl(uri: root.data.randomTopGenerativeToken.metadata.displayUri)
-                    let authorName = root.data.randomTopGenerativeToken.author?.name
+                    let authorName = root.data.randomTopGenerativeToken.author?.name ?? " "
                     let title = root.data.randomTopGenerativeToken.metadata.name
                     let description = root.data.randomTopGenerativeToken.metadata.description
                     self?.trendingNFTs.append(DiscoverNFT(thumbnailUri: thumbnailURL ?? "", displayUri: displayURL ?? "", contract: contract, title: title, authorName: authorName, nftDescription: description))
@@ -146,7 +182,14 @@ class DiscoverPageViewController: UIViewController {
         
         group.notify(queue: .main) { [weak self] in
             self?.discoverCollectionView.reloadData()
+            self?.discoverCollectionView.endHeaderRefreshing()
             BCProgressHUD.dismiss()
+        }
+    }
+    
+    private func fetchRecommendationInBackground() {
+        DispatchQueue.global(qos: .background).async { [weak self] in
+            self?.fetchRecommendationData(isBackground: true)
         }
     }
     
@@ -206,19 +249,11 @@ class DiscoverPageViewController: UIViewController {
         }
     }
     
-    private func fetchRecommendation() {
-        BCProgressHUD.show(text: "AI calculating...")
+    private func fetchRecommendationData(isBackground: Bool = false) {
         findUserNFTs()
-        trendingNFTs.removeAll()
         searchedNFTs.removeAll()
         recommendedNFTs.removeAll()
-        DispatchQueue.main.async { [weak self] in
-            if let layout = self?.discoverCollectionView.collectionViewLayout as? WaterFallFlowLayout {
-                layout.clearCache()
-            }
-            self?.discoverCollectionView.collectionViewLayout.invalidateLayout()
-            self?.discoverCollectionView.reloadData()
-        }
+        
         getRecommendationFromGPT()
         semaphore.wait()
         
@@ -228,11 +263,24 @@ class DiscoverPageViewController: UIViewController {
             group.enter()
             self.getRecommendedNFTs(collectionName: collection)
         }
-        group.notify(queue: .main) {
-            DispatchQueue.main.async { [weak self] in
-                self?.discoverCollectionView.reloadData()
-                BCProgressHUD.dismiss()
+        
+        group.notify(queue: .main) { [weak self] in
+            self?.recommendationCache = self?.recommendedNFTs
+            if !isBackground {
+                self?.updateRecommendationUI()
             }
+        }
+    }
+
+    private func updateRecommendationUI() {
+        DispatchQueue.main.async { [weak self] in
+            if let layout = self?.discoverCollectionView.collectionViewLayout as? WaterFallFlowLayout {
+                layout.clearCache()
+            }
+            self?.discoverCollectionView.collectionViewLayout.invalidateLayout()
+            self?.discoverCollectionView.reloadData()
+            self?.discoverCollectionView.endHeaderRefreshing()
+            BCProgressHUD.dismiss()
         }
     }
     
@@ -245,28 +293,38 @@ class DiscoverPageViewController: UIViewController {
             return
         }
         
-        var randomNFTs: [String] = []
-        randomNFTs.append(userNFTs.randomElement() ?? "")
-        randomNFTs.append(userNFTs.randomElement() ?? "")
-        randomNFTs.append(userNFTs.randomElement() ?? "")
-        print(randomNFTs)
-        
         if let url = URL(string: "https://api.openai.com/v1/chat/completions") {
             var request = URLRequest(url: url)
             request.setValue("application/json",
                              forHTTPHeaderField: "Content-Type")
             request.setValue("Bearer \(key)",
                              forHTTPHeaderField: "Authorization")
-            let openAIBody = OpenAIBody(messages: [
-                ["role": "user", "content": """
-           Generate recommendations for NFT collections similar to the following:
+            if userNFTs.isEmpty {
+                openAIBody = OpenAIBody(messages: [
+                    ["role": "user", "content": """
+               Please suggest art NFT collections. Suggest NFT collections should be on Ethereum blockchain. Please suggest 5 NFT collections. Provide only the collection names in bullet pointsc (not numbered lists) and not any other responses. Please do not mention the artist's name. Please do not include double quotes for the response. Please also do not include symbols such as colon, semicolon or dash.
+               """]
+                ])
+                
+            } else {
+                var randomNFTs: [String] = []
+                randomNFTs.append(userNFTs.randomElement() ?? "")
+                randomNFTs.append(userNFTs.randomElement() ?? "")
+                randomNFTs.append(userNFTs.randomElement() ?? "")
+                print(randomNFTs)
+                
+                openAIBody = OpenAIBody(messages: [
+                    ["role": "user", "content": """
+               Generate recommendations for NFT collections similar to the following:
+               
+               Collection Name: \(randomNFTs)
+               Hosted blockchain: Ethereum
+               
+               Please suggest NFT collections that share similarities with the provided collection. Suggest NFT collections should be on Ethereum blockchain. Please suggest 5 NFT collections. Provide only the collection names in bullet pointsc (not numbered lists) and not any other responses. Please do not mention the artist's name. Please do not include double quotes for the response. Please also do not include symbols such as colon, semicolon or dash.
+               """]
+                ])
+            }
            
-           Collection Name: \(randomNFTs)
-           Hosted blockchain: Ethereum
-           
-           Please suggest NFT collections that share similarities with the provided collection. Suggest NFT collections should be on Ethereum blockchain. Please suggest 5 NFT collections. Provide only the collection names in bullet pointsc (not numbered lists) and not any other responses. Please not to mention the artist's name. Please do not include double quotes for the response. Please also do not include symbols such as colon, semicolon or dash.
-           """]
-            ])
             request.httpBody = try? JSONEncoder().encode(openAIBody)
             request.httpMethod = "POST"
             
@@ -337,8 +395,8 @@ class DiscoverPageViewController: UIViewController {
             request.httpMethod = "GET"
             
             let configuration = URLSessionConfiguration.default
-            configuration.timeoutIntervalForRequest = 2.0
-            configuration.timeoutIntervalForResource = 2.0
+            configuration.timeoutIntervalForRequest = 4.0
+            configuration.timeoutIntervalForResource = 4.0
             
             let session = URLSession(configuration: configuration)
             
@@ -347,13 +405,11 @@ class DiscoverPageViewController: UIViewController {
                 
                 if let error = error {
                     print(error)
-                    BCProgressHUD.showFailure()
                     return
                 }
                 
                 guard let data = data else {
                     print("No data.")
-                    BCProgressHUD.showFailure()
                     return
                 }
                 
@@ -401,13 +457,13 @@ extension DiscoverPageViewController: UICollectionViewDelegateFlowLayout, UIColl
             fatalError("Cell cannot be created")
         }
         if isSearching {
-            discoverCollectionCell.imageView.loadImage(searchedNFTs[indexPath.row].thumbnailUri, placeHolder: UIImage(systemName: "circle.dotted"))
+            discoverCollectionCell.imageView.loadImage(searchedNFTs[indexPath.row].thumbnailUri, placeHolder: UIImage(named: "AppIcon"))
             discoverCollectionCell.titleLabel.text = searchedNFTs[indexPath.row].title
         } else if selectedPage == 0 {
-            discoverCollectionCell.imageView.loadImage(trendingNFTs[indexPath.row].thumbnailUri, placeHolder: UIImage(systemName: "circle.dotted"))
+            discoverCollectionCell.imageView.loadImage(trendingNFTs[indexPath.row].thumbnailUri, placeHolder: UIImage(named: "AppIcon"))
             discoverCollectionCell.titleLabel.text = trendingNFTs[indexPath.row].title
         } else {
-            discoverCollectionCell.imageView.loadImage(recommendedNFTs[indexPath.row].thumbnailUri, placeHolder: UIImage(systemName: "circle.dotted"))
+            discoverCollectionCell.imageView.loadImage(recommendedNFTs[indexPath.row].thumbnailUri, placeHolder: UIImage(named: "AppIcon"))
             discoverCollectionCell.titleLabel.text = recommendedNFTs[indexPath.row].title
         }
         
@@ -415,9 +471,9 @@ extension DiscoverPageViewController: UICollectionViewDelegateFlowLayout, UIColl
     }
     
     func waterFlowLayout(_ waterFlowLayout: WaterFallFlowLayout, itemHeight indexPath: IndexPath) -> CGFloat {
-        return CGFloat.random(in: 230...400)
+        return CGFloat.random(in: 220...380)
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard
             let detailVC = UIStoryboard.discover.instantiateViewController(
@@ -428,10 +484,13 @@ extension DiscoverPageViewController: UICollectionViewDelegateFlowLayout, UIColl
         }
         if isSearching {
             detailVC.discoverNFTMetadata = searchedNFTs[indexPath.row]
+            detailVC.indexPath = indexPath
         } else if selectedPage == 0 {
             detailVC.discoverNFTMetadata = trendingNFTs[indexPath.row]
+            detailVC.indexPath = indexPath
         } else {
             detailVC.discoverNFTMetadata = recommendedNFTs[indexPath.row]
+            detailVC.indexPath = indexPath
         }
         show(detailVC, sender: nil)
     }
@@ -448,7 +507,7 @@ extension DiscoverPageViewController: UISearchBarDelegate {
             self?.discoverCollectionView.collectionViewLayout.invalidateLayout()
             self?.discoverCollectionView.reloadData()
         }
-
+        
         if let searchText = nftSearchBar.text, searchText != "" {
             isSearching = true
             searchNFT(keyword: searchText)
@@ -492,16 +551,34 @@ extension DiscoverPageViewController {
     @objc func changePage(sender: UIButton) {
         let queue = DispatchQueue(label: "concurrentQueue", attributes: .concurrent)
         if sender.tag == 0 {
+            if selectedPage == 0 { return }
             selectedPage = 0
-            queue.async { [weak self] in
-                self?.getTrending()
+            if trendingNFTs.count == 0 {
+                queue.async { [weak self] in
+                    self?.getTrending()
+                }
+            } else {
+                DispatchQueue.main.async { [weak self] in
+                    if let layout = self?.discoverCollectionView.collectionViewLayout as? WaterFallFlowLayout {
+                        layout.clearCache()
+                    }
+                    self?.discoverCollectionView.collectionViewLayout.invalidateLayout()
+                    self?.discoverCollectionView.reloadData()
+                }
             }
         } else {
+            if selectedPage == 1 { return }
             selectedPage = 1
-            queue.async { [weak self] in
-                self?.fetchRecommendation()
+            if let cachedData = recommendationCache, !cachedData.isEmpty {
+                self.recommendedNFTs = cachedData
+                self.updateRecommendationUI()
+            } else {
+                BCProgressHUD.show(text: "AI calculating...")
+                fetchRecommendationData()
             }
         }
+        discoverCollectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
+        
         // 動畫
         underlineViewWidthConstraint.isActive = false
         underlineViewCenterXConstraint.isActive = false

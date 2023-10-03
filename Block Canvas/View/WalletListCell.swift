@@ -40,6 +40,11 @@ class WalletListCell: UITableViewCell {
         return label
     }()
     
+    let arrowImageView: UIImageView = {
+        let imageView = UIImageView()
+        return imageView
+    }()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
@@ -57,7 +62,7 @@ class WalletListCell: UITableViewCell {
         
         contentView.addSubview(walletNameTextField)
         walletNameTextField.snp.makeConstraints { make in
-            make.top.equalTo(contentView.snp.top).offset(12)
+            make.bottom.equalTo(walletImageView.snp.bottom)
             make.leading.equalTo(walletImageView.snp.trailing).offset(8)
             make.trailing.equalTo(contentView.snp.trailing).offset(-16)
         }
@@ -75,6 +80,13 @@ class WalletListCell: UITableViewCell {
             make.leading.equalTo(contentView.snp.leading).offset(16)
             make.trailing.equalTo(contentView.snp.trailing).offset(-16)
             make.bottom.equalTo(contentView.snp.bottom).offset(-12)
+        }
+        
+        contentView.addSubview(arrowImageView)
+        arrowImageView.image = UIImage(systemName: "chevron.right")?.withTintColor(.secondary, renderingMode: .alwaysOriginal)
+        arrowImageView.snp.makeConstraints { make in
+            make.bottom.equalTo(walletImageView.snp.bottom)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-16)
         }
     }
     

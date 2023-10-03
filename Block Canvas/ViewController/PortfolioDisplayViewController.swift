@@ -10,7 +10,11 @@ import SwiftUI
 import SnapKit
 
 class PortfolioDisplayViewController: UIViewController {
-    var NFTs: EthNFT?
+    private let backButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(systemName: "chevron.backward")?.withTintColor(.secondary, renderingMode: .alwaysOriginal), for: .normal)
+        return button
+    }()
     
     var nftInfoForDisplay: [NFTInfoForDisplay]?
     
@@ -30,10 +34,16 @@ class PortfolioDisplayViewController: UIViewController {
     }
     
     private func setupUI() {
+        navigationController?.navigationBar.isHidden = true
         view.backgroundColor = .primary
-        self.title = ""
-        let navigationExtendHeight: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        navigationController?.additionalSafeAreaInsets = navigationExtendHeight
+        tabBarController?.tabBar.isHidden = true
+        
+        view.addSubview(backButton)
+        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        backButton.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.leading.equalToSuperview().offset(20)
+        }
     }
     
     private func getEthNFTsByWallet() {
@@ -78,7 +88,6 @@ class PortfolioDisplayViewController: UIViewController {
                 do {
                     let NFTData = try decoder.decode(EthNFT.self, from: data)
                     print(NFTData)
-                    self?.NFTs = NFTData
                     self?.nftInfoForDisplay = NFTData.result.map({ ethNFTMetadata in
                         ethNFTMetadata.compactMap { ethNFT in
                             if let image = ethNFT.media?.mediaCollection?.high?.url {
@@ -97,15 +106,6 @@ class PortfolioDisplayViewController: UIViewController {
                         self?.userNFTs.append(nft.title)
                     })
                     self?.userDefaults.set(self?.userNFTs, forKey: "userNFTs")
-                    
-                    // for widget
-                    let sharedDefaults = UserDefaults(suiteName: "group.reneehsu.Block-Canvas")
-                    let encoder = JSONEncoder()
-                    if let encodedData = try? encoder.encode(self?.nftInfoForDisplay) {
-                        sharedDefaults?.set(encodedData, forKey: "nftInfoForDisplay")
-                    }
-                    print(sharedDefaults?.object(forKey: "nftInfoForDisplay") as? Data)
-
                 }
                 catch {
                     print("Error in JSON decoding.")
@@ -143,7 +143,7 @@ class PortfolioDisplayViewController: UIViewController {
         }
         
         portfolioDisplayView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
+            make.top.equalTo(backButton.snp.bottom).offset(8)
             make.left.equalToSuperview()
             make.right.equalToSuperview()
             make.bottom.equalToSuperview()
@@ -168,6 +168,9 @@ class PortfolioDisplayViewController: UIViewController {
             }
         }
         task.resume()
-        print(url)
+    }
+    
+    @objc func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
     }
 }

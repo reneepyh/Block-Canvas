@@ -19,19 +19,20 @@ class DetailPageViewController: UIViewController {
     
     var indexPath: IndexPath?
     
-    var isNFTInWatchlist: Bool {
-        if let discoverNFTMetadata = discoverNFTMetadata {
-            return WatchlistManager.shared.isInWatchlist(nft: discoverNFTMetadata)
-        }
-        return false
-    }
+    var isWatchlistButtonSelected: Bool = false
+    
+    var isProcessing: Bool = false
+    
+    var isDetailViewHidden: Bool = true
     
     private let detailTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(DetailImageCell.self, forCellReuseIdentifier: DetailImageCell.reuseIdentifier)
         tableView.register(DetailMetadataCell.self, forCellReuseIdentifier: DetailMetadataCell.reuseIdentifier)
+        tableView.register(DetailMetadataInfoCell.self, forCellReuseIdentifier: DetailMetadataInfoCell.reuseIdentifier)
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 500
+        tableView.showsVerticalScrollIndicator = false
         return tableView
     }()
     
@@ -39,6 +40,7 @@ class DetailPageViewController: UIViewController {
         let label = UILabel()
         label.textAlignment = .left
         label.textColor = .secondary
+        label.numberOfLines = 0
         label.font = UIFont.main(ofSize: 16)
         return label
     }()
@@ -54,12 +56,12 @@ class DetailPageViewController: UIViewController {
     lazy var titleStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [self.titleStackViewTitleLabel, self.titleStackViewArtistLabel])
         stackView.axis = .vertical
-        stackView.spacing = 4
         return stackView
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        checkIfInWatchlist()
         detailTableView.delegate = self
         detailTableView.dataSource = self
         setupUI()
@@ -70,26 +72,30 @@ class DetailPageViewController: UIViewController {
     private func setupUI() {
         view.backgroundColor = .primary
         detailTableView.backgroundColor = .primary
+        detailTableView.separatorStyle = .none
+        detailTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleStackView)
+        tabBarController?.tabBar.isHidden = true
         
         view.addSubview(detailTableView)
         detailTableView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             make.leading.equalTo(view.snp.leading)
             make.trailing.equalTo(view.snp.trailing)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-12)
+            make.bottom.equalTo(view.snp.bottom).offset(-20)
         }
     }
     
     private func watchlistButtonImage() -> UIImage? {
-        return isNFTInWatchlist ? UIImage(systemName: "heart.fill")?.withTintColor(.tertiary, renderingMode: .alwaysOriginal) : UIImage(systemName: "heart")
+        return isWatchlistButtonSelected ? UIImage(systemName: "heart.fill")?.withTintColor(.tertiary, renderingMode: .alwaysOriginal) : UIImage(systemName: "heart")
     }
     
     private func setupButtons() {
         navigationItem.hidesBackButton = true
         let watchlistButton = UIBarButtonItem(image: watchlistButtonImage(), style: .plain, target: self, action: #selector(watchlistButtonTapped))
         let closeButton = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(closeButtonTapped))
-        navigationItem.rightBarButtonItems = [closeButton, watchlistButton]
+        let arButton = UIBarButtonItem(image: UIImage(systemName: "eye.fill"), style: .plain, target: self, action: #selector(arButtonTapped))
+        navigationItem.rightBarButtonItems = [closeButton, watchlistButton, arButton]
     }
     
     private func setupNavBarTitle() {
@@ -99,67 +105,117 @@ class DetailPageViewController: UIViewController {
         }
     }
     
+    private func checkIfInWatchlist() {
+        if let discoverNFTMetadata = discoverNFTMetadata {
+            isWatchlistButtonSelected = WatchlistManager.shared.isInWatchlist(nft: discoverNFTMetadata)
+        }
+    }
+    
     private func updateWatchlistButtonImage() {
-        if let watchlistButton = navigationItem.rightBarButtonItems?.last {
-            watchlistButton.image = watchlistButtonImage()
+        if let watchlistButton = navigationItem.rightBarButtonItems?[1] {
+            DispatchQueue.main.async { [weak self] in
+                watchlistButton.image = self?.watchlistButtonImage()
+            }
         }
     }
     
     @objc func watchlistButtonTapped() {
+        if isProcessing { return }
+        isProcessing = true
+        
+        isWatchlistButtonSelected.toggle()
+        
         if let discoverNFTMetadata = discoverNFTMetadata {
-            if isNFTInWatchlist, let indexPath = indexPath {
-                delegate?.deleteWatchlistItem(at: indexPath)
-            } else {
+            if isWatchlistButtonSelected {
                 WatchlistManager.shared.saveToWatchlist(discoverNFTAdded: discoverNFTMetadata)
+            } else {
+                WatchlistManager.shared.deleteWatchlistItem(with: discoverNFTMetadata.displayUri)
             }
         }
         updateWatchlistButtonImage()
+        
+        isProcessing = false
     }
     
     @objc func closeButtonTapped() {
         navigationController?.popViewController(animated: true)
     }
+    
+    @objc func arButtonTapped() {
+        BCProgressHUD.show()
+        let arViewController = ARDisplayViewController()
+        guard let displayUri = discoverNFTMetadata?.displayUri else {
+            print("Cannot find display Uri.")
+            return
+        }
+        
+        guard let imageURL = URL(string: displayUri) else {
+            print("Cannot create image URL.")
+            return
+        }
+        
+        let task = URLSession.shared.dataTask(with: imageURL) { (data, response, error) in
+            if let error = error {
+                print("Error downloading image: \(error)")
+            } else if let data = data, let image = UIImage(data: data) {
+                arViewController.imageToDisplay = image
+                DispatchQueue.main.async {
+                    arViewController.modalPresentationStyle = .overFullScreen
+                    BCProgressHUD.dismiss()
+                    self.present(arViewController, animated: true, completion: nil)
+                }
+            }
+        }
+        task.resume()
+    }
 }
 
 extension DetailPageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        2
+        isDetailViewHidden ? 2 : 3
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
-            guard let detailImageCell = detailTableView.dequeueReusableCell(withIdentifier: DetailImageCell.reuseIdentifier, for: indexPath) as? DetailImageCell else {
-                fatalError("Cannot create detail image cell.")
-            }
-            if let discoverNFTMetadata = discoverNFTMetadata {
-                detailImageCell.detailImageView.loadImage(discoverNFTMetadata.displayUri, placeHolder: UIImage(systemName: "circle.dotted"))
-                detailImageCell.detailImageView.contentMode = .scaleAspectFit
-                detailImageCell.descriptionLabel.text = discoverNFTMetadata.nftDescription
-            }
-            return detailImageCell
-            
-        } else {
-            guard let detailMetadataCell = detailTableView.dequeueReusableCell(withIdentifier: DetailMetadataCell.reuseIdentifier, for: indexPath) as? DetailMetadataCell else {
-                fatalError("Cannot create detail metadata cell.")
-            }
-            if let discoverNFTMetadata = discoverNFTMetadata {
-                detailMetadataCell.detailView.titleLabel.text = discoverNFTMetadata.title
-                detailMetadataCell.detailView.artistLabel.text = discoverNFTMetadata.authorName
-                detailMetadataCell.detailView.contractLabel.text = discoverNFTMetadata.contract
-            }
-            return detailMetadataCell
+        switch indexPath.row {
+            case 0:
+                guard let detailImageCell = detailTableView.dequeueReusableCell(withIdentifier: DetailImageCell.reuseIdentifier, for: indexPath) as? DetailImageCell else {
+                    fatalError("Cannot create detail image cell.")
+                }
+                if let discoverNFTMetadata = discoverNFTMetadata {
+                    detailImageCell.detailImageView.loadImage(discoverNFTMetadata.displayUri, placeHolder: UIImage(named: "AppIcon"))
+                    detailImageCell.detailImageView.contentMode = .scaleAspectFit
+                    detailImageCell.descriptionLabel.text = discoverNFTMetadata.nftDescription
+                }
+                return detailImageCell
+            case 1:
+                guard let detailMetadataCell = detailTableView.dequeueReusableCell(withIdentifier: DetailMetadataCell.reuseIdentifier, for: indexPath) as? DetailMetadataCell else {
+                    fatalError("Cannot create detail metadata cell.")
+                }
+                if isDetailViewHidden {
+                    detailMetadataCell.arrowImageView.image = UIImage(systemName: "chevron.down")?.withTintColor(.tertiary, renderingMode: .alwaysOriginal)
+                } else {
+                    detailMetadataCell.arrowImageView.image = UIImage(systemName: "chevron.up")?.withTintColor(.tertiary, renderingMode: .alwaysOriginal)
+                }
+                return detailMetadataCell
+            case 2:
+                guard let detailMetadataInfoCell = detailTableView.dequeueReusableCell(withIdentifier: DetailMetadataInfoCell.reuseIdentifier, for: indexPath) as? DetailMetadataInfoCell else {
+                    fatalError("Cannot create detail image cell.")
+                }
+                if let discoverNFTMetadata = discoverNFTMetadata {
+                    detailMetadataInfoCell.titleLabel.text = discoverNFTMetadata.title
+                    detailMetadataInfoCell.artistLabel.text = discoverNFTMetadata.authorName
+                    detailMetadataInfoCell.contractLabel.text = discoverNFTMetadata.contract
+                }
+                return detailMetadataInfoCell
+            default:
+                return UITableViewCell()
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        UIView.animate(withDuration: 0.3) {
-            self.detailTableView.performBatchUpdates(nil)
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        if let cell = self.detailTableView.cellForRow(at: indexPath) as? DetailMetadataCell {
-            cell.hideDetailView()
-        }
+        if indexPath.row == 1 { // Metadata label tapped
+                isDetailViewHidden.toggle()
+                tableView.reloadData()
+            }
     }
 }

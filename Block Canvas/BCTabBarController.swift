@@ -14,9 +14,7 @@ class BCTabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.viewControllers = tabs.map { $0.makeViewController() }
-
     }
 }
 
@@ -42,22 +40,33 @@ extension BCTabBarController {
         }
         
         private func makeTabBarItem() -> UITabBarItem {
-            return UITabBarItem(title: "***", image: nil, selectedImage: nil)
-            // TODO: update images
+            return UITabBarItem(title: nil, image: image, selectedImage: selectedImage)
         }
         
-//        private var image: UIImage? {
-//            switch self {
-//                case .discover:
-//                    return .asset(.Icons_36px_Home_Normal)
-//            }
-//        }
-//
-//        private var selectedImage: UIImage? {
-//            switch self {
-//                case .lobby:
-//                    return .asset(.Icons_36px_Home_Selected)
-//            }
-//        }
+        private var image: UIImage? {
+            switch self {
+                case .discover:
+                    return UIImage(named: "discover")
+                case .portfolio:
+                    return UIImage(named: "portfolio")
+                case .crypto:
+                    return UIImage(named: "crypto")
+                case .settings:
+                    return UIImage(named: "settings")
+            }
+        }
+
+        private var selectedImage: UIImage? {
+            switch self {
+                case .discover:
+                    return UIImage(named: "discover_selected")
+                case .portfolio:
+                    return UIImage(named: "portfolio_selected")
+                case .crypto:
+                    return UIImage(named: "crypto_selected")
+                case .settings:
+                    return UIImage(named: "settings_selected")
+            }
+        }
     }
 }

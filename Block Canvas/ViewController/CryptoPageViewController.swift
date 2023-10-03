@@ -53,6 +53,7 @@ class CryptoPageViewController: UIViewController {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16)
         label.textColor = .secondary
+        label.text = "-- gwei"
         return label
     }()
     
@@ -196,7 +197,7 @@ class CryptoPageViewController: UIViewController {
                             var config = UIButton.Configuration.filled()
                             config.title = "\(priceChange)%"
                             let size = UIImage.SymbolConfiguration(pointSize: 8)
-                            config.image = UIImage(systemName: "arrowtriangle.up.fill", withConfiguration: size)
+                            config.image = UIImage(systemName: "arrowtriangle.down.fill", withConfiguration: size)
                             config.titlePadding = 4
                             config.imagePadding = 4
                             config.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 6, bottom: 4, trailing: 6)
@@ -324,13 +325,13 @@ class CryptoPageViewController: UIViewController {
         view.backgroundColor = .primary
         view.addSubview(ethLabel)
         ethLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(4)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(6)
             make.left.equalTo(view.snp.left).offset(16)
         }
         
         view.addSubview(priceLabel)
         priceLabel.snp.makeConstraints { make in
-            make.top.equalTo(ethLabel.snp.bottom).offset(4)
+            make.top.equalTo(ethLabel.snp.bottom).offset(6)
             make.left.equalTo(view.snp.left).offset(16)
         }
         
@@ -342,7 +343,7 @@ class CryptoPageViewController: UIViewController {
         
         view.addSubview(gasFeeLabel)
         gasFeeLabel.snp.makeConstraints { make in
-            make.top.equalTo(priceLabel.snp.bottom).offset(4)
+            make.top.equalTo(priceLabel.snp.bottom).offset(6)
             make.left.equalTo(view.snp.left).offset(18)
         }
     }
@@ -359,7 +360,7 @@ class CryptoPageViewController: UIViewController {
         view.addSubview(ethPriceChart)
         
         ethPriceChart.snp.makeConstraints { make in
-            make.top.equalTo(gasFeeLabel.snp.bottom).offset(8)
+            make.top.equalTo(gasFeeLabel.snp.bottom).offset(4)
             make.left.equalTo(view.snp.left).offset(8)
             make.right.equalTo(view.snp.right).offset(-8)
             make.bottom.equalTo(view.snp.bottom).offset(-100)
