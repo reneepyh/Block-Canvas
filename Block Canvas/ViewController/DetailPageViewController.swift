@@ -182,7 +182,7 @@ extension DetailPageViewController: UITableViewDelegate, UITableViewDataSource {
                     fatalError("Cannot create detail image cell.")
                 }
                 if let discoverNFTMetadata = discoverNFTMetadata {
-                    detailImageCell.detailImageView.loadImage(discoverNFTMetadata.displayUri, placeHolder: UIImage(named: "AppIcon"))
+                    detailImageCell.detailImageView.loadImage(discoverNFTMetadata.displayUri, placeHolder: UIImage(named: "placeholder"))
                     detailImageCell.detailImageView.contentMode = .scaleAspectFit
                     detailImageCell.descriptionLabel.text = discoverNFTMetadata.nftDescription
                 }

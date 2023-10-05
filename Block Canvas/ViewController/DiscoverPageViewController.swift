@@ -58,25 +58,11 @@ class DiscoverPageViewController: UIViewController {
         setupButtonTag()
         nftSearchBar.delegate = self
         getTrending()
-//        presentLaunchAnimation()
         fetchRecommendationInBackground()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         setupUI()
-    }
-    
-    private func presentLaunchAnimation() {
-        guard
-            let launchVC = UIStoryboard.discover.instantiateViewController(
-                withIdentifier: String(describing: LaunchAnimationViewController.self)
-            ) as? LaunchAnimationViewController
-        else {
-            return
-        }
-        launchVC.modalPresentationStyle = .overFullScreen
-        launchVC.tabBarController?.tabBar.isHidden = true
-        present(launchVC, animated: false)
     }
     
     private func setupCollectionView() {
@@ -457,13 +443,13 @@ extension DiscoverPageViewController: UICollectionViewDelegateFlowLayout, UIColl
             fatalError("Cell cannot be created")
         }
         if isSearching {
-            discoverCollectionCell.imageView.loadImage(searchedNFTs[indexPath.row].thumbnailUri, placeHolder: UIImage(named: "AppIcon"))
+            discoverCollectionCell.imageView.loadImage(searchedNFTs[indexPath.row].thumbnailUri, placeHolder: UIImage(named: "placeholder"))
             discoverCollectionCell.titleLabel.text = searchedNFTs[indexPath.row].title
         } else if selectedPage == 0 {
-            discoverCollectionCell.imageView.loadImage(trendingNFTs[indexPath.row].thumbnailUri, placeHolder: UIImage(named: "AppIcon"))
+            discoverCollectionCell.imageView.loadImage(trendingNFTs[indexPath.row].thumbnailUri, placeHolder: UIImage(named: "placeholder"))
             discoverCollectionCell.titleLabel.text = trendingNFTs[indexPath.row].title
         } else {
-            discoverCollectionCell.imageView.loadImage(recommendedNFTs[indexPath.row].thumbnailUri, placeHolder: UIImage(named: "AppIcon"))
+            discoverCollectionCell.imageView.loadImage(recommendedNFTs[indexPath.row].thumbnailUri, placeHolder: UIImage(named: "placeholder"))
             discoverCollectionCell.titleLabel.text = recommendedNFTs[indexPath.row].title
         }
         

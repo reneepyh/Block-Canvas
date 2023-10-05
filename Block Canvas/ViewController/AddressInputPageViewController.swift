@@ -19,7 +19,7 @@ class AddressInputPageViewController: UIViewController {
         textField.font = UIFont.systemFont(ofSize: 16)
         textField.textColor = .primary
         textField.tintColor = .primary
-        textField.attributedPlaceholder = NSAttributedString(string: "Enter wallet address", attributes: [NSAttributedString.Key.foregroundColor: UIColor.primary])
+        textField.attributedPlaceholder = NSAttributedString(string: "Enter Ethereum address", attributes: [NSAttributedString.Key.foregroundColor: UIColor.primary])
         textField.borderStyle = .roundedRect
         textField.clearButtonMode = .whileEditing
         textField.returnKeyType = .done
@@ -32,7 +32,7 @@ class AddressInputPageViewController: UIViewController {
         textField.font = UIFont.systemFont(ofSize: 16)
         textField.textColor = .primary
         textField.tintColor = .primary
-        textField.attributedPlaceholder = NSAttributedString(string: "Give this wallet a name", attributes: [NSAttributedString.Key.foregroundColor: UIColor.primary])
+        textField.attributedPlaceholder = NSAttributedString(string: "Give this address a name", attributes: [NSAttributedString.Key.foregroundColor: UIColor.primary])
         textField.borderStyle = .roundedRect
         textField.clearButtonMode = .whileEditing
         textField.returnKeyType = .done

@@ -16,6 +16,7 @@
 		DB0C67932AC9B591007C960A /* widget.json in Resources */ = {isa = PBXBuildFile; fileRef = DB0C67922AC9B591007C960A /* widget.json */; };
 		DB0C67952AC9B892007C960A /* WidgetWalletSelectedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0C67942AC9B892007C960A /* WidgetWalletSelectedViewController.swift */; };
 		DB0FA4C72ABEB9AF00272E7A /* JGProgressHUDWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0FA4C62ABEB9AF00272E7A /* JGProgressHUDWrapper.swift */; };
+		DB1C573C2ACE85AA00C203B3 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1C573B2ACE85AA00C203B3 /* UIImageView+Extension.swift */; };
 		DB1DBD202AB1D45A00F74B64 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DBD1F2AB1D45A00F74B64 /* AppDelegate.swift */; };
 		DB1DBD222AB1D45A00F74B64 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DBD212AB1D45A00F74B64 /* SceneDelegate.swift */; };
 		DB1DBD242AB1D45A00F74B64 /* DiscoverPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DBD232AB1D45A00F74B64 /* DiscoverPageViewController.swift */; };
@@ -116,6 +117,7 @@
 		DB0C67922AC9B591007C960A /* widget.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = widget.json; sourceTree = "<group>"; };
 		DB0C67942AC9B892007C960A /* WidgetWalletSelectedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetWalletSelectedViewController.swift; sourceTree = "<group>"; };
 		DB0FA4C62ABEB9AF00272E7A /* JGProgressHUDWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JGProgressHUDWrapper.swift; sourceTree = "<group>"; };
+		DB1C573B2ACE85AA00C203B3 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		DB1DBD1C2AB1D45A00F74B64 /* Block Canvas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Block Canvas.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB1DBD1F2AB1D45A00F74B64 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DB1DBD212AB1D45A00F74B64 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -256,6 +258,7 @@
 				DBB9BDBB2AB44E07002A5FBC /* KingfisherWrapper.swift */,
 				DB0FA4C62ABEB9AF00272E7A /* JGProgressHUDWrapper.swift */,
 				DBE93E252ACAC49B00ECF9E0 /* MJRefreshWrapper.swift */,
+				DB1C573B2ACE85AA00C203B3 /* UIImageView+Extension.swift */,
 			);
 			path = "Third Party Wrappers";
 			sourceTree = "<group>";
@@ -622,6 +625,7 @@
 				DB6981932AB4648500BE0036 /* Portfolio.swift in Sources */,
 				DBF329F22AC55DBB009DE67C /* DetailMetadataInfoCell.swift in Sources */,
 				DB4BFB2F2AB6AA1300187B1C /* PortfolioDisplayView.swift in Sources */,
+				DB1C573C2ACE85AA00C203B3 /* UIImageView+Extension.swift in Sources */,
 				DB6981912AB4608100BE0036 /* AddressInputPageViewController.swift in Sources */,
 				DB0864842ABC435F004598D6 /* WatchlistCell.swift in Sources */,
 				DBB9BDBC2AB44E07002A5FBC /* KingfisherWrapper.swift in Sources */,

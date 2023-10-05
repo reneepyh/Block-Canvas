@@ -44,7 +44,9 @@ class BCProgressHUD {
             }
             return
         }
+        shared.hud.backgroundColor = .primary
         shared.hud.textLabel.text = text
+        shared.hud.textLabel.textColor = .secondaryBlur
         shared.hud.indicatorView = JGProgressHUDSuccessIndicatorView()
         shared.hud.show(in: view)
         shared.hud.dismiss(afterDelay: 1.5)
@@ -58,7 +60,9 @@ class BCProgressHUD {
             }
             return
         }
+        shared.hud.backgroundColor = .primary
         shared.hud.textLabel.text = text
+        shared.hud.textLabel.textColor = .secondaryBlur
         shared.hud.indicatorView = JGProgressHUDErrorIndicatorView()
         if let view = shared.view {
             shared.hud.show(in: view)
@@ -73,8 +77,14 @@ class BCProgressHUD {
             }
             return
         }
-        shared.hud.indicatorView = JGProgressHUDIndeterminateIndicatorView()
+        guard let loadingGif = UIImage.gif(asset: "loading") else {
+            print("Cannot find loading gif.")
+            return
+        }
+        shared.hud.backgroundColor = .primary
+        shared.hud.indicatorView = JGProgressHUDImageIndicatorView(image: loadingGif)
         shared.hud.textLabel.text = text
+        shared.hud.textLabel.textColor = .secondaryBlur
         if let view = shared.view {
             shared.hud.show(in: view)
         }

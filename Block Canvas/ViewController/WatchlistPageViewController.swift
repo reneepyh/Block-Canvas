@@ -51,7 +51,7 @@ extension WatchlistPageViewController: UICollectionViewDelegateFlowLayout, UICol
         guard let watchlistCell = collectionView.dequeueReusableCell(withReuseIdentifier: WatchlistCell.reuseIdentifier, for: indexPath) as? WatchlistCell else {
             fatalError("Cell cannot be created")
         }
-        watchlistCell.imageView.loadImage(watchlistNFTs[indexPath.row].thumbnailUri, placeHolder: UIImage(named: "AppIcon"))
+        watchlistCell.imageView.loadImage(watchlistNFTs[indexPath.row].thumbnailUri, placeHolder: UIImage(named: "placeholder"))
         watchlistCell.imageView.contentMode = .scaleAspectFill
         
         return watchlistCell

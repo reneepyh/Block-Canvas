@@ -38,9 +38,10 @@ struct PortfolioDisplay: View {
                                 
                                 KFImage(nftInfo.url)
                                     .placeholder {
-                                        Image("AppIcon")
+                                        Image("placeholder")
                                             .font(.largeTitle)
                                             .opacity(0.5)
+                                        
                                     }
                                     .resizable()
                                     .scaledToFit()
