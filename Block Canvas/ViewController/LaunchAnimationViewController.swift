@@ -7,12 +7,11 @@
 
 import UIKit
 import SnapKit
-import Kingfisher
 
 class LaunchAnimationViewController: UIViewController {
     
-    private let imageView: AnimatedImageView = {
-        let imageView = AnimatedImageView()
+    private let imageView: UIImageView = {
+        let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
@@ -40,7 +39,7 @@ class LaunchAnimationViewController: UIViewController {
     }
     
     private func setupAnimation() {
-        imageView.loadImage("https://lh3.googleusercontent.com/drive-viewer/AK7aPaD8e9Ix2J29NQ3Yyi6BZ_0NswIY8nkCMMHaJUaO6elq4owRtu_DhAH7idGtCZSiIkt7-VT4aO8oE4s1gQcHWqnBAdHb=s1600")
+        imageView.loadGif(asset: "launch")
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             guard let mainVC = UIStoryboard.main.instantiateViewController(
