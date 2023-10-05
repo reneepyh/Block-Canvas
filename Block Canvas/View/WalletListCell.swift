@@ -83,7 +83,6 @@ class WalletListCell: UITableViewCell {
         }
         
         contentView.addSubview(arrowImageView)
-        arrowImageView.image = UIImage(systemName: "chevron.right")?.withTintColor(.secondary, renderingMode: .alwaysOriginal)
         arrowImageView.snp.makeConstraints { make in
             make.bottom.equalTo(walletImageView.snp.bottom)
             make.trailing.equalTo(contentView.snp.trailing).offset(-16)

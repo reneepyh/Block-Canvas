@@ -123,7 +123,7 @@ extension ARDisplayViewController {
         
         closeButton.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(12)
-            make.right.equalToSuperview().offset(-32)
+            make.trailing.equalToSuperview().offset(-32)
             make.width.equalTo(28)
             make.height.equalTo(28)
         }

@@ -70,7 +70,7 @@
 		DBF619DB2AB55F6E00687F13 /* CryptoPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF619DA2AB55F6E00687F13 /* CryptoPageViewController.swift */; };
 		DBF619DD2AB55F8600687F13 /* Crypto.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBF619DC2AB55F8600687F13 /* Crypto.storyboard */; };
 		DBF619DF2AB57EA200687F13 /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF619DE2AB57EA200687F13 /* Crypto.swift */; };
-		DBF619E32AB59C8400687F13 /* EthPriceChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF619E22AB59C8400687F13 /* EthPriceChartView.swift */; };
+		DBF619E32AB59C8400687F13 /* PriceChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF619E22AB59C8400687F13 /* PriceChartView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -178,7 +178,7 @@
 		DBF619DA2AB55F6E00687F13 /* CryptoPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoPageViewController.swift; sourceTree = "<group>"; };
 		DBF619DC2AB55F8600687F13 /* Crypto.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Crypto.storyboard; sourceTree = "<group>"; };
 		DBF619DE2AB57EA200687F13 /* Crypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crypto.swift; sourceTree = "<group>"; };
-		DBF619E22AB59C8400687F13 /* EthPriceChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthPriceChartView.swift; sourceTree = "<group>"; };
+		DBF619E22AB59C8400687F13 /* PriceChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriceChartView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -341,7 +341,7 @@
 				DBF619DC2AB55F8600687F13 /* Crypto.storyboard */,
 				DB08647D2ABC3D04004598D6 /* Settings.storyboard */,
 				DB8C90F02AB43DCF005D75DF /* DiscoverCollectionCell.swift */,
-				DBF619E22AB59C8400687F13 /* EthPriceChartView.swift */,
+				DBF619E22AB59C8400687F13 /* PriceChartView.swift */,
 				DB4BFB2E2AB6AA1300187B1C /* PortfolioDisplayView.swift */,
 				DB9E028D2AB7499100285E63 /* WalletListCell.swift */,
 				DB0864832ABC435F004598D6 /* WatchlistCell.swift */,
@@ -635,7 +635,7 @@
 				DB9E028E2AB7499100285E63 /* WalletListCell.swift in Sources */,
 				DBE3CE552AC7FD1C00A85FB2 /* SettingsPageViewController.swift in Sources */,
 				DB0864822ABC4063004598D6 /* WatchlistPageViewController.swift in Sources */,
-				DBF619E32AB59C8400687F13 /* EthPriceChartView.swift in Sources */,
+				DBF619E32AB59C8400687F13 /* PriceChartView.swift in Sources */,
 				DB5386A92AC2B4700077672B /* DetailMetadataCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -14,7 +14,7 @@ class WidgetPageViewController: UIViewController {
     
     private let userDefaults = UserDefaults.standard
     
-    private var ethWallets: [[String: String]] = []
+    private var walletAddress: [[String: String]] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +24,7 @@ class WidgetPageViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         setupUI()
-        fetchEthWallets()
+        fetchWallets()
     }
     
     private func setupUI() {
@@ -51,17 +51,17 @@ class WidgetPageViewController: UIViewController {
         walletListTableView.estimatedRowHeight = 200
     }
     
-    private func fetchEthWallets() {
-        let savedWallets = UserDefaults.standard.object(forKey: "ethWallets") as? [[String: String]] ?? []
+    private func fetchWallets() {
+        let savedWallets = UserDefaults.standard.object(forKey: "walletAddress") as? [[String: String]] ?? []
         
         if savedWallets.isEmpty {
-            ethWallets = [["address": "0x423cE4833b42b48611C662cFdc70929E3139b009", "name": "Demo Address"]]
+            walletAddress = [["address": "0x423cE4833b42b48611C662cFdc70929E3139b009", "name": "Demo Address"]]
         } else {
-            ethWallets = savedWallets
+            walletAddress = savedWallets
         }
     }
     
-    private func getEthNFTsByWallet(address: String) {
+    private func getNFTsByWallet(address: String) {
         BCProgressHUD.show()
         
         let apiKey = Bundle.main.object(forInfoDictionaryKey: "Moralis_API_Key") as? String
@@ -145,7 +145,7 @@ class WidgetPageViewController: UIViewController {
 
 extension WidgetPageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        ethWallets.count
+        walletAddress.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -153,9 +153,9 @@ extension WidgetPageViewController: UITableViewDelegate, UITableViewDataSource {
             fatalError("Cannot create wallet list cell.")
         }
         walletCell.walletImageView.image = UIImage(named: "ethereum")
-        let address = ethWallets[indexPath.row]["address"]
+        let address = walletAddress[indexPath.row]["address"]
         walletCell.addressLabel.text = address
-        walletCell.walletNameTextField.text = ethWallets[indexPath.row]["name"]
+        walletCell.walletNameTextField.text = walletAddress[indexPath.row]["name"]
         walletCell.walletNameTextField.isUserInteractionEnabled = false
         walletCell.balanceLabel.isHidden = true
         walletCell.arrowImageView.isHidden = true
@@ -163,10 +163,10 @@ extension WidgetPageViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let address = ethWallets[indexPath.row]["address"] else {
+        guard let address = walletAddress[indexPath.row]["address"] else {
             print("Cannot get wallet address.")
             return
         }
-        self.getEthNFTsByWallet(address: address)
+        self.getNFTsByWallet(address: address)
     }
 }
