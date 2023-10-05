@@ -36,10 +36,16 @@ class CryptoPageViewController: UIViewController {
     
     private let ethLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.main(ofSize: 18)
+        label.font = UIFont.main(ofSize: 20)
         label.text = "Ethereum"
         label.textColor = .tertiary
         return label
+    }()
+    
+    private let ethIconImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        return imageView
     }()
     
     private let ethPriceLabel: UILabel = {
@@ -69,10 +75,16 @@ class CryptoPageViewController: UIViewController {
     
     private let xtzLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.main(ofSize: 18)
+        label.font = UIFont.main(ofSize: 20)
         label.text = "Tezos"
         label.textColor = .tertiary
         return label
+    }()
+    
+    private let xtzIconImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        return imageView
     }()
     
     private let xtzPriceLabel: UILabel = {
@@ -554,12 +566,22 @@ class CryptoPageViewController: UIViewController {
     private func setupETHLabelUI() {
         navigationController?.navigationBar.isHidden = true
         view.backgroundColor = .primary
-        view.addSubview(ethLabel)
-        ethLabel.snp.makeConstraints { make in
+        
+        view.addSubview(ethIconImageView)
+        ethIconImageView.image = UIImage(named: "ethereum_crypto")
+        ethIconImageView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(6)
             make.leading.equalTo(view.snp.leading).offset(18)
+            make.width.equalTo(18)
+            make.height.equalTo(18)
         }
         
+        view.addSubview(ethLabel)
+        ethLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(ethIconImageView.snp.centerY)
+            make.leading.equalTo(ethIconImageView.snp.trailing).offset(6)
+        }
+
         view.addSubview(ethPriceLabel)
         ethPriceLabel.snp.makeConstraints { make in
             make.top.equalTo(ethLabel.snp.bottom).offset(6)
@@ -603,10 +625,20 @@ class CryptoPageViewController: UIViewController {
     private func setupXTZLabelUI() {
         navigationController?.navigationBar.isHidden = true
         view.backgroundColor = .primary
-        view.addSubview(xtzLabel)
-        xtzLabel.snp.makeConstraints { make in
+    
+        view.addSubview(xtzIconImageView)
+        xtzIconImageView.image = UIImage(named: "tezos_crypto")
+        xtzIconImageView.snp.makeConstraints { make in
             make.top.equalTo(ethhostingController.view.snp.bottom).offset(6)
             make.leading.equalTo(view.snp.leading).offset(18)
+            make.width.equalTo(18)
+            make.height.equalTo(18)
+        }
+        
+        view.addSubview(xtzLabel)
+        xtzLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(xtzIconImageView.snp.centerY)
+            make.leading.equalTo(xtzIconImageView.snp.trailing).offset(6)
         }
         
         view.addSubview(xtzPriceLabel)
