@@ -212,8 +212,8 @@ class PortfolioDisplayViewController: UIViewController {
         
         portfolioDisplayView.snp.makeConstraints { make in
             make.top.equalTo(backButton.snp.bottom).offset(8)
-            make.left.equalToSuperview()
-            make.right.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
             make.bottom.equalToSuperview()
         }
         

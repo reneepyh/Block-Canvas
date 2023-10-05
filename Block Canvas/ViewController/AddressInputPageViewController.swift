@@ -83,14 +83,14 @@ class AddressInputPageViewController: UIViewController {
         view.addSubview(nameTextField)
         addressTextField.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(50)
-            make.left.equalTo(view.snp.left).offset(16)
-            make.right.equalTo(view.snp.right).offset(-16)
+            make.leading.equalTo(view.snp.leading).offset(16)
+            make.trailing.equalTo(view.snp.trailing).offset(-16)
             make.height.equalTo(40)
         }
         nameTextField.snp.makeConstraints { make in
             make.top.equalTo(addressTextField.snp.bottom).offset(16)
-            make.left.equalTo(view.snp.left).offset(16)
-            make.right.equalTo(view.snp.right).offset(-16)
+            make.leading.equalTo(view.snp.leading).offset(16)
+            make.trailing.equalTo(view.snp.trailing).offset(-16)
             make.height.equalTo(40)
         }
         continueButton.snp.makeConstraints { make in
