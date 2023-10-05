@@ -100,6 +100,50 @@ struct NormalizedMetadata: Codable {
     }
 }
 
+struct TezosNFT: Codable {
+    let continuation: String?
+    let items: [TezosNFTMetadata]?
+}
+
+struct TezosNFTMetadata: Codable {
+    let id, blockchain, collection, contract: String?
+    let tokenID: String?
+    let creators: [Creator]?
+    let meta: Meta?
+
+    enum CodingKeys: String, CodingKey {
+        case id, blockchain, collection, contract
+        case tokenID = "tokenId"
+        case creators, meta
+    }
+}
+
+struct Creator: Codable {
+    let account: String?
+    let value: Int?
+}
+
+struct Meta: Codable {
+    let name, description: String?
+    let tags: [String]?
+    let content: [Content]?
+}
+
+struct Content: Codable {
+    let type: String?
+    let url: String?
+    let representation: String?
+    let mimeType: String?
+    let size: Int?
+    let available: Bool?
+    let width, height: Int?
+
+    enum CodingKeys: String, CodingKey {
+        case type = "@type"
+        case url, representation, mimeType, size, available, width, height
+    }
+}
+
 struct NFTInfoForDisplay: Codable {
     let url: URL
     let title: String

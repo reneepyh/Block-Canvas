@@ -11,7 +11,7 @@ import SnapKit
 class AddressInputPageViewController: UIViewController {
     private let userDefaults = UserDefaults.standard
     
-    private var ethWallets: [[String: String]] = []
+    private var walletAddresses: [[String: String]] = []
     
     private let addressTextField: UITextField = {
         let textField = UITextField()
@@ -19,7 +19,7 @@ class AddressInputPageViewController: UIViewController {
         textField.font = UIFont.systemFont(ofSize: 16)
         textField.textColor = .primary
         textField.tintColor = .primary
-        textField.attributedPlaceholder = NSAttributedString(string: "Enter Ethereum address", attributes: [NSAttributedString.Key.foregroundColor: UIColor.primary])
+        textField.attributedPlaceholder = NSAttributedString(string: "Enter Ethereum or Tezos address", attributes: [NSAttributedString.Key.foregroundColor: UIColor.primary])
         textField.borderStyle = .roundedRect
         textField.clearButtonMode = .whileEditing
         textField.returnKeyType = .done
@@ -55,7 +55,7 @@ class AddressInputPageViewController: UIViewController {
         super.viewDidLoad()
         addressTextField.delegate = self
         nameTextField.delegate = self
-        findEthWallets()
+        findWallets()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -101,8 +101,8 @@ class AddressInputPageViewController: UIViewController {
         continueButton.addTarget(self, action: #selector(continueButtonTapped), for: .touchUpInside)
     }
     
-    private func findEthWallets() {
-        ethWallets = userDefaults.object(forKey: "ethWallets") as? [[String: String]] ?? []
+    private func findWallets() {
+        walletAddresses = userDefaults.object(forKey: "walletAddress") as? [[String: String]] ?? []
     }
     
     @objc func continueButtonTapped() {
@@ -112,8 +112,8 @@ class AddressInputPageViewController: UIViewController {
             return
         }
         let walletInfo = ["address": address, "name": walletName]
-        ethWallets.append(walletInfo)
-        userDefaults.set(ethWallets, forKey: "ethWallets")
+        walletAddresses.append(walletInfo)
+        userDefaults.set(walletAddresses, forKey: "walletAddress")
         
         guard
             let portfolioListVC = UIStoryboard.portfolio.instantiateViewController(
