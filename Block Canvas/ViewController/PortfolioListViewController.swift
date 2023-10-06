@@ -188,8 +188,10 @@ extension PortfolioListViewController: UITableViewDelegate, UITableViewDataSourc
             if let balance = balance[address] {
                 if address.hasPrefix("0x") {
                     walletCell.balanceLabel.text = "\(balance) ETH"
+                    walletCell.walletImageView.image = UIImage(named: "ethereum")
                 } else {
                     walletCell.balanceLabel.text = "\(balance) XTZ"
+                    walletCell.walletImageView.image = UIImage(named: "tezos")
                 }
             }
         }

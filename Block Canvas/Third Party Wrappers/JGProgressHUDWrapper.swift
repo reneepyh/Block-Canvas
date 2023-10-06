@@ -49,7 +49,6 @@ class BCProgressHUD {
         shared.hud.indicatorView = JGProgressHUDSuccessIndicatorView()
         shared.hud.show(in: view)
         shared.hud.dismiss(afterDelay: 1)
-        
     }
     
     static func showFailure(text: String = "Failure") {

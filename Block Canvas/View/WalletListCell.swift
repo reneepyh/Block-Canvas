@@ -50,6 +50,10 @@ class WalletListCell: UITableViewCell {
         setupUI()
     }
     
+    override func prepareForReuse() {
+        walletImageView.image = nil
+    }
+    
     private func setupUI() {
         contentView.backgroundColor = .primary
         contentView.addSubview(walletImageView)
