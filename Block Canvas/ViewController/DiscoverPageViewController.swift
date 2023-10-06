@@ -94,6 +94,7 @@ class DiscoverPageViewController: UIViewController {
         nftSearchBar.searchTextField.textColor = .primary
         nftSearchBar.searchTextField.clearButtonMode = .unlessEditing
         nftSearchBar.searchTextField.autocapitalizationType = .none
+        nftSearchBar.searchTextField.autocorrectionType = .no
         
         let navigationExtendHeight: UIEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
         navigationController?.additionalSafeAreaInsets = navigationExtendHeight

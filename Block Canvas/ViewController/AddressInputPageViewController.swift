@@ -99,6 +99,14 @@ class AddressInputPageViewController: UIViewController {
             make.width.equalTo(view.snp.width).multipliedBy(0.9)
         }
         continueButton.addTarget(self, action: #selector(continueButtonTapped), for: .touchUpInside)
+        
+        addressTextField.clearButtonMode = .unlessEditing
+        addressTextField.autocapitalizationType = .none
+        addressTextField.autocorrectionType = .no
+        
+        nameTextField.clearButtonMode = .unlessEditing
+        nameTextField.autocapitalizationType = .none
+        nameTextField.autocorrectionType = .no
     }
     
     private func findWallets() {
@@ -106,11 +114,18 @@ class AddressInputPageViewController: UIViewController {
     }
     
     @objc func continueButtonTapped() {
-        guard let address = addressTextField.text, !address.isEmpty,
-        let walletName = nameTextField.text, !walletName.isEmpty else {
-            print("User did not enter address or wallet name")
+        guard let address = addressTextField.text, (address.hasPrefix("0x") || address.hasPrefix("tz") || (address.hasPrefix("tx"))) else {
+            print("User did not enter valid address")
+            BCProgressHUD.showFailure(text: "Address is not valid.")
             return
         }
+        
+        guard let walletName = nameTextField.text, !walletName.isEmpty else {
+            print("User did not enter wallet name")
+            BCProgressHUD.showFailure(text: "Wallet name empty.")
+            return
+        }
+        
         let walletInfo = ["address": address, "name": walletName]
         walletAddresses.append(walletInfo)
         userDefaults.set(walletAddresses, forKey: "walletAddress")

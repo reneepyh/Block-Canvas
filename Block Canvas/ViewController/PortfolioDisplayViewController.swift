@@ -74,13 +74,13 @@ class PortfolioDisplayViewController: UIViewController {
                 let task = session.dataTask(with: request) { [weak self] data, response, error in
                     if let error = error {
                         print(error)
-                        BCProgressHUD.showFailure()
+                        BCProgressHUD.showFailure(text: "Address error.")
                         return
                     }
                     
                     guard let data = data else {
                         print("No data.")
-                        BCProgressHUD.showFailure()
+                        BCProgressHUD.showFailure(text: "No NFT to show.")
                         return
                     }
                     
@@ -118,6 +118,7 @@ class PortfolioDisplayViewController: UIViewController {
             }
             else {
                 print("Invalid URL.")
+                BCProgressHUD.showFailure(text: "Address error.")
             }
         }
         else {
@@ -139,13 +140,13 @@ class PortfolioDisplayViewController: UIViewController {
                 let task = session.dataTask(with: request) { [weak self] data, response, error in
                     if let error = error {
                         print(error)
-                        BCProgressHUD.showFailure()
+                        BCProgressHUD.showFailure(text: "Address error.")
                         return
                     }
                     
                     guard let data = data else {
                         print("No data.")
-                        BCProgressHUD.showFailure()
+                        BCProgressHUD.showFailure(text: "No NFT to show.")
                         return
                     }
                     
@@ -156,7 +157,7 @@ class PortfolioDisplayViewController: UIViewController {
                         print(NFTData)
                         self?.nftInfoForDisplay = NFTData.items.map({ tezosNFTMetadata in
                             tezosNFTMetadata.compactMap { tezosNFT in
-                                if let image = tezosNFT.meta?.content?[1].url {
+                                if let image = tezosNFT.meta?.content?.first?.url {
                                     guard let imageUrl = URL(string: image) else {
                                         fatalError("Cannot get image URL of NFT.")
                                     }
@@ -186,6 +187,7 @@ class PortfolioDisplayViewController: UIViewController {
             }
             else {
                 print("Invalid URL.")
+                BCProgressHUD.showFailure(text: "Address error.")
             }
         }
     }
@@ -193,6 +195,7 @@ class PortfolioDisplayViewController: UIViewController {
     private func setupDisplay() {
         guard let nftInfoForDisplay = nftInfoForDisplay else {
             print("Cannot create imageURLs.")
+            BCProgressHUD.showFailure(text: "No NFT to show.")
             return
         }
         
