@@ -181,18 +181,17 @@ class DiscoverPageViewController: UIViewController {
     
     private func searchNFT(keyword: String) {
         BCProgressHUD.show(text: "Searching")
-        let apiKey = Bundle.main.object(forInfoDictionaryKey: "NFTPort_API_Key") as? String
+        let apiKey = Bundle.main.object(forInfoDictionaryKey: "Reservoir_API_Key") as? String
         
         guard let key = apiKey, !key.isEmpty else {
-            print("NFTPort API key does not exist.")
+            print("Reservoir API Key does not exist.")
             return
         }
         
-        if let url = URL(string: "https://api.nftport.xyz/v0/search?text=\(keyword.lowercased())&chain=ethereum&page_number=1&page_size=10&order_by=relevance&sort_order=desc") {
+        if let url = URL(string: "https://api.reservoir.tools/search/collections/v2?name=\(keyword.lowercased())&limit=10") {
             
             var request = URLRequest(url: url)
-            request.setValue("application/json", forHTTPHeaderField: "Accept")
-            request.setValue(key, forHTTPHeaderField: "Authorization")
+            request.setValue(key, forHTTPHeaderField: "X-API-KEY")
             request.httpMethod = "GET"
             
             let session = URLSession.shared
@@ -215,8 +214,14 @@ class DiscoverPageViewController: UIViewController {
                 do {
                     let searchData = try decoder.decode(SearchNFT.self, from: data)
                     print(searchData)
-                    for searchResult in searchData.searchResults ?? [] {
-                        self?.searchedNFTs.append(DiscoverNFT(thumbnailUri: searchResult.cachedFileURL ?? "", displayUri: searchResult.cachedFileURL ?? "", contract: searchResult.contractAddress ?? "", title: searchResult.name, authorName: "", nftDescription: searchResult.description))
+                    var nftDescription = ""
+                    for searchResult in searchData.collections ?? [] {
+                        if let slug = searchResult.slug {
+                            nftDescription = "https://opensea.io/collection/\(slug)"
+                        } else {
+                            nftDescription = ""
+                        }
+                        self?.searchedNFTs.append(DiscoverNFT(thumbnailUri: searchResult.image ?? "", displayUri: searchResult.image ?? "", contract: searchResult.contract ?? "", title: searchResult.name, authorName: "", nftDescription: nftDescription))
                     }
                     print(self?.searchedNFTs)
                 }
@@ -257,7 +262,7 @@ class DiscoverPageViewController: UIViewController {
             }
         }
     }
-
+    
     private func updateRecommendationUI() {
         DispatchQueue.main.async { [weak self] in
             if let layout = self?.discoverCollectionView.collectionViewLayout as? WaterFallFlowLayout {
@@ -271,7 +276,6 @@ class DiscoverPageViewController: UIViewController {
     }
     
     private func getRecommendationFromGPT() {
-        //TODO: error handle不遵照格式
         let apiKey = Bundle.main.object(forInfoDictionaryKey: "OpenAI_API_Key") as? String
         
         guard let key = apiKey, !key.isEmpty else {
@@ -310,7 +314,7 @@ class DiscoverPageViewController: UIViewController {
                """]
                 ])
             }
-           
+            
             request.httpBody = try? JSONEncoder().encode(openAIBody)
             request.httpMethod = "POST"
             
@@ -366,14 +370,14 @@ class DiscoverPageViewController: UIViewController {
     }
     
     private func getRecommendedNFTs(collectionName: String) {
-        let apiKey = Bundle.main.object(forInfoDictionaryKey: "NFTPort_API_Key") as? String
+        let apiKey = Bundle.main.object(forInfoDictionaryKey: "Reservoir_API_Key") as? String
         
         guard let key = apiKey, !key.isEmpty else {
-            print("NFTPort API key does not exist.")
+            print("Reservoir API Key does not exist.")
             return
         }
         
-        if let url = URL(string: "https://api.nftport.xyz/v0/search?text=\(collectionName)&chain=ethereum&page_number=1&page_size=5&order_by=mint_date&sort_order=desc") {
+        if let url = URL(string: "https://api.reservoir.tools/search/collections/v2?name=\(collectionName)&limit=5") {
             
             var request = URLRequest(url: url)
             request.setValue("application/json", forHTTPHeaderField: "Accept")
@@ -404,8 +408,14 @@ class DiscoverPageViewController: UIViewController {
                 do {
                     let searchData = try decoder.decode(SearchNFT.self, from: data)
                     print(searchData)
-                    for searchResult in searchData.searchResults ?? [] {
-                        self?.recommendedNFTs.append(DiscoverNFT(thumbnailUri: searchResult.cachedFileURL ?? "", displayUri: searchResult.cachedFileURL ?? "", contract: searchResult.contractAddress ?? "", title: searchResult.name, authorName: "", nftDescription: searchResult.description))
+                    var nftDescription = ""
+                    for searchResult in searchData.collections ?? [] {
+                        if let slug = searchResult.slug {
+                            nftDescription = "https://opensea.io/collection/\(slug)"
+                        } else {
+                            nftDescription = ""
+                        }
+                        self?.recommendedNFTs.append(DiscoverNFT(thumbnailUri: searchResult.image ?? "", displayUri: searchResult.image ?? "", contract: searchResult.contract ?? "", title: searchResult.name, authorName: "", nftDescription: nftDescription))
                     }
                     print(self?.recommendedNFTs)
                 }

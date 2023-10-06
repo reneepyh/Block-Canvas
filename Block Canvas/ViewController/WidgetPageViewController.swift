@@ -14,7 +14,7 @@ class WidgetPageViewController: UIViewController {
     
     private let userDefaults = UserDefaults.standard
     
-    private var walletAddress: [[String: String]] = []
+    private var walletAddresses: [[String: String]] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,9 +55,9 @@ class WidgetPageViewController: UIViewController {
         let savedWallets = UserDefaults.standard.object(forKey: "walletAddress") as? [[String: String]] ?? []
         
         if savedWallets.isEmpty {
-            walletAddress = [["address": "0x423cE4833b42b48611C662cFdc70929E3139b009", "name": "Demo Address"]]
+            walletAddresses = [["address": "0x423cE4833b42b48611C662cFdc70929E3139b009", "name": "Demo Address"]]
         } else {
-            walletAddress = savedWallets
+            walletAddresses = savedWallets
         }
     }
     
@@ -145,17 +145,23 @@ class WidgetPageViewController: UIViewController {
 
 extension WidgetPageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        walletAddress.count
+        walletAddresses.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let walletCell = walletListTableView.dequeueReusableCell(withIdentifier: WalletListCell.reuseIdentifier, for: indexPath) as? WalletListCell else {
             fatalError("Cannot create wallet list cell.")
         }
-        walletCell.walletImageView.image = UIImage(named: "ethereum")
-        let address = walletAddress[indexPath.row]["address"]
+        guard let address = walletAddresses[indexPath.row]["address"] else {
+            fatalError("Cannot find wallet address.")
+        }
         walletCell.addressLabel.text = address
-        walletCell.walletNameTextField.text = walletAddress[indexPath.row]["name"]
+        if address.hasPrefix("0x") {
+            walletCell.walletImageView.image = UIImage(named: "ethereum")
+        } else {
+            walletCell.walletImageView.image = UIImage(named: "tezos")
+        }
+        walletCell.walletNameTextField.text = walletAddresses[indexPath.row]["name"]
         walletCell.walletNameTextField.isUserInteractionEnabled = false
         walletCell.balanceLabel.isHidden = true
         walletCell.arrowImageView.isHidden = true
@@ -163,7 +169,7 @@ extension WidgetPageViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let address = walletAddress[indexPath.row]["address"] else {
+        guard let address = walletAddresses[indexPath.row]["address"] else {
             print("Cannot get wallet address.")
             return
         }
