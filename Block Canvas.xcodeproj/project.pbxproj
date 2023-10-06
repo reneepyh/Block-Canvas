@@ -245,6 +245,7 @@
 		DB0C67962AC9BB7B007C960A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				DB1C573B2ACE85AA00C203B3 /* UIImageView+Extension.swift */,
 				DBA478782AB2B29C0014E825 /* UIStoryboard+Extension.swift */,
 				DB98912E2AC0891700E41967 /* UIColor+Extension.swift */,
 				DB4422782AC2712C0038E34C /* UIFont+Extension.swift */,
@@ -258,7 +259,6 @@
 				DBB9BDBB2AB44E07002A5FBC /* KingfisherWrapper.swift */,
 				DB0FA4C62ABEB9AF00272E7A /* JGProgressHUDWrapper.swift */,
 				DBE93E252ACAC49B00ECF9E0 /* MJRefreshWrapper.swift */,
-				DB1C573B2ACE85AA00C203B3 /* UIImageView+Extension.swift */,
 			);
 			path = "Third Party Wrappers";
 			sourceTree = "<group>";

@@ -92,6 +92,8 @@ class DiscoverPageViewController: UIViewController {
         forYouButton.tintColor = .secondaryBlur
         nftSearchBar.searchTextField.backgroundColor = .tertiary
         nftSearchBar.searchTextField.textColor = .primary
+        nftSearchBar.searchTextField.clearButtonMode = .unlessEditing
+        nftSearchBar.searchTextField.autocapitalizationType = .none
         
         let navigationExtendHeight: UIEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
         navigationController?.additionalSafeAreaInsets = navigationExtendHeight
@@ -188,18 +190,29 @@ class DiscoverPageViewController: UIViewController {
             return
         }
         
-        if let url = URL(string: "https://api.reservoir.tools/search/collections/v2?name=\(keyword.lowercased())&limit=10") {
+        let formattedKeyword = keyword.replacingOccurrences(of: " ", with: "")
+        
+        if let url = URL(string: "https://api.reservoir.tools/search/collections/v2?name=\(formattedKeyword)&limit=10") {
             
             var request = URLRequest(url: url)
             request.setValue(key, forHTTPHeaderField: "X-API-KEY")
             request.httpMethod = "GET"
             
-            let session = URLSession.shared
+            let configuration = URLSessionConfiguration.default
+            configuration.timeoutIntervalForRequest = 6.0
+            configuration.timeoutIntervalForResource = 6.0
+            
+            let session = URLSession(configuration: configuration)
             
             let task = session.dataTask(with: request) { [weak self] data, response, error in
                 if let error = error {
-                    print(error)
-                    BCProgressHUD.showFailure()
+                    if (error as NSError).code == NSURLErrorTimedOut {
+                        print("Request timed out.")
+                        BCProgressHUD.showFailure(text: "Request timed out. Please try again.")
+                    } else {
+                        print(error)
+                        BCProgressHUD.showFailure()
+                    }
                     return
                 }
                 
@@ -227,6 +240,7 @@ class DiscoverPageViewController: UIViewController {
                 }
                 catch {
                     print("Error in JSON decoding.")
+                    BCProgressHUD.showFailure(text: "No NFT found.")
                 }
                 DispatchQueue.main.async { [weak self] in
                     self?.discoverCollectionView.reloadData()
@@ -237,6 +251,7 @@ class DiscoverPageViewController: UIViewController {
         }
         else {
             print("Invalid URL.")
+            BCProgressHUD.showFailure(text: "No NFT found.")
         }
     }
     
@@ -377,7 +392,7 @@ class DiscoverPageViewController: UIViewController {
             return
         }
         
-        if let url = URL(string: "https://api.reservoir.tools/search/collections/v2?name=\(collectionName)&limit=5") {
+        if let url = URL(string: "https://api.reservoir.tools/search/collections/v2?name=\(collectionName)&limit=3") {
             
             var request = URLRequest(url: url)
             request.setValue("application/json", forHTTPHeaderField: "Accept")
@@ -407,7 +422,6 @@ class DiscoverPageViewController: UIViewController {
                 
                 do {
                     let searchData = try decoder.decode(SearchNFT.self, from: data)
-                    print(searchData)
                     var nftDescription = ""
                     for searchResult in searchData.collections ?? [] {
                         if let slug = searchResult.slug {
@@ -417,7 +431,6 @@ class DiscoverPageViewController: UIViewController {
                         }
                         self?.recommendedNFTs.append(DiscoverNFT(thumbnailUri: searchResult.image ?? "", displayUri: searchResult.image ?? "", contract: searchResult.contract ?? "", title: searchResult.name, authorName: "", nftDescription: nftDescription))
                     }
-                    print(self?.recommendedNFTs)
                 }
                 catch {
                     print("Error in JSON decoding.")
@@ -546,6 +559,16 @@ extension DiscoverPageViewController {
     
     @objc func changePage(sender: UIButton) {
         let queue = DispatchQueue(label: "concurrentQueue", attributes: .concurrent)
+        nftSearchBar.text = ""
+        isSearching = false
+        searchedNFTs.removeAll()
+        DispatchQueue.main.async { [weak self] in
+            if let layout = self?.discoverCollectionView.collectionViewLayout as? WaterFallFlowLayout {
+                layout.clearCache()
+            }
+            self?.discoverCollectionView.collectionViewLayout.invalidateLayout()
+            self?.discoverCollectionView.reloadData()
+        }
         if sender.tag == 0 {
             if selectedPage == 0 { return }
             selectedPage = 0
