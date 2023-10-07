@@ -33,6 +33,7 @@
 		DB58ED932AC948B20053AAB6 /* NFTIntentExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = DB58ED792AC948B20053AAB6 /* NFTIntentExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		DB58ED9A2AC94B670053AAB6 /* NFTWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = DBF567872AB85632007BFDA1 /* NFTWidget.intentdefinition */; };
 		DB6853D12AB2F38400895EB9 /* Discover.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6853D02AB2F38400895EB9 /* Discover.swift */; };
+		DB68EBFF2AD0413F00D01B16 /* HiddenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB68EBFE2AD0413F00D01B16 /* HiddenManager.swift */; };
 		DB69818F2AB4604600BE0036 /* Portfolio.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB69818E2AB4604600BE0036 /* Portfolio.storyboard */; };
 		DB6981912AB4608100BE0036 /* AddressInputPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6981902AB4608100BE0036 /* AddressInputPageViewController.swift */; };
 		DB6981932AB4648500BE0036 /* Portfolio.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6981922AB4648500BE0036 /* Portfolio.swift */; };
@@ -44,7 +45,7 @@
 		DBA478792AB2B29C0014E825 /* BCTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA478762AB2B29C0014E825 /* BCTabBarController.swift */; };
 		DBA4787A2AB2B29C0014E825 /* Discover.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBA478772AB2B29C0014E825 /* Discover.storyboard */; };
 		DBA4787B2AB2B29C0014E825 /* UIStoryboard+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA478782AB2B29C0014E825 /* UIStoryboard+Extension.swift */; };
-		DBA57DC32ABC2F4200C1CE30 /* WatchlistManager.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DBA57DC12ABC2F4200C1CE30 /* WatchlistManager.xcdatamodeld */; };
+		DBA57DC32ABC2F4200C1CE30 /* SettingsManager.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DBA57DC12ABC2F4200C1CE30 /* SettingsManager.xcdatamodeld */; };
 		DBA57DCE2ABC32AF00C1CE30 /* WatchlistItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA57DCC2ABC32AF00C1CE30 /* WatchlistItem+CoreDataClass.swift */; };
 		DBA57DCF2ABC32AF00C1CE30 /* WatchlistItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA57DCD2ABC32AF00C1CE30 /* WatchlistItem+CoreDataProperties.swift */; };
 		DBA57DD22ABC33AB00C1CE30 /* WatchlistManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA57DD12ABC33AB00C1CE30 /* WatchlistManager.swift */; };
@@ -140,6 +141,7 @@
 		DB58ED9D2AC95FA20053AAB6 /* NFTIntentExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NFTIntentExtension.entitlements; sourceTree = "<group>"; };
 		DB6853CF2AB2ECA100895EB9 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		DB6853D02AB2F38400895EB9 /* Discover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Discover.swift; sourceTree = "<group>"; };
+		DB68EBFE2AD0413F00D01B16 /* HiddenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenManager.swift; sourceTree = "<group>"; };
 		DB69818E2AB4604600BE0036 /* Portfolio.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Portfolio.storyboard; sourceTree = "<group>"; };
 		DB6981902AB4608100BE0036 /* AddressInputPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressInputPageViewController.swift; sourceTree = "<group>"; };
 		DB6981922AB4648500BE0036 /* Portfolio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Portfolio.swift; sourceTree = "<group>"; };
@@ -305,7 +307,7 @@
 				DB1DBD2A2AB1D45B00F74B64 /* LaunchScreen.storyboard */,
 				DB1DBD2D2AB1D45B00F74B64 /* Info.plist */,
 				DB6853CF2AB2ECA100895EB9 /* Secrets.xcconfig */,
-				DBA57DC12ABC2F4200C1CE30 /* WatchlistManager.xcdatamodeld */,
+				DBA57DC12ABC2F4200C1CE30 /* SettingsManager.xcdatamodeld */,
 			);
 			path = "Block Canvas";
 			sourceTree = "<group>";
@@ -377,6 +379,7 @@
 			isa = PBXGroup;
 			children = (
 				DBA57DD12ABC33AB00C1CE30 /* WatchlistManager.swift */,
+				DB68EBFE2AD0413F00D01B16 /* HiddenManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -596,7 +599,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DBC6E31A2AC036E200B40514 /* WaterFallFlowLayout.swift in Sources */,
-				DBA57DC32ABC2F4200C1CE30 /* WatchlistManager.xcdatamodeld in Sources */,
+				DBA57DC32ABC2F4200C1CE30 /* SettingsManager.xcdatamodeld in Sources */,
 				DBA478792AB2B29C0014E825 /* BCTabBarController.swift in Sources */,
 				DB5386AD2AC2C10F0077672B /* DetailImageCell.swift in Sources */,
 				DBE3CE572AC80E2E00A85FB2 /* SettingsCell.swift in Sources */,
@@ -627,6 +630,7 @@
 				DB4BFB2F2AB6AA1300187B1C /* PortfolioDisplayView.swift in Sources */,
 				DB1C573C2ACE85AA00C203B3 /* UIImageView+Extension.swift in Sources */,
 				DB6981912AB4608100BE0036 /* AddressInputPageViewController.swift in Sources */,
+				DB68EBFF2AD0413F00D01B16 /* HiddenManager.swift in Sources */,
 				DB0864842ABC435F004598D6 /* WatchlistCell.swift in Sources */,
 				DBB9BDBC2AB44E07002A5FBC /* KingfisherWrapper.swift in Sources */,
 				DBB880322AB4B33600526E40 /* DetailPageViewController.swift in Sources */,
@@ -1036,13 +1040,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		DBA57DC12ABC2F4200C1CE30 /* WatchlistManager.xcdatamodeld */ = {
+		DBA57DC12ABC2F4200C1CE30 /* SettingsManager.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				DBA57DC22ABC2F4200C1CE30 /* WatchlistManager.xcdatamodel */,
 			);
 			currentVersion = DBA57DC22ABC2F4200C1CE30 /* WatchlistManager.xcdatamodel */;
-			path = WatchlistManager.xcdatamodeld;
+			path = SettingsManager.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

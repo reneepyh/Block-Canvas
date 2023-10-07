@@ -11,7 +11,7 @@ struct EthNFT: Codable {
     let page, pageSize: Int?
     let result: [EthNFTMetadata]?
     let status: String?
-
+    
     enum CodingKeys: String, CodingKey {
         case page
         case pageSize = "page_size"
@@ -27,19 +27,19 @@ struct EthNFTMetadata: Codable {
     let tokenURI: String?
     let metadata: String?
     var metadataObject: Metadata? {
-            get {
-                if let data = metadata?.data(using: .utf8) {
-                    return try? JSONDecoder().decode(Metadata.self, from: data)
-                }
-                return nil
+        get {
+            if let data = metadata?.data(using: .utf8) {
+                return try? JSONDecoder().decode(Metadata.self, from: data)
             }
+            return nil
         }
+    }
     let lastTokenURISync: String?
     let lastMetadataSync: String?
     let normalizedMetadata: NormalizedMetadata?
     let media: Media?
     let verifiedCollection: Bool?
-
+    
     enum CodingKeys: String, CodingKey {
         case tokenAddress = "token_address"
         case tokenID = "token_id"
@@ -75,7 +75,7 @@ struct Metadata: Codable {
 
 struct Media: Codable {
     let mediaCollection: MediaCollection?
-
+    
     enum CodingKeys: String, CodingKey {
         case mediaCollection = "media_collection"
     }
@@ -93,7 +93,7 @@ struct Size: Codable {
 struct NormalizedMetadata: Codable {
     let name, description: String?
     let image: String?
-
+    
     enum CodingKeys: String, CodingKey {
         case name, description
         case image
@@ -110,7 +110,7 @@ struct TezosNFTMetadata: Codable {
     let tokenID: String?
     let creators: [Creator]?
     let meta: Meta?
-
+    
     enum CodingKeys: String, CodingKey {
         case id, blockchain, collection, contract
         case tokenID = "tokenId"
@@ -137,17 +137,21 @@ struct Content: Codable {
     let size: Int?
     let available: Bool?
     let width, height: Int?
-
+    
     enum CodingKeys: String, CodingKey {
         case type = "@type"
         case url, representation, mimeType, size, available, width, height
     }
 }
 
-struct NFTInfoForDisplay: Codable {
+struct NFTInfoForDisplay: Codable, Equatable {
     let url: URL
     let title: String
     let artist: String
     let description: String
     let contract: String
+    
+    static func == (lhs: NFTInfoForDisplay, rhs: NFTInfoForDisplay) -> Bool {
+        return lhs.url == rhs.url && lhs.title == rhs.title && lhs.artist == rhs.artist && lhs.description == rhs.description && lhs.contract == rhs.contract
+    }
 }
