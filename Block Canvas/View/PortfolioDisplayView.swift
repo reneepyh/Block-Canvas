@@ -12,9 +12,13 @@ import Kingfisher
 
 struct PortfolioDisplay: View {
     
-    var nftInfoForDisplay: [NFTInfoForDisplay]
+    @State var nftInfoForDisplay: [NFTInfoForDisplay]
     var onARButtonTap: ((URL) -> Void)?
     @State private var selectedImageURL: URL?
+    
+    init(nfts: [NFTInfoForDisplay]) {
+        _nftInfoForDisplay = State(initialValue: nfts.filter { !HiddenManager.shared.isHiddenNFT(nft: $0) })
+    }
     
     var body: some View {
         GeometryReader { outerGeometry in
@@ -23,18 +27,33 @@ struct PortfolioDisplay: View {
                     ForEach(nftInfoForDisplay, id: \.url) { nftInfo in
                         GeometryReader { geometry in
                             VStack(alignment: .leading, spacing: 12) {
-                                Button(action: {
-                                    selectedImageURL = nftInfo.url
-                                    onARButtonTap?(nftInfo.url)
-                                }) {
-                                    HStack {
-                                        Image(systemName: "eye.fill")
-                                        Text("View in AR")
-                                            .font(.body)
+                                HStack {
+                                    Button(action: {
+                                        selectedImageURL = nftInfo.url
+                                        onARButtonTap?(nftInfo.url)
+                                    }) {
+                                        HStack {
+                                            Image(systemName: "eye.fill")
+                                            Text("View in AR")
+                                                .font(.body)
+                                        }
                                     }
+                                    .frame(width: 140, height: 16, alignment: .center)
+                                    .foregroundColor(Color(uiColor: .secondary))
+                                    
+                                    Button(action: {
+                                        withAnimation {
+                                            HiddenManager.shared.saveToHiddenNFTs(nft: nftInfo)
+                                            self.nftInfoForDisplay = self.nftInfoForDisplay.filter { !HiddenManager.shared.isHiddenNFT(nft: $0) }
+                                        }
+                                    }) {
+                                        HStack {
+                                            Image(systemName: "eye.slash.fill")
+                                        }
+                                    }
+                                    .frame(width: 140, height: 16, alignment: .center)
+                                    .foregroundColor(Color(uiColor: .secondary))
                                 }
-                                .frame(width: 140, height: 16, alignment: .center)
-                                .foregroundColor(Color(uiColor: .secondary))
                                 
                                 KFImage(nftInfo.url)
                                     .placeholder {
@@ -81,6 +100,7 @@ struct PortfolioDisplay: View {
                                             .foregroundColor(Color(uiColor: .secondary))
                                     }
                                 }
+                                .transition(.slide)
                             }
                         }
                     }

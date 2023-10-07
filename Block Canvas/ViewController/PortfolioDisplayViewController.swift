@@ -41,8 +41,9 @@ class PortfolioDisplayViewController: UIViewController {
         view.addSubview(backButton)
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         backButton.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.leading.equalToSuperview().offset(20)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(6)
+            make.leading.equalToSuperview().offset(12)
+            make.width.equalTo(16)
         }
     }
     // swiftlint: disable function_body_length
@@ -199,9 +200,10 @@ class PortfolioDisplayViewController: UIViewController {
             return
         }
         
-        let hostingController = UIHostingController(rootView: PortfolioDisplay(nftInfoForDisplay: nftInfoForDisplay, onARButtonTap: { selectedImageURL in
+        let hostingController = UIHostingController(rootView: PortfolioDisplay(nfts: nftInfoForDisplay))
+        hostingController.rootView.onARButtonTap = { selectedImageURL in
             self.viewInARButtonTapped(with: selectedImageURL)
-        }))
+        }
         
         addChild(hostingController)
         view.addSubview(hostingController.view)
