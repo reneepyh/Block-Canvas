@@ -39,10 +39,10 @@ struct EthPriceChange: Codable {
 
 struct EthGasFee: Codable {
     let status, message: String?
-    let result: Result?
+    let result: GasFeeResult?
 }
 
-struct Result: Codable {
+struct GasFeeResult: Codable {
     let lastBlock, safeGasPrice, proposeGasPrice, fastGasPrice: String?
     let suggestBaseFee, gasUsedRatio: String?
 
