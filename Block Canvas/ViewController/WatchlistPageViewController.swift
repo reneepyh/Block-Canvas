@@ -15,7 +15,7 @@ class WatchlistPageViewController: UIViewController {
     private let emptyView: UIView = {
         let view = UIView()
         let label = UILabel()
-        label.text = "You have no Watchlist items."
+        label.text = "Nothing in your watchlist yet."
         label.textColor = .secondaryBlur
         label.textAlignment = .center
         view.addSubview(label)

@@ -63,12 +63,12 @@ extension SettingsPageViewController: UITableViewDelegate, UITableViewDataSource
             settingsCell.settingsLabel.text = "Watchlist"
             return settingsCell
         } else if indexPath.row == 1 {
-            settingsCell.iconImageView.image = UIImage(systemName: "apps.iphone")?.withTintColor(.secondary, renderingMode: .alwaysOriginal)
-            settingsCell.settingsLabel.text = "Widget"
-            return settingsCell
-        } else {
             settingsCell.iconImageView.image = UIImage(systemName: "eye.slash.fill")?.withTintColor(.secondary, renderingMode: .alwaysOriginal)
             settingsCell.settingsLabel.text = "Hidden"
+            return settingsCell
+        } else {
+            settingsCell.iconImageView.image = UIImage(systemName: "apps.iphone")?.withTintColor(.secondary, renderingMode: .alwaysOriginal)
+            settingsCell.settingsLabel.text = "Widget"
             return settingsCell
         }
     }
@@ -86,16 +86,6 @@ extension SettingsPageViewController: UITableViewDelegate, UITableViewDataSource
             navigationController?.pushViewController(watchlistVC, animated: true)
         } else if indexPath.row == 1 {
             guard
-                let widgetVC = UIStoryboard.settings.instantiateViewController(
-                    withIdentifier: String(describing: WidgetPageViewController.self)
-                ) as? WidgetPageViewController
-            else {
-                return
-            }
-            widgetVC.modalPresentationStyle = .overFullScreen
-            navigationController?.pushViewController(widgetVC, animated: true)
-        } else if indexPath.row == 2 {
-            guard
                 let hiddenVC = UIStoryboard.settings.instantiateViewController(
                     withIdentifier: String(describing: HiddenPageViewController.self)
                 ) as? HiddenPageViewController
@@ -104,6 +94,16 @@ extension SettingsPageViewController: UITableViewDelegate, UITableViewDataSource
             }
             hiddenVC.modalPresentationStyle = .overFullScreen
             navigationController?.pushViewController(hiddenVC, animated: true)
+        } else if indexPath.row == 2 {
+            guard
+                let widgetVC = UIStoryboard.settings.instantiateViewController(
+                    withIdentifier: String(describing: WidgetPageViewController.self)
+                ) as? WidgetPageViewController
+            else {
+                return
+            }
+            widgetVC.modalPresentationStyle = .overFullScreen
+            navigationController?.pushViewController(widgetVC, animated: true)
         }
     }
 }

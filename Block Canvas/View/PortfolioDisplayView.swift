@@ -33,12 +33,13 @@ struct PortfolioDisplay: View {
                                         onARButtonTap?(nftInfo.url)
                                     }) {
                                         HStack {
-                                            Image(systemName: "eye.fill")
-                                            Text("View in AR")
+                                            Image(systemName: "dot.circle.viewfinder")
+                                            Text("AR")
                                                 .font(.body)
                                         }
                                     }
-                                    .frame(width: 140, height: 16, alignment: .center)
+                                    .frame(width: 200, height: 16, alignment: .leading)
+                                    .padding(.leading, 5)
                                     .foregroundColor(Color(uiColor: .secondary))
                                     
                                     Button(action: {
@@ -51,7 +52,7 @@ struct PortfolioDisplay: View {
                                             Image(systemName: "eye.slash.fill")
                                         }
                                     }
-                                    .frame(width: 140, height: 16, alignment: .center)
+                                    .frame(width: 60, height: 16, alignment: .trailing)
                                     .foregroundColor(Color(uiColor: .secondary))
                                 }
                                 

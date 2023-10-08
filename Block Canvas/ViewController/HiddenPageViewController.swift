@@ -15,7 +15,7 @@ class HiddenPageViewController: UIViewController {
     private let emptyView: UIView = {
         let view = UIView()
         let label = UILabel()
-        label.text = "You have no hidden artworks."
+        label.text = "You haven't hidden any artworks."
         label.textColor = .secondaryBlur
         label.textAlignment = .center
         view.addSubview(label)
