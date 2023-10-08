@@ -32,6 +32,7 @@
 		DB58ED7E2AC948B20053AAB6 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB58ED7D2AC948B20053AAB6 /* IntentHandler.swift */; };
 		DB58ED932AC948B20053AAB6 /* NFTIntentExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = DB58ED792AC948B20053AAB6 /* NFTIntentExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		DB58ED9A2AC94B670053AAB6 /* NFTWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = DBF567872AB85632007BFDA1 /* NFTWidget.intentdefinition */; };
+		DB6318862AD243EE00EF1121 /* HiddenPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6318852AD243EE00EF1121 /* HiddenPageViewController.swift */; };
 		DB6853D12AB2F38400895EB9 /* Discover.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6853D02AB2F38400895EB9 /* Discover.swift */; };
 		DB68EBFF2AD0413F00D01B16 /* HiddenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB68EBFE2AD0413F00D01B16 /* HiddenManager.swift */; };
 		DB69818F2AB4604600BE0036 /* Portfolio.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB69818E2AB4604600BE0036 /* Portfolio.storyboard */; };
@@ -141,6 +142,7 @@
 		DB58ED852AC948B20053AAB6 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
 		DB58ED9C2AC956B50053AAB6 /* NFTIntentExtensionRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NFTIntentExtensionRelease.entitlements; sourceTree = "<group>"; };
 		DB58ED9D2AC95FA20053AAB6 /* NFTIntentExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NFTIntentExtension.entitlements; sourceTree = "<group>"; };
+		DB6318852AD243EE00EF1121 /* HiddenPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenPageViewController.swift; sourceTree = "<group>"; };
 		DB6853CF2AB2ECA100895EB9 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		DB6853D02AB2F38400895EB9 /* Discover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Discover.swift; sourceTree = "<group>"; };
 		DB68EBFE2AD0413F00D01B16 /* HiddenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenManager.swift; sourceTree = "<group>"; };
@@ -375,6 +377,7 @@
 				DBAACF112AC96D0B001C7E76 /* WidgetPageViewController.swift */,
 				DB0C67942AC9B892007C960A /* WidgetWalletSelectedViewController.swift */,
 				DBC2CDDF2ACC3BEA0000974B /* LaunchAnimationViewController.swift */,
+				DB6318852AD243EE00EF1121 /* HiddenPageViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -639,6 +642,7 @@
 				DB6981912AB4608100BE0036 /* AddressInputPageViewController.swift in Sources */,
 				DB68EBFF2AD0413F00D01B16 /* HiddenManager.swift in Sources */,
 				DB0864842ABC435F004598D6 /* WatchlistCell.swift in Sources */,
+				DB6318862AD243EE00EF1121 /* HiddenPageViewController.swift in Sources */,
 				DBB9BDBC2AB44E07002A5FBC /* KingfisherWrapper.swift in Sources */,
 				DBB880322AB4B33600526E40 /* DetailPageViewController.swift in Sources */,
 				DB0FA4C72ABEB9AF00272E7A /* JGProgressHUDWrapper.swift in Sources */,

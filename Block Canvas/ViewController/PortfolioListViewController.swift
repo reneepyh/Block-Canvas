@@ -11,6 +11,20 @@ import UIKit
 class PortfolioListViewController: UIViewController {
     @IBOutlet weak var portfolioListTableView: UITableView!
     
+    private let emptyView: UIView = {
+        let view = UIView()
+        let label = UILabel()
+        label.text = "Tap plus button to add wallet."
+        label.textColor = .secondaryBlur
+        label.textAlignment = .center
+        view.addSubview(label)
+        label.snp.makeConstraints { make in
+            make.centerX.equalTo(view.snp.centerX)
+            make.centerY.equalTo(view.snp.centerY)
+        }
+        return view
+    }()
+    
     private let userDefaults = UserDefaults.standard
     
     private var walletAddresses: [[String: String]] = []
@@ -56,6 +70,12 @@ class PortfolioListViewController: UIViewController {
         let navigationExtendHeight: UIEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
         navigationController?.additionalSafeAreaInsets = navigationExtendHeight
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "", image: UIImage(systemName: "plus.circle.fill")?.withTintColor(.secondary, renderingMode: .alwaysOriginal), target: self, action: #selector(addWallet))
+        // 如不內建demo錢包，加入以下empty view
+//        view.addSubview(emptyView)
+//        emptyView.snp.makeConstraints { make in
+//            make.centerX.equalTo(view.snp.centerX)
+//            make.centerY.equalTo(view.snp.centerY)
+//        }
     }
     
     private func fetchWallets() {
@@ -79,6 +99,7 @@ class PortfolioListViewController: UIViewController {
         //            navigationController?.pushViewController(addressInputVC, animated: false)
         //            addressInputVC.navigationItem.hidesBackButton = true
         //        }
+        // emptyView.isHidden = !walletAddresses.isEmpty
     }
     
     private func fetchWalletBalance(address: String) {
@@ -216,6 +237,8 @@ extension PortfolioListViewController: UITableViewDelegate, UITableViewDataSourc
             self?.walletAddresses.remove(at: indexPath.row)
             self?.userDefaults.set(self?.walletAddresses, forKey: "walletAddress")
             self?.portfolioListTableView.deleteRows(at: [indexPath], with: .left)
+            // 如不內建demo錢包，加入以下empty view
+            // emptyView.isHidden = !walletAddresses.isEmpty
         }
         delete.backgroundColor = .systemPink
         delete.image = UIImage(systemName: "trash")

@@ -12,6 +12,20 @@ class WatchlistPageViewController: UIViewController {
     
     private var watchlistNFTs: [DiscoverNFT] = []
     
+    private let emptyView: UIView = {
+        let view = UIView()
+        let label = UILabel()
+        label.text = "Nothing in your watchlist yet."
+        label.textColor = .secondaryBlur
+        label.textAlignment = .center
+        view.addSubview(label)
+        label.snp.makeConstraints { make in
+            make.centerX.equalTo(view.snp.centerX)
+            make.centerY.equalTo(view.snp.centerY)
+        }
+        return view
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -30,6 +44,12 @@ class WatchlistPageViewController: UIViewController {
         let navigationExtendHeight: UIEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
         navigationController?.additionalSafeAreaInsets = navigationExtendHeight
         tabBarController?.tabBar.isHidden = true
+        
+        view.addSubview(emptyView)
+        emptyView.snp.makeConstraints { make in
+            make.centerX.equalTo(view.snp.centerX)
+            make.centerY.equalTo(view.snp.centerY)
+        }
     }
     
     private func fetchWatchlist() {
@@ -37,6 +57,7 @@ class WatchlistPageViewController: UIViewController {
             watchlistNFTs = fetchedWatchlistItems.map({ managedObject in
                 return DiscoverNFT(thumbnailUri: managedObject.value(forKey: "thumbnailUri") as? String ?? "", displayUri: managedObject.value(forKey: "displayUri") as? String ?? "", contract: managedObject.value(forKey: "contract") as? String ?? "", title: managedObject.value(forKey: "title") as? String, authorName: managedObject.value(forKey: "authorName") as? String, nftDescription: managedObject.value(forKey: "nftDescription") as? String)
             })
+            emptyView.isHidden = !watchlistNFTs.isEmpty
             watchlistCollectionView.reloadData()
         }
     }
@@ -51,6 +72,8 @@ extension WatchlistPageViewController: UICollectionViewDelegateFlowLayout, UICol
         guard let watchlistCell = collectionView.dequeueReusableCell(withReuseIdentifier: WatchlistCell.reuseIdentifier, for: indexPath) as? WatchlistCell else {
             fatalError("Cell cannot be created")
         }
+        watchlistCell.hiddenOverlay.isHidden = true
+        watchlistCell.hiddenImageView.isHidden = true
         watchlistCell.imageView.loadImage(watchlistNFTs[indexPath.row].thumbnailUri, placeHolder: UIImage(named: "placeholder"))
         watchlistCell.imageView.contentMode = .scaleAspectFill
         
@@ -87,5 +110,6 @@ extension WatchlistPageViewController: DetailPageViewControllerDelegate {
         WatchlistManager.shared.deleteWatchlistItem(with: nftToDelete.displayUri)
         watchlistNFTs.remove(at: indexPath.row)
         watchlistCollectionView.deleteItems(at: [indexPath])
+        emptyView.isHidden = !watchlistNFTs.isEmpty
     }
 }
