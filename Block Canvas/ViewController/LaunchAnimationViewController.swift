@@ -41,7 +41,7 @@ class LaunchAnimationViewController: UIViewController {
     private func setupAnimation() {
         imageView.loadGif(asset: "launch")
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             guard let mainVC = UIStoryboard.main.instantiateViewController(
                 withIdentifier: String(describing: BCTabBarController.self)
             ) as? BCTabBarController

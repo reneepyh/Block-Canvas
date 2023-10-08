@@ -6,7 +6,7 @@
 //
 
 import UIKit
-// swiftlint: disable type_body_length
+
 class DiscoverPageViewController: UIViewController {
     @IBOutlet weak var discoverCollectionView: UICollectionView!
     
@@ -51,6 +51,8 @@ class DiscoverPageViewController: UIViewController {
     private var recommendationCache: [DiscoverNFT]?
     
     private let group = DispatchGroup()
+    
+    private let apiService = DiscoverAPIService()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -113,67 +115,19 @@ class DiscoverPageViewController: UIViewController {
             self?.discoverCollectionView.reloadData()
         }
         BCProgressHUD.show()
-        let group = DispatchGroup()
-        func fetchToken() {
-            group.enter()
-            let url = URL(string: "https://api.fxhash.xyz/graphql")!
-            var request = URLRequest(url: url)
-            request.httpMethod = "POST"
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            
-            let query = """
-            {
-               randomTopGenerativeToken {
-                  author {
-                    name
-                  }
-                  gentkContractAddress
-                  issuerContractAddress
-                  metadata
-                }
-            }
-            """
-            
-            let json: [String: Any] = ["query": query]
-            let jsonData = try? JSONSerialization.data(withJSONObject: json)
-            
-            request.httpBody = jsonData
-            
-            let task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
-                defer {
-                    group.leave()
-                }
-                guard let data = data else { return }
-                do {
-                    let decoder = JSONDecoder()
-                    let root = try decoder.decode(Root.self, from: data)
-                    if self?.trendingNFTs.contains(where: { $0.title == root.data.randomTopGenerativeToken.metadata.name }) == true {
-                        fetchToken()
-                        return
-                    }
-                    
-                    let contract = root.data.randomTopGenerativeToken.gentkContractAddress
-                    let thumbnailURL = self?.generativeLiveDisplayUrl(uri: root.data.randomTopGenerativeToken.metadata.thumbnailUri)
-                    let displayURL = self?.generativeLiveDisplayUrl(uri: root.data.randomTopGenerativeToken.metadata.displayUri)
-                    let authorName = root.data.randomTopGenerativeToken.author?.name ?? " "
-                    let title = root.data.randomTopGenerativeToken.metadata.name
-                    let description = root.data.randomTopGenerativeToken.metadata.description
-                    self?.trendingNFTs.append(DiscoverNFT(thumbnailUri: thumbnailURL ?? "", displayUri: displayURL ?? "", contract: contract, title: title, authorName: authorName, nftDescription: description))
-                } catch {
-                    print("Error: \(error)")
-                }
-            }
-            task.resume()
-        }
-        for _ in 0..<10 {
-            fetchToken()
-        }
         
-        group.notify(queue: .main) { [weak self] in
-            self?.discoverCollectionView.reloadData()
-            self?.discoverCollectionView.endHeaderRefreshing()
-            BCProgressHUD.dismiss()
-        }
+        apiService.getTrending { [weak self] result in
+                switch result {
+                case .success(let fetchedTrendingNFTs):
+                    self?.trendingNFTs = fetchedTrendingNFTs
+                    self?.discoverCollectionView.reloadData()
+                    self?.discoverCollectionView.endHeaderRefreshing()
+                    BCProgressHUD.dismiss()
+                case .failure(let error):
+                    print("Error: \(error)")
+                    BCProgressHUD.dismiss()
+                }
+            }
     }
     
     private func fetchRecommendationInBackground() {
@@ -184,75 +138,21 @@ class DiscoverPageViewController: UIViewController {
     
     private func searchNFT(keyword: String) {
         BCProgressHUD.show(text: "Searching")
-        let apiKey = Bundle.main.object(forInfoDictionaryKey: "Reservoir_API_Key") as? String
-        
-        guard let key = apiKey, !key.isEmpty else {
-            print("Reservoir API Key does not exist.")
-            return
-        }
-        
-        let formattedKeyword = keyword.replacingOccurrences(of: " ", with: "")
-        
-        if let url = URL(string: "https://api.reservoir.tools/search/collections/v2?name=\(formattedKeyword)&limit=10") {
-            
-            var request = URLRequest(url: url)
-            request.setValue(key, forHTTPHeaderField: "X-API-KEY")
-            request.httpMethod = "GET"
-            
-            let configuration = URLSessionConfiguration.default
-            configuration.timeoutIntervalForRequest = 6.0
-            configuration.timeoutIntervalForResource = 6.0
-            
-            let session = URLSession(configuration: configuration)
-            
-            let task = session.dataTask(with: request) { [weak self] data, response, error in
-                if let error = error {
-                    if (error as NSError).code == NSURLErrorTimedOut {
-                        print("Request timed out.")
-                        BCProgressHUD.showFailure(text: "Request timed out. Please try again.")
-                    } else {
-                        print(error)
-                        BCProgressHUD.showFailure()
-                    }
-                    return
-                }
-                
-                guard let data = data else {
-                    print("No data.")
-                    BCProgressHUD.showFailure(text: "No NFT found.")
-                    return
-                }
-                
-                let decoder = JSONDecoder()
-                
-                do {
-                    let searchData = try decoder.decode(SearchNFT.self, from: data)
-                    print(searchData)
-                    var nftDescription = ""
-                    for searchResult in searchData.collections ?? [] {
-                        if let slug = searchResult.slug {
-                            nftDescription = "https://opensea.io/collection/\(slug)"
-                        } else {
-                            nftDescription = ""
-                        }
-                        self?.searchedNFTs.append(DiscoverNFT(thumbnailUri: searchResult.image ?? "", displayUri: searchResult.image ?? "", contract: searchResult.contract ?? "", title: searchResult.name, authorName: "", nftDescription: nftDescription))
-                    }
-                    print(self?.searchedNFTs)
-                }
-                catch {
-                    print("Error in JSON decoding.")
-                    BCProgressHUD.showFailure(text: "No NFT found.")
-                }
-                DispatchQueue.main.async { [weak self] in
+        apiService.searchNFT(keyword: keyword) { [weak self] result in
+            switch result {
+            case .success(let nfts):
+                self?.searchedNFTs = nfts
+                DispatchQueue.main.async {
                     self?.discoverCollectionView.reloadData()
                 }
                 BCProgressHUD.dismiss()
+            case .failure(let error):
+                if (error as NSError).code == NSURLErrorTimedOut {
+                    BCProgressHUD.showFailure(text: "Request timed out. Please try again.")
+                } else {
+                    BCProgressHUD.showFailure(text: "No NFT found.")
+                }
             }
-            task.resume()
-        }
-        else {
-            print("Invalid URL.")
-            BCProgressHUD.showFailure(text: "No NFT found.")
         }
     }
     
@@ -541,13 +441,6 @@ extension DiscoverPageViewController: UISearchBarDelegate {
 }
 
 extension DiscoverPageViewController {
-    private func generativeLiveDisplayUrl(uri: String) -> String {
-        let gateway = "https://gateway.fxhash.xyz/ipfs/"
-        let startIndex = uri.index(uri.startIndex, offsetBy: 7)
-        let newUri = String(uri[startIndex...])
-        return gateway + newUri
-    }
-    
     private func setupButtonTag() {
         let buttons = buttonStackView.subviews
         for (index, button) in buttons.enumerated() {
