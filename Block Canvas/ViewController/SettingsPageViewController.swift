@@ -49,7 +49,7 @@ class SettingsPageViewController: UIViewController {
 
 extension SettingsPageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        2
+        3
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -62,9 +62,13 @@ extension SettingsPageViewController: UITableViewDelegate, UITableViewDataSource
             settingsCell.iconImageView.image = UIImage(systemName: "heart.fill")?.withTintColor(.secondary, renderingMode: .alwaysOriginal)
             settingsCell.settingsLabel.text = "Watchlist"
             return settingsCell
-        } else {
+        } else if indexPath.row == 1 {
             settingsCell.iconImageView.image = UIImage(systemName: "apps.iphone")?.withTintColor(.secondary, renderingMode: .alwaysOriginal)
             settingsCell.settingsLabel.text = "Widget"
+            return settingsCell
+        } else {
+            settingsCell.iconImageView.image = UIImage(systemName: "eye.slash.fill")?.withTintColor(.secondary, renderingMode: .alwaysOriginal)
+            settingsCell.settingsLabel.text = "Hidden"
             return settingsCell
         }
     }
@@ -90,6 +94,16 @@ extension SettingsPageViewController: UITableViewDelegate, UITableViewDataSource
             }
             widgetVC.modalPresentationStyle = .overFullScreen
             navigationController?.pushViewController(widgetVC, animated: true)
+        } else if indexPath.row == 2 {
+            guard
+                let hiddenVC = UIStoryboard.settings.instantiateViewController(
+                    withIdentifier: String(describing: HiddenPageViewController.self)
+                ) as? HiddenPageViewController
+            else {
+                return
+            }
+            hiddenVC.modalPresentationStyle = .overFullScreen
+            navigationController?.pushViewController(hiddenVC, animated: true)
         }
     }
 }

@@ -113,6 +113,52 @@
             </objects>
             <point key="canvasLocation" x="4798" y="-27"/>
         </scene>
+        <!--Hidden Page View Controller-->
+        <scene sceneID="Eqy-jG-ldA">
+            <objects>
+                <viewController storyboardIdentifier="HiddenPageViewController" id="vqF-Ll-y8A" customClass="HiddenPageViewController" customModule="Block_Canvas" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="WA7-VO-gOn">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="mbn-gR-xki">
+                                <rect key="frame" x="0.0" y="139" width="393" height="679"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="UYU-Cc-lSY">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="WatchlistCell" id="TOK-vS-WH6" customClass="WatchlistCell" customModule="Block_Canvas" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="bMy-HT-Krg">
+                                            <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="gB6-Tr-2x5"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="mbn-gR-xki" firstAttribute="leading" secondItem="WA7-VO-gOn" secondAttribute="leading" id="XCA-kc-BlS"/>
+                            <constraint firstItem="mbn-gR-xki" firstAttribute="top" secondItem="gB6-Tr-2x5" secondAttribute="top" constant="80" id="miz-HI-WYm"/>
+                            <constraint firstAttribute="trailing" secondItem="mbn-gR-xki" secondAttribute="trailing" id="vfS-RY-KMq"/>
+                            <constraint firstItem="gB6-Tr-2x5" firstAttribute="bottom" secondItem="mbn-gR-xki" secondAttribute="bottom" id="ymo-MS-eoN"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="hiddenCollectionView" destination="mbn-gR-xki" id="iKF-qi-J9Z"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KZw-VL-rpQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2943" y="704"/>
+        </scene>
         <!--settings.-->
         <scene sceneID="7QQ-Ss-VzJ">
             <objects>
