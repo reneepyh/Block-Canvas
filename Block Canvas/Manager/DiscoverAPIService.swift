@@ -83,7 +83,7 @@ class DiscoverAPIService {
         }
     }
     
-    func searchNFT(keyword: String, completion: @escaping (Result<[DiscoverNFT], Error>) -> Void) {
+    func searchNFT(keyword: String, offset: Int, completion: @escaping (Result<[DiscoverNFT], Error>) -> Void) {
         let apiKey = Bundle.main.object(forInfoDictionaryKey: "Reservoir_API_Key") as? String
         
         guard let key = apiKey, !key.isEmpty else {
@@ -93,8 +93,8 @@ class DiscoverAPIService {
         
         let formattedKeyword = keyword.replacingOccurrences(of: " ", with: "")
         
-        if let url = URL(string: "https://api.reservoir.tools/search/collections/v2?name=\(formattedKeyword)&limit=10") {
-            
+        if let url = URL(string: "https://api.reservoir.tools/search/collections/v2?name=\(formattedKeyword)&limit=10&offset=\(offset)") {
+            print(url)
             var request = URLRequest(url: url)
             request.setValue(key, forHTTPHeaderField: "X-API-KEY")
             request.httpMethod = "GET"

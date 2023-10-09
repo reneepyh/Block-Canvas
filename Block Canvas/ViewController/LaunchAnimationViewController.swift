@@ -48,8 +48,14 @@ class LaunchAnimationViewController: UIViewController {
             else {
                 return
             }
-            UIApplication.shared.windows.first?.rootViewController = mainVC
-            UIApplication.shared.windows.first?.makeKeyAndVisible()
+            
+            guard let firstScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
+                return
+            }
+            guard let firstWindow = firstScene.windows.first else {
+                return
+            }
+            firstWindow.rootViewController = mainVC
         }
     }
 }
