@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  DiscoverPageViewController.swift
 //  Block Canvas
 //
 //  Created by Renee Hsu on 2023/9/13.
@@ -42,8 +42,6 @@ class DiscoverPageViewController: UIViewController {
     
     private var currentOffset: Int = 0
     
-    private let semaphore = DispatchSemaphore(value: 0)
-    
     private var recommendedResponse: String?
     
     private var recommendedCollections: [String] = []
@@ -51,8 +49,6 @@ class DiscoverPageViewController: UIViewController {
     private var recommendedNFTs: [DiscoverNFT] = []
     
     private var recommendationCache: [DiscoverNFT]?
-    
-    private let group = DispatchGroup()
     
     private let apiService = DiscoverAPIService()
     
@@ -224,20 +220,22 @@ class DiscoverPageViewController: UIViewController {
         searchedNFTs.removeAll()
         recommendedNFTs.removeAll()
         
-        getRecommendationFromGPT()
-        semaphore.wait()
-        
-        self.formatCollectionName()
-        
-        for collection in recommendedCollections {
-            group.enter()
-            self.getRecommendedNFTs(collectionName: collection)
-        }
-        
-        group.notify(queue: .main) { [weak self] in
-            self?.recommendationCache = self?.recommendedNFTs
-            if !isBackground {
-                self?.updateRecommendationUI()
+        getRecommendationFromGPT { [weak self] in
+            self?.formatCollectionName()
+            let group = DispatchGroup()
+            
+            for collection in self?.recommendedCollections ?? [] {
+                group.enter()
+                self?.getRecommendedNFTs(collectionName: collection) {
+                    group.leave()
+                }
+            }
+            
+            group.notify(queue: .main) { [weak self] in
+                self?.recommendationCache = self?.recommendedNFTs
+                if !isBackground {
+                    self?.updateRecommendationUI()
+                }
             }
         }
     }
@@ -254,7 +252,7 @@ class DiscoverPageViewController: UIViewController {
         }
     }
     
-    private func getRecommendationFromGPT() {
+    private func getRecommendationFromGPT(completion: @escaping () -> Void) {
         let apiKey = Bundle.main.object(forInfoDictionaryKey: "OpenAI_API_Key") as? String
         
         guard let key = apiKey, !key.isEmpty else {
@@ -323,7 +321,7 @@ class DiscoverPageViewController: UIViewController {
                     print("Error when post request to GPT API:\(error)")
                     
                 }
-                self?.semaphore.signal()
+                completion()
             }.resume()
         }
         else {
@@ -348,7 +346,7 @@ class DiscoverPageViewController: UIViewController {
         print(recommendedCollections)
     }
     
-    private func getRecommendedNFTs(collectionName: String) {
+    private func getRecommendedNFTs(collectionName: String, completion: @escaping () -> Void) {
         let apiKey = Bundle.main.object(forInfoDictionaryKey: "Reservoir_API_Key") as? String
         
         guard let key = apiKey, !key.isEmpty else {
@@ -370,7 +368,6 @@ class DiscoverPageViewController: UIViewController {
             let session = URLSession(configuration: configuration)
             
             let task = session.dataTask(with: request) { [weak self] data, response, error in
-                defer { self?.group.leave() }
                 
                 if let error = error {
                     print(error)
@@ -399,6 +396,7 @@ class DiscoverPageViewController: UIViewController {
                 catch {
                     print("Error in JSON decoding.")
                 }
+                completion()
             }
             task.resume()
         }

@@ -138,6 +138,8 @@ class DiscoverAPIService {
             completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL."])))
         }
     }
+    
+    
 }
 
 extension DiscoverAPIService {
