@@ -30,8 +30,6 @@ class DiscoverPageViewController: UIViewController {
     
     private let userDefaults = UserDefaults.standard
     
-    private var openAIBody: OpenAIBody?
-    
     private var userNFTs: [String] = []
     
     private var trendingNFTs: [DiscoverNFT] = []
@@ -41,8 +39,6 @@ class DiscoverPageViewController: UIViewController {
     private var isSearching: Bool = false
     
     private var currentOffset: Int = 0
-    
-    private var recommendedResponse: String?
     
     private var recommendedCollections: [String] = []
     
@@ -220,13 +216,21 @@ class DiscoverPageViewController: UIViewController {
         searchedNFTs.removeAll()
         recommendedNFTs.removeAll()
         
-        getRecommendationFromGPT { [weak self] in
-            self?.formatCollectionName()
+        apiService.getRecommendationFromGPT(userNFTs: userNFTs) { [weak self] recommendedCollections, error in
+            guard let self = self else { return }
+            
+            if let error = error {
+                print("Error fetching recommendation: \(error.localizedDescription)")
+                return
+            }
+            
+            self.recommendedCollections = recommendedCollections ?? []
+            
             let group = DispatchGroup()
             
-            for collection in self?.recommendedCollections ?? [] {
+            for collection in self.recommendedCollections ?? [] {
                 group.enter()
-                self?.getRecommendedNFTs(collectionName: collection) {
+                self.getRecommendedNFTs(collectionName: collection) {
                     group.leave()
                 }
             }
@@ -252,156 +256,15 @@ class DiscoverPageViewController: UIViewController {
         }
     }
     
-    private func getRecommendationFromGPT(completion: @escaping () -> Void) {
-        let apiKey = Bundle.main.object(forInfoDictionaryKey: "OpenAI_API_Key") as? String
-        
-        guard let key = apiKey, !key.isEmpty else {
-            print("OpenAI API key does not exist.")
-            return
-        }
-        
-        if let url = URL(string: "https://api.openai.com/v1/chat/completions") {
-            var request = URLRequest(url: url)
-            request.setValue("application/json",
-                             forHTTPHeaderField: "Content-Type")
-            request.setValue("Bearer \(key)",
-                             forHTTPHeaderField: "Authorization")
-            if userNFTs.isEmpty {
-                openAIBody = OpenAIBody(messages: [
-                    ["role": "user", "content": """
-               Please suggest art NFT collections. Suggest NFT collections should be on Ethereum blockchain. Please suggest 5 NFT collections. Provide only the collection names in bullet pointsc (not numbered lists) and not any other responses. Please do not mention the artist's name. Please do not include double quotes for the response. Please also do not include symbols such as colon, semicolon or dash.
-               """]
-                ])
-                
-            } else {
-                var randomNFTs: [String] = []
-                randomNFTs.append(userNFTs.randomElement() ?? "")
-                randomNFTs.append(userNFTs.randomElement() ?? "")
-                randomNFTs.append(userNFTs.randomElement() ?? "")
-                print(randomNFTs)
-                
-                openAIBody = OpenAIBody(messages: [
-                    ["role": "user", "content": """
-               Generate recommendations for NFT collections similar to the following:
-               
-               Collection Name: \(randomNFTs)
-               Hosted blockchain: Ethereum
-               
-               Please suggest NFT collections that share similarities with the provided collection. Suggest NFT collections should be on Ethereum blockchain. Please suggest 5 NFT collections. Provide only the collection names in bullet pointsc (not numbered lists) and not any other responses. Please do not mention the artist's name. Please do not include double quotes for the response. Please also do not include symbols such as colon, semicolon or dash.
-               """]
-                ])
-            }
-            
-            request.httpBody = try? JSONEncoder().encode(openAIBody)
-            request.httpMethod = "POST"
-            
-            if let postData = try? JSONEncoder().encode(openAIBody) {
-                if let jsonString = String(data: postData, encoding: .utf8) {
-                    print("Request JSON: \(jsonString)")
-                }
-                request.httpBody = postData
-            } else {
-                print("Failed to encode the JSON data")
-            }
-            
-            URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
-                if let data = data {
-                    do {
-                        let data = try JSONDecoder().decode(OpenAIResponse.self, from: data)
-                        self?.recommendedResponse = data.choices?[0].message?.content
-                        print("response: \(self?.recommendedResponse)")
-                    } catch {
-                        print(error.localizedDescription)
-                    }
-                }
-                if let httpResponse = response as? HTTPURLResponse {
-                    print("HTTP Status Code: \(httpResponse.statusCode)")
-                }
-                if let error = error {
-                    print("Error when post request to GPT API:\(error)")
-                    
-                }
-                completion()
-            }.resume()
-        }
-        else {
-            print("Invalid URL.")
-        }
-    }
-    
-    private func formatCollectionName() {
-        guard let recommendedResponse = recommendedResponse else {
-            print("No response from GPT.")
-            return
-        }
-        self.recommendedCollections = recommendedResponse.split(separator: "\n").map { line -> String in
-            let trimmedLine = line.trimmingCharacters(in: .whitespacesAndNewlines)
-            if trimmedLine.hasPrefix("-") {
-                let collectionName = String(trimmedLine.dropFirst().trimmingCharacters(in: .whitespaces))
-                return collectionName.replacingOccurrences(of: " ", with: "")
-            } else {
-                return trimmedLine.replacingOccurrences(of: " ", with: "")
-            }
-        }
-        print(recommendedCollections)
-    }
-    
     private func getRecommendedNFTs(collectionName: String, completion: @escaping () -> Void) {
-        let apiKey = Bundle.main.object(forInfoDictionaryKey: "Reservoir_API_Key") as? String
-        
-        guard let key = apiKey, !key.isEmpty else {
-            print("Reservoir API Key does not exist.")
-            return
-        }
-        
-        if let url = URL(string: "https://api.reservoir.tools/search/collections/v2?name=\(collectionName)&limit=3") {
-            
-            var request = URLRequest(url: url)
-            request.setValue("application/json", forHTTPHeaderField: "Accept")
-            request.setValue(key, forHTTPHeaderField: "Authorization")
-            request.httpMethod = "GET"
-            
-            let configuration = URLSessionConfiguration.default
-            configuration.timeoutIntervalForRequest = 4.0
-            configuration.timeoutIntervalForResource = 4.0
-            
-            let session = URLSession(configuration: configuration)
-            
-            let task = session.dataTask(with: request) { [weak self] data, response, error in
-                
-                if let error = error {
-                    print(error)
-                    return
-                }
-                
-                guard let data = data else {
-                    print("No data.")
-                    return
-                }
-                
-                let decoder = JSONDecoder()
-                
-                do {
-                    let searchData = try decoder.decode(SearchNFT.self, from: data)
-                    var nftDescription = ""
-                    for searchResult in searchData.collections ?? [] {
-                        if let slug = searchResult.slug {
-                            nftDescription = "https://opensea.io/collection/\(slug)"
-                        } else {
-                            nftDescription = ""
-                        }
-                        self?.recommendedNFTs.append(DiscoverNFT(thumbnailUri: searchResult.image ?? "", displayUri: searchResult.image ?? "", contract: searchResult.contract ?? "", title: searchResult.name, authorName: "", nftDescription: nftDescription))
-                    }
-                }
-                catch {
-                    print("Error in JSON decoding.")
-                }
-                completion()
+        apiService.getRecommendedNFTs(collectionName: collectionName) { [weak self] recommendedNFTs, error in
+            if let error = error {
+                print("Error fetching recommended NFTs: \(error.localizedDescription)")
+                return
             }
-            task.resume()
-        }
-        else {
-            print("Invalid URL.")
+            
+            self?.recommendedNFTs.append(contentsOf: recommendedNFTs ?? [])
+            completion()
         }
     }
     
