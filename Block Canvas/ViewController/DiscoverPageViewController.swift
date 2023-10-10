@@ -93,7 +93,7 @@ class DiscoverPageViewController: UIViewController {
                 guard let keyword = self.nftSearchBar.text else {
                     return
                 }
-                self.apiService.searchNFT(keyword: keyword, offset: self.currentOffset ?? 0) { result in
+                self.apiService.searchNFT(keyword: keyword, offset: self.currentOffset) { result in
                     switch result {
                         case .success(let newNFTs):
                             self.searchedNFTs.append(contentsOf: newNFTs)
@@ -216,30 +216,30 @@ class DiscoverPageViewController: UIViewController {
         searchedNFTs.removeAll()
         recommendedNFTs.removeAll()
         
-        apiService.getRecommendationFromGPT(userNFTs: userNFTs) { [weak self] recommendedCollections, error in
+        apiService.getRecommendationFromGPT(userNFTs: userNFTs) { [weak self] result in
             guard let self = self else { return }
             
-            if let error = error {
-                print("Error fetching recommendation: \(error.localizedDescription)")
-                return
-            }
-            
-            self.recommendedCollections = recommendedCollections ?? []
-            
-            let group = DispatchGroup()
-            
-            for collection in self.recommendedCollections ?? [] {
-                group.enter()
-                self.getRecommendedNFTs(collectionName: collection) {
-                    group.leave()
-                }
-            }
-            
-            group.notify(queue: .main) { [weak self] in
-                self?.recommendationCache = self?.recommendedNFTs
-                if !isBackground {
-                    self?.updateRecommendationUI()
-                }
+            switch result {
+                case .success(let recommendedCollections):
+                    self.recommendedCollections = recommendedCollections
+                    
+                    let group = DispatchGroup()
+                    
+                    for collection in self.recommendedCollections {
+                        group.enter()
+                        self.getRecommendedNFTs(collectionName: collection) {
+                            group.leave()
+                        }
+                    }
+                    
+                    group.notify(queue: .main) { [weak self] in
+                        self?.recommendationCache = self?.recommendedNFTs
+                        if !isBackground {
+                            self?.updateRecommendationUI()
+                        }
+                    }
+                case .failure(let error):
+                    print("Error fetching recommendation: \(error.localizedDescription)")
             }
         }
     }
@@ -257,13 +257,16 @@ class DiscoverPageViewController: UIViewController {
     }
     
     private func getRecommendedNFTs(collectionName: String, completion: @escaping () -> Void) {
-        apiService.getRecommendedNFTs(collectionName: collectionName) { [weak self] recommendedNFTs, error in
-            if let error = error {
-                print("Error fetching recommended NFTs: \(error.localizedDescription)")
-                return
-            }
+        apiService.getRecommendedNFTs(collectionName: collectionName) { [weak self] result in
+            guard let self = self else { return }
             
-            self?.recommendedNFTs.append(contentsOf: recommendedNFTs ?? [])
+            switch result {
+                case .success(let recommendedNFTs):
+                    self.recommendedNFTs.append(contentsOf: recommendedNFTs)
+                    
+                case.failure(let error):
+                    print("Error fetching recommended NFTs: \(error.localizedDescription)")
+            }
             completion()
         }
     }

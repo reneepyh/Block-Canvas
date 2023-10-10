@@ -139,11 +139,11 @@ class DiscoverAPIService {
         }
     }
     
-    func getRecommendationFromGPT(userNFTs: [String], completion: @escaping ([String]?, Error?) -> Void) {
+    func getRecommendationFromGPT(userNFTs: [String], completion: @escaping (Result<[String], Error>) -> Void) {
         let apiKey = Bundle.main.object(forInfoDictionaryKey: "OpenAI_API_Key") as? String
         
         guard let key = apiKey, !key.isEmpty else {
-            completion(nil, NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "OpenAI API key does not exist."]))
+            completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "OpenAI API key does not exist."])))
             return
         }
         
@@ -208,27 +208,27 @@ class DiscoverAPIService {
                                 return trimmedLine.replacingOccurrences(of: " ", with: "")
                             }
                         }
-                        completion(recommendedCollections, nil)
+                        completion(.success(recommendedCollections ?? []))
                     } catch {
-                        completion(nil, error)
+                        completion(.failure(error))
                     }
                 } else if let error = error {
-                    completion(nil, error)
+                    completion(.failure(error))
                 } else {
-                    completion(nil, NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Unknown error."]))
+                    completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Unknown error."])))
                 }
             }.resume()
         }
         else {
-            completion(nil, NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL."]))
+            completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL."])))
         }
     }
     
-    func getRecommendedNFTs(collectionName: String, completion: @escaping ([DiscoverNFT]?, Error?) -> Void) {
+    func getRecommendedNFTs(collectionName: String, completion: @escaping (Result<[DiscoverNFT], Error>) -> Void) {
         let apiKey = Bundle.main.object(forInfoDictionaryKey: "Reservoir_API_Key") as? String
         
         guard let key = apiKey, !key.isEmpty else {
-            print("Reservoir API Key does not exist.")
+            completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Reservoir API Key does not exist."])))
             return
         }
         
@@ -248,12 +248,12 @@ class DiscoverAPIService {
             let task = session.dataTask(with: request) { [weak self] data, response, error in
                 
                 if let error = error {
-                    completion(nil, error)
+                    completion(.failure(error))
                     return
                 }
                 
                 guard let data = data else {
-                    completion(nil, NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No data."]))
+                    completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No data."])))
                     return
                 }
                 
@@ -273,16 +273,16 @@ class DiscoverAPIService {
                             recommendedNFTs.append(DiscoverNFT(thumbnailUri: image, displayUri: image, contract: searchResult.contract ?? "", title: searchResult.name, authorName: "", nftDescription: nftDescription))
                         }
                     }
-                    completion(recommendedNFTs, nil)
+                    completion(.success(recommendedNFTs))
                 }
                 catch {
-                    completion(nil, error)
+                    completion(.failure(error))
                 }
             }
             task.resume()
         }
         else {
-            completion(nil, NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL."]))
+            completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL."])))
         }
     }
 }
