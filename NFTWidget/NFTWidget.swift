@@ -58,24 +58,30 @@ struct NFTWidgetEntryView: View {
     var entry: Provider.Entry
     
     var body: some View {
-        if let nftInfo = entry.nftInfo,
-           let imageData = try? Data(contentsOf: nftInfo.url),
-           let originalImage =  UIImage(data: imageData) {
-            
-            let targetWidth: CGFloat = 220
-            let scaleFactor = targetWidth / originalImage.size.width
-            let targetHeight = originalImage.size.height * scaleFactor
-            
-            let newSize = CGSize(width: targetWidth, height: targetHeight)
-            let renderer = UIGraphicsImageRenderer(size: newSize)
-            
-            let resizedImageData = renderer.image { (context) in
-                originalImage.draw(in: CGRect(origin: .zero, size: newSize))
+        if let nftInfo = entry.nftInfo {
+            if nftInfo.url.absoluteString == "https://lh3.googleusercontent.com/drive-viewer/AK7aPaCru5HIxcDvIP6ZAwrIzApQE6xa0axyrB4hUfJWxHavNENmYbG86LQa9BFNKEZ94-yk7c8UuOFEetY0x0j_7pxXQ3HqZw=s1600" {
+                Image("placeholder")
+                    .resizable()
+                    .scaledToFill()
+            } else if let imageData = try? Data(contentsOf: nftInfo.url),
+                      let originalImage =  UIImage(data: imageData) {
+                let targetWidth: CGFloat = 220
+                let scaleFactor = targetWidth / originalImage.size.width
+                let targetHeight = originalImage.size.height * scaleFactor
+                
+                let newSize = CGSize(width: targetWidth, height: targetHeight)
+                let renderer = UIGraphicsImageRenderer(size: newSize)
+                
+                let resizedImageData = renderer.image { (context) in
+                    originalImage.draw(in: CGRect(origin: .zero, size: newSize))
+                }
+                
+                Image(uiImage: resizedImageData)
+                    .resizable()
+                    .scaledToFill()
+            } else {
+                Text("Choose an NFT to display")
             }
-            
-            Image(uiImage: resizedImageData)
-                .resizable()
-                .scaledToFill()
         } else {
             Text("Choose an NFT to display")
         }
