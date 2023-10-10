@@ -11,9 +11,23 @@ import UIKit
 class PortfolioListViewController: UIViewController {
     @IBOutlet weak var portfolioListTableView: UITableView!
     
+    private let emptyView: UIView = {
+        let view = UIView()
+        let label = UILabel()
+        label.text = "Tap plus button to add wallet."
+        label.textColor = .secondaryBlur
+        label.textAlignment = .center
+        view.addSubview(label)
+        label.snp.makeConstraints { make in
+            make.centerX.equalTo(view.snp.centerX)
+            make.centerY.equalTo(view.snp.centerY)
+        }
+        return view
+    }()
+    
     private let userDefaults = UserDefaults.standard
     
-    private var ethWallets: [[String: String]] = []
+    private var walletAddresses: [[String: String]] = []
     
     private var balance: [String: String] = [:]
     
@@ -25,9 +39,9 @@ class PortfolioListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         setupUI()
-        fetchEthWallets()
+        fetchWallets()
         balance.removeAll()
-        ethWallets.forEach { wallet in
+        walletAddresses.forEach { wallet in
             fetchWalletBalance(address: wallet["address"] ?? "")
         }
         tabBarController?.tabBar.isHidden = false
@@ -56,15 +70,21 @@ class PortfolioListViewController: UIViewController {
         let navigationExtendHeight: UIEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
         navigationController?.additionalSafeAreaInsets = navigationExtendHeight
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "", image: UIImage(systemName: "plus.circle.fill")?.withTintColor(.secondary, renderingMode: .alwaysOriginal), target: self, action: #selector(addWallet))
+        // 如不內建demo錢包，加入以下empty view
+//        view.addSubview(emptyView)
+//        emptyView.snp.makeConstraints { make in
+//            make.centerX.equalTo(view.snp.centerX)
+//            make.centerY.equalTo(view.snp.centerY)
+//        }
     }
     
-    private func fetchEthWallets() {
-        let savedWallets = UserDefaults.standard.object(forKey: "ethWallets") as? [[String: String]] ?? []
+    private func fetchWallets() {
+        let savedWallets = UserDefaults.standard.object(forKey: "walletAddress") as? [[String: String]] ?? []
         
         if savedWallets.isEmpty {
-            ethWallets = [["address": "0x423cE4833b42b48611C662cFdc70929E3139b009", "name": "My Wallet"]]
+            walletAddresses = [["address": "0x423cE4833b42b48611C662cFdc70929E3139b009", "name": "Demo Address"]]
         } else {
-            ethWallets = savedWallets
+            walletAddresses = savedWallets
         }
         // 內建一個錢包地址，先拿掉以下判斷
         //        if ethWallets.count == 0 {
@@ -79,6 +99,7 @@ class PortfolioListViewController: UIViewController {
         //            navigationController?.pushViewController(addressInputVC, animated: false)
         //            addressInputVC.navigationItem.hidesBackButton = true
         //        }
+        // emptyView.isHidden = !walletAddresses.isEmpty
     }
     
     private func fetchWalletBalance(address: String) {
@@ -89,8 +110,15 @@ class PortfolioListViewController: UIViewController {
             return
         }
         
-        if let url = URL(string: "https://svc.blockdaemon.com/universal/v1/ethereum/mainnet/account/\(address)") {
-            
+        let urlString: String
+        
+        if address.hasPrefix("0x") {
+            urlString = "https://svc.blockdaemon.com/universal/v1/ethereum/mainnet/account/\(address)"
+        } else {
+            urlString = "https://svc.blockdaemon.com/universal/v1/tezos/mainnet/account/\(address)"
+        }
+        
+        if let url = URL(string: urlString) {
             var request = URLRequest(url: url)
             request.setValue("application/json", forHTTPHeaderField: "Accept")
             request.setValue(apiKey, forHTTPHeaderField: "X-API-Key")
@@ -154,7 +182,7 @@ class PortfolioListViewController: UIViewController {
 
 extension PortfolioListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        ethWallets.count
+        walletAddresses.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -162,20 +190,33 @@ extension PortfolioListViewController: UITableViewDelegate, UITableViewDataSourc
             fatalError("Cannot create wallet list cell.")
         }
         
-        walletCell.walletImageView.image = UIImage(named: "ethereum")
-        let address = ethWallets[indexPath.row]["address"]
+        guard let address = walletAddresses[indexPath.row]["address"] else {
+            fatalError("Cannot find wallet address.")
+        }
         walletCell.addressLabel.text = address
         walletCell.walletNameTextField.delegate = self
-        walletCell.walletNameTextField.text = ethWallets[indexPath.row]["name"]
+        walletCell.walletNameTextField.text = walletAddresses[indexPath.row]["name"]
         walletCell.walletNameTextField.isUserInteractionEnabled = false
-        if balance.count != ethWallets.count {
-            walletCell.balanceLabel.text = "-- ETH"
+        if balance.count != walletAddresses.count {
+            if address.hasPrefix("0x") {
+                walletCell.balanceLabel.text = "-- ETH"
+                walletCell.walletImageView.image = UIImage(named: "ethereum")
+            } else {
+                walletCell.balanceLabel.text = "-- XTZ"
+                walletCell.walletImageView.image = UIImage(named: "tezos")
+            }
         } else {
-            if let balance = balance[address ?? ""] {
-                walletCell.balanceLabel.text = "\(balance) ETH"
+            if let balance = balance[address] {
+                if address.hasPrefix("0x") {
+                    walletCell.balanceLabel.text = "\(balance) ETH"
+                    walletCell.walletImageView.image = UIImage(named: "ethereum")
+                } else {
+                    walletCell.balanceLabel.text = "\(balance) XTZ"
+                    walletCell.walletImageView.image = UIImage(named: "tezos")
+                }
             }
         }
-        print(ethWallets[indexPath.row])
+        print(walletAddresses[indexPath.row])
         
         return walletCell
     }
@@ -183,19 +224,21 @@ extension PortfolioListViewController: UITableViewDelegate, UITableViewDataSourc
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showPortfolio" {
             let portfolioVC = segue.destination as? PortfolioDisplayViewController
-            portfolioVC?.ethAddress = sender as? String
+            portfolioVC?.walletAddress = sender as? String
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "showPortfolio", sender: ethWallets[indexPath.row]["address"])
+        performSegue(withIdentifier: "showPortfolio", sender: walletAddresses[indexPath.row]["address"])
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive, title: "") { [weak self] (action, view, completionHandler) in
-            self?.ethWallets.remove(at: indexPath.row)
-            self?.userDefaults.set(self?.ethWallets, forKey: "ethWallets")
+            self?.walletAddresses.remove(at: indexPath.row)
+            self?.userDefaults.set(self?.walletAddresses, forKey: "walletAddress")
             self?.portfolioListTableView.deleteRows(at: [indexPath], with: .left)
+            // 如不內建demo錢包，加入以下empty view
+            // emptyView.isHidden = !walletAddresses.isEmpty
         }
         delete.backgroundColor = .systemPink
         delete.image = UIImage(systemName: "trash")
@@ -221,8 +264,8 @@ extension PortfolioListViewController: UITableViewDelegate, UITableViewDataSourc
 extension PortfolioListViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if let newName = textField.text, !newName.isEmpty, let walletListCell = textField.superview?.superview as? WalletListCell, let indexPath = portfolioListTableView.indexPath(for: walletListCell) {
-            ethWallets[indexPath.row]["name"] = newName
-            userDefaults.set(ethWallets, forKey: "ethWallets")
+            walletAddresses[indexPath.row]["name"] = newName
+            userDefaults.set(walletAddresses, forKey: "walletAddress")
         }
         textField.resignFirstResponder()
         textField.isUserInteractionEnabled = false

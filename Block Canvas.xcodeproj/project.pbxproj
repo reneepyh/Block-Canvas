@@ -16,6 +16,7 @@
 		DB0C67932AC9B591007C960A /* widget.json in Resources */ = {isa = PBXBuildFile; fileRef = DB0C67922AC9B591007C960A /* widget.json */; };
 		DB0C67952AC9B892007C960A /* WidgetWalletSelectedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0C67942AC9B892007C960A /* WidgetWalletSelectedViewController.swift */; };
 		DB0FA4C72ABEB9AF00272E7A /* JGProgressHUDWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0FA4C62ABEB9AF00272E7A /* JGProgressHUDWrapper.swift */; };
+		DB1C573C2ACE85AA00C203B3 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1C573B2ACE85AA00C203B3 /* UIImageView+Extension.swift */; };
 		DB1DBD202AB1D45A00F74B64 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DBD1F2AB1D45A00F74B64 /* AppDelegate.swift */; };
 		DB1DBD222AB1D45A00F74B64 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DBD212AB1D45A00F74B64 /* SceneDelegate.swift */; };
 		DB1DBD242AB1D45A00F74B64 /* DiscoverPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1DBD232AB1D45A00F74B64 /* DiscoverPageViewController.swift */; };
@@ -31,7 +32,9 @@
 		DB58ED7E2AC948B20053AAB6 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB58ED7D2AC948B20053AAB6 /* IntentHandler.swift */; };
 		DB58ED932AC948B20053AAB6 /* NFTIntentExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = DB58ED792AC948B20053AAB6 /* NFTIntentExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		DB58ED9A2AC94B670053AAB6 /* NFTWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = DBF567872AB85632007BFDA1 /* NFTWidget.intentdefinition */; };
+		DB6318862AD243EE00EF1121 /* HiddenPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6318852AD243EE00EF1121 /* HiddenPageViewController.swift */; };
 		DB6853D12AB2F38400895EB9 /* Discover.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6853D02AB2F38400895EB9 /* Discover.swift */; };
+		DB68EBFF2AD0413F00D01B16 /* HiddenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB68EBFE2AD0413F00D01B16 /* HiddenManager.swift */; };
 		DB69818F2AB4604600BE0036 /* Portfolio.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB69818E2AB4604600BE0036 /* Portfolio.storyboard */; };
 		DB6981912AB4608100BE0036 /* AddressInputPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6981902AB4608100BE0036 /* AddressInputPageViewController.swift */; };
 		DB6981932AB4648500BE0036 /* Portfolio.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6981922AB4648500BE0036 /* Portfolio.swift */; };
@@ -43,7 +46,7 @@
 		DBA478792AB2B29C0014E825 /* BCTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA478762AB2B29C0014E825 /* BCTabBarController.swift */; };
 		DBA4787A2AB2B29C0014E825 /* Discover.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBA478772AB2B29C0014E825 /* Discover.storyboard */; };
 		DBA4787B2AB2B29C0014E825 /* UIStoryboard+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA478782AB2B29C0014E825 /* UIStoryboard+Extension.swift */; };
-		DBA57DC32ABC2F4200C1CE30 /* WatchlistManager.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DBA57DC12ABC2F4200C1CE30 /* WatchlistManager.xcdatamodeld */; };
+		DBA57DC32ABC2F4200C1CE30 /* SettingsManager.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DBA57DC12ABC2F4200C1CE30 /* SettingsManager.xcdatamodeld */; };
 		DBA57DCE2ABC32AF00C1CE30 /* WatchlistItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA57DCC2ABC32AF00C1CE30 /* WatchlistItem+CoreDataClass.swift */; };
 		DBA57DCF2ABC32AF00C1CE30 /* WatchlistItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA57DCD2ABC32AF00C1CE30 /* WatchlistItem+CoreDataProperties.swift */; };
 		DBA57DD22ABC33AB00C1CE30 /* WatchlistManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA57DD12ABC33AB00C1CE30 /* WatchlistManager.swift */; };
@@ -52,6 +55,7 @@
 		DBB9BDBC2AB44E07002A5FBC /* KingfisherWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB9BDBB2AB44E07002A5FBC /* KingfisherWrapper.swift */; };
 		DBC2CDE02ACC3BEA0000974B /* LaunchAnimationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC2CDDF2ACC3BEA0000974B /* LaunchAnimationViewController.swift */; };
 		DBC6E31A2AC036E200B40514 /* WaterFallFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC6E3192AC036E200B40514 /* WaterFallFlowLayout.swift */; };
+		DBD8D4192AD1586E00B8FC00 /* DiscoverAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD8D4182AD1586E00B8FC00 /* DiscoverAPIService.swift */; };
 		DBE3CE552AC7FD1C00A85FB2 /* SettingsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE3CE542AC7FD1C00A85FB2 /* SettingsPageViewController.swift */; };
 		DBE3CE572AC80E2E00A85FB2 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE3CE562AC80E2E00A85FB2 /* SettingsCell.swift */; };
 		DBE93E262ACAC49B00ECF9E0 /* MJRefreshWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE93E252ACAC49B00ECF9E0 /* MJRefreshWrapper.swift */; };
@@ -69,7 +73,7 @@
 		DBF619DB2AB55F6E00687F13 /* CryptoPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF619DA2AB55F6E00687F13 /* CryptoPageViewController.swift */; };
 		DBF619DD2AB55F8600687F13 /* Crypto.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBF619DC2AB55F8600687F13 /* Crypto.storyboard */; };
 		DBF619DF2AB57EA200687F13 /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF619DE2AB57EA200687F13 /* Crypto.swift */; };
-		DBF619E32AB59C8400687F13 /* EthPriceChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF619E22AB59C8400687F13 /* EthPriceChartView.swift */; };
+		DBF619E32AB59C8400687F13 /* PriceChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF619E22AB59C8400687F13 /* PriceChartView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -116,6 +120,7 @@
 		DB0C67922AC9B591007C960A /* widget.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = widget.json; sourceTree = "<group>"; };
 		DB0C67942AC9B892007C960A /* WidgetWalletSelectedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetWalletSelectedViewController.swift; sourceTree = "<group>"; };
 		DB0FA4C62ABEB9AF00272E7A /* JGProgressHUDWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JGProgressHUDWrapper.swift; sourceTree = "<group>"; };
+		DB1C573B2ACE85AA00C203B3 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		DB1DBD1C2AB1D45A00F74B64 /* Block Canvas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Block Canvas.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB1DBD1F2AB1D45A00F74B64 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DB1DBD212AB1D45A00F74B64 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -136,8 +141,10 @@
 		DB58ED852AC948B20053AAB6 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
 		DB58ED9C2AC956B50053AAB6 /* NFTIntentExtensionRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NFTIntentExtensionRelease.entitlements; sourceTree = "<group>"; };
 		DB58ED9D2AC95FA20053AAB6 /* NFTIntentExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NFTIntentExtension.entitlements; sourceTree = "<group>"; };
+		DB6318852AD243EE00EF1121 /* HiddenPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenPageViewController.swift; sourceTree = "<group>"; };
 		DB6853CF2AB2ECA100895EB9 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		DB6853D02AB2F38400895EB9 /* Discover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Discover.swift; sourceTree = "<group>"; };
+		DB68EBFE2AD0413F00D01B16 /* HiddenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenManager.swift; sourceTree = "<group>"; };
 		DB69818E2AB4604600BE0036 /* Portfolio.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Portfolio.storyboard; sourceTree = "<group>"; };
 		DB6981902AB4608100BE0036 /* AddressInputPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressInputPageViewController.swift; sourceTree = "<group>"; };
 		DB6981922AB4648500BE0036 /* Portfolio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Portfolio.swift; sourceTree = "<group>"; };
@@ -158,6 +165,7 @@
 		DBB9BDBB2AB44E07002A5FBC /* KingfisherWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingfisherWrapper.swift; sourceTree = "<group>"; };
 		DBC2CDDF2ACC3BEA0000974B /* LaunchAnimationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAnimationViewController.swift; sourceTree = "<group>"; };
 		DBC6E3192AC036E200B40514 /* WaterFallFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterFallFlowLayout.swift; sourceTree = "<group>"; };
+		DBD8D4182AD1586E00B8FC00 /* DiscoverAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverAPIService.swift; sourceTree = "<group>"; };
 		DBE3CE542AC7FD1C00A85FB2 /* SettingsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPageViewController.swift; sourceTree = "<group>"; };
 		DBE3CE562AC80E2E00A85FB2 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		DBE93E252ACAC49B00ECF9E0 /* MJRefreshWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MJRefreshWrapper.swift; sourceTree = "<group>"; };
@@ -176,7 +184,7 @@
 		DBF619DA2AB55F6E00687F13 /* CryptoPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoPageViewController.swift; sourceTree = "<group>"; };
 		DBF619DC2AB55F8600687F13 /* Crypto.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Crypto.storyboard; sourceTree = "<group>"; };
 		DBF619DE2AB57EA200687F13 /* Crypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crypto.swift; sourceTree = "<group>"; };
-		DBF619E22AB59C8400687F13 /* EthPriceChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthPriceChartView.swift; sourceTree = "<group>"; };
+		DBF619E22AB59C8400687F13 /* PriceChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriceChartView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -243,6 +251,7 @@
 		DB0C67962AC9BB7B007C960A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				DB1C573B2ACE85AA00C203B3 /* UIImageView+Extension.swift */,
 				DBA478782AB2B29C0014E825 /* UIStoryboard+Extension.swift */,
 				DB98912E2AC0891700E41967 /* UIColor+Extension.swift */,
 				DB4422782AC2712C0038E34C /* UIFont+Extension.swift */,
@@ -302,7 +311,7 @@
 				DB1DBD2A2AB1D45B00F74B64 /* LaunchScreen.storyboard */,
 				DB1DBD2D2AB1D45B00F74B64 /* Info.plist */,
 				DB6853CF2AB2ECA100895EB9 /* Secrets.xcconfig */,
-				DBA57DC12ABC2F4200C1CE30 /* WatchlistManager.xcdatamodeld */,
+				DBA57DC12ABC2F4200C1CE30 /* SettingsManager.xcdatamodeld */,
 			);
 			path = "Block Canvas";
 			sourceTree = "<group>";
@@ -338,7 +347,7 @@
 				DBF619DC2AB55F8600687F13 /* Crypto.storyboard */,
 				DB08647D2ABC3D04004598D6 /* Settings.storyboard */,
 				DB8C90F02AB43DCF005D75DF /* DiscoverCollectionCell.swift */,
-				DBF619E22AB59C8400687F13 /* EthPriceChartView.swift */,
+				DBF619E22AB59C8400687F13 /* PriceChartView.swift */,
 				DB4BFB2E2AB6AA1300187B1C /* PortfolioDisplayView.swift */,
 				DB9E028D2AB7499100285E63 /* WalletListCell.swift */,
 				DB0864832ABC435F004598D6 /* WatchlistCell.swift */,
@@ -366,6 +375,7 @@
 				DBAACF112AC96D0B001C7E76 /* WidgetPageViewController.swift */,
 				DB0C67942AC9B892007C960A /* WidgetWalletSelectedViewController.swift */,
 				DBC2CDDF2ACC3BEA0000974B /* LaunchAnimationViewController.swift */,
+				DB6318852AD243EE00EF1121 /* HiddenPageViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -374,6 +384,8 @@
 			isa = PBXGroup;
 			children = (
 				DBA57DD12ABC33AB00C1CE30 /* WatchlistManager.swift */,
+				DB68EBFE2AD0413F00D01B16 /* HiddenManager.swift */,
+				DBD8D4182AD1586E00B8FC00 /* DiscoverAPIService.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -593,7 +605,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DBC6E31A2AC036E200B40514 /* WaterFallFlowLayout.swift in Sources */,
-				DBA57DC32ABC2F4200C1CE30 /* WatchlistManager.xcdatamodeld in Sources */,
+				DBA57DC32ABC2F4200C1CE30 /* SettingsManager.xcdatamodeld in Sources */,
 				DBA478792AB2B29C0014E825 /* BCTabBarController.swift in Sources */,
 				DB5386AD2AC2C10F0077672B /* DetailImageCell.swift in Sources */,
 				DBE3CE572AC80E2E00A85FB2 /* SettingsCell.swift in Sources */,
@@ -622,8 +634,12 @@
 				DB6981932AB4648500BE0036 /* Portfolio.swift in Sources */,
 				DBF329F22AC55DBB009DE67C /* DetailMetadataInfoCell.swift in Sources */,
 				DB4BFB2F2AB6AA1300187B1C /* PortfolioDisplayView.swift in Sources */,
+				DB1C573C2ACE85AA00C203B3 /* UIImageView+Extension.swift in Sources */,
+				DBD8D4192AD1586E00B8FC00 /* DiscoverAPIService.swift in Sources */,
 				DB6981912AB4608100BE0036 /* AddressInputPageViewController.swift in Sources */,
+				DB68EBFF2AD0413F00D01B16 /* HiddenManager.swift in Sources */,
 				DB0864842ABC435F004598D6 /* WatchlistCell.swift in Sources */,
+				DB6318862AD243EE00EF1121 /* HiddenPageViewController.swift in Sources */,
 				DBB9BDBC2AB44E07002A5FBC /* KingfisherWrapper.swift in Sources */,
 				DBB880322AB4B33600526E40 /* DetailPageViewController.swift in Sources */,
 				DB0FA4C72ABEB9AF00272E7A /* JGProgressHUDWrapper.swift in Sources */,
@@ -631,7 +647,7 @@
 				DB9E028E2AB7499100285E63 /* WalletListCell.swift in Sources */,
 				DBE3CE552AC7FD1C00A85FB2 /* SettingsPageViewController.swift in Sources */,
 				DB0864822ABC4063004598D6 /* WatchlistPageViewController.swift in Sources */,
-				DBF619E32AB59C8400687F13 /* EthPriceChartView.swift in Sources */,
+				DBF619E32AB59C8400687F13 /* PriceChartView.swift in Sources */,
 				DB5386A92AC2B4700077672B /* DetailMetadataCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1032,13 +1048,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		DBA57DC12ABC2F4200C1CE30 /* WatchlistManager.xcdatamodeld */ = {
+		DBA57DC12ABC2F4200C1CE30 /* SettingsManager.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				DBA57DC22ABC2F4200C1CE30 /* WatchlistManager.xcdatamodel */,
 			);
 			currentVersion = DBA57DC22ABC2F4200C1CE30 /* WatchlistManager.xcdatamodel */;
-			path = WatchlistManager.xcdatamodeld;
+			path = SettingsManager.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

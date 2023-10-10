@@ -94,7 +94,7 @@ class DetailPageViewController: UIViewController {
         navigationItem.hidesBackButton = true
         let watchlistButton = UIBarButtonItem(image: watchlistButtonImage(), style: .plain, target: self, action: #selector(watchlistButtonTapped))
         let closeButton = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(closeButtonTapped))
-        let arButton = UIBarButtonItem(image: UIImage(systemName: "eye.fill"), style: .plain, target: self, action: #selector(arButtonTapped))
+        let arButton = UIBarButtonItem(image: UIImage(systemName: "dot.circle.viewfinder"), style: .plain, target: self, action: #selector(arButtonTapped))
         navigationItem.rightBarButtonItems = [closeButton, watchlistButton, arButton]
     }
     
@@ -182,7 +182,7 @@ extension DetailPageViewController: UITableViewDelegate, UITableViewDataSource {
                     fatalError("Cannot create detail image cell.")
                 }
                 if let discoverNFTMetadata = discoverNFTMetadata {
-                    detailImageCell.detailImageView.loadImage(discoverNFTMetadata.displayUri, placeHolder: UIImage(named: "AppIcon"))
+                    detailImageCell.detailImageView.loadImage(discoverNFTMetadata.displayUri, placeHolder: UIImage(named: "placeholder"))
                     detailImageCell.detailImageView.contentMode = .scaleAspectFit
                     detailImageCell.descriptionLabel.text = discoverNFTMetadata.nftDescription
                 }

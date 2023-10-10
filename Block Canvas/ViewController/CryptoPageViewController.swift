@@ -8,7 +8,7 @@
 import UIKit
 import SwiftUI
 import SnapKit
-
+// swiftlint: disable type_body_length
 class CryptoPageViewController: UIViewController {
     private var ethPriceData: [EthHistoryPriceData] = []
     
@@ -16,13 +16,23 @@ class CryptoPageViewController: UIViewController {
     
     private var ethPriceChange: String?
     
+    private var xtzPriceData: [EthHistoryPriceData] = []
+    
+    private var xtzCurrentPrice: String?
+    
+    private var xtzPriceChange: String?
+    
     private var ethGasFee: String?
     
     private var previousEthPrice: Double?
     
+    private var previousXTZPrice: Double?
+    
     private var updateTimer: Timer?
     
-    private let hostingController = UIHostingController(rootView: EthPriceChart())
+    private let ethhostingController = UIHostingController(rootView: ETHPriceChart())
+    
+    private let xtzhostingController = UIHostingController(rootView: XTZPriceChart())
     
     private let ethLabel: UILabel = {
         let label = UILabel()
@@ -32,16 +42,22 @@ class CryptoPageViewController: UIViewController {
         return label
     }()
     
-    private let priceLabel: UILabel = {
+    private let ethIconImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+    
+    private let ethPriceLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.main(ofSize: 38)
+        label.font = UIFont.main(ofSize: 32)
         label.textColor = .secondary
         return label
     }()
     
-    private let priceChangeButton: UIButton = {
+    private let ethPriceChangeButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.titleLabel?.font = UIFont.main(ofSize: 22)
+        button.titleLabel?.font = UIFont.main(ofSize: 20)
         button.setTitleColor(.secondary, for: .normal)
         button.layer.cornerRadius = 8
         button.isUserInteractionEnabled = false
@@ -51,10 +67,41 @@ class CryptoPageViewController: UIViewController {
     
     private let gasFeeLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 16)
-        label.textColor = .secondary
+        label.font = .systemFont(ofSize: 14)
+        label.textColor = .secondaryBlur
         label.text = "-- gwei"
         return label
+    }()
+    
+    private let xtzLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.main(ofSize: 20)
+        label.text = "Tezos"
+        label.textColor = .tertiary
+        return label
+    }()
+    
+    private let xtzIconImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+    
+    private let xtzPriceLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.main(ofSize: 32)
+        label.textColor = .secondary
+        return label
+    }()
+    
+    private let xtzPriceChangeButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.titleLabel?.font = UIFont.main(ofSize: 20)
+        button.setTitleColor(.secondary, for: .normal)
+        button.layer.cornerRadius = 8
+        button.isUserInteractionEnabled = false
+        button.clipsToBounds = true
+        return button
     }()
     
     override func viewDidLoad() {
@@ -63,12 +110,17 @@ class CryptoPageViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        setupLabelUI()
-        setupChartUI()
+        setupETHLabelUI()
+        setupETHChartUI()
+        setupXTZLabelUI()
+        setupXTZChartUI()
+        getETHGasFee()
         getETHCurrentPrice()
-        getEthHistoryPrice()
+        getXTZCurrentPrice()
+        getETHHistoryPrice()
+        getXTZHistoryPrice()
         getETHPriceChange()
-        getEthGasFee()
+        getXTZPriceChange()
         startTimer()
     }
     
@@ -76,6 +128,7 @@ class CryptoPageViewController: UIViewController {
         super.viewWillDisappear(true)
         updateTimer?.invalidate()
         ethPriceData = []
+        xtzPriceData = []
     }
     
     private func startTimer() {
@@ -133,7 +186,67 @@ class CryptoPageViewController: UIViewController {
                     print("Error in JSON decoding.")
                 }
                 DispatchQueue.main.async { [weak self] in
-                    self?.priceLabel.text = self?.ethCurrentPrice
+                    self?.ethPriceLabel.text = self?.ethCurrentPrice
+                }
+            }
+            task.resume()
+        }
+        else {
+            print("Invalid URL.")
+        }
+    }
+    
+    private func getXTZCurrentPrice() {
+        let apiKey = Bundle.main.object(forInfoDictionaryKey: "Binance_API_Key") as? String
+        
+        guard let key = apiKey, !key.isEmpty else {
+            print("Binance API key does not exist.")
+            return
+        }
+        
+        if let url = URL(string: "https://api1.binance.com/api/v3/ticker/price?symbol=XTZUSDT") {
+            
+            var request = URLRequest(url: url)
+            request.setValue(apiKey, forHTTPHeaderField: "X-MBX-APIKEY")
+            request.httpMethod = "GET"
+            
+            let session = URLSession.shared
+            
+            let task = session.dataTask(with: request) { [weak self] data, response, error in
+                if let error = error {
+                    print(error)
+                    return
+                }
+                
+                guard let data = data else {
+                    print("No data.")
+                    return
+                }
+                
+                let decoder = JSONDecoder()
+                
+                do {
+                    let ethCurrentPrice = try decoder.decode(EthCurrentPriceData.self, from: data)
+                    let doubledCurrentPrice = Double(ethCurrentPrice.price)
+                    let floored = floor((doubledCurrentPrice ?? 0) * 1000) / 1000
+                    self?.xtzCurrentPrice = "US$\(String(floored))"
+                    
+                    if let previousXTZPrice = self?.previousXTZPrice {
+                        if let doubledCurrentPrice = doubledCurrentPrice {
+                            if doubledCurrentPrice > previousXTZPrice {
+                                self?.animatePriceLabelColor(to: .systemGreen)
+                            } else if doubledCurrentPrice < previousXTZPrice {
+                                self?.animatePriceLabelColor(to: .systemPink)
+                            }
+                        }
+                    }
+                    self?.previousXTZPrice = doubledCurrentPrice
+                }
+                catch {
+                    print("Error in JSON decoding.")
+                }
+                DispatchQueue.main.async { [weak self] in
+                    self?.xtzPriceLabel.text = self?.xtzCurrentPrice
                 }
             }
             task.resume()
@@ -173,8 +286,8 @@ class CryptoPageViewController: UIViewController {
                 let decoder = JSONDecoder()
                 
                 do {
-                    let ethCurrentPrice = try decoder.decode(EthPriceChange.self, from: data)
-                    let doubled = Double(ethCurrentPrice.priceChangePercent)
+                    let ethPriceChange = try decoder.decode(EthPriceChange.self, from: data)
+                    let doubled = Double(ethPriceChange.priceChangePercent)
                     let floored = floor((doubled ?? 0) * 100) / 100
                     self?.ethPriceChange = String(floored)
                 }
@@ -192,7 +305,7 @@ class CryptoPageViewController: UIViewController {
                             config.imagePadding = 4
                             config.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 6, bottom: 4, trailing: 6)
                             config.background.backgroundColor = .systemGreen
-                            self?.priceChangeButton.configuration = config
+                            self?.ethPriceChangeButton.configuration = config
                         } else if change < 0 {
                             var config = UIButton.Configuration.filled()
                             config.title = "\(priceChange)%"
@@ -202,14 +315,14 @@ class CryptoPageViewController: UIViewController {
                             config.imagePadding = 4
                             config.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 6, bottom: 4, trailing: 6)
                             config.background.backgroundColor = .systemPink
-                            self?.priceChangeButton.configuration = config
+                            self?.ethPriceChangeButton.configuration = config
                         } else {
                             var config = UIButton.Configuration.filled()
                             config.title = "\(priceChange)%"
                             config.titlePadding = 4
                             config.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4)
                             config.background.backgroundColor = .black
-                            self?.priceChangeButton.configuration = config
+                            self?.ethPriceChangeButton.configuration = config
                         }
                     }
                 }
@@ -221,7 +334,85 @@ class CryptoPageViewController: UIViewController {
         }
     }
     
-    private func getEthGasFee() {
+    private func getXTZPriceChange() {
+        let apiKey = Bundle.main.object(forInfoDictionaryKey: "Binance_API_Key") as? String
+        
+        guard let key = apiKey, !key.isEmpty else {
+            print("Binance API key does not exist.")
+            return
+        }
+        
+        if let url = URL(string: "https://api1.binance.com/api/v3/ticker/24hr?symbol=XTZUSDT") {
+            
+            var request = URLRequest(url: url)
+            request.setValue(apiKey, forHTTPHeaderField: "X-MBX-APIKEY")
+            request.httpMethod = "GET"
+            
+            let session = URLSession.shared
+            
+            let task = session.dataTask(with: request) { [weak self] data, response, error in
+                if let error = error {
+                    print(error)
+                    return
+                }
+                
+                guard let data = data else {
+                    print("No data.")
+                    return
+                }
+                
+                let decoder = JSONDecoder()
+                
+                do {
+                    let xtzPriceChange = try decoder.decode(EthPriceChange.self, from: data)
+                    let doubled = Double(xtzPriceChange.priceChangePercent)
+                    let floored = floor((doubled ?? 0) * 100) / 100
+                    self?.xtzPriceChange = String(floored)
+                }
+                catch {
+                    print("Error in JSON decoding.")
+                }
+                DispatchQueue.main.async { [weak self] in
+                    if let priceChange = self?.xtzPriceChange, let change = Double(priceChange) {
+                        if change > 0 {
+                            var config = UIButton.Configuration.filled()
+                            config.title = "\(priceChange)%"
+                            let size = UIImage.SymbolConfiguration(pointSize: 8)
+                            config.image = UIImage(systemName: "arrowtriangle.up.fill", withConfiguration: size)
+                            config.titlePadding = 4
+                            config.imagePadding = 4
+                            config.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 6, bottom: 4, trailing: 6)
+                            config.background.backgroundColor = .systemGreen
+                            self?.xtzPriceChangeButton.configuration = config
+                        } else if change < 0 {
+                            var config = UIButton.Configuration.filled()
+                            config.title = "\(priceChange)%"
+                            let size = UIImage.SymbolConfiguration(pointSize: 8)
+                            config.image = UIImage(systemName: "arrowtriangle.down.fill", withConfiguration: size)
+                            config.titlePadding = 4
+                            config.imagePadding = 4
+                            config.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 6, bottom: 4, trailing: 6)
+                            config.background.backgroundColor = .systemPink
+                            self?.xtzPriceChangeButton.configuration = config
+                        } else {
+                            var config = UIButton.Configuration.filled()
+                            config.title = "\(priceChange)%"
+                            config.titlePadding = 4
+                            config.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4)
+                            config.background.backgroundColor = .black
+                            self?.xtzPriceChangeButton.configuration = config
+                        }
+                    }
+                }
+            }
+            task.resume()
+        }
+        else {
+            print("Invalid URL.")
+        }
+    }
+    
+    private func getETHGasFee() {
         let apiKey = Bundle.main.object(forInfoDictionaryKey: "Etherscan_API_Key") as? String
         
         guard let key = apiKey, !key.isEmpty else {
@@ -267,7 +458,7 @@ class CryptoPageViewController: UIViewController {
         }
     }
     
-    private func getEthHistoryPrice() {
+    private func getETHHistoryPrice() {
         BCProgressHUD.show()
         if let url = URL(string: "https://api.coincap.io/v2/assets/ethereum/history?interval=m1") {
             var request = URLRequest(url: url)
@@ -308,7 +499,59 @@ class CryptoPageViewController: UIViewController {
                         BCProgressHUD.showFailure()
                         return
                     }
-                    self?.hostingController.rootView = EthPriceChart(ethPriceData: ethPriceData)
+                    self?.ethhostingController.rootView = ETHPriceChart(ethPriceData: ethPriceData)
+                    BCProgressHUD.dismiss()
+                }
+            }
+            task.resume()
+        }
+        else {
+            print("Invalid URL.")
+        }
+    }
+    
+    private func getXTZHistoryPrice() {
+        BCProgressHUD.show()
+        if let url = URL(string: "https://api.coincap.io/v2/assets/tezos/history?interval=m1") {
+            var request = URLRequest(url: url)
+            request.setValue("deflate", forHTTPHeaderField: "Accept-Encoding")
+            request.httpMethod = "GET"
+            
+            let session = URLSession.shared
+            
+            let task = session.dataTask(with: request) { [weak self] data, response, error in
+                if let error = error {
+                    print(error)
+                    BCProgressHUD.showFailure()
+                    return
+                }
+                
+                guard let data = data else {
+                    print("No data.")
+                    BCProgressHUD.showFailure()
+                    return
+                }
+                
+                let decoder = JSONDecoder()
+                
+                do {
+                    let xtzPrice = try decoder.decode(EthHistoryPrice.self, from: data)
+                    for xtzPriceData in xtzPrice.data {
+                        let unixTimestampSeconds = Double(xtzPriceData.time) / 1000.0
+                        let date = Date(timeIntervalSince1970: unixTimestampSeconds)
+                        self?.xtzPriceData.append(EthHistoryPriceData(price: Double(xtzPriceData.priceUsd) ?? 0, time: date))
+                    }
+                }
+                catch {
+                    print("Error in JSON decoding.")
+                }
+                DispatchQueue.main.async { [weak self] in
+                    guard let xtzPriceData = self?.xtzPriceData else {
+                        print("Cannot fetch xtzPriceData.")
+                        BCProgressHUD.showFailure()
+                        return
+                    }
+                    self?.xtzhostingController.rootView = XTZPriceChart(xtzPriceData: xtzPriceData)
                     BCProgressHUD.dismiss()
                 }
             }
@@ -320,65 +563,128 @@ class CryptoPageViewController: UIViewController {
         
     }
     
-    private func setupLabelUI() {
+    private func setupETHLabelUI() {
         navigationController?.navigationBar.isHidden = true
         view.backgroundColor = .primary
+        
+        view.addSubview(ethIconImageView)
+        ethIconImageView.image = UIImage(named: "ethereum_crypto")
+        ethIconImageView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(6)
+            make.leading.equalTo(view.snp.leading).offset(18)
+            make.width.equalTo(18)
+            make.height.equalTo(18)
+        }
+        
         view.addSubview(ethLabel)
         ethLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(6)
-            make.left.equalTo(view.snp.left).offset(16)
+            make.centerY.equalTo(ethIconImageView.snp.centerY)
+            make.leading.equalTo(ethIconImageView.snp.trailing).offset(6)
         }
-        
-        view.addSubview(priceLabel)
-        priceLabel.snp.makeConstraints { make in
+
+        view.addSubview(ethPriceLabel)
+        ethPriceLabel.snp.makeConstraints { make in
             make.top.equalTo(ethLabel.snp.bottom).offset(6)
-            make.left.equalTo(view.snp.left).offset(16)
+            make.leading.equalTo(view.snp.leading).offset(18)
         }
         
-        view.addSubview(priceChangeButton)
-        priceChangeButton.snp.makeConstraints { make in
-            make.bottom.equalTo(priceLabel.snp.bottom)
-            make.right.equalTo(view.snp.right).offset(-16)
+        view.addSubview(ethPriceChangeButton)
+        ethPriceChangeButton.snp.makeConstraints { make in
+            make.bottom.equalTo(ethPriceLabel.snp.bottom)
+            make.trailing.equalTo(view.snp.trailing).offset(-18)
         }
         
         view.addSubview(gasFeeLabel)
         gasFeeLabel.snp.makeConstraints { make in
-            make.top.equalTo(priceLabel.snp.bottom).offset(6)
-            make.left.equalTo(view.snp.left).offset(18)
+            make.top.equalTo(ethPriceLabel.snp.bottom).offset(6)
+            make.leading.equalTo(view.snp.leading).offset(20)
         }
     }
     
-    private func setupChartUI() {
-        let ethPriceChart = hostingController.view
+    private func setupETHChartUI() {
+        let ethPriceChart = ethhostingController.view
         
-        guard let ethPriceChart = ethPriceChart else {
-            print("No ethPriceChart.")
+        guard let priceChart = ethPriceChart else {
+            print("No ETH priceChart.")
             return
         }
         
-        addChild(hostingController)
-        view.addSubview(ethPriceChart)
+        addChild(ethhostingController)
+        view.addSubview(priceChart)
         
-        ethPriceChart.snp.makeConstraints { make in
+        priceChart.snp.makeConstraints { make in
             make.top.equalTo(gasFeeLabel.snp.bottom).offset(4)
-            make.left.equalTo(view.snp.left).offset(8)
-            make.right.equalTo(view.snp.right).offset(-8)
-            make.bottom.equalTo(view.snp.bottom).offset(-100)
-            make.height.greaterThanOrEqualTo(350)
+            make.leading.equalTo(view.snp.leading).offset(8)
+            make.trailing.equalTo(view.snp.trailing).offset(-8)
+            make.height.equalTo(280)
         }
         
-        hostingController.didMove(toParent: self)
+        ethhostingController.didMove(toParent: self)
+    }
+    
+    private func setupXTZLabelUI() {
+        navigationController?.navigationBar.isHidden = true
+        view.backgroundColor = .primary
+    
+        view.addSubview(xtzIconImageView)
+        xtzIconImageView.image = UIImage(named: "tezos_crypto")
+        xtzIconImageView.snp.makeConstraints { make in
+            make.top.equalTo(ethhostingController.view.snp.bottom).offset(6)
+            make.leading.equalTo(view.snp.leading).offset(18)
+            make.width.equalTo(18)
+            make.height.equalTo(18)
+        }
+        
+        view.addSubview(xtzLabel)
+        xtzLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(xtzIconImageView.snp.centerY)
+            make.leading.equalTo(xtzIconImageView.snp.trailing).offset(6)
+        }
+        
+        view.addSubview(xtzPriceLabel)
+        xtzPriceLabel.snp.makeConstraints { make in
+            make.top.equalTo(xtzLabel.snp.bottom).offset(6)
+            make.leading.equalTo(view.snp.leading).offset(18)
+        }
+        
+        view.addSubview(xtzPriceChangeButton)
+        xtzPriceChangeButton.snp.makeConstraints { make in
+            make.bottom.equalTo(xtzPriceLabel.snp.bottom)
+            make.trailing.equalTo(view.snp.trailing).offset(-18)
+        }
+    }
+    
+    private func setupXTZChartUI() {
+        let xtzPriceChart = xtzhostingController.view
+        
+        guard let priceChart = xtzPriceChart else {
+            print("No XTZ priceChart.")
+            return
+        }
+        
+        addChild(xtzhostingController)
+        view.addSubview(priceChart)
+        
+        priceChart.snp.makeConstraints { make in
+            make.top.equalTo(xtzPriceLabel.snp.bottom).offset(4)
+            make.leading.equalTo(view.snp.leading).offset(8)
+            make.trailing.equalTo(view.snp.trailing).offset(-8)
+            make.bottom.greaterThanOrEqualTo(view.snp.bottom).offset(-10)
+            make.height.greaterThanOrEqualTo(150)
+        }
+        
+        xtzhostingController.didMove(toParent: self)
     }
     
     private func animatePriceLabelColor(to color: UIColor) {
         DispatchQueue.main.async {
             // Change the color immediately to the new value
-            self.priceLabel.textColor = color
+            self.ethPriceLabel.textColor = color
             
             // After a delay, fade back to black
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                UIView.transition(with: self.priceLabel, duration: 0.5, options: .transitionCrossDissolve, animations: {
-                    self.priceLabel.textColor = .secondary
+                UIView.transition(with: self.ethPriceLabel, duration: 0.5, options: .transitionCrossDissolve, animations: {
+                    self.ethPriceLabel.textColor = .secondary
                 }, completion: nil)
             }
         }
@@ -388,7 +694,8 @@ class CryptoPageViewController: UIViewController {
         print("4秒重抓")
         getETHCurrentPrice()
         getETHPriceChange()
-        getEthGasFee()
+        getETHGasFee()
+        getXTZCurrentPrice()
+        getXTZPriceChange()
     }
-    
 }

@@ -16,6 +16,10 @@ class BCTabBarController: UITabBarController {
         super.viewDidLoad()
         self.viewControllers = tabs.map { $0.makeViewController() }
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
 }
 
 // MARK: - Tabs

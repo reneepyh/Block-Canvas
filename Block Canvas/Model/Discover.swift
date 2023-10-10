@@ -40,25 +40,16 @@ struct TrendingNFTMetadata: Codable {
 }
 
 struct SearchNFT: Codable {
-    let response: String?
-    let searchResults: [SearchResult]?
-
-    enum CodingKeys: String, CodingKey {
-        case response
-        case searchResults = "search_results"
-    }
+    let collections: [SearchCollection]?
 }
 
-struct SearchResult: Codable {
-    let contractAddress, tokenID: String?
-    let cachedFileURL: String?
-    let name, description: String?
+struct SearchCollection: Codable {
+    let collectionID, name, slug, contract: String?
+    let image: String?
 
     enum CodingKeys: String, CodingKey {
-        case contractAddress = "contract_address"
-        case tokenID = "token_id"
-        case cachedFileURL = "cached_file_url"
-        case name, description
+        case collectionID = "collectionId"
+        case name, slug, contract, image
     }
 }
 

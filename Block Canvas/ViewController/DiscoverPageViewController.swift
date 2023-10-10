@@ -1,12 +1,12 @@
 //
-//  ViewController.swift
+//  DiscoverPageViewController.swift
 //  Block Canvas
 //
 //  Created by Renee Hsu on 2023/9/13.
 //
 
 import UIKit
-// swiftlint: disable type_body_length
+
 class DiscoverPageViewController: UIViewController {
     @IBOutlet weak var discoverCollectionView: UICollectionView!
     
@@ -30,8 +30,6 @@ class DiscoverPageViewController: UIViewController {
     
     private let userDefaults = UserDefaults.standard
     
-    private var openAIBody: OpenAIBody?
-    
     private var userNFTs: [String] = []
     
     private var trendingNFTs: [DiscoverNFT] = []
@@ -40,9 +38,7 @@ class DiscoverPageViewController: UIViewController {
     
     private var isSearching: Bool = false
     
-    private let semaphore = DispatchSemaphore(value: 0)
-    
-    private var recommendedResponse: String?
+    private var currentOffset: Int = 0
     
     private var recommendedCollections: [String] = []
     
@@ -50,7 +46,7 @@ class DiscoverPageViewController: UIViewController {
     
     private var recommendationCache: [DiscoverNFT]?
     
-    private let group = DispatchGroup()
+    private let apiService = DiscoverAPIService()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,25 +54,11 @@ class DiscoverPageViewController: UIViewController {
         setupButtonTag()
         nftSearchBar.delegate = self
         getTrending()
-//        presentLaunchAnimation()
         fetchRecommendationInBackground()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         setupUI()
-    }
-    
-    private func presentLaunchAnimation() {
-        guard
-            let launchVC = UIStoryboard.discover.instantiateViewController(
-                withIdentifier: String(describing: LaunchAnimationViewController.self)
-            ) as? LaunchAnimationViewController
-        else {
-            return
-        }
-        launchVC.modalPresentationStyle = .overFullScreen
-        launchVC.tabBarController?.tabBar.isHidden = true
-        present(launchVC, animated: false)
     }
     
     private func setupCollectionView() {
@@ -90,13 +72,67 @@ class DiscoverPageViewController: UIViewController {
         discoverCollectionView.collectionViewLayout = layout
         
         discoverCollectionView.addRefreshHeader(refreshingBlock: { [weak self] in
-            if self?.selectedPage == 0 {
-                self?.getTrending()
-            } else if self?.selectedPage == 1 {
+            guard let self = self else { return }
+            
+            hideHeaderLoader()
+            
+            if self.selectedPage == 0 {
+                self.getTrending()
+            } else if self.selectedPage == 1 {
                 BCProgressHUD.show(text: "AI calculating...")
-                self?.fetchRecommendationData()
+                self.fetchRecommendationData()
             }
         })
+        
+        discoverCollectionView.addRefreshFooter(refreshingBlock: { [weak self] in
+            guard let self = self else { return }
+            
+            hideFooterLoader()
+            
+            if self.isSearching == true {
+                guard let keyword = self.nftSearchBar.text else {
+                    return
+                }
+                self.apiService.searchNFT(keyword: keyword, offset: self.currentOffset) { result in
+                    switch result {
+                        case .success(let newNFTs):
+                            self.searchedNFTs.append(contentsOf: newNFTs)
+                            DispatchQueue.main.async { [weak self] in
+                                if let layout = self?.discoverCollectionView.collectionViewLayout as? WaterFallFlowLayout {
+                                    layout.clearCache()
+                                }
+                                self?.discoverCollectionView.collectionViewLayout.invalidateLayout()
+                                self?.discoverCollectionView.reloadData()
+                            }
+                            self.currentOffset += newNFTs.count
+                            if newNFTs.count < 10 {
+                                self.discoverCollectionView.endWithNoMoreData()
+                            } else {
+                                self.discoverCollectionView.endFooterRefreshing()
+                            }
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                            self.discoverCollectionView.endFooterRefreshing()
+                    }
+                }
+            }
+        })
+    }
+    
+    private func hideHeaderLoader() {
+        if self.isSearching == true {
+            self.discoverCollectionView.isHeaderHidden = true
+        } else {
+            self.discoverCollectionView.isHeaderHidden = false
+        }
+    }
+    
+    private func hideFooterLoader() {
+        if self.isSearching == true {
+            self.discoverCollectionView.isFooterHidden = false
+        } else {
+            self.discoverCollectionView.isFooterHidden = true
+        }
     }
     
     private func setupUI() {
@@ -106,6 +142,9 @@ class DiscoverPageViewController: UIViewController {
         forYouButton.tintColor = .secondaryBlur
         nftSearchBar.searchTextField.backgroundColor = .tertiary
         nftSearchBar.searchTextField.textColor = .primary
+        nftSearchBar.searchTextField.clearButtonMode = .unlessEditing
+        nftSearchBar.searchTextField.autocapitalizationType = .none
+        nftSearchBar.searchTextField.autocorrectionType = .no
         
         let navigationExtendHeight: UIEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
         navigationController?.additionalSafeAreaInsets = navigationExtendHeight
@@ -124,66 +163,18 @@ class DiscoverPageViewController: UIViewController {
             self?.discoverCollectionView.reloadData()
         }
         BCProgressHUD.show()
-        let group = DispatchGroup()
-        func fetchToken() {
-            group.enter()
-            let url = URL(string: "https://api.fxhash.xyz/graphql")!
-            var request = URLRequest(url: url)
-            request.httpMethod = "POST"
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            
-            let query = """
-            {
-               randomTopGenerativeToken {
-                  author {
-                    name
-                  }
-                  gentkContractAddress
-                  issuerContractAddress
-                  metadata
-                }
-            }
-            """
-            
-            let json: [String: Any] = ["query": query]
-            let jsonData = try? JSONSerialization.data(withJSONObject: json)
-            
-            request.httpBody = jsonData
-            
-            let task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
-                defer {
-                    group.leave()
-                }
-                guard let data = data else { return }
-                do {
-                    let decoder = JSONDecoder()
-                    let root = try decoder.decode(Root.self, from: data)
-                    if self?.trendingNFTs.contains(where: { $0.title == root.data.randomTopGenerativeToken.metadata.name }) == true {
-                        fetchToken()
-                        return
-                    }
-                    
-                    let contract = root.data.randomTopGenerativeToken.gentkContractAddress
-                    let thumbnailURL = self?.generativeLiveDisplayUrl(uri: root.data.randomTopGenerativeToken.metadata.thumbnailUri)
-                    let displayURL = self?.generativeLiveDisplayUrl(uri: root.data.randomTopGenerativeToken.metadata.displayUri)
-                    let authorName = root.data.randomTopGenerativeToken.author?.name ?? " "
-                    let title = root.data.randomTopGenerativeToken.metadata.name
-                    let description = root.data.randomTopGenerativeToken.metadata.description
-                    self?.trendingNFTs.append(DiscoverNFT(thumbnailUri: thumbnailURL ?? "", displayUri: displayURL ?? "", contract: contract, title: title, authorName: authorName, nftDescription: description))
-                } catch {
-                    print("Error: \(error)")
-                }
-            }
-            task.resume()
-        }
-        for _ in 0..<10 {
-            fetchToken()
-        }
         
-        group.notify(queue: .main) { [weak self] in
-            self?.discoverCollectionView.reloadData()
-            self?.discoverCollectionView.endHeaderRefreshing()
-            BCProgressHUD.dismiss()
+        apiService.getTrending { [weak self] result in
+            switch result {
+                case .success(let fetchedTrendingNFTs):
+                    self?.trendingNFTs = fetchedTrendingNFTs
+                    self?.discoverCollectionView.reloadData()
+                    self?.discoverCollectionView.endHeaderRefreshing()
+                    BCProgressHUD.dismiss()
+                case .failure(let error):
+                    print("Error: \(error)")
+                    BCProgressHUD.dismiss()
+            }
         }
     }
     
@@ -195,57 +186,28 @@ class DiscoverPageViewController: UIViewController {
     
     private func searchNFT(keyword: String) {
         BCProgressHUD.show(text: "Searching")
-        let apiKey = Bundle.main.object(forInfoDictionaryKey: "NFTPort_API_Key") as? String
-        
-        guard let key = apiKey, !key.isEmpty else {
-            print("NFTPort API key does not exist.")
-            return
-        }
-        
-        if let url = URL(string: "https://api.nftport.xyz/v0/search?text=\(keyword.lowercased())&chain=ethereum&page_number=1&page_size=10&order_by=relevance&sort_order=desc") {
-            
-            var request = URLRequest(url: url)
-            request.setValue("application/json", forHTTPHeaderField: "Accept")
-            request.setValue(key, forHTTPHeaderField: "Authorization")
-            request.httpMethod = "GET"
-            
-            let session = URLSession.shared
-            
-            let task = session.dataTask(with: request) { [weak self] data, response, error in
-                if let error = error {
-                    print(error)
-                    BCProgressHUD.showFailure()
-                    return
-                }
-                
-                guard let data = data else {
-                    print("No data.")
-                    BCProgressHUD.showFailure(text: "No NFT found.")
-                    return
-                }
-                
-                let decoder = JSONDecoder()
-                
-                do {
-                    let searchData = try decoder.decode(SearchNFT.self, from: data)
-                    print(searchData)
-                    for searchResult in searchData.searchResults ?? [] {
-                        self?.searchedNFTs.append(DiscoverNFT(thumbnailUri: searchResult.cachedFileURL ?? "", displayUri: searchResult.cachedFileURL ?? "", contract: searchResult.contractAddress ?? "", title: searchResult.name, authorName: "", nftDescription: searchResult.description))
+        apiService.searchNFT(keyword: keyword, offset: currentOffset) { [weak self] result in
+            switch result {
+                case .success(let nfts):
+                    self?.searchedNFTs = nfts
+                    if nfts.count == 0 {
+                        BCProgressHUD.show(text: "No result.")
+                        sleep(1)
+                        BCProgressHUD.dismiss()
+                    } else {
+                        self?.currentOffset += 10
+                        DispatchQueue.main.async {
+                            self?.discoverCollectionView.reloadData()
+                        }
+                        BCProgressHUD.dismiss()
                     }
-                    print(self?.searchedNFTs)
-                }
-                catch {
-                    print("Error in JSON decoding.")
-                }
-                DispatchQueue.main.async { [weak self] in
-                    self?.discoverCollectionView.reloadData()
-                }
-                BCProgressHUD.dismiss()
+                case .failure(let error):
+                    if (error as NSError).code == NSURLErrorTimedOut {
+                        BCProgressHUD.showFailure(text: "Request timed out. Please try again.")
+                    } else {
+                        BCProgressHUD.showFailure(text: "No result.")
+                    }
             }
-            task.resume()
-        }
-        else {
-            print("Invalid URL.")
         }
     }
     
@@ -254,24 +216,34 @@ class DiscoverPageViewController: UIViewController {
         searchedNFTs.removeAll()
         recommendedNFTs.removeAll()
         
-        getRecommendationFromGPT()
-        semaphore.wait()
-        
-        self.formatCollectionName()
-        
-        for collection in recommendedCollections {
-            group.enter()
-            self.getRecommendedNFTs(collectionName: collection)
-        }
-        
-        group.notify(queue: .main) { [weak self] in
-            self?.recommendationCache = self?.recommendedNFTs
-            if !isBackground {
-                self?.updateRecommendationUI()
+        apiService.getRecommendationFromGPT(userNFTs: userNFTs) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+                case .success(let recommendedCollections):
+                    self.recommendedCollections = recommendedCollections
+                    
+                    let group = DispatchGroup()
+                    
+                    for collection in self.recommendedCollections {
+                        group.enter()
+                        self.getRecommendedNFTs(collectionName: collection) {
+                            group.leave()
+                        }
+                    }
+                    
+                    group.notify(queue: .main) { [weak self] in
+                        self?.recommendationCache = self?.recommendedNFTs
+                        if !isBackground {
+                            self?.updateRecommendationUI()
+                        }
+                    }
+                case .failure(let error):
+                    print("Error fetching recommendation: \(error.localizedDescription)")
             }
         }
     }
-
+    
     private func updateRecommendationUI() {
         DispatchQueue.main.async { [weak self] in
             if let layout = self?.discoverCollectionView.collectionViewLayout as? WaterFallFlowLayout {
@@ -284,153 +256,18 @@ class DiscoverPageViewController: UIViewController {
         }
     }
     
-    private func getRecommendationFromGPT() {
-        //TODO: error handle不遵照格式
-        let apiKey = Bundle.main.object(forInfoDictionaryKey: "OpenAI_API_Key") as? String
-        
-        guard let key = apiKey, !key.isEmpty else {
-            print("OpenAI API key does not exist.")
-            return
-        }
-        
-        if let url = URL(string: "https://api.openai.com/v1/chat/completions") {
-            var request = URLRequest(url: url)
-            request.setValue("application/json",
-                             forHTTPHeaderField: "Content-Type")
-            request.setValue("Bearer \(key)",
-                             forHTTPHeaderField: "Authorization")
-            if userNFTs.isEmpty {
-                openAIBody = OpenAIBody(messages: [
-                    ["role": "user", "content": """
-               Please suggest art NFT collections. Suggest NFT collections should be on Ethereum blockchain. Please suggest 5 NFT collections. Provide only the collection names in bullet pointsc (not numbered lists) and not any other responses. Please do not mention the artist's name. Please do not include double quotes for the response. Please also do not include symbols such as colon, semicolon or dash.
-               """]
-                ])
-                
-            } else {
-                var randomNFTs: [String] = []
-                randomNFTs.append(userNFTs.randomElement() ?? "")
-                randomNFTs.append(userNFTs.randomElement() ?? "")
-                randomNFTs.append(userNFTs.randomElement() ?? "")
-                print(randomNFTs)
-                
-                openAIBody = OpenAIBody(messages: [
-                    ["role": "user", "content": """
-               Generate recommendations for NFT collections similar to the following:
-               
-               Collection Name: \(randomNFTs)
-               Hosted blockchain: Ethereum
-               
-               Please suggest NFT collections that share similarities with the provided collection. Suggest NFT collections should be on Ethereum blockchain. Please suggest 5 NFT collections. Provide only the collection names in bullet pointsc (not numbered lists) and not any other responses. Please do not mention the artist's name. Please do not include double quotes for the response. Please also do not include symbols such as colon, semicolon or dash.
-               """]
-                ])
-            }
-           
-            request.httpBody = try? JSONEncoder().encode(openAIBody)
-            request.httpMethod = "POST"
+    private func getRecommendedNFTs(collectionName: String, completion: @escaping () -> Void) {
+        apiService.getRecommendedNFTs(collectionName: collectionName) { [weak self] result in
+            guard let self = self else { return }
             
-            if let postData = try? JSONEncoder().encode(openAIBody) {
-                if let jsonString = String(data: postData, encoding: .utf8) {
-                    print("Request JSON: \(jsonString)")
-                }
-                request.httpBody = postData
-            } else {
-                print("Failed to encode the JSON data")
-            }
-            
-            URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
-                if let data = data {
-                    do {
-                        let data = try JSONDecoder().decode(OpenAIResponse.self, from: data)
-                        self?.recommendedResponse = data.choices?[0].message?.content
-                        print("response: \(self?.recommendedResponse)")
-                    } catch {
-                        print(error.localizedDescription)
-                    }
-                }
-                if let httpResponse = response as? HTTPURLResponse {
-                    print("HTTP Status Code: \(httpResponse.statusCode)")
-                }
-                if let error = error {
-                    print("Error when post request to GPT API:\(error)")
+            switch result {
+                case .success(let recommendedNFTs):
+                    self.recommendedNFTs.append(contentsOf: recommendedNFTs)
                     
-                }
-                self?.semaphore.signal()
-            }.resume()
-        }
-        else {
-            print("Invalid URL.")
-        }
-    }
-    
-    private func formatCollectionName() {
-        guard let recommendedResponse = recommendedResponse else {
-            print("No response from GPT.")
-            return
-        }
-        self.recommendedCollections = recommendedResponse.split(separator: "\n").map { line -> String in
-            let trimmedLine = line.trimmingCharacters(in: .whitespacesAndNewlines)
-            if trimmedLine.hasPrefix("-") {
-                let collectionName = String(trimmedLine.dropFirst().trimmingCharacters(in: .whitespaces))
-                return collectionName.replacingOccurrences(of: " ", with: "")
-            } else {
-                return trimmedLine.replacingOccurrences(of: " ", with: "")
+                case.failure(let error):
+                    print("Error fetching recommended NFTs: \(error.localizedDescription)")
             }
-        }
-        print(recommendedCollections)
-    }
-    
-    private func getRecommendedNFTs(collectionName: String) {
-        let apiKey = Bundle.main.object(forInfoDictionaryKey: "NFTPort_API_Key") as? String
-        
-        guard let key = apiKey, !key.isEmpty else {
-            print("NFTPort API key does not exist.")
-            return
-        }
-        
-        if let url = URL(string: "https://api.nftport.xyz/v0/search?text=\(collectionName)&chain=ethereum&page_number=1&page_size=5&order_by=mint_date&sort_order=desc") {
-            
-            var request = URLRequest(url: url)
-            request.setValue("application/json", forHTTPHeaderField: "Accept")
-            request.setValue(key, forHTTPHeaderField: "Authorization")
-            request.httpMethod = "GET"
-            
-            let configuration = URLSessionConfiguration.default
-            configuration.timeoutIntervalForRequest = 4.0
-            configuration.timeoutIntervalForResource = 4.0
-            
-            let session = URLSession(configuration: configuration)
-            
-            let task = session.dataTask(with: request) { [weak self] data, response, error in
-                defer { self?.group.leave() }
-                
-                if let error = error {
-                    print(error)
-                    return
-                }
-                
-                guard let data = data else {
-                    print("No data.")
-                    return
-                }
-                
-                let decoder = JSONDecoder()
-                
-                do {
-                    let searchData = try decoder.decode(SearchNFT.self, from: data)
-                    print(searchData)
-                    for searchResult in searchData.searchResults ?? [] {
-                        self?.recommendedNFTs.append(DiscoverNFT(thumbnailUri: searchResult.cachedFileURL ?? "", displayUri: searchResult.cachedFileURL ?? "", contract: searchResult.contractAddress ?? "", title: searchResult.name, authorName: "", nftDescription: searchResult.description))
-                    }
-                    print(self?.recommendedNFTs)
-                }
-                catch {
-                    print("Error in JSON decoding.")
-                }
-            }
-            task.resume()
-        }
-        else {
-            print("Invalid URL.")
+            completion()
         }
     }
     
@@ -457,13 +294,13 @@ extension DiscoverPageViewController: UICollectionViewDelegateFlowLayout, UIColl
             fatalError("Cell cannot be created")
         }
         if isSearching {
-            discoverCollectionCell.imageView.loadImage(searchedNFTs[indexPath.row].thumbnailUri, placeHolder: UIImage(named: "AppIcon"))
+            discoverCollectionCell.imageView.loadImage(searchedNFTs[indexPath.row].thumbnailUri, placeHolder: UIImage(named: "placeholder"))
             discoverCollectionCell.titleLabel.text = searchedNFTs[indexPath.row].title
         } else if selectedPage == 0 {
-            discoverCollectionCell.imageView.loadImage(trendingNFTs[indexPath.row].thumbnailUri, placeHolder: UIImage(named: "AppIcon"))
+            discoverCollectionCell.imageView.loadImage(trendingNFTs[indexPath.row].thumbnailUri, placeHolder: UIImage(named: "placeholder"))
             discoverCollectionCell.titleLabel.text = trendingNFTs[indexPath.row].title
         } else {
-            discoverCollectionCell.imageView.loadImage(recommendedNFTs[indexPath.row].thumbnailUri, placeHolder: UIImage(named: "AppIcon"))
+            discoverCollectionCell.imageView.loadImage(recommendedNFTs[indexPath.row].thumbnailUri, placeHolder: UIImage(named: "placeholder"))
             discoverCollectionCell.titleLabel.text = recommendedNFTs[indexPath.row].title
         }
         
@@ -500,6 +337,8 @@ extension DiscoverPageViewController: UICollectionViewDelegateFlowLayout, UIColl
 extension DiscoverPageViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchedNFTs.removeAll()
+        self.currentOffset = 0
+        self.discoverCollectionView.resetNoMoreData()
         DispatchQueue.main.async { [weak self] in
             if let layout = self?.discoverCollectionView.collectionViewLayout as? WaterFallFlowLayout {
                 layout.clearCache()
@@ -510,6 +349,8 @@ extension DiscoverPageViewController: UISearchBarDelegate {
         
         if let searchText = nftSearchBar.text, searchText != "" {
             isSearching = true
+            hideHeaderLoader()
+            hideFooterLoader()
             searchNFT(keyword: searchText)
         }
         searchBar.resignFirstResponder()
@@ -518,6 +359,8 @@ extension DiscoverPageViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText == "" {
             isSearching = false
+            hideHeaderLoader()
+            hideFooterLoader()
             searchedNFTs.removeAll()
             DispatchQueue.main.async { [weak self] in
                 if let layout = self?.discoverCollectionView.collectionViewLayout as? WaterFallFlowLayout {
@@ -531,13 +374,6 @@ extension DiscoverPageViewController: UISearchBarDelegate {
 }
 
 extension DiscoverPageViewController {
-    private func generativeLiveDisplayUrl(uri: String) -> String {
-        let gateway = "https://gateway.fxhash.xyz/ipfs/"
-        let startIndex = uri.index(uri.startIndex, offsetBy: 7)
-        let newUri = String(uri[startIndex...])
-        return gateway + newUri
-    }
-    
     private func setupButtonTag() {
         let buttons = buttonStackView.subviews
         for (index, button) in buttons.enumerated() {
@@ -550,6 +386,18 @@ extension DiscoverPageViewController {
     
     @objc func changePage(sender: UIButton) {
         let queue = DispatchQueue(label: "concurrentQueue", attributes: .concurrent)
+        nftSearchBar.text = ""
+        isSearching = false
+        searchedNFTs.removeAll()
+        DispatchQueue.main.async { [weak self] in
+            if let layout = self?.discoverCollectionView.collectionViewLayout as? WaterFallFlowLayout {
+                layout.clearCache()
+            }
+            self?.discoverCollectionView.collectionViewLayout.invalidateLayout()
+            self?.discoverCollectionView.reloadData()
+        }
+        hideHeaderLoader()
+        hideFooterLoader()
         if sender.tag == 0 {
             if selectedPage == 0 { return }
             selectedPage = 0
@@ -577,6 +425,7 @@ extension DiscoverPageViewController {
                 fetchRecommendationData()
             }
         }
+        self.discoverCollectionView.reloadData()
         discoverCollectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
         
         // 動畫
