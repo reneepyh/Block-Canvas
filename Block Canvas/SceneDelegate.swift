@@ -17,8 +17,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
 
-//        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Settings", bundle: nil)
-//        let viewController = mainStoryboard.instantiateViewController(withIdentifier: "HiddenPageViewController") as? HiddenPageViewController
+//        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Portfolio", bundle: nil)
+//        let viewController = mainStoryboard.instantiateViewController(withIdentifier: "PortfolioListViewController") as? PortfolioListViewController
 //        UIApplication.shared.windows.first?.rootViewController = viewController
 //        UIApplication.shared.windows.first?.makeKeyAndVisible()
     }
