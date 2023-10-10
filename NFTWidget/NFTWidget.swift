@@ -62,7 +62,7 @@ struct NFTWidgetEntryView: View {
            let imageData = try? Data(contentsOf: nftInfo.url),
            let originalImage =  UIImage(data: imageData) {
             
-            let targetWidth: CGFloat = 300
+            let targetWidth: CGFloat = 220
             let scaleFactor = targetWidth / originalImage.size.width
             let targetHeight = originalImage.size.height * scaleFactor
             
