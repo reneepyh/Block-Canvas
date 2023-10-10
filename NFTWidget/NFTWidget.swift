@@ -60,8 +60,20 @@ struct NFTWidgetEntryView: View {
     var body: some View {
         if let nftInfo = entry.nftInfo,
            let imageData = try? Data(contentsOf: nftInfo.url),
-           let uiImage = UIImage(data: imageData) {
-            Image(uiImage: uiImage)
+           let originalImage =  UIImage(data: imageData) {
+            
+            let targetWidth: CGFloat = 300
+            let scaleFactor = targetWidth / originalImage.size.width
+            let targetHeight = originalImage.size.height * scaleFactor
+            
+            let newSize = CGSize(width: targetWidth, height: targetHeight)
+            let renderer = UIGraphicsImageRenderer(size: newSize)
+            
+            let resizedImageData = renderer.image { (context) in
+                originalImage.draw(in: CGRect(origin: .zero, size: newSize))
+            }
+            
+            Image(uiImage: resizedImageData)
                 .resizable()
                 .scaledToFill()
         } else {
