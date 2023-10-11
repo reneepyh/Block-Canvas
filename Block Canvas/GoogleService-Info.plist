@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyBzljXF8mMyn5BsF10woDTnXrhK2Twapq8</string>
+	<key>GCM_SENDER_ID</key>
+	<string>401367085475</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>reneehsu.Block-Canvas</string>
+	<key>PROJECT_ID</key>
+	<string>midterm-38ad3</string>
+	<key>STORAGE_BUCKET</key>
+	<string>midterm-38ad3.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:401367085475:ios:72b05bbb727f6391586a16</string>
+</dict>
+</plist>
