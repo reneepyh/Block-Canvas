@@ -148,7 +148,6 @@
 		DB58ED9C2AC956B50053AAB6 /* NFTIntentExtensionRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NFTIntentExtensionRelease.entitlements; sourceTree = "<group>"; };
 		DB58ED9D2AC95FA20053AAB6 /* NFTIntentExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NFTIntentExtension.entitlements; sourceTree = "<group>"; };
 		DB6318852AD243EE00EF1121 /* HiddenPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenPageViewController.swift; sourceTree = "<group>"; };
-		DB6853CF2AB2ECA100895EB9 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		DB6853D02AB2F38400895EB9 /* Discover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Discover.swift; sourceTree = "<group>"; };
 		DB68EBFE2AD0413F00D01B16 /* HiddenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenManager.swift; sourceTree = "<group>"; };
 		DB69818E2AB4604600BE0036 /* Portfolio.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Portfolio.storyboard; sourceTree = "<group>"; };
@@ -167,6 +166,7 @@
 		DBA57DCD2ABC32AF00C1CE30 /* WatchlistItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WatchlistItem+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		DBA57DD12ABC33AB00C1CE30 /* WatchlistManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistManager.swift; sourceTree = "<group>"; };
 		DBAACF112AC96D0B001C7E76 /* WidgetPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetPageViewController.swift; sourceTree = "<group>"; };
+		DBB688062AD6FD1A005F278F /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		DBB880312AB4B33600526E40 /* DetailPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPageViewController.swift; sourceTree = "<group>"; };
 		DBB9BDBB2AB44E07002A5FBC /* KingfisherWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingfisherWrapper.swift; sourceTree = "<group>"; };
 		DBC2CDDF2ACC3BEA0000974B /* LaunchAnimationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAnimationViewController.swift; sourceTree = "<group>"; };
@@ -319,8 +319,8 @@
 				DB1DBD2A2AB1D45B00F74B64 /* LaunchScreen.storyboard */,
 				DB1DBD2D2AB1D45B00F74B64 /* Info.plist */,
 				DB4937CE2AD6AAFC00242940 /* GoogleService-Info.plist */,
-				DB6853CF2AB2ECA100895EB9 /* Secrets.xcconfig */,
 				DBA57DC12ABC2F4200C1CE30 /* SettingsManager.xcdatamodeld */,
+				DBB688062AD6FD1A005F278F /* Secrets.xcconfig */,
 			);
 			path = "Block Canvas";
 			sourceTree = "<group>";
@@ -751,7 +751,7 @@
 /* Begin XCBuildConfiguration section */
 		DB1DBD2E2AB1D45B00F74B64 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DB6853CF2AB2ECA100895EB9 /* Secrets.xcconfig */;
+			baseConfigurationReference = DBB688062AD6FD1A005F278F /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -812,7 +812,7 @@
 		};
 		DB1DBD2F2AB1D45B00F74B64 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DB6853CF2AB2ECA100895EB9 /* Secrets.xcconfig */;
+			baseConfigurationReference = DBB688062AD6FD1A005F278F /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
