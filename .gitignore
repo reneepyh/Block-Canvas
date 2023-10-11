@@ -120,6 +120,7 @@ iOSInjectionProject/
 
 ### API Key ###
 Secrets.xcconfig
+GoogleService-Info.plist
 
 ### Xcode ###
 
