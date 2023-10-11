@@ -14,13 +14,13 @@
 	<string>$(Etherscan_API_Key)</string>
 	<key>Moralis_API_Key</key>
 	<string>$(Moralis_API_Key)</string>
+	<key>OpenAI_API_Key</key>
+	<string>$(OpenAI_API_Key)</string>
 	<key>NSUserActivityTypes</key>
 	<array>
 		<string>ConfigurationIntent</string>
 		<string>SelectNFTIntent</string>
 	</array>
-	<key>OpenAI_API_Key</key>
-	<string>$(OpenAI_API_Key)</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
