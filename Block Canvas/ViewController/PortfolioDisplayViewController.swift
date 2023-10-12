@@ -105,6 +105,7 @@ class PortfolioDisplayViewController: UIViewController {
                                 }
                             }
                         })
+                        print(self?.nftInfoForDisplay)
                         // for you
                         self?.nftInfoForDisplay?.forEach({ nft in
                             self?.userNFTs.append(nft.title)
@@ -200,7 +201,6 @@ class PortfolioDisplayViewController: UIViewController {
     private func setupDisplay() {
         guard let nftInfoForDisplay = nftInfoForDisplay else {
             print("Cannot create imageURLs.")
-            BCProgressHUD.showFailure(text: "No NFT to show.")
             return
         }
         
