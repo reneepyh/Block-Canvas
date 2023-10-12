@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let _ = (scene as? UIWindowScene) else { return }
 
 //        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Portfolio", bundle: nil)
-//        let viewController = mainStoryboard.instantiateViewController(withIdentifier: "PortfolioListViewController") as? PortfolioListViewController
+//        let viewController = mainStoryboard.instantiateViewController(withIdentifier: "AddressInputPageViewController") as? AddressInputPageViewController
 //        UIApplication.shared.windows.first?.rootViewController = viewController
 //        UIApplication.shared.windows.first?.makeKeyAndVisible()
     }

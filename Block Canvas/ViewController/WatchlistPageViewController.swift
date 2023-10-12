@@ -28,12 +28,13 @@ class WatchlistPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         fetchWatchlist()
-        setupUI()
+        setupNavTab()
     }
     
     private func setupUI() {
@@ -41,15 +42,18 @@ class WatchlistPageViewController: UIViewController {
         watchlistCollectionView.dataSource = self
         watchlistCollectionView.delegate = self
         watchlistCollectionView.backgroundColor = .primary
-        let navigationExtendHeight: UIEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
-        navigationController?.additionalSafeAreaInsets = navigationExtendHeight
-        tabBarController?.tabBar.isHidden = true
         
         view.addSubview(emptyView)
         emptyView.snp.makeConstraints { make in
             make.centerX.equalTo(view.snp.centerX)
             make.centerY.equalTo(view.snp.centerY)
         }
+    }
+    
+    private func setupNavTab() {
+        let navigationExtendHeight: UIEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
+        navigationController?.additionalSafeAreaInsets = navigationExtendHeight
+        tabBarController?.tabBar.isHidden = true
     }
     
     private func fetchWatchlist() {

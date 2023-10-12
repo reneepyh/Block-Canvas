@@ -53,34 +53,25 @@ class AddressInputPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        addressTextField.delegate = self
-        nameTextField.delegate = self
+        setupUI()
         findWallets()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupUI()
+        setupNavTab()
     }
     
     private func setupUI() {
         view.backgroundColor = .primary
         self.title = "add Wallet."
-        let navigationBar = self.navigationController?.navigationBar
-        navigationController?.additionalSafeAreaInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        let navigationBarAppearance = UINavigationBarAppearance()
-        navigationBarAppearance.configureWithOpaqueBackground()
-        navigationBarAppearance.backgroundColor = .primary
-        navigationBarAppearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.secondary, NSAttributedString.Key.font: UIFont.main(ofSize: 16)]
-        navigationBarAppearance.shadowColor = .clear
-        navigationBar?.standardAppearance = navigationBarAppearance
-        navigationBar?.scrollEdgeAppearance = navigationBarAppearance
-        
-        tabBarController?.tabBar.isHidden = true
         
         view.addSubview(addressTextField)
         view.addSubview(continueButton)
         view.addSubview(nameTextField)
+        addressTextField.delegate = self
+        nameTextField.delegate = self
+        
         addressTextField.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(50)
             make.leading.equalTo(view.snp.leading).offset(16)
@@ -97,6 +88,7 @@ class AddressInputPageViewController: UIViewController {
             make.centerX.equalTo(view)
             make.bottom.equalTo(view.snp.bottom).offset(-70)
             make.width.equalTo(view.snp.width).multipliedBy(0.9)
+            make.height.equalTo(40)
         }
         continueButton.addTarget(self, action: #selector(continueButtonTapped), for: .touchUpInside)
         
@@ -107,6 +99,20 @@ class AddressInputPageViewController: UIViewController {
         nameTextField.clearButtonMode = .unlessEditing
         nameTextField.autocapitalizationType = .none
         nameTextField.autocorrectionType = .no
+    }
+    
+    private func setupNavTab() {
+        let navigationBar = self.navigationController?.navigationBar
+        navigationController?.additionalSafeAreaInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        let navigationBarAppearance = UINavigationBarAppearance()
+        navigationBarAppearance.configureWithOpaqueBackground()
+        navigationBarAppearance.backgroundColor = .primary
+        navigationBarAppearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.secondary, NSAttributedString.Key.font: UIFont.main(ofSize: 16)]
+        navigationBarAppearance.shadowColor = .clear
+        navigationBar?.standardAppearance = navigationBarAppearance
+        navigationBar?.scrollEdgeAppearance = navigationBarAppearance
+        
+        tabBarController?.tabBar.isHidden = true
     }
     
     private func findWallets() {

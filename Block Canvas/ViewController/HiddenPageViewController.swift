@@ -28,12 +28,13 @@ class HiddenPageViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchHiddenNFTs()
-        setupUI()
+        setupNavTab()
     }
 
     private func setupUI() {
@@ -42,15 +43,18 @@ class HiddenPageViewController: UIViewController {
         hiddenCollectionView.dataSource = self
         hiddenCollectionView.delegate = self
         hiddenCollectionView.backgroundColor = .primary
-        let navigationExtendHeight: UIEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
-        navigationController?.additionalSafeAreaInsets = navigationExtendHeight
-        tabBarController?.tabBar.isHidden = true
         
         view.addSubview(emptyView)
         emptyView.snp.makeConstraints { make in
             make.centerX.equalTo(view.snp.centerX)
             make.centerY.equalTo(view.snp.centerY)
         }
+    }
+    
+    private func setupNavTab() {
+        let navigationExtendHeight: UIEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
+        navigationController?.additionalSafeAreaInsets = navigationExtendHeight
+        tabBarController?.tabBar.isHidden = true
     }
     
     private func fetchHiddenNFTs() {
