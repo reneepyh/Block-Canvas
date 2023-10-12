@@ -25,9 +25,6 @@
 		DB1DBD2C2AB1D45B00F74B64 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB1DBD2A2AB1D45B00F74B64 /* LaunchScreen.storyboard */; };
 		DB4422792AC2712C0038E34C /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4422782AC2712C0038E34C /* UIFont+Extension.swift */; };
 		DB4937CB2AD6A70F00242940 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB4937CA2AD6A70F00242940 /* FirebaseCrashlytics */; };
-		DB4937CF2AD6AAFC00242940 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB4937CE2AD6AAFC00242940 /* GoogleService-Info.plist */; };
-		DB4937D02AD6AAFC00242940 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB4937CE2AD6AAFC00242940 /* GoogleService-Info.plist */; };
-		DB4937D12AD6AAFC00242940 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB4937CE2AD6AAFC00242940 /* GoogleService-Info.plist */; };
 		DB4937D32AD6AE1E00242940 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB4937D22AD6AE1E00242940 /* FirebaseAnalytics */; };
 		DB4BFB2D2AB6A31C00187B1C /* PortfolioDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4BFB2C2AB6A31C00187B1C /* PortfolioDisplayViewController.swift */; };
 		DB4BFB2F2AB6AA1300187B1C /* PortfolioDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4BFB2E2AB6AA1300187B1C /* PortfolioDisplayView.swift */; };
@@ -64,6 +61,7 @@
 		DBE3CE552AC7FD1C00A85FB2 /* SettingsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE3CE542AC7FD1C00A85FB2 /* SettingsPageViewController.swift */; };
 		DBE3CE572AC80E2E00A85FB2 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE3CE562AC80E2E00A85FB2 /* SettingsCell.swift */; };
 		DBE93E262ACAC49B00ECF9E0 /* MJRefreshWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE93E252ACAC49B00ECF9E0 /* MJRefreshWrapper.swift */; };
+		DBEF31572AD7940200D648F4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DBEF31562AD7940200D648F4 /* GoogleService-Info.plist */; };
 		DBF329F22AC55DBB009DE67C /* DetailMetadataInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF329F12AC55DBB009DE67C /* DetailMetadataInfoCell.swift */; };
 		DBF45F472AB6E870002E5D31 /* ARDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF45F462AB6E870002E5D31 /* ARDisplayViewController.swift */; };
 		DBF5677F2AB85632007BFDA1 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBF5677E2AB85632007BFDA1 /* WidgetKit.framework */; };
@@ -135,7 +133,6 @@
 		DB1DBD2B2AB1D45B00F74B64 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DB1DBD2D2AB1D45B00F74B64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB4422782AC2712C0038E34C /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
-		DB4937CE2AD6AAFC00242940 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DB4BFB2C2AB6A31C00187B1C /* PortfolioDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioDisplayViewController.swift; sourceTree = "<group>"; };
 		DB4BFB2E2AB6AA1300187B1C /* PortfolioDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioDisplayView.swift; sourceTree = "<group>"; };
 		DB5386A82AC2B4700077672B /* DetailMetadataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMetadataCell.swift; sourceTree = "<group>"; };
@@ -175,6 +172,7 @@
 		DBE3CE542AC7FD1C00A85FB2 /* SettingsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPageViewController.swift; sourceTree = "<group>"; };
 		DBE3CE562AC80E2E00A85FB2 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		DBE93E252ACAC49B00ECF9E0 /* MJRefreshWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MJRefreshWrapper.swift; sourceTree = "<group>"; };
+		DBEF31562AD7940200D648F4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DBF329F12AC55DBB009DE67C /* DetailMetadataInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMetadataInfoCell.swift; sourceTree = "<group>"; };
 		DBF45F462AB6E870002E5D31 /* ARDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARDisplayViewController.swift; sourceTree = "<group>"; };
 		DBF5677D2AB85632007BFDA1 /* NFTWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NFTWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -318,9 +316,9 @@
 				DBA478762AB2B29C0014E825 /* BCTabBarController.swift */,
 				DB1DBD2A2AB1D45B00F74B64 /* LaunchScreen.storyboard */,
 				DB1DBD2D2AB1D45B00F74B64 /* Info.plist */,
-				DB4937CE2AD6AAFC00242940 /* GoogleService-Info.plist */,
 				DBA57DC12ABC2F4200C1CE30 /* SettingsManager.xcdatamodeld */,
 				DBB688062AD6FD1A005F278F /* Secrets.xcconfig */,
+				DBEF31562AD7940200D648F4 /* GoogleService-Info.plist */,
 			);
 			path = "Block Canvas";
 			sourceTree = "<group>";
@@ -533,7 +531,7 @@
 				DB00B65F2AC6C72100AE8164 /* tap.json in Resources */,
 				DB1DBD272AB1D45A00F74B64 /* Main.storyboard in Resources */,
 				DB0C67932AC9B591007C960A /* widget.json in Resources */,
-				DB4937CF2AD6AAFC00242940 /* GoogleService-Info.plist in Resources */,
+				DBEF31572AD7940200D648F4 /* GoogleService-Info.plist in Resources */,
 				DB00B6632AC7F78B00AE8164 /* pinch to zoom.json in Resources */,
 				DB08647E2ABC3D04004598D6 /* Settings.storyboard in Resources */,
 			);
@@ -543,7 +541,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB4937D12AD6AAFC00242940 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -552,7 +549,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DBF567892AB85633007BFDA1 /* Assets.xcassets in Resources */,
-				DB4937D02AD6AAFC00242940 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -882,7 +878,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Block Canvas";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera for augmented reality.";
-				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We need access to save photos.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We request access to your photos to save pictures you capture in the AR view. ";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = Main.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -920,7 +916,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Block Canvas";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera for augmented reality.";
-				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We need access to save photos.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We request access to your photos to save pictures you capture in the AR view. ";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = Main.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
