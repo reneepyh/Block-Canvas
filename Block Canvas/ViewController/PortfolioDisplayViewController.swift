@@ -27,17 +27,15 @@ class PortfolioDisplayViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         getNFTsByWallet()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
         setupUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        setupNavTab()
+    }
+    
     private func setupUI() {
-        navigationController?.navigationBar.isHidden = true
         view.backgroundColor = .primary
-        tabBarController?.tabBar.isHidden = true
-        
         view.addSubview(backButton)
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         backButton.snp.makeConstraints { make in
@@ -46,6 +44,12 @@ class PortfolioDisplayViewController: UIViewController {
             make.width.equalTo(16)
         }
     }
+    
+    private func setupNavTab() {
+        navigationController?.navigationBar.isHidden = true
+        tabBarController?.tabBar.isHidden = true
+    }
+    
     // swiftlint: disable function_body_length
     private func getNFTsByWallet() {
         BCProgressHUD.show()

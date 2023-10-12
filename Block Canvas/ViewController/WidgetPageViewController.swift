@@ -19,17 +19,30 @@ class WidgetPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
+        setupUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        setupUI()
+        setupNavTab()
         fetchWallets()
     }
     
     private func setupUI() {
         view.backgroundColor = .primary
         self.title = "choose wallet."
+        navigationItem.backButtonTitle = ""
+    }
+    
+    private func setupTableView() {
+        walletListTableView.dataSource = self
+        walletListTableView.delegate = self
+        walletListTableView.backgroundColor = .primary
+        walletListTableView.rowHeight = UITableView.automaticDimension
+        walletListTableView.estimatedRowHeight = 200
+    }
+    
+    private func setupNavTab() {
         let navigationBar = self.navigationController?.navigationBar
         navigationController?.additionalSafeAreaInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         let navigationBarAppearance = UINavigationBarAppearance()
@@ -41,14 +54,6 @@ class WidgetPageViewController: UIViewController {
         navigationBar?.scrollEdgeAppearance = navigationBarAppearance
         navigationItem.backButtonTitle = ""
         tabBarController?.tabBar.isHidden = true
-    }
-    
-    private func setupTableView() {
-        walletListTableView.dataSource = self
-        walletListTableView.delegate = self
-        walletListTableView.backgroundColor = .primary
-        walletListTableView.rowHeight = UITableView.automaticDimension
-        walletListTableView.estimatedRowHeight = 200
     }
     
     private func fetchWallets() {

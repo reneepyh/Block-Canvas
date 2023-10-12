@@ -52,13 +52,13 @@ class DiscoverPageViewController: UIViewController {
         super.viewDidLoad()
         setupCollectionView()
         setupButtonTag()
-        nftSearchBar.delegate = self
+        setupUI()
         getTrending()
         fetchRecommendationInBackground()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        setupUI()
+        setupNavTab()
     }
     
     private func setupCollectionView() {
@@ -145,7 +145,10 @@ class DiscoverPageViewController: UIViewController {
         nftSearchBar.searchTextField.clearButtonMode = .unlessEditing
         nftSearchBar.searchTextField.autocapitalizationType = .none
         nftSearchBar.searchTextField.autocorrectionType = .no
-        
+        nftSearchBar.delegate = self
+    }
+    
+    private func setupNavTab() {
         let navigationExtendHeight: UIEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
         navigationController?.additionalSafeAreaInsets = navigationExtendHeight
         
