@@ -63,7 +63,7 @@ class BCProgressHUD {
         shared.hud.indicatorView = JGProgressHUDErrorIndicatorView()
         if let view = shared.view {
             shared.hud.show(in: view)
-            shared.hud.dismiss(afterDelay: 1)
+            shared.hud.dismiss(afterDelay: 2)
         }
     }
     
