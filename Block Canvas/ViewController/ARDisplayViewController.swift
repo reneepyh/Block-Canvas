@@ -213,7 +213,7 @@ extension ARDisplayViewController {
             ac.addAction(UIAlertAction(title: "OK", style: .default))
             present(ac, animated: true)
         } else {
-            BCProgressHUD.showSuccess(text: "Saved Successfully", view: sceneView)
+            BCProgressHUD.showSuccess(text: "Saved", view: sceneView)
         }
     }
 }

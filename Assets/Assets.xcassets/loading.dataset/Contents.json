@@ -1,8 +1,9 @@
 {
   "data" : [
     {
-      "filename" : "loading.gif",
-      "idiom" : "universal"
+      "filename" : "Block Canvas (2).gif",
+      "idiom" : "universal",
+      "universal-type-identifier" : "com.compuserve.gif"
     }
   ],
   "info" : {

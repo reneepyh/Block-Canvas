@@ -313,7 +313,6 @@
 				DB6853D22AB3637A00895EB9 /* Model */,
 				DB1DBD1F2AB1D45A00F74B64 /* AppDelegate.swift */,
 				DB1DBD212AB1D45A00F74B64 /* SceneDelegate.swift */,
-				DBA478762AB2B29C0014E825 /* BCTabBarController.swift */,
 				DB1DBD2A2AB1D45B00F74B64 /* LaunchScreen.storyboard */,
 				DB1DBD2D2AB1D45B00F74B64 /* Info.plist */,
 				DBA57DC12ABC2F4200C1CE30 /* SettingsManager.xcdatamodeld */,
@@ -383,6 +382,7 @@
 				DB0C67942AC9B892007C960A /* WidgetWalletSelectedViewController.swift */,
 				DBC2CDDF2ACC3BEA0000974B /* LaunchAnimationViewController.swift */,
 				DB6318852AD243EE00EF1121 /* HiddenPageViewController.swift */,
+				DBA478762AB2B29C0014E825 /* BCTabBarController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";

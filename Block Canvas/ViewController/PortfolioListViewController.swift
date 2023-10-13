@@ -199,6 +199,7 @@ extension PortfolioListViewController: UITableViewDelegate, UITableViewDataSourc
             fatalError("Cannot find wallet address.")
         }
         walletCell.addressLabel.text = address
+        walletCell.arrowImageView.image = UIImage(systemName: "chevron.forward")?.withTintColor(.secondary, renderingMode: .alwaysOriginal)
         walletCell.walletNameTextField.delegate = self
         walletCell.walletNameTextField.text = walletAddresses[indexPath.row]["name"]
         walletCell.walletNameTextField.isUserInteractionEnabled = false
