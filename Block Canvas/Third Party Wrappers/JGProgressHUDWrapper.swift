@@ -78,7 +78,7 @@ class BCProgressHUD {
         shared.hud.textLabel.textColor = .secondaryBlur
         
         if shared.hud.textLabel.text == "" {
-            shared.hud.contentInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+            shared.hud.contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         } else {
             shared.hud.contentInsets = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
         }
