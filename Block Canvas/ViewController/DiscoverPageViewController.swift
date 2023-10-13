@@ -52,13 +52,13 @@ class DiscoverPageViewController: UIViewController {
         super.viewDidLoad()
         setupCollectionView()
         setupButtonTag()
-        nftSearchBar.delegate = self
+        setupUI()
         getTrending()
         fetchRecommendationInBackground()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        setupUI()
+        setupNavTab()
     }
     
     private func setupCollectionView() {
@@ -145,7 +145,10 @@ class DiscoverPageViewController: UIViewController {
         nftSearchBar.searchTextField.clearButtonMode = .unlessEditing
         nftSearchBar.searchTextField.autocapitalizationType = .none
         nftSearchBar.searchTextField.autocorrectionType = .no
-        
+        nftSearchBar.delegate = self
+    }
+    
+    private func setupNavTab() {
         let navigationExtendHeight: UIEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
         navigationController?.additionalSafeAreaInsets = navigationExtendHeight
         
@@ -191,9 +194,7 @@ class DiscoverPageViewController: UIViewController {
                 case .success(let nfts):
                     self?.searchedNFTs = nfts
                     if nfts.count == 0 {
-                        BCProgressHUD.show(text: "No result.")
-                        sleep(1)
-                        BCProgressHUD.dismiss()
+                        BCProgressHUD.showFailure(text: "No result.")
                     } else {
                         self?.currentOffset += 10
                         DispatchQueue.main.async {
@@ -203,7 +204,7 @@ class DiscoverPageViewController: UIViewController {
                     }
                 case .failure(let error):
                     if (error as NSError).code == NSURLErrorTimedOut {
-                        BCProgressHUD.showFailure(text: "Request timed out. Please try again.")
+                        BCProgressHUD.showFailure(text: "Internet error. Please try again.")
                     } else {
                         BCProgressHUD.showFailure(text: "No result.")
                     }
@@ -222,6 +223,7 @@ class DiscoverPageViewController: UIViewController {
             switch result {
                 case .success(let recommendedCollections):
                     self.recommendedCollections = recommendedCollections
+                    print(recommendedCollections)
                     
                     let group = DispatchGroup()
                     
@@ -233,13 +235,18 @@ class DiscoverPageViewController: UIViewController {
                     }
                     
                     group.notify(queue: .main) { [weak self] in
-                        self?.recommendationCache = self?.recommendedNFTs
-                        if !isBackground {
-                            self?.updateRecommendationUI()
+                        if self?.recommendedNFTs.count == 0 {
+                            BCProgressHUD.showFailure(text: "Internet error. Please try again.")
+                        } else {
+                            self?.recommendationCache = self?.recommendedNFTs
+                            if !isBackground {
+                                self?.updateRecommendationUI()
+                            }
                         }
                     }
                 case .failure(let error):
                     print("Error fetching recommendation: \(error.localizedDescription)")
+                    BCProgressHUD.showFailure(text: "Internet error. Please try again.")
             }
         }
     }
@@ -263,7 +270,6 @@ class DiscoverPageViewController: UIViewController {
             switch result {
                 case .success(let recommendedNFTs):
                     self.recommendedNFTs.append(contentsOf: recommendedNFTs)
-                    
                 case.failure(let error):
                     print("Error fetching recommended NFTs: \(error.localizedDescription)")
             }

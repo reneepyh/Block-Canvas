@@ -12,8 +12,11 @@ class BCTabBarController: UITabBarController {
     
     private var orderObserver: NSKeyValueObservation?
     
+    private let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.delegate = self
         self.viewControllers = tabs.map { $0.makeViewController() }
     }
     
@@ -72,5 +75,11 @@ extension BCTabBarController {
                     return UIImage(named: "settings_selected")
             }
         }
+    }
+}
+
+extension BCTabBarController: UITabBarControllerDelegate {
+    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        feedbackGenerator.impactOccurred()
     }
 }

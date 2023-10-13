@@ -13,11 +13,12 @@ class SettingsPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
+        view.backgroundColor = .primary
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        setupUI()
+        setupNavTab()
     }
     
     private func setupTableView() {
@@ -28,8 +29,7 @@ class SettingsPageViewController: UIViewController {
         settingsTableView.rowHeight = 60
     }
     
-    private func setupUI() {
-        view.backgroundColor = .primary
+    private func setupNavTab() {
         let navigationBar = self.navigationController?.navigationBar
         let navigationBarAppearance = UINavigationBarAppearance()
         navigationBarAppearance.configureWithOpaqueBackground()
@@ -38,13 +38,12 @@ class SettingsPageViewController: UIViewController {
         navigationBarAppearance.shadowColor = .clear
         navigationBar?.standardAppearance = navigationBarAppearance
         navigationBar?.scrollEdgeAppearance = navigationBarAppearance
-        navigationItem.backButtonTitle = ""
         let navigationExtendHeight: UIEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
         navigationController?.additionalSafeAreaInsets = navigationExtendHeight
         navigationItem.backButtonTitle = ""
+        
         tabBarController?.tabBar.isHidden = false
     }
-    
 }
 
 extension SettingsPageViewController: UITableViewDelegate, UITableViewDataSource {

@@ -106,14 +106,15 @@ class CryptoPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
         setupETHLabelUI()
         setupETHChartUI()
         setupXTZLabelUI()
         setupXTZChartUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        navigationController?.navigationBar.isHidden = true
         getETHGasFee()
         getETHCurrentPrice()
         getXTZCurrentPrice()
@@ -564,7 +565,6 @@ class CryptoPageViewController: UIViewController {
     }
     
     private func setupETHLabelUI() {
-        navigationController?.navigationBar.isHidden = true
         view.backgroundColor = .primary
         
         view.addSubview(ethIconImageView)
@@ -623,7 +623,6 @@ class CryptoPageViewController: UIViewController {
     }
     
     private func setupXTZLabelUI() {
-        navigationController?.navigationBar.isHidden = true
         view.backgroundColor = .primary
     
         view.addSubview(xtzIconImageView)

@@ -34,17 +34,17 @@ class PortfolioListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
+        setupUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        setupUI()
         fetchWallets()
         balance.removeAll()
         walletAddresses.forEach { wallet in
             fetchWalletBalance(address: wallet["address"] ?? "")
         }
-        tabBarController?.tabBar.isHidden = false
+        setupNavTab()
     }
     
     private func setupTableView() {
@@ -57,6 +57,17 @@ class PortfolioListViewController: UIViewController {
     
     private func setupUI() {
         view.backgroundColor = .primary
+        navigationItem.backButtonTitle = ""
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "", image: UIImage(systemName: "plus.circle.fill")?.withTintColor(.secondary, renderingMode: .alwaysOriginal), target: self, action: #selector(addWallet))
+        // 如不內建demo錢包，加入以下empty view
+//        view.addSubview(emptyView)
+//        emptyView.snp.makeConstraints { make in
+//            make.centerX.equalTo(view.snp.centerX)
+//            make.centerY.equalTo(view.snp.centerY)
+//        }
+    }
+    
+    private func setupNavTab() {
         navigationController?.navigationBar.isHidden = false
         let navigationBar = self.navigationController?.navigationBar
         let navigationBarAppearance = UINavigationBarAppearance()
@@ -66,16 +77,10 @@ class PortfolioListViewController: UIViewController {
         navigationBarAppearance.shadowColor = .clear
         navigationBar?.standardAppearance = navigationBarAppearance
         navigationBar?.scrollEdgeAppearance = navigationBarAppearance
-        navigationItem.backButtonTitle = ""
         let navigationExtendHeight: UIEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
         navigationController?.additionalSafeAreaInsets = navigationExtendHeight
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "", image: UIImage(systemName: "plus.circle.fill")?.withTintColor(.secondary, renderingMode: .alwaysOriginal), target: self, action: #selector(addWallet))
-        // 如不內建demo錢包，加入以下empty view
-//        view.addSubview(emptyView)
-//        emptyView.snp.makeConstraints { make in
-//            make.centerX.equalTo(view.snp.centerX)
-//            make.centerY.equalTo(view.snp.centerY)
-//        }
+        
+        tabBarController?.tabBar.isHidden = false
     }
     
     private func fetchWallets() {
@@ -194,6 +199,7 @@ extension PortfolioListViewController: UITableViewDelegate, UITableViewDataSourc
             fatalError("Cannot find wallet address.")
         }
         walletCell.addressLabel.text = address
+        walletCell.arrowImageView.image = UIImage(systemName: "chevron.forward")?.withTintColor(.secondary, renderingMode: .alwaysOriginal)
         walletCell.walletNameTextField.delegate = self
         walletCell.walletNameTextField.text = walletAddresses[indexPath.row]["name"]
         walletCell.walletNameTextField.isUserInteractionEnabled = false

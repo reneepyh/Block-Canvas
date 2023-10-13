@@ -28,15 +28,6 @@ class BCProgressHUD {
         return nil
     }
     
-//    static func show(type: HUDType) {
-//        switch type {
-//            case .success(let text):
-//                showSuccess(text: text)
-//            case .failure(let text):
-//                showFailure(text: text)
-//        }
-//    }
-    
     static func showSuccess(text: String = "Success", view: UIView) {
         if !Thread.isMainThread {
             DispatchQueue.main.async {
@@ -63,24 +54,35 @@ class BCProgressHUD {
         shared.hud.indicatorView = JGProgressHUDErrorIndicatorView()
         if let view = shared.view {
             shared.hud.show(in: view)
-            shared.hud.dismiss(afterDelay: 1)
+            shared.hud.dismiss(afterDelay: 2)
         }
     }
     
-    static func show(text: String = "Loading") {
+    static func show(text: String = "") {
         if !Thread.isMainThread {
             DispatchQueue.main.async {
                 show(text: text)
             }
             return
         }
+        
         guard let loadingGif = UIImage.gif(asset: "loading") else {
             print("Cannot find loading gif.")
             return
         }
-        shared.hud.indicatorView = JGProgressHUDImageIndicatorView(image: loadingGif)
+        
+        let gifIndicator = CustomGIFIndicatorView(gifImage: loadingGif)
+        
+        shared.hud.indicatorView = gifIndicator
         shared.hud.textLabel.text = text
         shared.hud.textLabel.textColor = .secondaryBlur
+        
+        if shared.hud.textLabel.text == "" {
+            shared.hud.contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        } else {
+            shared.hud.contentInsets = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
+        }
+        
         if let view = shared.view {
             shared.hud.show(in: view)
         }
@@ -94,5 +96,24 @@ class BCProgressHUD {
             return
         }
         shared.hud.dismiss()
+    }
+}
+
+class CustomGIFIndicatorView: JGProgressHUDImageIndicatorView {
+    private var gifImageView: UIImageView!
+    
+    init(gifImage: UIImage?) {
+        super.init(image: UIImage())
+        self.frame = CGRect(x: 0, y: 0, width: 70, height: 70)
+        gifImageView = UIImageView()
+        gifImageView.frame = self.bounds
+        gifImageView.contentMode = .scaleAspectFit
+        gifImageView.clipsToBounds = true
+        gifImageView.image = gifImage
+        addSubview(gifImageView)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
