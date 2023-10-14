@@ -59,7 +59,7 @@ class WatchlistPageViewController: UIViewController {
     private func fetchWatchlist() {
         if let fetchedWatchlistItems = WatchlistManager.shared.fetchWatchlistItems() {
             watchlistNFTs = fetchedWatchlistItems.map({ managedObject in
-                return DiscoverNFT(thumbnailUri: managedObject.value(forKey: "thumbnailUri") as? String ?? "", displayUri: managedObject.value(forKey: "displayUri") as? String ?? "", contract: managedObject.value(forKey: "contract") as? String ?? "", title: managedObject.value(forKey: "title") as? String, authorName: managedObject.value(forKey: "authorName") as? String, nftDescription: managedObject.value(forKey: "nftDescription") as? String)
+                return DiscoverNFT(thumbnailUri: managedObject.value(forKey: "thumbnailUri") as? String ?? "", displayUri: managedObject.value(forKey: "displayUri") as? String ?? "", contract: managedObject.value(forKey: "contract") as? String ?? "", title: managedObject.value(forKey: "title") as? String, authorName: managedObject.value(forKey: "authorName") as? String, nftDescription: managedObject.value(forKey: "nftDescription") as? String, id: managedObject.value(forKey: "id") as? String ?? "")
             })
             emptyView.isHidden = !watchlistNFTs.isEmpty
             watchlistCollectionView.reloadData()

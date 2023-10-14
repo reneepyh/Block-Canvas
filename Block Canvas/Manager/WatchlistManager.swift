@@ -41,6 +41,7 @@ class WatchlistManager {
         watchlistItem.setValue(discoverNFTAdded.nftDescription, forKey: "nftDescription")
         watchlistItem.setValue(discoverNFTAdded.thumbnailUri, forKey: "thumbnailUri")
         watchlistItem.setValue(discoverNFTAdded.displayUri, forKey: "displayUri")
+        watchlistItem.setValue(discoverNFTAdded.id, forKey: "id")
         
         do {
             try managedContext.save()
