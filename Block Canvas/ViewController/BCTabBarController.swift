@@ -12,7 +12,7 @@ class BCTabBarController: UITabBarController {
     
     private var orderObserver: NSKeyValueObservation?
     
-    private let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
+    private let feedbackGenerator = UIImpactFeedbackGenerator(style: .light)
     
     override func viewDidLoad() {
         super.viewDidLoad()
