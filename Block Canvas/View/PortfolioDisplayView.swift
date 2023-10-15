@@ -105,13 +105,6 @@ struct PortfolioDisplay: View {
                                                 .font(.system(size: 16))
                                                 .lineLimit(nil)
                                                 .foregroundColor(Color(uiColor: .secondary))
-                                            
-                                            Text(nftInfo.contract)
-                                                .frame(width: 300, alignment: .leading)
-                                                .font(.footnote)
-                                                .font(.system(size: 16))
-                                                .lineLimit(nil)
-                                                .foregroundColor(Color(uiColor: .secondary))
                                         }
                                     }
                                     .transition(.slide)

@@ -63,7 +63,7 @@ class HiddenPageViewController: UIViewController {
                 guard let displayURL = URL(string: managedObject.value(forKey: "displayUri") as? String ?? "") else {
                     fatalError("Cannot create display URL.")
                 }
-                return NFTInfoForDisplay(url: displayURL, title: managedObject.value(forKey: "title") as? String ?? "", artist: managedObject.value(forKey: "artist") as? String ?? "", description: managedObject.value(forKey: "nftDescription") as? String ?? "", contract: managedObject.value(forKey: "contract") as? String ?? "")
+                return NFTInfoForDisplay(url: displayURL, title: managedObject.value(forKey: "title") as? String ?? "", artist: managedObject.value(forKey: "artist") as? String ?? "", description: managedObject.value(forKey: "nftDescription") as? String ?? "")
             })
             emptyView.isHidden = !hiddenNFTs.isEmpty
             hiddenCollectionView.reloadData()
