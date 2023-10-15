@@ -10,19 +10,23 @@ import SwiftUI
 import SnapKit
 // swiftlint: disable type_body_length
 class CryptoPageViewController: UIViewController {
-    private var ethPriceData: [EthHistoryPriceData] = []
+    private var ethData = CryptoData()
     
-    private var ethCurrentPrice: String?
+    private var xtzData = CryptoData()
     
-    private var ethPriceChange: String?
-    
-    private var xtzPriceData: [EthHistoryPriceData] = []
-    
-    private var xtzCurrentPrice: String?
-    
-    private var xtzPriceChange: String?
-    
-    private var ethGasFee: String?
+//    private var ethPriceData: [HistoryPriceData] = []
+//
+//    private var ethCurrentPrice: String?
+//
+//    private var ethPriceChange: String?
+//
+//    private var xtzPriceData: [HistoryPriceData] = []
+//
+//    private var xtzCurrentPrice: String?
+//
+//    private var xtzPriceChange: String?
+//
+//    private var ethGasFee: String?
     
     private var previousEthPrice: Double?
     
@@ -128,8 +132,8 @@ class CryptoPageViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         updateTimer?.invalidate()
-        ethPriceData = []
-        xtzPriceData = []
+        ethData.historyPriceData = []
+        xtzData.historyPriceData = []
     }
     
     private func startTimer() {
@@ -167,10 +171,10 @@ class CryptoPageViewController: UIViewController {
                 let decoder = JSONDecoder()
                 
                 do {
-                    let ethCurrentPrice = try decoder.decode(EthCurrentPriceData.self, from: data)
+                    let ethCurrentPrice = try decoder.decode(CryptoCurrentPriceData.self, from: data)
                     let doubledCurrentPrice = Double(ethCurrentPrice.price)
                     let floored = floor((doubledCurrentPrice ?? 0) * 100) / 100
-                    self?.ethCurrentPrice = "US$\(String(floored))"
+                    self?.ethData.currentPrice = "US$\(String(floored))"
                     
                     if let previousEthPrice = self?.previousEthPrice {
                         if let doubledCurrentPrice = doubledCurrentPrice {
@@ -187,7 +191,7 @@ class CryptoPageViewController: UIViewController {
                     print("Error in JSON decoding.")
                 }
                 DispatchQueue.main.async { [weak self] in
-                    self?.ethPriceLabel.text = self?.ethCurrentPrice
+                    self?.ethPriceLabel.text = self?.ethData.currentPrice
                 }
             }
             task.resume()
@@ -227,10 +231,10 @@ class CryptoPageViewController: UIViewController {
                 let decoder = JSONDecoder()
                 
                 do {
-                    let ethCurrentPrice = try decoder.decode(EthCurrentPriceData.self, from: data)
+                    let ethCurrentPrice = try decoder.decode(CryptoCurrentPriceData.self, from: data)
                     let doubledCurrentPrice = Double(ethCurrentPrice.price)
                     let floored = floor((doubledCurrentPrice ?? 0) * 1000) / 1000
-                    self?.xtzCurrentPrice = "US$\(String(floored))"
+                    self?.xtzData.currentPrice = "US$\(String(floored))"
                     
                     if let previousXTZPrice = self?.previousXTZPrice {
                         if let doubledCurrentPrice = doubledCurrentPrice {
@@ -247,7 +251,7 @@ class CryptoPageViewController: UIViewController {
                     print("Error in JSON decoding.")
                 }
                 DispatchQueue.main.async { [weak self] in
-                    self?.xtzPriceLabel.text = self?.xtzCurrentPrice
+                    self?.xtzPriceLabel.text = self?.xtzData.currentPrice
                 }
             }
             task.resume()
@@ -287,16 +291,16 @@ class CryptoPageViewController: UIViewController {
                 let decoder = JSONDecoder()
                 
                 do {
-                    let ethPriceChange = try decoder.decode(EthPriceChange.self, from: data)
+                    let ethPriceChange = try decoder.decode(CryptoPriceChange.self, from: data)
                     let doubled = Double(ethPriceChange.priceChangePercent)
                     let floored = floor((doubled ?? 0) * 100) / 100
-                    self?.ethPriceChange = String(floored)
+                    self?.ethData.priceChange = String(floored)
                 }
                 catch {
                     print("Error in JSON decoding.")
                 }
                 DispatchQueue.main.async { [weak self] in
-                    if let priceChange = self?.ethPriceChange, let change = Double(priceChange) {
+                    if let priceChange = self?.ethData.priceChange, let change = Double(priceChange) {
                         if change > 0 {
                             var config = UIButton.Configuration.filled()
                             config.title = "\(priceChange)%"
@@ -365,16 +369,16 @@ class CryptoPageViewController: UIViewController {
                 let decoder = JSONDecoder()
                 
                 do {
-                    let xtzPriceChange = try decoder.decode(EthPriceChange.self, from: data)
+                    let xtzPriceChange = try decoder.decode(CryptoPriceChange.self, from: data)
                     let doubled = Double(xtzPriceChange.priceChangePercent)
                     let floored = floor((doubled ?? 0) * 100) / 100
-                    self?.xtzPriceChange = String(floored)
+                    self?.xtzData.priceChange = String(floored)
                 }
                 catch {
                     print("Error in JSON decoding.")
                 }
                 DispatchQueue.main.async { [weak self] in
-                    if let priceChange = self?.xtzPriceChange, let change = Double(priceChange) {
+                    if let priceChange = self?.xtzData.priceChange, let change = Double(priceChange) {
                         if change > 0 {
                             var config = UIButton.Configuration.filled()
                             config.title = "\(priceChange)%"
@@ -443,13 +447,13 @@ class CryptoPageViewController: UIViewController {
                 
                 do {
                     let ethGasFee = try decoder.decode(EthGasFee.self, from: data)
-                    self?.ethGasFee = "\(ethGasFee.result?.proposeGasPrice ?? "") gwei"
+                    self?.ethData.gasFee = "\(ethGasFee.result?.proposeGasPrice ?? "") gwei"
                 }
                 catch {
                     print("Error in JSON decoding.")
                 }
                 DispatchQueue.main.async { [weak self] in
-                    self?.gasFeeLabel.text = self?.ethGasFee
+                    self?.gasFeeLabel.text = self?.ethData.gasFee
                 }
             }
             task.resume()
@@ -484,18 +488,18 @@ class CryptoPageViewController: UIViewController {
                 let decoder = JSONDecoder()
                 
                 do {
-                    let ethPrice = try decoder.decode(EthHistoryPrice.self, from: data)
+                    let ethPrice = try decoder.decode(CryptoHistoryPrice.self, from: data)
                     for ethPriceData in ethPrice.data {
                         let unixTimestampSeconds = Double(ethPriceData.time) / 1000.0
                         let date = Date(timeIntervalSince1970: unixTimestampSeconds)
-                        self?.ethPriceData.append(EthHistoryPriceData(price: Double(ethPriceData.priceUsd) ?? 0, time: date))
+                        self?.ethData.historyPriceData?.append(HistoryPriceData(price: Double(ethPriceData.priceUsd) ?? 0, time: date))
                     }
                 }
                 catch {
                     print("Error in JSON decoding.")
                 }
                 DispatchQueue.main.async { [weak self] in
-                    guard let ethPriceData = self?.ethPriceData else {
+                    guard let ethPriceData = self?.ethData.historyPriceData else {
                         print("Cannot fetch ethPriceData.")
                         BCProgressHUD.showFailure()
                         return
@@ -536,18 +540,18 @@ class CryptoPageViewController: UIViewController {
                 let decoder = JSONDecoder()
                 
                 do {
-                    let xtzPrice = try decoder.decode(EthHistoryPrice.self, from: data)
+                    let xtzPrice = try decoder.decode(CryptoHistoryPrice.self, from: data)
                     for xtzPriceData in xtzPrice.data {
                         let unixTimestampSeconds = Double(xtzPriceData.time) / 1000.0
                         let date = Date(timeIntervalSince1970: unixTimestampSeconds)
-                        self?.xtzPriceData.append(EthHistoryPriceData(price: Double(xtzPriceData.priceUsd) ?? 0, time: date))
+                        self?.xtzData.historyPriceData?.append(HistoryPriceData(price: Double(xtzPriceData.priceUsd) ?? 0, time: date))
                     }
                 }
                 catch {
                     print("Error in JSON decoding.")
                 }
                 DispatchQueue.main.async { [weak self] in
-                    guard let xtzPriceData = self?.xtzPriceData else {
+                    guard let xtzPriceData = self?.xtzData.historyPriceData else {
                         print("Cannot fetch xtzPriceData.")
                         BCProgressHUD.showFailure()
                         return

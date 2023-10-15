@@ -23,6 +23,7 @@
 		DB1DBD272AB1D45A00F74B64 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB1DBD252AB1D45A00F74B64 /* Main.storyboard */; };
 		DB1DBD292AB1D45B00F74B64 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB1DBD282AB1D45B00F74B64 /* Assets.xcassets */; };
 		DB1DBD2C2AB1D45B00F74B64 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB1DBD2A2AB1D45B00F74B64 /* LaunchScreen.storyboard */; };
+		DB2324452ADC375200938635 /* CryptoAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2324442ADC375200938635 /* CryptoAPIService.swift */; };
 		DB4422792AC2712C0038E34C /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4422782AC2712C0038E34C /* UIFont+Extension.swift */; };
 		DB4937CB2AD6A70F00242940 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB4937CA2AD6A70F00242940 /* FirebaseCrashlytics */; };
 		DB4937D32AD6AE1E00242940 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB4937D22AD6AE1E00242940 /* FirebaseAnalytics */; };
@@ -132,6 +133,7 @@
 		DB1DBD282AB1D45B00F74B64 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DB1DBD2B2AB1D45B00F74B64 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DB1DBD2D2AB1D45B00F74B64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DB2324442ADC375200938635 /* CryptoAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoAPIService.swift; sourceTree = "<group>"; };
 		DB4422782AC2712C0038E34C /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		DB4BFB2C2AB6A31C00187B1C /* PortfolioDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioDisplayViewController.swift; sourceTree = "<group>"; };
 		DB4BFB2E2AB6AA1300187B1C /* PortfolioDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioDisplayView.swift; sourceTree = "<group>"; };
@@ -393,6 +395,7 @@
 				DBA57DD12ABC33AB00C1CE30 /* WatchlistManager.swift */,
 				DB68EBFE2AD0413F00D01B16 /* HiddenManager.swift */,
 				DBD8D4182AD1586E00B8FC00 /* DiscoverAPIService.swift */,
+				DB2324442ADC375200938635 /* CryptoAPIService.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -680,6 +683,7 @@
 				DB0864842ABC435F004598D6 /* WatchlistCell.swift in Sources */,
 				DB6318862AD243EE00EF1121 /* HiddenPageViewController.swift in Sources */,
 				DBB9BDBC2AB44E07002A5FBC /* KingfisherWrapper.swift in Sources */,
+				DB2324452ADC375200938635 /* CryptoAPIService.swift in Sources */,
 				DBB880322AB4B33600526E40 /* DetailPageViewController.swift in Sources */,
 				DB0FA4C72ABEB9AF00272E7A /* JGProgressHUDWrapper.swift in Sources */,
 				DBF45F472AB6E870002E5D31 /* ARDisplayViewController.swift in Sources */,

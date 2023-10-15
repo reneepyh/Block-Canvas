@@ -7,18 +7,25 @@
 
 import Foundation
 
-struct EthHistoryPrice: Codable {
-    let data: [EthHistoryPriceDataForDecode]
+struct CryptoData {
+    var currentPrice: String?
+    var priceChange: String?
+    var gasFee: String?
+    var historyPriceData: [HistoryPriceData]?
+}
+
+struct CryptoHistoryPrice: Codable {
+    let data: [CryptoHistoryPriceDataForDecode]
     let timestamp: Int
 }
 
-struct EthHistoryPriceDataForDecode: Codable {
+struct CryptoHistoryPriceDataForDecode: Codable {
     let priceUsd: String
     let time: Int
     let circulatingSupply, date: String
 }
 
-struct EthHistoryPriceData: Identifiable {
+struct HistoryPriceData: Identifiable {
     let id = UUID()
     let price: Double
     let time: Date
@@ -29,11 +36,11 @@ struct EthHistoryPriceData: Identifiable {
     }
 }
 
-struct EthCurrentPriceData: Codable {
+struct CryptoCurrentPriceData: Codable {
     let symbol, price: String
 }
 
-struct EthPriceChange: Codable {
+struct CryptoPriceChange: Codable {
     let priceChangePercent: String
 }
 
