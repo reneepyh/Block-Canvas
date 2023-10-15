@@ -141,11 +141,13 @@ class DiscoverPageViewController: UIViewController {
         trendingButton.tintColor = .secondary
         forYouButton.tintColor = .secondaryBlur
         nftSearchBar.searchTextField.backgroundColor = .tertiary
+        nftSearchBar.searchTextField.placeholder = "Find Ethereum NFTs"
         nftSearchBar.searchTextField.textColor = .primary
         nftSearchBar.searchTextField.clearButtonMode = .unlessEditing
         nftSearchBar.searchTextField.autocapitalizationType = .none
         nftSearchBar.searchTextField.autocorrectionType = .no
         nftSearchBar.delegate = self
+        nftSearchBar.inputAccessoryView = createCancelToolbar()
     }
     
     private func setupNavTab() {
@@ -376,6 +378,22 @@ extension DiscoverPageViewController: UISearchBarDelegate {
                 self?.discoverCollectionView.reloadData()
             }
         }
+    }
+    
+    func createCancelToolbar() -> UIToolbar {
+        let toolbar = UIToolbar()
+        toolbar.barStyle = .default
+        toolbar.isTranslucent = true
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelButtonTapped))
+        let spacerButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        toolbar.setItems([spacerButton, cancelButton], animated: false)
+        toolbar.isUserInteractionEnabled = true
+        toolbar.sizeToFit()
+        return toolbar
+    }
+    
+    @objc func cancelButtonTapped() {
+        nftSearchBar.resignFirstResponder()
     }
 }
 
