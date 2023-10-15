@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import WebKit
 
 protocol DetailPageViewControllerDelegate: AnyObject {
     func deleteWatchlistItem(at indexPath: IndexPath)
@@ -204,7 +205,12 @@ extension DetailPageViewController: UITableViewDelegate, UITableViewDataSource {
                 if let discoverNFTMetadata = discoverNFTMetadata {
                     detailMetadataInfoCell.titleLabel.text = discoverNFTMetadata.title
                     detailMetadataInfoCell.artistLabel.text = discoverNFTMetadata.authorName
-                    detailMetadataInfoCell.contractLabel.text = discoverNFTMetadata.contract
+                    if discoverNFTMetadata.contract.hasPrefix("K") {
+                        detailMetadataInfoCell.tokenButton.setTitle("fx(hash)", for: .normal)
+                    } else {
+                        detailMetadataInfoCell.tokenButton.setTitle("OpenSea", for: .normal)
+                    }
+                    detailMetadataInfoCell.delegate = self
                 }
                 return detailMetadataInfoCell
             default:
@@ -214,8 +220,50 @@ extension DetailPageViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 1 { // Metadata label tapped
-                isDetailViewHidden.toggle()
-                tableView.reloadData()
+            isDetailViewHidden.toggle()
+            tableView.reloadData()
+        }
+    }
+}
+
+extension DetailPageViewController: DetailMetadataInfoCellDelegate {
+    func tokenTapped() {
+        if let contract = discoverNFTMetadata?.contract {
+            var tokenURL: URL?
+            if contract.hasPrefix("K") {
+                if let id = discoverNFTMetadata?.id, let fxhashURL = URL(string: "https://www.fxhash.xyz/marketplace/generative/\(id)") {
+                    tokenURL = fxhashURL
+                }
+            } else {
+                if let openseaDescription = discoverNFTMetadata?.nftDescription, let openseaURL = URL(string: openseaDescription) {
+                    tokenURL = openseaURL
+                }
             }
+            let webViewController = PlatformWebViewController()
+            webViewController.urlString = tokenURL?.absoluteString
+            
+            let navController = UINavigationController(rootViewController: webViewController)
+            if let sheet = navController.sheetPresentationController {
+                sheet.detents = [.medium(), .large()]
+            }
+            present(navController, animated: true, completion: nil)
+        }
+    }
+}
+
+class PlatformWebViewController: UIViewController {
+    private var webView: WKWebView!
+    var urlString: String?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        webView = WKWebView()
+        webView.frame = view.bounds
+        view.addSubview(webView)
+        
+        if let urlString = urlString, let url = URL(string: urlString) {
+            let request = URLRequest(url: url)
+            webView.load(request)
+        }
     }
 }

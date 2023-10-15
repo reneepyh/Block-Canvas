@@ -7,8 +7,14 @@
 
 import UIKit
 
+protocol DetailMetadataInfoCellDelegate: AnyObject {
+    func tokenTapped()
+}
+
 class DetailMetadataInfoCell: UITableViewCell {
     static let reuseIdentifier = String(describing: DetailMetadataInfoCell.self)
+    
+    weak var delegate: DetailMetadataInfoCellDelegate?
     
     private let titleFieldLabel: UILabel = {
         let label = UILabel()
@@ -42,20 +48,25 @@ class DetailMetadataInfoCell: UITableViewCell {
         return label
     }()
     
-    private let contractFieldLabel: UILabel = {
+    private let tokenFieldLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16)
-        label.text = "Contract"
+        label.text = "Token"
         label.textColor = .secondaryBlur
         return label
     }()
     
-    let contractLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 16)
-        label.numberOfLines = 0
-        label.textColor = .secondary
-        return label
+    let tokenButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setTitleColor(.tertiary, for: .normal)
+        button.setTitleColor(.tertiary, for: .highlighted)
+        button.titleLabel?.font = .systemFont(ofSize: 16)
+        button.titleLabel?.numberOfLines = 0
+        button.contentHorizontalAlignment = .left
+        var config = UIButton.Configuration.plain()
+        config.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+        button.configuration = config
+        return button
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -70,44 +81,50 @@ class DetailMetadataInfoCell: UITableViewCell {
     private func setupUI() {
         backgroundColor = .primary
         selectionStyle = .none
-        addSubview(titleFieldLabel)
+        contentView.addSubview(titleFieldLabel)
         titleFieldLabel.snp.makeConstraints { make in
-            make.top.equalTo(snp.top).offset(16)
-            make.leading.equalTo(snp.leading).offset(16)
+            make.top.equalTo(contentView.snp.top).offset(16)
+            make.leading.equalTo(contentView.snp.leading).offset(16)
         }
         
-        addSubview(titleLabel)
+        contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(snp.top).offset(16)
-            make.leading.equalTo(snp.centerX).offset(-60)
-            make.trailing.equalTo(snp.trailing).offset(-16)
+            make.top.equalTo(contentView.snp.top).offset(16)
+            make.leading.equalTo(contentView.snp.centerX).offset(-60)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-16)
         }
         
-        addSubview(artistFieldLabel)
+        contentView.addSubview(artistFieldLabel)
         artistFieldLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(16)
-            make.leading.equalTo(snp.leading).offset(16)
+            make.leading.equalTo(contentView.snp.leading).offset(16)
         }
         
-        addSubview(artistLabel)
+        contentView.addSubview(artistLabel)
         artistLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(16)
-            make.leading.equalTo(snp.centerX).offset(-60)
-            make.trailing.equalTo(snp.trailing).offset(-16)
+            make.leading.equalTo(contentView.snp.centerX).offset(-60)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-16)
         }
         
-        addSubview(contractFieldLabel)
-        contractFieldLabel.snp.makeConstraints { make in
+        contentView.addSubview(tokenFieldLabel)
+        tokenFieldLabel.snp.makeConstraints { make in
             make.top.equalTo(artistFieldLabel.snp.bottom).offset(16)
-            make.leading.equalTo(snp.leading).offset(16)
+            make.leading.equalTo(contentView.snp.leading).offset(16)
         }
         
-        addSubview(contractLabel)
-        contractLabel.snp.makeConstraints { make in
-            make.top.equalTo(contractFieldLabel.snp.top)
-            make.leading.equalTo(snp.centerX).offset(-60)
-            make.trailing.equalTo(snp.trailing).offset(-16)
-            make.bottom.equalTo(snp.bottom).offset(-32)
+        contentView.addSubview(tokenButton)
+        tokenButton.snp.makeConstraints { make in
+            make.top.equalTo(tokenFieldLabel.snp.top)
+            make.leading.equalTo(contentView.snp.centerX).offset(-60)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-16)
+            make.bottom.equalTo(contentView.snp.bottom).offset(-32)
         }
+        
+        tokenButton.addTarget(self, action: #selector(contractLabelTapped), for: .touchUpInside)
+    }
+    
+    @objc func contractLabelTapped() {
+        delegate?.tokenTapped()
     }
 }

@@ -12,6 +12,7 @@ struct DiscoverNFT {
     let title: String?
     let authorName: String?
     let nftDescription: String?
+    let id: String
 }
 
 struct Root: Codable {
@@ -26,6 +27,7 @@ struct RandomTopGenerativeToken: Codable {
     let author: Author?
     let gentkContractAddress, issuerContractAddress: String
     let metadata: TrendingNFTMetadata
+    let id: Int
 }
 
 struct Author: Codable {

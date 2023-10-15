@@ -11,6 +11,7 @@
         <attribute name="authorName" optional="YES" attributeType="String"/>
         <attribute name="contract" attributeType="String"/>
         <attribute name="displayUri" attributeType="String"/>
+        <attribute name="id" attributeType="String" defaultValueString=""/>
         <attribute name="nftDescription" optional="YES" attributeType="String"/>
         <attribute name="thumbnailUri" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>

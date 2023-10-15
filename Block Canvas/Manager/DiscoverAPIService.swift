@@ -22,13 +22,14 @@ class DiscoverAPIService {
             let query = """
             {
                randomTopGenerativeToken {
-                  author {
-                    name
-                  }
-                  gentkContractAddress
-                  issuerContractAddress
-                  metadata
-                }
+                   author {
+                     name
+                   }
+                   gentkContractAddress
+                   issuerContractAddress
+                   metadata
+                   id
+                 }
             }
             """
             
@@ -65,7 +66,8 @@ class DiscoverAPIService {
                     let authorName = root.data.randomTopGenerativeToken.author?.name ?? " "
                     let title = root.data.randomTopGenerativeToken.metadata.name
                     let description = root.data.randomTopGenerativeToken.metadata.description
-                    trendingNFTs.append(DiscoverNFT(thumbnailUri: thumbnailURL, displayUri: displayURL, contract: contract, title: title, authorName: authorName, nftDescription: description))
+                    let id = String(root.data.randomTopGenerativeToken.id)
+                    trendingNFTs.append(DiscoverNFT(thumbnailUri: thumbnailURL, displayUri: displayURL, contract: contract, title: title, authorName: authorName, nftDescription: description, id: id))
                 } catch {
                     print("Error in JSON decoding.")
                     completion(.failure(error))
@@ -123,7 +125,7 @@ class DiscoverAPIService {
                     var discoverNFTs: [DiscoverNFT] = []
                     for searchResult in searchData.collections ?? [] {
                         let nftDescription = searchResult.slug.map { "https://opensea.io/collection/\($0)" } ?? ""
-                        discoverNFTs.append(DiscoverNFT(thumbnailUri: searchResult.image ?? "", displayUri: searchResult.image ?? "", contract: searchResult.contract ?? "", title: searchResult.name, authorName: "", nftDescription: nftDescription))
+                        discoverNFTs.append(DiscoverNFT(thumbnailUri: searchResult.image ?? "", displayUri: searchResult.image ?? "", contract: searchResult.contract ?? "", title: searchResult.name, authorName: "", nftDescription: nftDescription, id: ""))
                     }
                     completion(.success(discoverNFTs))
                 }
@@ -270,7 +272,7 @@ class DiscoverAPIService {
                             nftDescription = ""
                         }
                         if let image = searchResult.image, !image.isEmpty {
-                            recommendedNFTs.append(DiscoverNFT(thumbnailUri: image, displayUri: image, contract: searchResult.contract ?? "", title: searchResult.name, authorName: "", nftDescription: nftDescription))
+                            recommendedNFTs.append(DiscoverNFT(thumbnailUri: image, displayUri: image, contract: searchResult.contract ?? "", title: searchResult.name, authorName: "", nftDescription: nftDescription, id: ""))
                         }
                     }
                     completion(.success(recommendedNFTs))
