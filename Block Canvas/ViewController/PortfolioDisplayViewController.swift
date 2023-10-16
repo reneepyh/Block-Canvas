@@ -99,7 +99,7 @@ class PortfolioDisplayViewController: UIViewController {
                                     guard let imageUrl = URL(string: image) else {
                                         fatalError("Cannot get image URL of NFT.")
                                     }
-                                    return NFTInfoForDisplay(url: imageUrl, title: ethNFT.normalizedMetadata?.name ?? "", artist: ethNFT.metadataObject?.createdBy ?? "", description: ethNFT.normalizedMetadata?.description ?? "", contract: ethNFT.tokenAddress ?? "")
+                                    return NFTInfoForDisplay(url: imageUrl, title: ethNFT.normalizedMetadata?.name ?? "", artist: ethNFT.metadataObject?.createdBy ?? "", description: ethNFT.normalizedMetadata?.description ?? "")
                                 } else {
                                     return nil
                                 }
@@ -168,7 +168,7 @@ class PortfolioDisplayViewController: UIViewController {
                                         fatalError("Cannot get image URL of NFT.")
                                     }
                                     let modifiedContract = tezosNFT.contract?.replacingOccurrences(of: "TEZOS:", with: "")
-                                    return NFTInfoForDisplay(url: imageUrl, title: tezosNFT.meta?.name ?? "", artist: "", description: tezosNFT.meta?.description ?? "", contract: modifiedContract ?? "")
+                                    return NFTInfoForDisplay(url: imageUrl, title: tezosNFT.meta?.name ?? "", artist: "", description: tezosNFT.meta?.description ?? "")
                                 } else {
                                     return nil
                                 }

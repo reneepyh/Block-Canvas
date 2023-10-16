@@ -9,7 +9,7 @@ import SwiftUI
 import Charts
 
 struct ETHPriceChart: View {
-    var ethPriceData: [EthHistoryPriceData] = []
+    var ethPriceData: [HistoryPriceData] = []
     
     var minPrice: Double {
         ethPriceData.map { $0.price }.min() ?? 0.0
@@ -56,7 +56,7 @@ struct ETHPriceChart: View {
 }
 
 struct XTZPriceChart: View {
-    var xtzPriceData: [EthHistoryPriceData] = []
+    var xtzPriceData: [HistoryPriceData] = []
     
     var minPrice: Double {
         xtzPriceData.map { $0.price }.min() ?? 0.0

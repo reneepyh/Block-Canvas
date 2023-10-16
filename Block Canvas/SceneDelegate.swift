@@ -17,10 +17,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
 
-//        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Portfolio", bundle: nil)
-//        let viewController = mainStoryboard.instantiateViewController(withIdentifier: "AddressInputPageViewController") as? AddressInputPageViewController
-//        UIApplication.shared.windows.first?.rootViewController = viewController
-//        UIApplication.shared.windows.first?.makeKeyAndVisible()
+        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Crypto", bundle: nil)
+        let viewController = mainStoryboard.instantiateViewController(withIdentifier: "CryptoPageViewController") as? CryptoPageViewController
+        UIApplication.shared.windows.first?.rootViewController = viewController
+        UIApplication.shared.windows.first?.makeKeyAndVisible()
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {

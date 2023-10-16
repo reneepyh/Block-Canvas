@@ -34,7 +34,6 @@ class HiddenManager {
         hiddenNFTItem.setValue(nft.title, forKey: "title")
         hiddenNFTItem.setValue(nft.artist, forKey: "artist")
         hiddenNFTItem.setValue(nft.description, forKey: "nftDescription")
-        hiddenNFTItem.setValue(nft.contract, forKey: "contract")
         hiddenNFTItem.setValue(nft.url.absoluteString, forKey: "displayUri")
         
         do {
