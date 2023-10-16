@@ -8,6 +8,12 @@
 import Foundation
 
 class DiscoverAPIService {
+    static let shared = DiscoverAPIService()
+    
+    private init() {}
+}
+
+extension DiscoverAPIService {
     func getTrending(completion: @escaping (Result<[DiscoverNFT], Error>) -> Void) {
         var trendingNFTs: [DiscoverNFT] = []
         let group = DispatchGroup()

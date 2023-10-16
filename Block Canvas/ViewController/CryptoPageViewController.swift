@@ -14,19 +14,7 @@ class CryptoPageViewController: UIViewController {
     
     private var xtzData = CryptoData()
     
-//    private var ethPriceData: [HistoryPriceData] = []
-//
-//    private var ethCurrentPrice: String?
-//
-//    private var ethPriceChange: String?
-//
-//    private var xtzPriceData: [HistoryPriceData] = []
-//
-//    private var xtzCurrentPrice: String?
-//
-//    private var xtzPriceChange: String?
-//
-//    private var ethGasFee: String?
+    private let apiService = CryptoAPIService.shared
     
     private var previousEthPrice: Double?
     
@@ -142,122 +130,52 @@ class CryptoPageViewController: UIViewController {
     }
     
     private func getETHCurrentPrice() {
-        let apiKey = Bundle.main.object(forInfoDictionaryKey: "Binance_API_Key") as? String
-        
-        guard let key = apiKey, !key.isEmpty else {
-            print("Binance API key does not exist.")
-            return
-        }
-        
-        if let url = URL(string: "https://api1.binance.com/api/v3/ticker/price?symbol=ETHUSDT") {
-            
-            var request = URLRequest(url: url)
-            request.setValue(apiKey, forHTTPHeaderField: "X-MBX-APIKEY")
-            request.httpMethod = "GET"
-            
-            let session = URLSession.shared
-            
-            let task = session.dataTask(with: request) { [weak self] data, response, error in
-                if let error = error {
-                    print(error)
-                    return
-                }
-                
-                guard let data = data else {
-                    print("No data.")
-                    return
-                }
-                
-                let decoder = JSONDecoder()
-                
-                do {
-                    let ethCurrentPrice = try decoder.decode(CryptoCurrentPriceData.self, from: data)
-                    let doubledCurrentPrice = Double(ethCurrentPrice.price)
-                    let floored = floor((doubledCurrentPrice ?? 0) * 100) / 100
+        apiService.getCurrentPrice(for: .ETH) { [weak self] result in
+            switch result {
+                case .success(let doubledCurrentPrice):
+                    let floored = floor(doubledCurrentPrice * 100) / 100
                     self?.ethData.currentPrice = "US$\(String(floored))"
                     
                     if let previousEthPrice = self?.previousEthPrice {
-                        if let doubledCurrentPrice = doubledCurrentPrice {
-                            if doubledCurrentPrice > previousEthPrice {
-                                self?.animatePriceLabelColor(to: .systemGreen)
-                            } else if doubledCurrentPrice < previousEthPrice {
-                                self?.animatePriceLabelColor(to: .systemPink)
-                            }
+                        if doubledCurrentPrice > previousEthPrice {
+                            self?.animatePriceLabelColor(to: .systemGreen)
+                        } else if doubledCurrentPrice < previousEthPrice {
+                            self?.animatePriceLabelColor(to: .systemPink)
                         }
                     }
                     self?.previousEthPrice = doubledCurrentPrice
-                }
-                catch {
-                    print("Error in JSON decoding.")
-                }
-                DispatchQueue.main.async { [weak self] in
-                    self?.ethPriceLabel.text = self?.ethData.currentPrice
-                }
+                    DispatchQueue.main.async { [weak self] in
+                        self?.ethPriceLabel.text = self?.ethData.currentPrice
+                    }
+                    
+                case .failure(let error):
+                    print(error.localizedDescription)
             }
-            task.resume()
-        }
-        else {
-            print("Invalid URL.")
         }
     }
     
     private func getXTZCurrentPrice() {
-        let apiKey = Bundle.main.object(forInfoDictionaryKey: "Binance_API_Key") as? String
-        
-        guard let key = apiKey, !key.isEmpty else {
-            print("Binance API key does not exist.")
-            return
-        }
-        
-        if let url = URL(string: "https://api1.binance.com/api/v3/ticker/price?symbol=XTZUSDT") {
-            
-            var request = URLRequest(url: url)
-            request.setValue(apiKey, forHTTPHeaderField: "X-MBX-APIKEY")
-            request.httpMethod = "GET"
-            
-            let session = URLSession.shared
-            
-            let task = session.dataTask(with: request) { [weak self] data, response, error in
-                if let error = error {
-                    print(error)
-                    return
-                }
-                
-                guard let data = data else {
-                    print("No data.")
-                    return
-                }
-                
-                let decoder = JSONDecoder()
-                
-                do {
-                    let ethCurrentPrice = try decoder.decode(CryptoCurrentPriceData.self, from: data)
-                    let doubledCurrentPrice = Double(ethCurrentPrice.price)
-                    let floored = floor((doubledCurrentPrice ?? 0) * 1000) / 1000
+        apiService.getCurrentPrice(for: .XYZ) { [weak self] result in
+            switch result {
+                case .success(let doubledCurrentPrice):
+                    let floored = floor(doubledCurrentPrice * 100) / 100
                     self?.xtzData.currentPrice = "US$\(String(floored))"
                     
                     if let previousXTZPrice = self?.previousXTZPrice {
-                        if let doubledCurrentPrice = doubledCurrentPrice {
-                            if doubledCurrentPrice > previousXTZPrice {
-                                self?.animatePriceLabelColor(to: .systemGreen)
-                            } else if doubledCurrentPrice < previousXTZPrice {
-                                self?.animatePriceLabelColor(to: .systemPink)
-                            }
+                        if doubledCurrentPrice > previousXTZPrice {
+                            self?.animatePriceLabelColor(to: .systemGreen)
+                        } else if doubledCurrentPrice < previousXTZPrice {
+                            self?.animatePriceLabelColor(to: .systemPink)
                         }
                     }
                     self?.previousXTZPrice = doubledCurrentPrice
-                }
-                catch {
-                    print("Error in JSON decoding.")
-                }
-                DispatchQueue.main.async { [weak self] in
-                    self?.xtzPriceLabel.text = self?.xtzData.currentPrice
-                }
+                    DispatchQueue.main.async { [weak self] in
+                        self?.xtzPriceLabel.text = self?.xtzData.currentPrice
+                    }
+                    
+                case .failure(let error):
+                    print(error.localizedDescription)
             }
-            task.resume()
-        }
-        else {
-            print("Invalid URL.")
         }
     }
     
@@ -492,7 +410,7 @@ class CryptoPageViewController: UIViewController {
                     for ethPriceData in ethPrice.data {
                         let unixTimestampSeconds = Double(ethPriceData.time) / 1000.0
                         let date = Date(timeIntervalSince1970: unixTimestampSeconds)
-                        self?.ethData.historyPriceData?.append(HistoryPriceData(price: Double(ethPriceData.priceUsd) ?? 0, time: date))
+                        self?.ethData.historyPriceData.append(HistoryPriceData(price: Double(ethPriceData.priceUsd) ?? 0, time: date))
                     }
                 }
                 catch {
@@ -544,7 +462,7 @@ class CryptoPageViewController: UIViewController {
                     for xtzPriceData in xtzPrice.data {
                         let unixTimestampSeconds = Double(xtzPriceData.time) / 1000.0
                         let date = Date(timeIntervalSince1970: unixTimestampSeconds)
-                        self?.xtzData.historyPriceData?.append(HistoryPriceData(price: Double(xtzPriceData.priceUsd) ?? 0, time: date))
+                        self?.xtzData.historyPriceData.append(HistoryPriceData(price: Double(xtzPriceData.priceUsd) ?? 0, time: date))
                     }
                 }
                 catch {
@@ -585,7 +503,7 @@ class CryptoPageViewController: UIViewController {
             make.centerY.equalTo(ethIconImageView.snp.centerY)
             make.leading.equalTo(ethIconImageView.snp.trailing).offset(6)
         }
-
+        
         view.addSubview(ethPriceLabel)
         ethPriceLabel.snp.makeConstraints { make in
             make.top.equalTo(ethLabel.snp.bottom).offset(6)
@@ -628,7 +546,7 @@ class CryptoPageViewController: UIViewController {
     
     private func setupXTZLabelUI() {
         view.backgroundColor = .primary
-    
+        
         view.addSubview(xtzIconImageView)
         xtzIconImageView.image = UIImage(named: "tezos_crypto")
         xtzIconImageView.snp.makeConstraints { make in

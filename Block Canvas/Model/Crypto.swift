@@ -11,7 +11,7 @@ struct CryptoData {
     var currentPrice: String?
     var priceChange: String?
     var gasFee: String?
-    var historyPriceData: [HistoryPriceData]?
+    var historyPriceData: [HistoryPriceData] = []
 }
 
 struct CryptoHistoryPrice: Codable {
