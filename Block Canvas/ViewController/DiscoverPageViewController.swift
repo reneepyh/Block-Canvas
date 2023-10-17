@@ -143,6 +143,7 @@ class DiscoverPageViewController: UIViewController {
         nftSearchBar.searchTextField.backgroundColor = .tertiary
         nftSearchBar.searchTextField.placeholder = "Find Ethereum NFTs"
         nftSearchBar.searchTextField.textColor = .primary
+        nftSearchBar.searchTextField.font = .systemFont(ofSize: 14)
         nftSearchBar.searchTextField.clearButtonMode = .unlessEditing
         nftSearchBar.searchTextField.autocapitalizationType = .none
         nftSearchBar.searchTextField.autocorrectionType = .no
@@ -392,7 +393,7 @@ extension DiscoverPageViewController: UISearchBarDelegate {
         toolbar.isTranslucent = true
         let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelButtonTapped))
         let spacerButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        toolbar.setItems([spacerButton, cancelButton], animated: false)
+        toolbar.setItems([cancelButton, spacerButton], animated: false)
         toolbar.isUserInteractionEnabled = true
         toolbar.sizeToFit()
         return toolbar
@@ -417,6 +418,7 @@ extension DiscoverPageViewController {
     @objc func changePage(sender: UIButton) {
         let queue = DispatchQueue(label: "concurrentQueue", attributes: .concurrent)
         nftSearchBar.text = ""
+        nftSearchBar.resignFirstResponder()
         isSearching = false
         searchedNFTs.removeAll()
         DispatchQueue.main.async { [weak self] in
