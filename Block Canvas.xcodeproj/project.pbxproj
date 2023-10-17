@@ -41,6 +41,7 @@
 		DB69818F2AB4604600BE0036 /* Portfolio.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB69818E2AB4604600BE0036 /* Portfolio.storyboard */; };
 		DB6981912AB4608100BE0036 /* AddressInputPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6981902AB4608100BE0036 /* AddressInputPageViewController.swift */; };
 		DB6981932AB4648500BE0036 /* Portfolio.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6981922AB4648500BE0036 /* Portfolio.swift */; };
+		DB8434D72ADD67D400A7FD01 /* Trending.json in Resources */ = {isa = PBXBuildFile; fileRef = DB8434D62ADD67D400A7FD01 /* Trending.json */; };
 		DB8C90F12AB43DCF005D75DF /* DiscoverCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8C90F02AB43DCF005D75DF /* DiscoverCollectionCell.swift */; };
 		DB98912F2AC0891700E41967 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB98912E2AC0891700E41967 /* UIColor+Extension.swift */; };
 		DB9DFB872AB7614C006D6CE1 /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9DFB862AB7614C006D6CE1 /* Wallet.swift */; };
@@ -153,6 +154,7 @@
 		DB69818E2AB4604600BE0036 /* Portfolio.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Portfolio.storyboard; sourceTree = "<group>"; };
 		DB6981902AB4608100BE0036 /* AddressInputPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressInputPageViewController.swift; sourceTree = "<group>"; };
 		DB6981922AB4648500BE0036 /* Portfolio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Portfolio.swift; sourceTree = "<group>"; };
+		DB8434D62ADD67D400A7FD01 /* Trending.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Trending.json; sourceTree = "<group>"; };
 		DB8C90F02AB43DCF005D75DF /* DiscoverCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverCollectionCell.swift; sourceTree = "<group>"; };
 		DB98912E2AC0891700E41967 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		DB9DFB862AB7614C006D6CE1 /* Wallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wallet.swift; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 		DB0C67912AC9B560007C960A /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				DB8434D62ADD67D400A7FD01 /* Trending.json */,
 				DB0C67922AC9B591007C960A /* widget.json */,
 				DB1DBD282AB1D45B00F74B64 /* Assets.xcassets */,
 				DB00B65E2AC6C72100AE8164 /* tap.json */,
@@ -528,6 +531,7 @@
 			files = (
 				DB1DBD2C2AB1D45B00F74B64 /* LaunchScreen.storyboard in Resources */,
 				DBA4787A2AB2B29C0014E825 /* Discover.storyboard in Resources */,
+				DB8434D72ADD67D400A7FD01 /* Trending.json in Resources */,
 				DB69818F2AB4604600BE0036 /* Portfolio.storyboard in Resources */,
 				DBF619DD2AB55F8600687F13 /* Crypto.storyboard in Resources */,
 				DB1DBD292AB1D45B00F74B64 /* Assets.xcassets in Resources */,

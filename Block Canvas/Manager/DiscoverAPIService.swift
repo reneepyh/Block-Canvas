@@ -18,6 +18,40 @@ extension DiscoverAPIService {
         var trendingNFTs: [DiscoverNFT] = []
         let group = DispatchGroup()
         
+        var mockDataFetched = false
+        
+        func fetchMockData(completion: @escaping (Result<[DiscoverNFT], Error>) -> Void) {
+            if mockDataFetched {
+                completion(.success(trendingNFTs))
+                return
+            }
+            
+            if let mockDataURL = Bundle.main.url(forResource: "Trending", withExtension: "json"),
+               let data = try? Data(contentsOf: mockDataURL) {
+                do {
+                    let decoder = JSONDecoder()
+                    let roots = try decoder.decode([Root].self, from: data)
+                    roots.map { root in
+                        let contract = root.data.randomTopGenerativeToken.gentkContractAddress
+                        let thumbnailURL = self.generativeLiveDisplayUrl(uri: root.data.randomTopGenerativeToken.metadata.thumbnailUri)
+                        let displayURL = self.generativeLiveDisplayUrl(uri: root.data.randomTopGenerativeToken.metadata.displayUri)
+                        let authorName = root.data.randomTopGenerativeToken.author?.name ?? " "
+                        let title = root.data.randomTopGenerativeToken.metadata.name
+                        let description = root.data.randomTopGenerativeToken.metadata.description
+                        let id = String(root.data.randomTopGenerativeToken.id)
+                        trendingNFTs.append(DiscoverNFT(thumbnailUri: thumbnailURL, displayUri: displayURL, contract: contract, title: title, authorName: authorName, nftDescription: description, id: id))
+                    }
+                    completion(.success(trendingNFTs))
+                    mockDataFetched = true 
+                } catch {
+                    print("Error in JSON decoding.")
+                    completion(.failure(error))
+                }
+            } else {
+                completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Local JSON file not found."])))
+            }
+        }
+        
         func fetchToken() {
             group.enter()
             let url = URL(string: "https://api.fxhash.xyz/graphql")!
@@ -50,11 +84,13 @@ extension DiscoverAPIService {
                 }
                 if let error = error {
                     completion(.failure(error))
+                    fetchMockData(completion: completion)
                     return
                 }
                 
                 guard let data = data else {
                     completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No data received"])))
+                    fetchMockData(completion: completion)
                     return
                 }
                 
@@ -77,6 +113,7 @@ extension DiscoverAPIService {
                 } catch {
                     print("Error in JSON decoding.")
                     completion(.failure(error))
+                    fetchMockData(completion: completion)
                 }
             }
             task.resume()
