@@ -36,7 +36,8 @@ class BCProgressHUD {
             return
         }
         shared.hud.textLabel.text = text
-        shared.hud.textLabel.textColor = .secondaryBlur
+        shared.hud.textLabel.textColor = .secondary
+        shared.hud.contentInsets = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
         shared.hud.indicatorView = JGProgressHUDSuccessIndicatorView()
         shared.hud.show(in: view)
         shared.hud.dismiss(afterDelay: 1)
@@ -50,7 +51,7 @@ class BCProgressHUD {
             return
         }
         shared.hud.textLabel.text = text
-        shared.hud.textLabel.textColor = .secondaryBlur
+        shared.hud.textLabel.textColor = .secondary
         shared.hud.indicatorView = JGProgressHUDErrorIndicatorView()
         if let view = shared.view {
             shared.hud.show(in: view)

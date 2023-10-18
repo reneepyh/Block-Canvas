@@ -46,7 +46,7 @@ class DiscoverPageViewController: UIViewController {
     
     private var recommendationCache: [DiscoverNFT]?
     
-    private let apiService = DiscoverAPIService()
+    private let apiService = DiscoverAPIService.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -141,11 +141,14 @@ class DiscoverPageViewController: UIViewController {
         trendingButton.tintColor = .secondary
         forYouButton.tintColor = .secondaryBlur
         nftSearchBar.searchTextField.backgroundColor = .tertiary
+        nftSearchBar.searchTextField.placeholder = "Find Ethereum NFTs"
         nftSearchBar.searchTextField.textColor = .primary
+        nftSearchBar.searchTextField.font = .systemFont(ofSize: 14)
         nftSearchBar.searchTextField.clearButtonMode = .unlessEditing
         nftSearchBar.searchTextField.autocapitalizationType = .none
         nftSearchBar.searchTextField.autocorrectionType = .no
         nftSearchBar.delegate = self
+        nftSearchBar.inputAccessoryView = createCancelToolbar()
     }
     
     private func setupNavTab() {
@@ -171,9 +174,15 @@ class DiscoverPageViewController: UIViewController {
             switch result {
                 case .success(let fetchedTrendingNFTs):
                     self?.trendingNFTs = fetchedTrendingNFTs
-                    self?.discoverCollectionView.reloadData()
-                    self?.discoverCollectionView.endHeaderRefreshing()
-                    BCProgressHUD.dismiss()
+                    DispatchQueue.main.async { [weak self] in
+                        if let layout = self?.discoverCollectionView.collectionViewLayout as? WaterFallFlowLayout {
+                            layout.clearCache()
+                        }
+                        self?.discoverCollectionView.collectionViewLayout.invalidateLayout()
+                        self?.discoverCollectionView.reloadData()
+                        self?.discoverCollectionView.endHeaderRefreshing()
+                        BCProgressHUD.dismiss()
+                    }
                 case .failure(let error):
                     print("Error: \(error)")
                     BCProgressHUD.dismiss()
@@ -377,6 +386,22 @@ extension DiscoverPageViewController: UISearchBarDelegate {
             }
         }
     }
+    
+    func createCancelToolbar() -> UIToolbar {
+        let toolbar = UIToolbar()
+        toolbar.barStyle = .default
+        toolbar.isTranslucent = true
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelButtonTapped))
+        let spacerButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        toolbar.setItems([cancelButton, spacerButton], animated: false)
+        toolbar.isUserInteractionEnabled = true
+        toolbar.sizeToFit()
+        return toolbar
+    }
+    
+    @objc func cancelButtonTapped() {
+        nftSearchBar.resignFirstResponder()
+    }
 }
 
 extension DiscoverPageViewController {
@@ -393,6 +418,7 @@ extension DiscoverPageViewController {
     @objc func changePage(sender: UIButton) {
         let queue = DispatchQueue(label: "concurrentQueue", attributes: .concurrent)
         nftSearchBar.text = ""
+        nftSearchBar.resignFirstResponder()
         isSearching = false
         searchedNFTs.removeAll()
         DispatchQueue.main.async { [weak self] in

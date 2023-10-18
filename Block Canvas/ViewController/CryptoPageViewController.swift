@@ -10,19 +10,11 @@ import SwiftUI
 import SnapKit
 // swiftlint: disable type_body_length
 class CryptoPageViewController: UIViewController {
-    private var ethPriceData: [EthHistoryPriceData] = []
+    private var ethData = CryptoData()
     
-    private var ethCurrentPrice: String?
+    private var xtzData = CryptoData()
     
-    private var ethPriceChange: String?
-    
-    private var xtzPriceData: [EthHistoryPriceData] = []
-    
-    private var xtzCurrentPrice: String?
-    
-    private var xtzPriceChange: String?
-    
-    private var ethGasFee: String?
+    private let apiService = CryptoAPIService.shared
     
     private var previousEthPrice: Double?
     
@@ -128,8 +120,8 @@ class CryptoPageViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         updateTimer?.invalidate()
-        ethPriceData = []
-        xtzPriceData = []
+        ethData.historyPriceData = []
+        xtzData.historyPriceData = []
     }
     
     private func startTimer() {
@@ -138,122 +130,52 @@ class CryptoPageViewController: UIViewController {
     }
     
     private func getETHCurrentPrice() {
-        let apiKey = Bundle.main.object(forInfoDictionaryKey: "Binance_API_Key") as? String
-        
-        guard let key = apiKey, !key.isEmpty else {
-            print("Binance API key does not exist.")
-            return
-        }
-        
-        if let url = URL(string: "https://api1.binance.com/api/v3/ticker/price?symbol=ETHUSDT") {
-            
-            var request = URLRequest(url: url)
-            request.setValue(apiKey, forHTTPHeaderField: "X-MBX-APIKEY")
-            request.httpMethod = "GET"
-            
-            let session = URLSession.shared
-            
-            let task = session.dataTask(with: request) { [weak self] data, response, error in
-                if let error = error {
-                    print(error)
-                    return
-                }
-                
-                guard let data = data else {
-                    print("No data.")
-                    return
-                }
-                
-                let decoder = JSONDecoder()
-                
-                do {
-                    let ethCurrentPrice = try decoder.decode(EthCurrentPriceData.self, from: data)
-                    let doubledCurrentPrice = Double(ethCurrentPrice.price)
-                    let floored = floor((doubledCurrentPrice ?? 0) * 100) / 100
-                    self?.ethCurrentPrice = "US$\(String(floored))"
+        apiService.getCurrentPrice(for: .ETH) { [weak self] result in
+            switch result {
+                case .success(let doubledCurrentPrice):
+                    let floored = floor(doubledCurrentPrice * 100) / 100
+                    self?.ethData.currentPrice = "US$\(String(floored))"
                     
                     if let previousEthPrice = self?.previousEthPrice {
-                        if let doubledCurrentPrice = doubledCurrentPrice {
-                            if doubledCurrentPrice > previousEthPrice {
-                                self?.animatePriceLabelColor(to: .systemGreen)
-                            } else if doubledCurrentPrice < previousEthPrice {
-                                self?.animatePriceLabelColor(to: .systemPink)
-                            }
+                        if doubledCurrentPrice > previousEthPrice {
+                            self?.animatePriceLabelColor(to: .systemGreen)
+                        } else if doubledCurrentPrice < previousEthPrice {
+                            self?.animatePriceLabelColor(to: .systemPink)
                         }
                     }
                     self?.previousEthPrice = doubledCurrentPrice
-                }
-                catch {
-                    print("Error in JSON decoding.")
-                }
-                DispatchQueue.main.async { [weak self] in
-                    self?.ethPriceLabel.text = self?.ethCurrentPrice
-                }
+                    DispatchQueue.main.async { [weak self] in
+                        self?.ethPriceLabel.text = self?.ethData.currentPrice
+                    }
+                    
+                case .failure(let error):
+                    print(error.localizedDescription)
             }
-            task.resume()
-        }
-        else {
-            print("Invalid URL.")
         }
     }
     
     private func getXTZCurrentPrice() {
-        let apiKey = Bundle.main.object(forInfoDictionaryKey: "Binance_API_Key") as? String
-        
-        guard let key = apiKey, !key.isEmpty else {
-            print("Binance API key does not exist.")
-            return
-        }
-        
-        if let url = URL(string: "https://api1.binance.com/api/v3/ticker/price?symbol=XTZUSDT") {
-            
-            var request = URLRequest(url: url)
-            request.setValue(apiKey, forHTTPHeaderField: "X-MBX-APIKEY")
-            request.httpMethod = "GET"
-            
-            let session = URLSession.shared
-            
-            let task = session.dataTask(with: request) { [weak self] data, response, error in
-                if let error = error {
-                    print(error)
-                    return
-                }
-                
-                guard let data = data else {
-                    print("No data.")
-                    return
-                }
-                
-                let decoder = JSONDecoder()
-                
-                do {
-                    let ethCurrentPrice = try decoder.decode(EthCurrentPriceData.self, from: data)
-                    let doubledCurrentPrice = Double(ethCurrentPrice.price)
-                    let floored = floor((doubledCurrentPrice ?? 0) * 1000) / 1000
-                    self?.xtzCurrentPrice = "US$\(String(floored))"
+        apiService.getCurrentPrice(for: .XYZ) { [weak self] result in
+            switch result {
+                case .success(let doubledCurrentPrice):
+                    let floored = floor(doubledCurrentPrice * 100) / 100
+                    self?.xtzData.currentPrice = "US$\(String(floored))"
                     
                     if let previousXTZPrice = self?.previousXTZPrice {
-                        if let doubledCurrentPrice = doubledCurrentPrice {
-                            if doubledCurrentPrice > previousXTZPrice {
-                                self?.animatePriceLabelColor(to: .systemGreen)
-                            } else if doubledCurrentPrice < previousXTZPrice {
-                                self?.animatePriceLabelColor(to: .systemPink)
-                            }
+                        if doubledCurrentPrice > previousXTZPrice {
+                            self?.animatePriceLabelColor(to: .systemGreen)
+                        } else if doubledCurrentPrice < previousXTZPrice {
+                            self?.animatePriceLabelColor(to: .systemPink)
                         }
                     }
                     self?.previousXTZPrice = doubledCurrentPrice
-                }
-                catch {
-                    print("Error in JSON decoding.")
-                }
-                DispatchQueue.main.async { [weak self] in
-                    self?.xtzPriceLabel.text = self?.xtzCurrentPrice
-                }
+                    DispatchQueue.main.async { [weak self] in
+                        self?.xtzPriceLabel.text = self?.xtzData.currentPrice
+                    }
+                    
+                case .failure(let error):
+                    print(error.localizedDescription)
             }
-            task.resume()
-        }
-        else {
-            print("Invalid URL.")
         }
     }
     
@@ -287,16 +209,16 @@ class CryptoPageViewController: UIViewController {
                 let decoder = JSONDecoder()
                 
                 do {
-                    let ethPriceChange = try decoder.decode(EthPriceChange.self, from: data)
+                    let ethPriceChange = try decoder.decode(CryptoPriceChange.self, from: data)
                     let doubled = Double(ethPriceChange.priceChangePercent)
                     let floored = floor((doubled ?? 0) * 100) / 100
-                    self?.ethPriceChange = String(floored)
+                    self?.ethData.priceChange = String(floored)
                 }
                 catch {
                     print("Error in JSON decoding.")
                 }
                 DispatchQueue.main.async { [weak self] in
-                    if let priceChange = self?.ethPriceChange, let change = Double(priceChange) {
+                    if let priceChange = self?.ethData.priceChange, let change = Double(priceChange) {
                         if change > 0 {
                             var config = UIButton.Configuration.filled()
                             config.title = "\(priceChange)%"
@@ -365,16 +287,16 @@ class CryptoPageViewController: UIViewController {
                 let decoder = JSONDecoder()
                 
                 do {
-                    let xtzPriceChange = try decoder.decode(EthPriceChange.self, from: data)
+                    let xtzPriceChange = try decoder.decode(CryptoPriceChange.self, from: data)
                     let doubled = Double(xtzPriceChange.priceChangePercent)
                     let floored = floor((doubled ?? 0) * 100) / 100
-                    self?.xtzPriceChange = String(floored)
+                    self?.xtzData.priceChange = String(floored)
                 }
                 catch {
                     print("Error in JSON decoding.")
                 }
                 DispatchQueue.main.async { [weak self] in
-                    if let priceChange = self?.xtzPriceChange, let change = Double(priceChange) {
+                    if let priceChange = self?.xtzData.priceChange, let change = Double(priceChange) {
                         if change > 0 {
                             var config = UIButton.Configuration.filled()
                             config.title = "\(priceChange)%"
@@ -443,13 +365,13 @@ class CryptoPageViewController: UIViewController {
                 
                 do {
                     let ethGasFee = try decoder.decode(EthGasFee.self, from: data)
-                    self?.ethGasFee = "\(ethGasFee.result?.proposeGasPrice ?? "") gwei"
+                    self?.ethData.gasFee = "\(ethGasFee.result?.proposeGasPrice ?? "") gwei"
                 }
                 catch {
                     print("Error in JSON decoding.")
                 }
                 DispatchQueue.main.async { [weak self] in
-                    self?.gasFeeLabel.text = self?.ethGasFee
+                    self?.gasFeeLabel.text = self?.ethData.gasFee
                 }
             }
             task.resume()
@@ -484,18 +406,18 @@ class CryptoPageViewController: UIViewController {
                 let decoder = JSONDecoder()
                 
                 do {
-                    let ethPrice = try decoder.decode(EthHistoryPrice.self, from: data)
+                    let ethPrice = try decoder.decode(CryptoHistoryPrice.self, from: data)
                     for ethPriceData in ethPrice.data {
                         let unixTimestampSeconds = Double(ethPriceData.time) / 1000.0
                         let date = Date(timeIntervalSince1970: unixTimestampSeconds)
-                        self?.ethPriceData.append(EthHistoryPriceData(price: Double(ethPriceData.priceUsd) ?? 0, time: date))
+                        self?.ethData.historyPriceData.append(HistoryPriceData(price: Double(ethPriceData.priceUsd) ?? 0, time: date))
                     }
                 }
                 catch {
                     print("Error in JSON decoding.")
                 }
                 DispatchQueue.main.async { [weak self] in
-                    guard let ethPriceData = self?.ethPriceData else {
+                    guard let ethPriceData = self?.ethData.historyPriceData else {
                         print("Cannot fetch ethPriceData.")
                         BCProgressHUD.showFailure()
                         return
@@ -536,18 +458,18 @@ class CryptoPageViewController: UIViewController {
                 let decoder = JSONDecoder()
                 
                 do {
-                    let xtzPrice = try decoder.decode(EthHistoryPrice.self, from: data)
+                    let xtzPrice = try decoder.decode(CryptoHistoryPrice.self, from: data)
                     for xtzPriceData in xtzPrice.data {
                         let unixTimestampSeconds = Double(xtzPriceData.time) / 1000.0
                         let date = Date(timeIntervalSince1970: unixTimestampSeconds)
-                        self?.xtzPriceData.append(EthHistoryPriceData(price: Double(xtzPriceData.priceUsd) ?? 0, time: date))
+                        self?.xtzData.historyPriceData.append(HistoryPriceData(price: Double(xtzPriceData.priceUsd) ?? 0, time: date))
                     }
                 }
                 catch {
                     print("Error in JSON decoding.")
                 }
                 DispatchQueue.main.async { [weak self] in
-                    guard let xtzPriceData = self?.xtzPriceData else {
+                    guard let xtzPriceData = self?.xtzData.historyPriceData else {
                         print("Cannot fetch xtzPriceData.")
                         BCProgressHUD.showFailure()
                         return
@@ -581,7 +503,7 @@ class CryptoPageViewController: UIViewController {
             make.centerY.equalTo(ethIconImageView.snp.centerY)
             make.leading.equalTo(ethIconImageView.snp.trailing).offset(6)
         }
-
+        
         view.addSubview(ethPriceLabel)
         ethPriceLabel.snp.makeConstraints { make in
             make.top.equalTo(ethLabel.snp.bottom).offset(6)
@@ -624,7 +546,7 @@ class CryptoPageViewController: UIViewController {
     
     private func setupXTZLabelUI() {
         view.backgroundColor = .primary
-    
+        
         view.addSubview(xtzIconImageView)
         xtzIconImageView.image = UIImage(named: "tezos_crypto")
         xtzIconImageView.snp.makeConstraints { make in

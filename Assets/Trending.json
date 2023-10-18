@@ -1,0 +1,533 @@
+[
+    {
+        "data": {
+            "randomTopGenerativeToken": {
+                "author": {
+                    "name": "Kim Asendorf"
+                },
+                "gentkContractAddress": "KT1U6EHmNxJTkvaWJ4ThczG4FSDaHC21ssvi",
+                "issuerContractAddress": "KT1BJC12dG17CVvPKJ1VYaNnaT5mzfnUTwXv",
+                "metadata": {
+                    "name": "Reading a book",
+                    "description": "The formal structure of a book is beautiful by itself, but its aesthetic is the tacit atmosphere within which events take place in a story.\n\nThe WebGL real-time animation sets up an initial grid based on the fxhash. The grid cells get subdivided into another grid and the resulting cells become filled with pixels in color (~33%) or black and white (~66%).\nThe colored pixels come in 3 different coloring styles.\n- Big Palette (~49%)\n- Small Palette (~49%)\n- Monochrome [b/w] (~2%)\n4 noise algorithms modify the pixels of selected grid cells while at the same time 4 reset algorithms reassemble the initial image. The selected cells switch over time.",
+                    "childrenDescription": "The formal structure of a book is beautiful by itself, but its aesthetic is the tacit atmosphere within which events take place in a story.\n\nThe WebGL real-time animation sets up an initial grid based on the fxhash. The grid cells get subdivided into another grid and the resulting cells become filled with pixels in color (~33%) or black and white (~66%).\nThe colored pixels come in 3 different coloring styles.\n- Big Palette (~49%)\n- Small Palette (~49%)\n- Monochrome [b/w] (~2%)\n4 noise algorithms modify the pixels of selected grid cells while at the same time 4 reset algorithms reassemble the initial image. The selected cells switch over time.",
+                    "tags": [
+                        "real-time",
+                        "glsl",
+                        "webgl",
+                        "glitch",
+                        "kimasendorf",
+                        "pixel"
+                    ],
+                    "artifactUri": "ipfs://QmbSJDXUjiysBpifFPiSaF3xBf3urDwDFgXPXoCAay6ubq",
+                    "displayUri": "ipfs://QmUAFhaqUYCt4pUmFjzXDs15uskt8smkgPSCFcpJznfqcK",
+                    "thumbnailUri": "ipfs://QmUL6wqjrwo3f5YUtEJnf2DzQHDG1vX1yCcRadniSAbTCA",
+                    "generativeUri": "ipfs://QmSgkdmpqwGLrCtH8qCYQGYNqeKvt47SgasZisGCQrpzKE",
+                    "authenticityHash": "1c0c447eed4c1705b7f0953a0c514700bc007eea200fb3d33daafac5e7358571",
+                    "capture": {
+                        "mode": "VIEWPORT",
+                        "resolution": {
+                            "x": 800,
+                            "y": 800
+                        },
+                        "delay": 40000
+                    },
+                    "symbol": "FXGEN",
+                    "decimals": 0
+                },
+                "id": 86
+            }
+        }
+    },
+    {
+      "data": {
+        "randomTopGenerativeToken": {
+          "author": {
+            "name": "Volatile Moods"
+          },
+          "gentkContractAddress": "KT1U6EHmNxJTkvaWJ4ThczG4FSDaHC21ssvi",
+          "issuerContractAddress": "KT1BJC12dG17CVvPKJ1VYaNnaT5mzfnUTwXv",
+          "metadata": {
+            "name": "Slumbers",
+            "description": "Generative abstract artwork that explores forms, shapes, coloring and brushwork.\n\nOptions:\n\n- press 'f' to turn off paper-like texture (recommended for print on hi-quality paper)\n- press 's' to save the PNG image of the current view\n- press 1, 2, 3, or 4 to save hi-res PNG images\n\nColors and textures might differ slightly on some devices due to the heavy use of low alpha blending. Calibrated and tested on Firefox 107.0 & Chrome 107.0.5304.107 on Win10 x64 Intel machine.\n\nCreated using p5js.\n\n@VolatileMoods, November, 2022.",
+            "childrenDescription": "Generative abstract artwork that explores forms, shapes, coloring and brushwork.\n\nOptions:\n\n- press 'f' to turn off paper-like texture (recommended for print on hi-quality paper)\n- press 's' to save the PNG image of the current view\n- press 1, 2, 3, or 4 to save hi-res PNG images\n\nColors and textures might differ slightly on some devices due to the heavy use of low alpha blending. Calibrated and tested on Firefox 107.0 & Chrome 107.0.5304.107 on Win10 x64 Intel machine.\n\nCreated using p5js.\n\n@VolatileMoods, November, 2022.",
+            "tags": [
+              "slumbers volatile moods abstract generative painting colors brushwork"
+            ],
+            "artifactUri": "ipfs://QmSCw3J65Q3QBgdBRDkdWmz2smii6YTWjed1EEcfbBFS8r?fxhash=ooVgY9dZjZA9KVgTfDxxdwdo3piR9ppKwh9597jU4DXbkmd3HnK",
+            "displayUri": "ipfs://QmYsAQEaGoPGCJ9vXgBvSxKc7L4GbrSqWQPXeCgb7tRFbz",
+            "thumbnailUri": "ipfs://QmRRPCQzHdAECRpy4m8gHzaB7dbj6ZJNheKgjbXzX2XUJn",
+            "generativeUri": "ipfs://QmSCw3J65Q3QBgdBRDkdWmz2smii6YTWjed1EEcfbBFS8r",
+            "authenticityHash": "44517a972da6b236b0596440092dc484965ca9512845c3929e791d7c70b13fa4",
+            "previewHash": "ooVgY9dZjZA9KVgTfDxxdwdo3piR9ppKwh9597jU4DXbkmd3HnK",
+            "capture": {
+              "mode": "CANVAS",
+              "triggerMode": "FN_TRIGGER",
+              "gpu": false,
+              "canvasSelector": "canvas"
+            },
+            "settings": {
+              "exploration": {
+                "preMint": {
+                  "enabled": true,
+                  "hashConstraints": [
+                    "ooQnCpsgEP52AzZ2egMw5qufWjPgt77jZiibWPn94QdUc7BbgzW",
+                    "ooPs66jJNiJfKoP5z3JpHvYj7ZzqzxMtygzNs5P9mQTnSZybjt9",
+                    "ooJD7zXtntAKMDwy67rJvV2yyQrfZQqj1DhaoWteDsPcEbLKV5W",
+                    "ooVB6SAg9Qzb7kHN6aTpdUzRqP4hfSz8DSBQ6QQFcJnrrLUq7xF",
+                    "ooGxDBeZcLcDDxaLuqGXdt9rHopSsDDjcvV5WsB8Cn8mMEMkB1A",
+                    "oobj3bh4XgZHZCceiGH37c95PqjApdiGh9Fj3JEb3gWAYe615qi",
+                    "ooUHNd3jwbw8pk5oFprdniCYMJaS2gwPHKDvuYbdzzr1DR2Xiz4",
+                    "oode8rdHEZP35ZEvhP1hoFegRXzGEsfL6D36Rnk11DD7ut4HVdx",
+                    "ood5oicyqeZ1mLwiNxhNVhDmvKKrBCixAH9t3g66d8a4ZN4rxVU",
+                    "oo2sDMC9CYM1UWsiQpZUTbsoL6DueLekayDDUuGi8bNtEUJMauc",
+                    "ooHtG7731Zj1WsCCFqZb31gJ2fQphT9xfn1LjrbYDiNWxCQUaQj"
+                  ]
+                },
+                "postMint": {
+                  "enabled": false,
+                  "hashConstraints": null
+                }
+              }
+            },
+            "symbol": "FXGEN",
+            "decimals": 0,
+            "version": "0.2"
+          },
+          "id": 21602
+        }
+      }
+    },
+    {
+      "data": {
+        "randomTopGenerativeToken": {
+          "author": {
+            "name": "itsgalo"
+          },
+          "gentkContractAddress": "KT1U6EHmNxJTkvaWJ4ThczG4FSDaHC21ssvi",
+          "issuerContractAddress": "KT1BJC12dG17CVvPKJ1VYaNnaT5mzfnUTwXv",
+          "metadata": {
+            "name": "BLOBBERS",
+            "description": "Generative animated painting made out of throbbing blobbers. Some are rare.",
+            "childrenDescription": "Generative animated painting made out of throbbing blobbers. Some are rare.",
+            "tags": [
+              "painting",
+              "p5js",
+              "dither",
+              "glsl"
+            ],
+            "artifactUri": "ipfs://QmbGDPF1PcBvAyNkeH7iSdvteVFZ7eVsFaWMKP2MvVK3L6",
+            "displayUri": "ipfs://QmNx2UZqtbiMFvXwRX7zYYtTurt63dAECMJLkB7Gi2x2n6",
+            "thumbnailUri": "ipfs://QmY3V9MVCEDKudwXtrrdyUGVyhynw442ER57sbxwfiRvZp",
+            "generativeUri": "ipfs://QmZ7Ccwa8Tr35Tu76d4FqbNEL1w4wDwNBBKBm3MsEgKK8a",
+            "authenticityHash": "d2d10635414d29cdc1b405edbf6a3b78461d2673531920881b72d690c87b7b37",
+            "capture": {
+              "mode": "VIEWPORT",
+              "resolution": {
+                "x": 800,
+                "y": 800
+              },
+              "delay": 5000
+            },
+            "symbol": "FXGEN",
+            "decimals": 0
+          },
+          "id": 765
+        }
+      }
+    },
+    {
+      "data": {
+        "randomTopGenerativeToken": {
+          "author": {
+            "name": "perkwerk"
+          },
+          "gentkContractAddress": "KT1U6EHmNxJTkvaWJ4ThczG4FSDaHC21ssvi",
+          "issuerContractAddress": "KT1BJC12dG17CVvPKJ1VYaNnaT5mzfnUTwXv",
+          "metadata": {
+            "name": "Ciphers",
+            "description": "A generative series using the most basic of building blocks.\n\nFirst generative token by @perkwerk ever.",
+            "childrenDescription": "A generative series using the most basic of building blocks.\n\nFirst generative token by @perkwerk ever.",
+            "tags": [
+              "generative",
+              "glyphs",
+              "ciphers",
+              "grid",
+              "pattern",
+              "perkwerk"
+            ],
+            "artifactUri": "ipfs://QmaQRVcGHWQ1uJyQyLyCSbgfNUUk6gkGosi1radxpfbH6H",
+            "displayUri": "ipfs://Qmb4su76ZquNsujiNSJmrSFFVA8vMDJNfrcXshb1MNhhQ8",
+            "thumbnailUri": "ipfs://QmVcpRfMpKVh7288yc3hdxwW6FLH4XhRaVN67qCYgHnhvD",
+            "generativeUri": "ipfs://QmcuWTVoEtspsWhAb59TqQ5KH5k2M9yzwibWnvDT6sAUnW",
+            "authenticityHash": "9f8cbc6bb837d536644aa18d8f1248e5a789295bfffb30471b05e4917f37456b",
+            "capture": {
+              "mode": "CANVAS",
+              "delay": 2000,
+              "canvasSelector": "canvas#defaultCanvas0"
+            },
+            "symbol": "FXGEN",
+            "decimals": 0
+          },
+          "id": 1455
+        }
+      }
+    },
+    {
+      "data": {
+        "randomTopGenerativeToken": {
+          "author": {
+            "name": "Aleksandra"
+          },
+          "gentkContractAddress": "KT1U6EHmNxJTkvaWJ4ThczG4FSDaHC21ssvi",
+          "issuerContractAddress": "KT1BJC12dG17CVvPKJ1VYaNnaT5mzfnUTwXv",
+          "metadata": {
+            "name": "CHROMATLAS, Vol. 9",
+            "description": "[As for a picture, if it isn't worth a thousand words, the hell with it.]\n\nThere is a keyboard key that unlocks more variations.",
+            "childrenDescription": "[As for a picture, if it isn't worth a thousand words, the hell with it.]\n\nThere is a keyboard key that unlocks more variations.",
+            "tags": [
+              "generative",
+              "interactive",
+              "animation",
+              "p5.js",
+              "p5js",
+              "minimal",
+              "generativeart"
+            ],
+            "artifactUri": "ipfs://QmXqBJgoqxpyssFAB78nZJQSa18669U6WdWZeQ4Zm26Ska?fxhash=oo7ADpehCam8s2Ejfzr2GrsXry3cCrsBRFhBNfLwgE6Jh6HVZSg",
+            "displayUri": "ipfs://QmXf4uZrNpvT4KBHVskFsQ8a41wuVbUYAKzpcZQp7zJA9Y",
+            "thumbnailUri": "ipfs://QmY44QVLMtjUXgswHJvyStyfJpkcvUP5RN5Uwyoi2PbatC",
+            "generativeUri": "ipfs://QmXqBJgoqxpyssFAB78nZJQSa18669U6WdWZeQ4Zm26Ska",
+            "authenticityHash": "c73dbe314149ef69211272ccc3fd47ada6824f54a929b73cf70450996cd7657e",
+            "previewHash": "oo7ADpehCam8s2Ejfzr2GrsXry3cCrsBRFhBNfLwgE6Jh6HVZSg",
+            "capture": {
+              "mode": "CANVAS",
+              "triggerMode": "FN_TRIGGER",
+              "gpu": false,
+              "canvasSelector": "canvas#defaultCanvas0"
+            },
+            "settings": {
+              "exploration": {
+                "preMint": {
+                  "enabled": true,
+                  "hashConstraints": null
+                },
+                "postMint": {
+                  "enabled": true,
+                  "hashConstraints": null
+                }
+              }
+            },
+            "symbol": "FXGEN",
+            "decimals": 0,
+            "version": "0.2"
+          },
+          "id": 16535
+        }
+      }
+    },
+    {
+      "data": {
+        "randomTopGenerativeToken": {
+          "author": {
+            "name": "AydaEtb"
+          },
+          "gentkContractAddress": "KT1EfsNuqwLAWDd3o4pvfUx1CAh5GMdTrRvr",
+          "issuerContractAddress": "KT1Xpmp15KfqoePNW9HczFmqaGNHwadV2a3b",
+          "metadata": {
+            "name": "human in search of himself",
+            "description": "human in search of himself\nA person who looks for himself among the colors, lines, details and noises of the world\n\nThis work consists of 6 layers\nIt includes people, writings, background and colors",
+            "childrenDescription": "human in search of himself\nA person who looks for himself among the colors, lines, details and noises of the world\n\nThis work consists of 6 layers\nIt includes people, writings, background and colors",
+            "mintingInstructions": "",
+            "tags": [
+              "nft",
+              "sea",
+              "to",
+              "art",
+              "2d",
+              "2dart",
+              "paintin",
+              "paint",
+              "digital",
+              "artist",
+              "colorful"
+            ],
+            "artifactUri": "ipfs://QmUxftZmjHwPAG93CPLcMhDMWjCYfExBNgrNuvx1UZScXo/?fxhash=oosJ9C3ic4wNTXZR5dwrfa7sj5zMcyzygimQjqHmbzriAX2q6kV&fxiteration=1&fxminter=tz1hSCTrgrQuZpnQygK7C2anqgsiyqH3h6D7",
+            "displayUri": "ipfs://QmWMoQ6ab9amy23mM4npwyriJnij7i1gz326kDLy6ymoiG",
+            "thumbnailUri": "ipfs://QmVwM7f8X96794QqBvsoJXqL8sN3f3wELsrZuiA8RdCw5u",
+            "generativeUri": "ipfs://QmUxftZmjHwPAG93CPLcMhDMWjCYfExBNgrNuvx1UZScXo",
+            "authenticityHash": "64456cf26c6c41829a8a154a5f3de52a72ef67ad1ed2ec07d8f6bd7a36169aa0",
+            "previewHash": "oosJ9C3ic4wNTXZR5dwrfa7sj5zMcyzygimQjqHmbzriAX2q6kV",
+            "previewIteration": 1,
+            "previewMinter": "tz1hSCTrgrQuZpnQygK7C2anqgsiyqH3h6D7",
+            "previewInputBytes": null,
+            "capture": {
+              "mode": "CANVAS",
+              "triggerMode": "FN_TRIGGER",
+              "gpu": false,
+              "canvasSelector": "#theCanvas"
+            },
+            "settings": {
+              "exploration": {
+                "preMint": {
+                  "enabled": true,
+                  "hashConstraints": null,
+                  "iterationConstraints": null,
+                  "paramsConstraints": null
+                },
+                "postMint": {
+                  "enabled": false,
+                  "hashConstraints": null,
+                  "iterationConstraints": null,
+                  "paramsConstraints": null
+                }
+              }
+            },
+            "symbol": "FXGEN",
+            "decimals": 0,
+            "version": "3.0.1",
+            "params": {
+              "definition": null,
+              "inputBytesSize": 0
+            },
+            "snippetVersion": "3.3.0"
+          },
+          "id": 29090
+        }
+      }
+    },
+    {
+      "data": {
+        "randomTopGenerativeToken": {
+          "author": {
+            "name": "ertdfgcvb"
+          },
+          "gentkContractAddress": "KT1U6EHmNxJTkvaWJ4ThczG4FSDaHC21ssvi",
+          "issuerContractAddress": "KT1BJC12dG17CVvPKJ1VYaNnaT5mzfnUTwXv",
+          "metadata": {
+            "name": "Smooth Steps",
+            "description": "Mostly dark. \n\nCustom software (color, silent) Variable dimensions, horizontal or vertical HTML, JavaScript, WebGL\n\nKeys\n\ni : Toggle info\n1-4 : Display density (select 1 if slow)\nq : Toggle quality\nf : Full-screen\n\nSome settings can be adjusted through the URL query string: more info in the HTML source.",
+            "childrenDescription": "Mostly dark. \n\nCustom software (color, silent) Variable dimensions, horizontal or vertical HTML, JavaScript, WebGL\n\nKeys\n\ni : Toggle info\n1-4 : Display density (select 1 if slow)\nq : Toggle quality\nf : Full-screen\n\nSome settings can be adjusted through the URL query string: more info in the HTML source.",
+            "tags": [
+              "concrete",
+              "experimental",
+              "generative",
+              "kinetictype",
+              "procedural",
+              "textart",
+              "textmode",
+              "typography",
+              "webgl"
+            ],
+            "artifactUri": "ipfs://QmTgCy4L4gKDJW3CadJ5df8HNXXzCBsVFVwWUguZuDaL8w?fxhash=ooYbYz1GMTFyf8xdKQ944S91EJV6irHAvxS77Z9758iegbfZcym",
+            "displayUri": "ipfs://QmVarDBU9CTdycHHpEXDm29JTLZ4LKSCCSUgJLDfDXixkk",
+            "thumbnailUri": "ipfs://Qmevn9GBT3tjBeCWfwRSGqByXm8S83kU3zosGuBvgvp4tj",
+            "generativeUri": "ipfs://QmTgCy4L4gKDJW3CadJ5df8HNXXzCBsVFVwWUguZuDaL8w",
+            "authenticityHash": "36722c488e7003f3753bf05a3f0f921584856fddbe509285fc609151b068db69",
+            "previewHash": "ooYbYz1GMTFyf8xdKQ944S91EJV6irHAvxS77Z9758iegbfZcym",
+            "capture": {
+              "mode": "VIEWPORT",
+              "triggerMode": "FN_TRIGGER",
+              "gpu": true,
+              "resolution": {
+                "x": 768,
+                "y": 768
+              }
+            },
+            "settings": {
+              "exploration": {
+                "preMint": {
+                  "enabled": true,
+                  "hashConstraints": [
+                    "ooqNfSwjt7QpKfPwZ9Pi2ukxxxfdS4bz4tMfwoDqtDca9Su26dB",
+                    "oo5xihZPpQpdZno8ZVJUfQ3RJ3uhCaXfEdYPVUkCFWywyHS4HLj",
+                    "oovQSembnLKnPAcGa9rwmrqhwqjkqdPf6PRgvSumYTgAR5QkzNJ",
+                    "ooF1szpKS2oWMFq5TrsQZUTggjMeKAoFuaU2d5Rs82ox65FWABs",
+                    "ooDTyMNMxEAf13DsBJXUxFnvKYmDK5P8xqBaeszfyG3pCiKLLNN",
+                    "ooFbXA19GntyJpueYsc79JtWTzWpjKF4kK447LfA4SqyzJBNDL6",
+                    "ooemaKhudytyFHnk4jGHzL5mdRFdQt62fy77ACaR5eJgu7d3Yx9"
+                  ]
+                },
+                "postMint": {
+                  "enabled": false,
+                  "hashConstraints": null
+                }
+              }
+            },
+            "symbol": "FXGEN",
+            "decimals": 0,
+            "version": "0.2"
+          },
+          "id": 25393
+        }
+      }
+    },
+    {
+      "data": {
+        "randomTopGenerativeToken": {
+          "author": {
+            "name": "msoriaro"
+          },
+          "gentkContractAddress": "KT1U6EHmNxJTkvaWJ4ThczG4FSDaHC21ssvi",
+          "issuerContractAddress": "KT1BJC12dG17CVvPKJ1VYaNnaT5mzfnUTwXv",
+          "metadata": {
+            "name": "el inefable momento",
+            "description": "\"el inefable momento del colorido descubrimiento\" (\"the ineffable moment of the colorful discovery\")  is part of the fxhash interactive minting experience at The Ever-Evolving World of Art, Art Basel Hong-Kong, 2022.\n\nIt is a tribute to playful discovery. This work was commissioned for the Art Basel Hong Kong / Tezos / fxhash collaboration, as part of an activity to introduce visitors into generative art. As I was pondering what could I do in the short time available, I saw my youngest daughter drawing: the ineffable moment of colorful discovery. Child play is one of the most discovery-filled activities I can think of. And drawing is that joy that I describe: a blank piece of paper with a crayon is pure possibility. Which is what generative art is. I had wanted for quite some time to create a tribute to those drawings my daughters do, and this has been the perfect occasion to start it: it seemed to me that it fit the occasion perfectly: kids discover through painting, maybe adults can discover generative art using the same visual language.\n\n\"el inefable momento del colorido descubrimiento\" is a work that explores colour and irregular basic shapes, and that leaves the viewer in front of a new space with each execution. Does it trigger any excitement to see those imperfect elements? It is dearest to me to see the hearts and rainbows, as two mainstays of the drawings that I keep in folders and count in the hundreds and thousands. Can an algorithm that reproduces those elements trigger the same warm feelings in the viewer? It does with me.\n\nThe piece lets the viewer explore certain characteristics. The viewer can pause the iterations: each is just an execution of the same drawing, slightly different. When paused, one can look at each line individually and notice how the drawing is constructed. When running, it gives an idea of how the things we know are just versions of the ideal concept they represent. \n\nAlso, one can have an idea of what would have happened if the child had decided to draw more or less elements. The viewer can press “e” to see different variations of the same piece: random elements are selected and displayed. To restore the original work, press “r”. Which one is the “finished” artwork? All of them. What is “the” artwork? \n\nThe work has the following commands:\n\n- Change the work: “e”. To restore: “r”\n- The painting can be paused/unpaused pressing “p”\n- The viewer can save an artwork pressing “s” (it will pause the piece, press \"p\" to unpause)\n- The resolution can be arbitrarily changed pressing “d” followed by a number from 1 to 9. If the image goes dark and nothing paints, press “d 0” (d zero) and try again with a lower number. Resolution can be increased iteratively: press d 2, then d 2, etc. It will always add the amount to the current pixel density, thus increasing resolution.\n- The viewer can see how many decisions are made per iteration. This might be interesting to those who don’t know how generative art works. Each iteration is composed of thousands of decisions that inform colour, positions, shapes, etc. To toggle the decision count view, press “q”\n- It has also colour controls: press z for brightness, x for contrast, g for gamma, b for blur, n for noise followed by + or - to alter their values. You might get some simple variations that you might enjoy. Press a to enable/disable all colour controls (except the noise).\n- There are some pre-recorded colour variations: press “v” followed by 1, 2 or 3. Press “v” followed by 0 (zero) to reset the variations.\n\nIn every process of discovery, one comes to an \"aha\" moment ;) If you find your aha moment, then you can do one more thing: you can play with the size of certain elements pressing “o”. To restore, reload the piece. Once you find your aha moment, you can go back the same way you got there. All the controls work the same when one has reached their aha moment.\n\nI hope you enjoy the piece as much as I have enjoyed drawing it, directly or indirectly, with my daughters. Thanks.\n\nArtwork by Marcelo Soria-Rodríguez, @msoriaro.\nMade with p5js and glsl.",
+            "childrenDescription": "\"el inefable momento del colorido descubrimiento\" (\"the ineffable moment of the colorful discovery\")  is part of the fxhash interactive minting experience at The Ever-Evolving World of Art, Art Basel Hong-Kong, 2022.\n\nIt is a tribute to playful discovery. This work was commissioned for the Art Basel Hong Kong / Tezos / fxhash collaboration, as part of an activity to introduce visitors into generative art. As I was pondering what could I do in the short time available, I saw my youngest daughter drawing: the ineffable moment of colorful discovery. Child play is one of the most discovery-filled activities I can think of. And drawing is that joy that I describe: a blank piece of paper with a crayon is pure possibility. Which is what generative art is. I had wanted for quite some time to create a tribute to those drawings my daughters do, and this has been the perfect occasion to start it: it seemed to me that it fit the occasion perfectly: kids discover through painting, maybe adults can discover generative art using the same visual language.\n\n\"el inefable momento del colorido descubrimiento\" is a work that explores colour and irregular basic shapes, and that leaves the viewer in front of a new space with each execution. Does it trigger any excitement to see those imperfect elements? It is dearest to me to see the hearts and rainbows, as two mainstays of the drawings that I keep in folders and count in the hundreds and thousands. Can an algorithm that reproduces those elements trigger the same warm feelings in the viewer? It does with me.\n\nThe piece lets the viewer explore certain characteristics. The viewer can pause the iterations: each is just an execution of the same drawing, slightly different. When paused, one can look at each line individually and notice how the drawing is constructed. When running, it gives an idea of how the things we know are just versions of the ideal concept they represent. \n\nAlso, one can have an idea of what would have happened if the child had decided to draw more or less elements. The viewer can press “e” to see different variations of the same piece: random elements are selected and displayed. To restore the original work, press “r”. Which one is the “finished” artwork? All of them. What is “the” artwork? \n\nThe work has the following commands:\n\n- Change the work: “e”. To restore: “r”\n- The painting can be paused/unpaused pressing “p”\n- The viewer can save an artwork pressing “s” (it will pause the piece, press \"p\" to unpause)\n- The resolution can be arbitrarily changed pressing “d” followed by a number from 1 to 9. If the image goes dark and nothing paints, press “d 0” (d zero) and try again with a lower number. Resolution can be increased iteratively: press d 2, then d 2, etc. It will always add the amount to the current pixel density, thus increasing resolution.\n- The viewer can see how many decisions are made per iteration. This might be interesting to those who don’t know how generative art works. Each iteration is composed of thousands of decisions that inform colour, positions, shapes, etc. To toggle the decision count view, press “q”\n- It has also colour controls: press z for brightness, x for contrast, g for gamma, b for blur, n for noise followed by + or - to alter their values. You might get some simple variations that you might enjoy. Press a to enable/disable all colour controls (except the noise).\n- There are some pre-recorded colour variations: press “v” followed by 1, 2 or 3. Press “v” followed by 0 (zero) to reset the variations.\n\nIn every process of discovery, one comes to an \"aha\" moment ;) If you find your aha moment, then you can do one more thing: you can play with the size of certain elements pressing “o”. To restore, reload the piece. Once you find your aha moment, you can go back the same way you got there. All the controls work the same when one has reached their aha moment.\n\nI hope you enjoy the piece as much as I have enjoyed drawing it, directly or indirectly, with my daughters. Thanks.\n\nArtwork by Marcelo Soria-Rodríguez, @msoriaro.\nMade with p5js and glsl.",
+            "tags": [
+              "ABHK2022",
+              "Art Basel",
+              "Hong-Kong 2022",
+              "playful",
+              "child",
+              "discovery",
+              "iillucid",
+              "polylines",
+              "colorful"
+            ],
+            "artifactUri": "ipfs://QmcwZdCwXARrhbjTt7CkCNK7yDfD4iZ7UvvYYTHaQF22dr?fxhash=oot49pUQ61wjg3RauNuiBZ9MWS8aNcfP7NxNkyPNprNDa5ErwuH",
+            "displayUri": "ipfs://QmSnDgtYvwnuQAkd6qtiodiixnwr6g8gUkBw9xVaZTQBi6",
+            "thumbnailUri": "ipfs://QmeqSZ2T6JQiGnUSugAik8o8b6Bx8DYeHMzwfozsSFkGjp",
+            "generativeUri": "ipfs://QmcwZdCwXARrhbjTt7CkCNK7yDfD4iZ7UvvYYTHaQF22dr",
+            "authenticityHash": "04d2d68c154a07828bef26ee38c85dcd85cb27296f7a38b33241b9debd184195",
+            "previewHash": "oot49pUQ61wjg3RauNuiBZ9MWS8aNcfP7NxNkyPNprNDa5ErwuH",
+            "capture": {
+              "mode": "CANVAS",
+              "triggerMode": "FN_TRIGGER",
+              "gpu": false,
+              "canvasSelector": "canvas#inefable"
+            },
+            "settings": {
+              "exploration": {
+                "preMint": {
+                  "enabled": true,
+                  "hashConstraints": null
+                },
+                "postMint": {
+                  "enabled": true,
+                  "hashConstraints": null
+                }
+              }
+            },
+            "symbol": "FXGEN",
+            "decimals": 0,
+            "version": "0.2"
+          },
+          "id": 13484
+        }
+      }
+    },
+    {
+      "data": {
+        "randomTopGenerativeToken": {
+          "author": {
+            "name": "nicolasdnl"
+          },
+          "gentkContractAddress": "KT1EfsNuqwLAWDd3o4pvfUx1CAh5GMdTrRvr",
+          "issuerContractAddress": "KT1Xpmp15KfqoePNW9HczFmqaGNHwadV2a3b",
+          "metadata": {
+            "name": "Destructures",
+            "description": "Deconstructed structure built from many blocks in isometric view.\n\n\n——\n\n- Press [s] in live mode to export a PNG file.\n\n- By adding a ‘scale’ parameter in the live URL, you can generate a higher resolution image. The scale ranges from 1 to 4 with a default value of 1.",
+            "childrenDescription": "Deconstructed structure built from many blocks in isometric view.\n\n\n——\n\n- Press [s] in live mode to export a PNG file.\n\n- By adding a ‘scale’ parameter in the live URL, you can generate a higher resolution image. The scale ranges from 1 to 4 with a default value of 1.",
+            "tags": [
+              "generative",
+              "structure",
+              "deconstruction",
+              "grid"
+            ],
+            "artifactUri": "ipfs://QmVe76YX5Rk3YKzFWbEdoJYBNjrJJNgv5BnZmKntTjR8tg/?fxhash=oofoJmz5w7RjH5YRSU4i5moyyoeuh6ViVHCvSRtWPjRivy2ffzU&fxminter=tz1XSFkziGSeXsExiMKasq4thhDUCjiUy3AF",
+            "displayUri": "ipfs://QmZWp281rCjUjH2QmxMeUeDck1z2B9j6G2eoxQZ4KMx7Zc",
+            "thumbnailUri": "ipfs://QmcQ4MsT4fa6fjkMUqmmN6yVQzDZEJ2apBWnDDetQiZJci",
+            "generativeUri": "ipfs://QmVe76YX5Rk3YKzFWbEdoJYBNjrJJNgv5BnZmKntTjR8tg",
+            "authenticityHash": "f1d77323a805f68602ae379651d80009ac977c57e3c6d2c0e2dbce54941046b4",
+            "previewHash": "oofoJmz5w7RjH5YRSU4i5moyyoeuh6ViVHCvSRtWPjRivy2ffzU",
+            "previewMinter": "tz1XSFkziGSeXsExiMKasq4thhDUCjiUy3AF",
+            "previewInputBytes": null,
+            "capture": {
+              "mode": "CANVAS",
+              "triggerMode": "FN_TRIGGER",
+              "gpu": false,
+              "canvasSelector": "canvas"
+            },
+            "settings": {
+              "exploration": {
+                "preMint": {
+                  "enabled": true,
+                  "hashConstraints": [
+                    "oofoJmz5w7RjH5YRSU4i5moyyoeuh6ViVHCvSRtWPjRivy2ffzU",
+                    "ooykaGdj21UfYveXuvwyFdzWF7xAkDKg8SgSVsSZdLL5YCQ9W8J",
+                    "oo3UFJfqaLrWFsqW2N3pmQJx2rrHWgN68dPsMukBsBW18RaDxyp",
+                    "ooFbw6Wq7x8p1gHBQA9pwXDcXNhJkvD4uRcnXsTt44ExBV7wopt",
+                    "oohEnvhjVRuxd2qiWhiSyCFtnc5jYZHEggxDxP3JS8pNDjTBB5R"
+                  ],
+                  "paramsConstraints": null
+                },
+                "postMint": {
+                  "enabled": true,
+                  "hashConstraints": null,
+                  "paramsConstraints": null
+                }
+              }
+            },
+            "symbol": "FXGEN",
+            "decimals": 0,
+            "version": "3.0.1",
+            "params": {
+              "inputBytesSize": 0
+            }
+          },
+          "id": 27192
+        }
+      }
+    },
+    {
+      "data": {
+        "randomTopGenerativeToken": {
+          "author": {
+            "name": "Sarah Ridgley"
+          },
+          "gentkContractAddress": "KT1U6EHmNxJTkvaWJ4ThczG4FSDaHC21ssvi",
+          "issuerContractAddress": "KT1BJC12dG17CVvPKJ1VYaNnaT5mzfnUTwXv",
+          "metadata": {
+            "name": "GRAPHEME",
+            "description": "Released on the occasion of the Tribute to Herbert W. Franke. \nwww.tribute-hwf.com\n\n“One criterion for art involves the process used by the artist for shaping the work. In the special case of mathematically supported fine art, the artmaking process occurs in a mathematically defined operation that allows the generation and transformation of images, methods used for picture processing.” - Herbert W. Franke\n\nI first came across Franke’s ‘Ornamental Alphabets’ in his book 𝘊𝘰𝘮𝘱𝘶𝘵𝘦𝘳 𝘎𝘳𝘢𝘱𝘩𝘪𝘤𝘴 - 𝘊𝘰𝘮𝘱𝘶𝘵𝘦𝘳 𝘈𝘳𝘵, and was intrigued with the idea of using a simple letterform to explore different generative image processing techniques. \n\nI’ve used letters and writing in my work for a long time, both with letterpress printing and in my asemic poetry programs. With asemic writing, I generate unrecognizable letters to reference text, and here I use recognizable letterforms removed from their typical function as language signifiers. \n\nMy goal with this project was to build as much texture and layering as possible by warping and collaging the letters together in various ways. The font I’m using is a design I made years ago to supplement my wood type collection for printing. I really enjoyed being able to bring that part of my past work into my generative art practice. \n\nEach image is composed of the letters found in the hash for that piece, divided into either vowels or consonants. The program builds on a technique I’ve used before, where I generate an image to an off-screen canvas and then dive through the pixels to pull out the color and form I want to surface in the final image.\n\n25% of the primary sales will be donated on-chain to the Foundation Herbert W. Franke. These funds will be used by ZKM Karlsruhe to digitize Franke’s 1,800 manuscripts and make them publicly available. Any additional funds raised will be donated to the Rütgers Foundation which supports children and young adults in Africa so that they can get access to and work with technology.\n\n- Press “R” to increase the pixel density and reload the image (this can be render intensive and will create a really large file suitable for printing)\n- Press “S” to save a copy\n\nMade with p5js\nArtist: Sarah Ridgley\nOctober, 2022",
+            "childrenDescription": "Released on the occasion of the Tribute to Herbert W. Franke. \nwww.tribute-hwf.com\n\n“One criterion for art involves the process used by the artist for shaping the work. In the special case of mathematically supported fine art, the artmaking process occurs in a mathematically defined operation that allows the generation and transformation of images, methods used for picture processing.” - Herbert W. Franke\n\nI first came across Franke’s ‘Ornamental Alphabets’ in his book 𝘊𝘰𝘮𝘱𝘶𝘵𝘦𝘳 𝘎𝘳𝘢𝘱𝘩𝘪𝘤𝘴 - 𝘊𝘰𝘮𝘱𝘶𝘵𝘦𝘳 𝘈𝘳𝘵, and was intrigued with the idea of using a simple letterform to explore different generative image processing techniques. \n\nI’ve used letters and writing in my work for a long time, both with letterpress printing and in my asemic poetry programs. With asemic writing, I generate unrecognizable letters to reference text, and here I use recognizable letterforms removed from their typical function as language signifiers. \n\nMy goal with this project was to build as much texture and layering as possible by warping and collaging the letters together in various ways. The font I’m using is a design I made years ago to supplement my wood type collection for printing. I really enjoyed being able to bring that part of my past work into my generative art practice. \n\nEach image is composed of the letters found in the hash for that piece, divided into either vowels or consonants. The program builds on a technique I’ve used before, where I generate an image to an off-screen canvas and then dive through the pixels to pull out the color and form I want to surface in the final image.\n\n25% of the primary sales will be donated on-chain to the Foundation Herbert W. Franke. These funds will be used by ZKM Karlsruhe to digitize Franke’s 1,800 manuscripts and make them publicly available. Any additional funds raised will be donated to the Rütgers Foundation which supports children and young adults in Africa so that they can get access to and work with technology.\n\n- Press “R” to increase the pixel density and reload the image (this can be render intensive and will create a really large file suitable for printing)\n- Press “S” to save a copy\n\nMade with p5js\nArtist: Sarah Ridgley\nOctober, 2022",
+            "tags": [
+              "TributeHerbertWFranke",
+              "generative art",
+              "typography",
+              "p5js"
+            ],
+            "artifactUri": "ipfs://Qmc3tR1JNCUJpwMGKAUgtTbCzR78PLLfsZQU65EVRaGm2Z?fxhash=oogGBGeooNEPyfUPFBXKaeyZ2J4LG4pMCoWqQ3f8CBXybxqya4x",
+            "displayUri": "ipfs://QmVvtytK2sgwYJcsyp5RAGE73fUK4T2AZRRM47dEYeijna",
+            "thumbnailUri": "ipfs://QmNvSxrNKsfDWL3BdZWsyjMG7TkeUU4DiqMRj47hc55hZz",
+            "generativeUri": "ipfs://Qmc3tR1JNCUJpwMGKAUgtTbCzR78PLLfsZQU65EVRaGm2Z",
+            "authenticityHash": "1c08f456f147b9a5882ec7b9786dc263fa3fa9efb10e2de34df0c65b384dd54c",
+            "previewHash": "oogGBGeooNEPyfUPFBXKaeyZ2J4LG4pMCoWqQ3f8CBXybxqya4x",
+            "capture": {
+              "mode": "CANVAS",
+              "triggerMode": "FN_TRIGGER",
+              "gpu": false,
+              "canvasSelector": "canvas"
+            },
+            "settings": {
+              "exploration": {
+                "preMint": {
+                  "enabled": true,
+                  "hashConstraints": null
+                },
+                "postMint": {
+                  "enabled": true,
+                  "hashConstraints": null
+                }
+              }
+            },
+            "symbol": "FXGEN",
+            "decimals": 0,
+            "version": "0.2"
+          },
+          "id": 20276
+        }
+      }
+    }
+]

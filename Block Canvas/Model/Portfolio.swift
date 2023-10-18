@@ -149,9 +149,8 @@ struct NFTInfoForDisplay: Codable, Equatable {
     let title: String
     let artist: String
     let description: String
-    let contract: String
     
     static func == (lhs: NFTInfoForDisplay, rhs: NFTInfoForDisplay) -> Bool {
-        return lhs.url == rhs.url && lhs.title == rhs.title && lhs.artist == rhs.artist && lhs.description == rhs.description && lhs.contract == rhs.contract
+        return lhs.url == rhs.url && lhs.title == rhs.title && lhs.artist == rhs.artist && lhs.description == rhs.description
     }
 }
