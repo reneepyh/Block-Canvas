@@ -18,14 +18,9 @@ extension DiscoverAPIService {
         var trendingNFTs: [DiscoverNFT] = []
         let group = DispatchGroup()
         
-        var mockDataFetched = false
+        let readLocalData = false
         
         func fetchMockData(completion: @escaping (Result<[DiscoverNFT], Error>) -> Void) {
-            if mockDataFetched {
-                completion(.success(trendingNFTs))
-                return
-            }
-            
             if let mockDataURL = Bundle.main.url(forResource: "Trending", withExtension: "json"),
                let data = try? Data(contentsOf: mockDataURL) {
                 do {
@@ -42,7 +37,6 @@ extension DiscoverAPIService {
                         trendingNFTs.append(DiscoverNFT(thumbnailUri: thumbnailURL, displayUri: displayURL, contract: contract, title: title, authorName: authorName, nftDescription: description, id: id))
                     }
                     completion(.success(trendingNFTs))
-                    mockDataFetched = true 
                 } catch {
                     print("Error in JSON decoding.")
                     completion(.failure(error))
@@ -84,13 +78,11 @@ extension DiscoverAPIService {
                 }
                 if let error = error {
                     completion(.failure(error))
-                    fetchMockData(completion: completion)
                     return
                 }
                 
                 guard let data = data else {
                     completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No data received"])))
-                    fetchMockData(completion: completion)
                     return
                 }
                 
@@ -113,14 +105,17 @@ extension DiscoverAPIService {
                 } catch {
                     print("Error in JSON decoding.")
                     completion(.failure(error))
-                    fetchMockData(completion: completion)
                 }
             }
             task.resume()
         }
         
-        for _ in 0..<10 {
-            fetchToken()
+        if readLocalData {
+            fetchMockData(completion: completion)
+        } else {
+            for _ in 0..<10 {
+                fetchToken()
+            }
         }
         
         group.notify(queue: .main) {
