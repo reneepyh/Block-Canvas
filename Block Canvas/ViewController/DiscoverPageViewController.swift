@@ -174,9 +174,15 @@ class DiscoverPageViewController: UIViewController {
             switch result {
                 case .success(let fetchedTrendingNFTs):
                     self?.trendingNFTs = fetchedTrendingNFTs
-                    self?.discoverCollectionView.reloadData()
-                    self?.discoverCollectionView.endHeaderRefreshing()
-                    BCProgressHUD.dismiss()
+                    DispatchQueue.main.async { [weak self] in
+                        if let layout = self?.discoverCollectionView.collectionViewLayout as? WaterFallFlowLayout {
+                            layout.clearCache()
+                        }
+                        self?.discoverCollectionView.collectionViewLayout.invalidateLayout()
+                        self?.discoverCollectionView.reloadData()
+                        self?.discoverCollectionView.endHeaderRefreshing()
+                        BCProgressHUD.dismiss()
+                    }
                 case .failure(let error):
                     print("Error: \(error)")
                     BCProgressHUD.dismiss()

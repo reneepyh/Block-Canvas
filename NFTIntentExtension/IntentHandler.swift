@@ -12,7 +12,6 @@ struct NFTInfoForWidget: Codable {
     let title: String
     let artist: String
     let description: String
-    let contract: String
 }
 
 class IntentHandler: INExtension, SelectNFTIntentHandling {
