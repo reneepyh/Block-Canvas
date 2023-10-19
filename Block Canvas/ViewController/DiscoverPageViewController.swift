@@ -8,6 +8,7 @@
 import UIKit
 
 class DiscoverPageViewController: UIViewController {
+    // MARK: - Outlets
     @IBOutlet weak var discoverCollectionView: UICollectionView!
     
     @IBOutlet weak var buttonStackView: UIStackView!
@@ -26,41 +27,46 @@ class DiscoverPageViewController: UIViewController {
     
     @IBOutlet weak var nftSearchBar: UISearchBar!
     
-    private var selectedPage: Int = 0
+    // MARK: - Properties
+    private lazy var selectedPage: Int = 0
     
     private let userDefaults = UserDefaults.standard
     
-    private var userNFTs: [String] = []
+    private lazy var userNFTs: [String] = []
     
-    private var trendingNFTs: [DiscoverNFT] = []
+    private lazy var trendingNFTs: [DiscoverNFT] = []
     
-    private var searchedNFTs: [DiscoverNFT] = []
+    private lazy var searchedNFTs: [DiscoverNFT] = []
     
-    private var isSearching: Bool = false
+    private lazy var isSearching: Bool = false
     
-    private var currentOffset: Int = 0
+    private lazy var currentOffset: Int = 0
     
-    private var recommendedCollections: [String] = []
+    private lazy var recommendedCollections: [String] = []
     
-    private var recommendedNFTs: [DiscoverNFT] = []
+    private lazy var recommendedNFTs: [DiscoverNFT] = []
     
-    private var recommendationCache: [DiscoverNFT]?
+    private lazy var recommendationCache: [DiscoverNFT] = []
     
     private let apiService = DiscoverAPIService.shared
     
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
         setupButtonTag()
         setupUI()
-        getTrending()
+        getTrendingFromManager()
         fetchRecommendationInBackground()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         setupNavTab()
     }
-    
+}
+
+// MARK: - UI Functions
+extension DiscoverPageViewController {
     private func setupCollectionView() {
         discoverCollectionView.dataSource = self
         discoverCollectionView.delegate = self
@@ -71,19 +77,26 @@ class DiscoverPageViewController: UIViewController {
         layout.cols = 2
         discoverCollectionView.collectionViewLayout = layout
         
+        addRefreshHeader()
+        addRefreshFooter()
+    }
+    
+    private func addRefreshHeader() {
         discoverCollectionView.addRefreshHeader(refreshingBlock: { [weak self] in
             guard let self = self else { return }
             
             hideHeaderLoader()
             
             if self.selectedPage == 0 {
-                self.getTrending()
+                self.getTrendingFromManager()
             } else if self.selectedPage == 1 {
                 BCProgressHUD.show(text: "AI calculating...")
                 self.fetchRecommendationData()
             }
         })
-        
+    }
+    
+    private func addRefreshFooter() {
         discoverCollectionView.addRefreshFooter(refreshingBlock: { [weak self] in
             guard let self = self else { return }
             
@@ -97,13 +110,7 @@ class DiscoverPageViewController: UIViewController {
                     switch result {
                         case .success(let newNFTs):
                             self.searchedNFTs.append(contentsOf: newNFTs)
-                            DispatchQueue.main.async { [weak self] in
-                                if let layout = self?.discoverCollectionView.collectionViewLayout as? WaterFallFlowLayout {
-                                    layout.clearCache()
-                                }
-                                self?.discoverCollectionView.collectionViewLayout.invalidateLayout()
-                                self?.discoverCollectionView.reloadData()
-                            }
+                            self.updateCollectionViewUI()
                             self.currentOffset += newNFTs.count
                             if newNFTs.count < 10 {
                                 self.discoverCollectionView.endWithNoMoreData()
@@ -158,9 +165,7 @@ class DiscoverPageViewController: UIViewController {
         tabBarController?.tabBar.isHidden = false
     }
     
-    private func getTrending() {
-        trendingNFTs.removeAll()
-        searchedNFTs.removeAll()
+    private func updateCollectionViewUI() {
         DispatchQueue.main.async { [weak self] in
             if let layout = self?.discoverCollectionView.collectionViewLayout as? WaterFallFlowLayout {
                 layout.clearCache()
@@ -168,21 +173,25 @@ class DiscoverPageViewController: UIViewController {
             self?.discoverCollectionView.collectionViewLayout.invalidateLayout()
             self?.discoverCollectionView.reloadData()
         }
+    }
+}
+
+// MARK: - API Functions
+extension DiscoverPageViewController {
+    private func getTrendingFromManager() {
+        trendingNFTs.removeAll()
+        searchedNFTs.removeAll()
+        updateCollectionViewUI()
         BCProgressHUD.show()
         
         apiService.getTrending { [weak self] result in
             switch result {
                 case .success(let fetchedTrendingNFTs):
                     self?.trendingNFTs = fetchedTrendingNFTs
-                    DispatchQueue.main.async { [weak self] in
-                        if let layout = self?.discoverCollectionView.collectionViewLayout as? WaterFallFlowLayout {
-                            layout.clearCache()
-                        }
-                        self?.discoverCollectionView.collectionViewLayout.invalidateLayout()
-                        self?.discoverCollectionView.reloadData()
+                    self?.updateCollectionViewUI()
                         self?.discoverCollectionView.endHeaderRefreshing()
                         BCProgressHUD.dismiss()
-                    }
+                    
                 case .failure(let error):
                     print("Error: \(error)")
                     BCProgressHUD.dismiss()
@@ -196,7 +205,7 @@ class DiscoverPageViewController: UIViewController {
         }
     }
     
-    private func searchNFT(keyword: String) {
+    private func searchNFTFromManager(keyword: String) {
         BCProgressHUD.show(text: "Searching")
         apiService.searchNFT(keyword: keyword, offset: currentOffset) { [weak self] result in
             switch result {
@@ -238,20 +247,23 @@ class DiscoverPageViewController: UIViewController {
                     
                     for collection in self.recommendedCollections {
                         group.enter()
-                        self.getRecommendedNFTs(collectionName: collection) {
+                        self.getRecommendedNFTsFromManager(collectionName: collection) {
                             group.leave()
                         }
                     }
                     
                     group.notify(queue: .main) { [weak self] in
-                        if self?.recommendedNFTs.count == 0 {
-                            BCProgressHUD.showFailure(text: "Internet error. Please try again.")
-                        } else {
-                            self?.recommendationCache = self?.recommendedNFTs
+                        if let recommededNFTs = self?.recommendedNFTs, recommededNFTs.count != 0 {
+                            self?.recommendationCache = recommededNFTs
                             if !isBackground {
-                                self?.updateRecommendationUI()
+                                self?.updateCollectionViewUI()
+                                self?.discoverCollectionView.endHeaderRefreshing()
+                                BCProgressHUD.dismiss()
                             }
+                        } else {
+                            BCProgressHUD.showFailure(text: "Internet error. Please try again.")
                         }
+                        
                     }
                 case .failure(let error):
                     print("Error fetching recommendation: \(error.localizedDescription)")
@@ -260,26 +272,14 @@ class DiscoverPageViewController: UIViewController {
         }
     }
     
-    private func updateRecommendationUI() {
-        DispatchQueue.main.async { [weak self] in
-            if let layout = self?.discoverCollectionView.collectionViewLayout as? WaterFallFlowLayout {
-                layout.clearCache()
-            }
-            self?.discoverCollectionView.collectionViewLayout.invalidateLayout()
-            self?.discoverCollectionView.reloadData()
-            self?.discoverCollectionView.endHeaderRefreshing()
-            BCProgressHUD.dismiss()
-        }
-    }
-    
-    private func getRecommendedNFTs(collectionName: String, completion: @escaping () -> Void) {
+    private func getRecommendedNFTsFromManager(collectionName: String, completion: @escaping () -> Void) {
         apiService.getRecommendedNFTs(collectionName: collectionName) { [weak self] result in
             guard let self = self else { return }
             
             switch result {
                 case .success(let recommendedNFTs):
                     self.recommendedNFTs.append(contentsOf: recommendedNFTs)
-                case.failure(let error):
+                case .failure(let error):
                     print("Error fetching recommended NFTs: \(error.localizedDescription)")
             }
             completion()
@@ -291,6 +291,7 @@ class DiscoverPageViewController: UIViewController {
     }
 }
 
+// MARK: - Collection View
 extension DiscoverPageViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, WaterFallLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if isSearching {
@@ -308,6 +309,7 @@ extension DiscoverPageViewController: UICollectionViewDelegateFlowLayout, UIColl
         guard let discoverCollectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: DiscoverCollectionCell.reuseIdentifier, for: indexPath) as? DiscoverCollectionCell else {
             fatalError("Cell cannot be created")
         }
+        //可以拉出一個function，參數帶search/trending/recommended
         if isSearching {
             discoverCollectionCell.imageView.loadImage(searchedNFTs[indexPath.row].thumbnailUri, placeHolder: UIImage(named: "placeholder"))
             discoverCollectionCell.titleLabel.text = searchedNFTs[indexPath.row].title
@@ -349,24 +351,19 @@ extension DiscoverPageViewController: UICollectionViewDelegateFlowLayout, UIColl
     
 }
 
+// MARK: - Search Bar
 extension DiscoverPageViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchedNFTs.removeAll()
         self.currentOffset = 0
         self.discoverCollectionView.resetNoMoreData()
-        DispatchQueue.main.async { [weak self] in
-            if let layout = self?.discoverCollectionView.collectionViewLayout as? WaterFallFlowLayout {
-                layout.clearCache()
-            }
-            self?.discoverCollectionView.collectionViewLayout.invalidateLayout()
-            self?.discoverCollectionView.reloadData()
-        }
+        updateCollectionViewUI()
         
         if let searchText = nftSearchBar.text, searchText != "" {
             isSearching = true
             hideHeaderLoader()
             hideFooterLoader()
-            searchNFT(keyword: searchText)
+            searchNFTFromManager(keyword: searchText)
         }
         searchBar.resignFirstResponder()
     }
@@ -377,13 +374,7 @@ extension DiscoverPageViewController: UISearchBarDelegate {
             hideHeaderLoader()
             hideFooterLoader()
             searchedNFTs.removeAll()
-            DispatchQueue.main.async { [weak self] in
-                if let layout = self?.discoverCollectionView.collectionViewLayout as? WaterFallFlowLayout {
-                    layout.clearCache()
-                }
-                self?.discoverCollectionView.collectionViewLayout.invalidateLayout()
-                self?.discoverCollectionView.reloadData()
-            }
+            updateCollectionViewUI()
         }
     }
     
@@ -404,6 +395,7 @@ extension DiscoverPageViewController: UISearchBarDelegate {
     }
 }
 
+// MARK: - Switch Buttons
 extension DiscoverPageViewController {
     private func setupButtonTag() {
         let buttons = buttonStackView.subviews
@@ -421,37 +413,28 @@ extension DiscoverPageViewController {
         nftSearchBar.resignFirstResponder()
         isSearching = false
         searchedNFTs.removeAll()
-        DispatchQueue.main.async { [weak self] in
-            if let layout = self?.discoverCollectionView.collectionViewLayout as? WaterFallFlowLayout {
-                layout.clearCache()
-            }
-            self?.discoverCollectionView.collectionViewLayout.invalidateLayout()
-            self?.discoverCollectionView.reloadData()
-        }
+        updateCollectionViewUI()
         hideHeaderLoader()
         hideFooterLoader()
+        
         if sender.tag == 0 {
             if selectedPage == 0 { return }
             selectedPage = 0
             if trendingNFTs.count == 0 {
                 queue.async { [weak self] in
-                    self?.getTrending()
+                    self?.getTrendingFromManager()
                 }
             } else {
-                DispatchQueue.main.async { [weak self] in
-                    if let layout = self?.discoverCollectionView.collectionViewLayout as? WaterFallFlowLayout {
-                        layout.clearCache()
-                    }
-                    self?.discoverCollectionView.collectionViewLayout.invalidateLayout()
-                    self?.discoverCollectionView.reloadData()
-                }
+                updateCollectionViewUI()
             }
         } else {
             if selectedPage == 1 { return }
             selectedPage = 1
-            if let cachedData = recommendationCache, !cachedData.isEmpty {
-                self.recommendedNFTs = cachedData
-                self.updateRecommendationUI()
+            if !recommendationCache.isEmpty {
+                self.recommendedNFTs = recommendationCache
+                self.updateCollectionViewUI()
+                self.discoverCollectionView.endHeaderRefreshing()
+                BCProgressHUD.dismiss()
             } else {
                 BCProgressHUD.show(text: "AI calculating...")
                 fetchRecommendationData()
@@ -460,7 +443,11 @@ extension DiscoverPageViewController {
         self.discoverCollectionView.reloadData()
         discoverCollectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
         
-        // 動畫
+        animateUnderlineView(sender: sender)
+        updateButtonColors(for: sender.tag)
+    }
+    
+    private func animateUnderlineView(sender: UIButton) {
         underlineViewWidthConstraint.isActive = false
         underlineViewCenterXConstraint.isActive = false
         underlineViewTopConstraint.isActive = false
@@ -473,8 +460,6 @@ extension DiscoverPageViewController {
         UIViewPropertyAnimator(duration: 0.5, curve: .easeInOut) {
             self.view.layoutIfNeeded()
         }.startAnimation()
-        
-        updateButtonColors(for: sender.tag)
     }
     
     private func updateButtonColors(for tag: Int) {
