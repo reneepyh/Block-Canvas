@@ -28,25 +28,25 @@ class DiscoverPageViewController: UIViewController {
     @IBOutlet weak var nftSearchBar: UISearchBar!
     
     // MARK: - Properties
-    private lazy var selectedPage: Int = 0
+    private var selectedPage: Int = 0
     
     private let userDefaults = UserDefaults.standard
     
-    private lazy var userNFTs: [String] = []
+    private var userNFTs: [String] = []
     
-    private lazy var trendingNFTs: [DiscoverNFT] = []
+    private var trendingNFTs: [DiscoverNFT] = []
     
-    private lazy var searchedNFTs: [DiscoverNFT] = []
+    private var searchedNFTs: [DiscoverNFT] = []
     
-    private lazy var isSearching: Bool = false
+    private var isSearching: Bool = false
     
-    private lazy var currentOffset: Int = 0
+    private var currentOffset: Int = 0
     
-    private lazy var recommendedCollections: [String] = []
+    private var recommendedCollections: [String] = []
     
-    private lazy var recommendedNFTs: [DiscoverNFT] = []
+    private var recommendedNFTs: [DiscoverNFT] = []
     
-    private lazy var recommendationCache: [DiscoverNFT] = []
+    private var recommendationCache: [DiscoverNFT] = []
     
     private let apiService = DiscoverAPIService.shared
     
@@ -108,18 +108,18 @@ extension DiscoverPageViewController {
                 }
                 self.apiService.searchNFT(keyword: keyword, offset: self.currentOffset) { result in
                     switch result {
-                        case .success(let newNFTs):
-                            self.searchedNFTs.append(contentsOf: newNFTs)
-                            self.updateCollectionViewUI()
-                            self.currentOffset += newNFTs.count
-                            if newNFTs.count < 10 {
-                                self.discoverCollectionView.endWithNoMoreData()
-                            } else {
-                                self.discoverCollectionView.endFooterRefreshing()
-                            }
-                        case .failure(let error):
-                            print(error.localizedDescription)
+                    case .success(let newNFTs):
+                        self.searchedNFTs.append(contentsOf: newNFTs)
+                        self.updateCollectionViewUI()
+                        self.currentOffset += newNFTs.count
+                        if newNFTs.count < 10 {
+                            self.discoverCollectionView.endWithNoMoreData()
+                        } else {
                             self.discoverCollectionView.endFooterRefreshing()
+                        }
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                        self.discoverCollectionView.endFooterRefreshing()
                     }
                 }
             }
@@ -186,15 +186,15 @@ extension DiscoverPageViewController {
         
         apiService.getTrending { [weak self] result in
             switch result {
-                case .success(let fetchedTrendingNFTs):
-                    self?.trendingNFTs = fetchedTrendingNFTs
-                    self?.updateCollectionViewUI()
-                        self?.discoverCollectionView.endHeaderRefreshing()
-                        BCProgressHUD.dismiss()
-                    
-                case .failure(let error):
-                    print("Error: \(error)")
-                    BCProgressHUD.dismiss()
+            case .success(let fetchedTrendingNFTs):
+                self?.trendingNFTs = fetchedTrendingNFTs
+                self?.updateCollectionViewUI()
+                self?.discoverCollectionView.endHeaderRefreshing()
+                BCProgressHUD.dismiss()
+                
+            case .failure(let error):
+                print("Error: \(error)")
+                BCProgressHUD.dismiss()
             }
         }
     }
@@ -209,23 +209,23 @@ extension DiscoverPageViewController {
         BCProgressHUD.show(text: "Searching")
         apiService.searchNFT(keyword: keyword, offset: currentOffset) { [weak self] result in
             switch result {
-                case .success(let nfts):
-                    self?.searchedNFTs = nfts
-                    if nfts.count == 0 {
-                        BCProgressHUD.showFailure(text: "No result.")
-                    } else {
-                        self?.currentOffset += 10
-                        DispatchQueue.main.async {
-                            self?.discoverCollectionView.reloadData()
-                        }
-                        BCProgressHUD.dismiss()
+            case .success(let nfts):
+                self?.searchedNFTs = nfts
+                if nfts.count == 0 {
+                    BCProgressHUD.showFailure(text: "No result.")
+                } else {
+                    self?.currentOffset += 10
+                    DispatchQueue.main.async {
+                        self?.discoverCollectionView.reloadData()
                     }
-                case .failure(let error):
-                    if (error as NSError).code == NSURLErrorTimedOut {
-                        BCProgressHUD.showFailure(text: "Internet error. Please try again.")
-                    } else {
-                        BCProgressHUD.showFailure(text: "No result.")
-                    }
+                    BCProgressHUD.dismiss()
+                }
+            case .failure(let error):
+                if (error as NSError).code == NSURLErrorTimedOut {
+                    BCProgressHUD.showFailure(text: "Internet error. Please try again.")
+                } else {
+                    BCProgressHUD.showFailure(text: "No result.")
+                }
             }
         }
     }
@@ -239,35 +239,35 @@ extension DiscoverPageViewController {
             guard let self = self else { return }
             
             switch result {
-                case .success(let recommendedCollections):
-                    self.recommendedCollections = recommendedCollections
-                    print(recommendedCollections)
-                    
-                    let group = DispatchGroup()
-                    
-                    for collection in self.recommendedCollections {
-                        group.enter()
-                        self.getRecommendedNFTsFromManager(collectionName: collection) {
-                            group.leave()
+            case .success(let recommendedCollections):
+                self.recommendedCollections = recommendedCollections
+                print(recommendedCollections)
+                
+                let group = DispatchGroup()
+                
+                for collection in self.recommendedCollections {
+                    group.enter()
+                    self.getRecommendedNFTsFromManager(collectionName: collection) {
+                        group.leave()
+                    }
+                }
+                
+                group.notify(queue: .main) { [weak self] in
+                    if let recommededNFTs = self?.recommendedNFTs, recommededNFTs.count != 0 {
+                        self?.recommendationCache = recommededNFTs
+                        if !isBackground {
+                            self?.updateCollectionViewUI()
+                            self?.discoverCollectionView.endHeaderRefreshing()
+                            BCProgressHUD.dismiss()
                         }
+                    } else {
+                        BCProgressHUD.showFailure(text: "Internet error. Please try again.")
                     }
                     
-                    group.notify(queue: .main) { [weak self] in
-                        if let recommededNFTs = self?.recommendedNFTs, recommededNFTs.count != 0 {
-                            self?.recommendationCache = recommededNFTs
-                            if !isBackground {
-                                self?.updateCollectionViewUI()
-                                self?.discoverCollectionView.endHeaderRefreshing()
-                                BCProgressHUD.dismiss()
-                            }
-                        } else {
-                            BCProgressHUD.showFailure(text: "Internet error. Please try again.")
-                        }
-                        
-                    }
-                case .failure(let error):
-                    print("Error fetching recommendation: \(error.localizedDescription)")
-                    BCProgressHUD.showFailure(text: "Internet error. Please try again.")
+                }
+            case .failure(let error):
+                print("Error fetching recommendation: \(error.localizedDescription)")
+                BCProgressHUD.showFailure(text: "Internet error. Please try again.")
             }
         }
     }
@@ -277,10 +277,10 @@ extension DiscoverPageViewController {
             guard let self = self else { return }
             
             switch result {
-                case .success(let recommendedNFTs):
-                    self.recommendedNFTs.append(contentsOf: recommendedNFTs)
-                case .failure(let error):
-                    print("Error fetching recommended NFTs: \(error.localizedDescription)")
+            case .success(let recommendedNFTs):
+                self.recommendedNFTs.append(contentsOf: recommendedNFTs)
+            case .failure(let error):
+                print("Error fetching recommended NFTs: \(error.localizedDescription)")
             }
             completion()
         }
@@ -309,7 +309,6 @@ extension DiscoverPageViewController: UICollectionViewDelegateFlowLayout, UIColl
         guard let discoverCollectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: DiscoverCollectionCell.reuseIdentifier, for: indexPath) as? DiscoverCollectionCell else {
             fatalError("Cell cannot be created")
         }
-        //可以拉出一個function，參數帶search/trending/recommended
         if isSearching {
             discoverCollectionCell.imageView.loadImage(searchedNFTs[indexPath.row].thumbnailUri, placeHolder: UIImage(named: "placeholder"))
             discoverCollectionCell.titleLabel.text = searchedNFTs[indexPath.row].title
