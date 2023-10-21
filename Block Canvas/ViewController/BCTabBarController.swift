@@ -78,6 +78,7 @@ extension BCTabBarController {
     }
 }
 
+// MARK: - Delegate
 extension BCTabBarController: UITabBarControllerDelegate {
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         feedbackGenerator.impactOccurred()
