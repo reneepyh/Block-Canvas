@@ -61,6 +61,7 @@ class DiscoverPageViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         setupNavTab()
     }
 }
