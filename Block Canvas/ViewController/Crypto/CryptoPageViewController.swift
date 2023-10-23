@@ -8,7 +8,7 @@
 import UIKit
 import SwiftUI
 import SnapKit
-// swiftlint: disable type_body_length
+
 class CryptoPageViewController: UIViewController {
     private var ethData = CryptoData()
     
@@ -123,315 +123,10 @@ class CryptoPageViewController: UIViewController {
         ethData.historyPriceData = []
         xtzData.historyPriceData = []
     }
-    
-    private func startTimer() {
-        updateTimer?.invalidate()
-        updateTimer = Timer.scheduledTimer(timeInterval: 4.0, target: self, selector: #selector(updatePriceLabel), userInfo: nil, repeats: true)
-    }
-    
-    private func getETHCurrentPrice() {
-        apiService.getCurrentPrice(for: .ETH) { [weak self] result in
-            switch result {
-                case .success(let doubledCurrentPrice):
-                    let floored = floor(doubledCurrentPrice * 100) / 100
-                    self?.ethData.currentPrice = "US$\(String(floored))"
-                    
-                    if let previousEthPrice = self?.previousEthPrice {
-                        if doubledCurrentPrice > previousEthPrice {
-                            self?.animatePriceLabelColor(to: .systemGreen)
-                        } else if doubledCurrentPrice < previousEthPrice {
-                            self?.animatePriceLabelColor(to: .systemPink)
-                        }
-                    }
-                    self?.previousEthPrice = doubledCurrentPrice
-                    DispatchQueue.main.async { [weak self] in
-                        self?.ethPriceLabel.text = self?.ethData.currentPrice
-                    }
-                    
-                case .failure(let error):
-                    print(error.localizedDescription)
-            }
-        }
-    }
-    
-    private func getXTZCurrentPrice() {
-        apiService.getCurrentPrice(for: .XYZ) { [weak self] result in
-            switch result {
-                case .success(let doubledCurrentPrice):
-                    let floored = floor(doubledCurrentPrice * 100) / 100
-                    self?.xtzData.currentPrice = "US$\(String(floored))"
-                    
-                    if let previousXTZPrice = self?.previousXTZPrice {
-                        if doubledCurrentPrice > previousXTZPrice {
-                            self?.animatePriceLabelColor(to: .systemGreen)
-                        } else if doubledCurrentPrice < previousXTZPrice {
-                            self?.animatePriceLabelColor(to: .systemPink)
-                        }
-                    }
-                    self?.previousXTZPrice = doubledCurrentPrice
-                    DispatchQueue.main.async { [weak self] in
-                        self?.xtzPriceLabel.text = self?.xtzData.currentPrice
-                    }
-                    
-                case .failure(let error):
-                    print(error.localizedDescription)
-            }
-        }
-    }
-    
-    private func getETHPriceChange() {
-        let apiKey = Bundle.main.object(forInfoDictionaryKey: "Binance_API_Key") as? String
-        
-        guard let key = apiKey, !key.isEmpty else {
-            print("Binance API key does not exist.")
-            return
-        }
-        
-        if let url = URL(string: "https://api1.binance.com/api/v3/ticker/24hr?symbol=ETHUSDT") {
-            
-            var request = URLRequest(url: url)
-            request.setValue(apiKey, forHTTPHeaderField: "X-MBX-APIKEY")
-            request.httpMethod = "GET"
-            
-            let session = URLSession.shared
-            
-            let task = session.dataTask(with: request) { [weak self] data, response, error in
-                if let error = error {
-                    print(error)
-                    return
-                }
-                
-                guard let data = data else {
-                    print("No data.")
-                    return
-                }
-                
-                let decoder = JSONDecoder()
-                
-                do {
-                    let ethPriceChange = try decoder.decode(CryptoPriceChange.self, from: data)
-                    let doubled = Double(ethPriceChange.priceChangePercent)
-                    let floored = floor((doubled ?? 0) * 100) / 100
-                    self?.ethData.priceChange = String(floored)
-                }
-                catch {
-                    print("Error in JSON decoding.")
-                }
-                DispatchQueue.main.async { [weak self] in
-                    if let priceChange = self?.ethData.priceChange, let change = Double(priceChange) {
-                        self?.updateETHButtonConfiguration(for: change)
-                    }
-                }
-            }
-            task.resume()
-        }
-        else {
-            print("Invalid URL.")
-        }
-    }
-    
-    private func getXTZPriceChange() {
-        let apiKey = Bundle.main.object(forInfoDictionaryKey: "Binance_API_Key") as? String
-        
-        guard let key = apiKey, !key.isEmpty else {
-            print("Binance API key does not exist.")
-            return
-        }
-        
-        if let url = URL(string: "https://api1.binance.com/api/v3/ticker/24hr?symbol=XTZUSDT") {
-            
-            var request = URLRequest(url: url)
-            request.setValue(apiKey, forHTTPHeaderField: "X-MBX-APIKEY")
-            request.httpMethod = "GET"
-            
-            let session = URLSession.shared
-            
-            let task = session.dataTask(with: request) { [weak self] data, response, error in
-                if let error = error {
-                    print(error)
-                    return
-                }
-                
-                guard let data = data else {
-                    print("No data.")
-                    return
-                }
-                
-                let decoder = JSONDecoder()
-                
-                do {
-                    let xtzPriceChange = try decoder.decode(CryptoPriceChange.self, from: data)
-                    let doubled = Double(xtzPriceChange.priceChangePercent)
-                    let floored = floor((doubled ?? 0) * 100) / 100
-                    self?.xtzData.priceChange = String(floored)
-                }
-                catch {
-                    print("Error in JSON decoding.")
-                }
-                DispatchQueue.main.async { [weak self] in
-                    if let priceChange = self?.xtzData.priceChange, let change = Double(priceChange) {
-                        self?.updateXTZButtonConfiguration(for: change)
-                    }
-                }
-            }
-            task.resume()
-        }
-        else {
-            print("Invalid URL.")
-        }
-    }
-    
-    private func getETHGasFee() {
-        let apiKey = Bundle.main.object(forInfoDictionaryKey: "Etherscan_API_Key") as? String
-        
-        guard let key = apiKey, !key.isEmpty else {
-            print("Etherscan API Key does not exist.")
-            return
-        }
-        
-        if let url = URL(string: "https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey=\(key)") {
-            
-            var request = URLRequest(url: url)
-            request.httpMethod = "GET"
-            
-            let session = URLSession.shared
-            
-            let task = session.dataTask(with: request) { [weak self] data, response, error in
-                if let error = error {
-                    print(error)
-                    return
-                }
-                
-                guard let data = data else {
-                    print("No data.")
-                    return
-                }
-                
-                let decoder = JSONDecoder()
-                
-                do {
-                    let ethGasFee = try decoder.decode(EthGasFee.self, from: data)
-                    self?.ethData.gasFee = "\(ethGasFee.result?.proposeGasPrice ?? "") gwei"
-                }
-                catch {
-                    print("Error in JSON decoding.")
-                }
-                DispatchQueue.main.async { [weak self] in
-                    self?.gasFeeLabel.text = self?.ethData.gasFee
-                }
-            }
-            task.resume()
-        }
-        else {
-            print("Invalid URL.")
-        }
-    }
-    
-    private func getETHHistoryPrice() {
-        BCProgressHUD.show()
-        if let url = URL(string: "https://api.coincap.io/v2/assets/ethereum/history?interval=m1") {
-            var request = URLRequest(url: url)
-            request.setValue("deflate", forHTTPHeaderField: "Accept-Encoding")
-            request.httpMethod = "GET"
-            
-            let session = URLSession.shared
-            
-            let task = session.dataTask(with: request) { [weak self] data, response, error in
-                if let error = error {
-                    print(error)
-                    BCProgressHUD.showFailure()
-                    return
-                }
-                
-                guard let data = data else {
-                    print("No data.")
-                    BCProgressHUD.showFailure()
-                    return
-                }
-                
-                let decoder = JSONDecoder()
-                
-                do {
-                    let ethPrice = try decoder.decode(CryptoHistoryPrice.self, from: data)
-                    for ethPriceData in ethPrice.data {
-                        let unixTimestampSeconds = Double(ethPriceData.time) / 1000.0
-                        let date = Date(timeIntervalSince1970: unixTimestampSeconds)
-                        self?.ethData.historyPriceData.append(HistoryPriceData(price: Double(ethPriceData.priceUsd) ?? 0, time: date))
-                    }
-                }
-                catch {
-                    print("Error in JSON decoding.")
-                }
-                DispatchQueue.main.async { [weak self] in
-                    guard let ethPriceData = self?.ethData.historyPriceData else {
-                        print("Cannot fetch ethPriceData.")
-                        BCProgressHUD.showFailure()
-                        return
-                    }
-                    self?.ethhostingController.rootView = ETHPriceChart(ethPriceData: ethPriceData)
-                    BCProgressHUD.dismiss()
-                }
-            }
-            task.resume()
-        }
-        else {
-            print("Invalid URL.")
-        }
-    }
-    
-    private func getXTZHistoryPrice() {
-        BCProgressHUD.show()
-        if let url = URL(string: "https://api.coincap.io/v2/assets/tezos/history?interval=m1") {
-            var request = URLRequest(url: url)
-            request.setValue("deflate", forHTTPHeaderField: "Accept-Encoding")
-            request.httpMethod = "GET"
-            
-            let session = URLSession.shared
-            
-            let task = session.dataTask(with: request) { [weak self] data, response, error in
-                if let error = error {
-                    print(error)
-                    BCProgressHUD.showFailure()
-                    return
-                }
-                
-                guard let data = data else {
-                    print("No data.")
-                    BCProgressHUD.showFailure()
-                    return
-                }
-                
-                let decoder = JSONDecoder()
-                
-                do {
-                    let xtzPrice = try decoder.decode(CryptoHistoryPrice.self, from: data)
-                    for xtzPriceData in xtzPrice.data {
-                        let unixTimestampSeconds = Double(xtzPriceData.time) / 1000.0
-                        let date = Date(timeIntervalSince1970: unixTimestampSeconds)
-                        self?.xtzData.historyPriceData.append(HistoryPriceData(price: Double(xtzPriceData.priceUsd) ?? 0, time: date))
-                    }
-                }
-                catch {
-                    print("Error in JSON decoding.")
-                }
-                DispatchQueue.main.async { [weak self] in
-                    guard let xtzPriceData = self?.xtzData.historyPriceData else {
-                        print("Cannot fetch xtzPriceData.")
-                        BCProgressHUD.showFailure()
-                        return
-                    }
-                    self?.xtzhostingController.rootView = XTZPriceChart(xtzPriceData: xtzPriceData)
-                    BCProgressHUD.dismiss()
-                }
-            }
-            task.resume()
-        }
-        else {
-            print("Invalid URL.")
-        }
-        
-    }
-    
+}
+
+// MARK: - UI Functions
+extension CryptoPageViewController {
     private func setupETHLabelUI() {
         view.backgroundColor = .primary
         
@@ -565,7 +260,7 @@ class CryptoPageViewController: UIViewController {
         config.titlePadding = 4
         config.imagePadding = 4
         config.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 6, bottom: 4, trailing: 6)
-
+        
         if priceChange > 0 {
             config.image = UIImage(systemName: "arrowtriangle.up.fill", withConfiguration: size)
             config.background.backgroundColor = .systemGreen
@@ -576,16 +271,158 @@ class CryptoPageViewController: UIViewController {
             config.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4)
             config.background.backgroundColor = .black
         }
-
+        
         return config
     }
     
     private func updateETHButtonConfiguration(for priceChange: Double) {
         ethPriceChangeButton.configuration = configurationForPriceChange(priceChange)
     }
-
+    
     private func updateXTZButtonConfiguration(for priceChange: Double) {
         xtzPriceChangeButton.configuration = configurationForPriceChange(priceChange)
+    }
+}
+
+// MARK: - API Functions
+extension CryptoPageViewController {
+    private func getETHCurrentPrice() {
+        apiService.getCurrentPrice(for: .ETH) { [weak self] result in
+            switch result {
+            case .success(let doubledCurrentPrice):
+                let floored = floor(doubledCurrentPrice * 100) / 100
+                self?.ethData.currentPrice = "US$\(String(floored))"
+                
+                if let previousEthPrice = self?.previousEthPrice {
+                    if doubledCurrentPrice > previousEthPrice {
+                        self?.animatePriceLabelColor(to: .systemGreen)
+                    } else if doubledCurrentPrice < previousEthPrice {
+                        self?.animatePriceLabelColor(to: .systemPink)
+                    }
+                }
+                self?.previousEthPrice = doubledCurrentPrice
+                DispatchQueue.main.async { [weak self] in
+                    self?.ethPriceLabel.text = self?.ethData.currentPrice
+                }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    private func getXTZCurrentPrice() {
+        apiService.getCurrentPrice(for: .XTZ) { [weak self] result in
+            switch result {
+            case .success(let doubledCurrentPrice):
+                let floored = floor(doubledCurrentPrice * 100) / 100
+                self?.xtzData.currentPrice = "US$\(String(floored))"
+                
+                if let previousXTZPrice = self?.previousXTZPrice {
+                    if doubledCurrentPrice > previousXTZPrice {
+                        self?.animatePriceLabelColor(to: .systemGreen)
+                    } else if doubledCurrentPrice < previousXTZPrice {
+                        self?.animatePriceLabelColor(to: .systemPink)
+                    }
+                }
+                self?.previousXTZPrice = doubledCurrentPrice
+                DispatchQueue.main.async { [weak self] in
+                    self?.xtzPriceLabel.text = self?.xtzData.currentPrice
+                }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    private func getETHPriceChange() {
+        apiService.getPriceChange(for: .ETH) { [weak self] result in
+            switch result {
+            case .success(let priceChange):
+                self?.ethData.priceChange = String(priceChange)
+                DispatchQueue.main.async { [weak self] in
+                    if let priceChange = self?.ethData.priceChange, let change = Double(priceChange) {
+                        self?.updateETHButtonConfiguration(for: change)
+                    }
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    private func getXTZPriceChange() {
+        apiService.getPriceChange(for: .XTZ) { [weak self] result in
+            switch result {
+            case .success(let priceChange):
+                self?.xtzData.priceChange = String(priceChange)
+                DispatchQueue.main.async { [weak self] in
+                    if let priceChange = self?.xtzData.priceChange, let change = Double(priceChange) {
+                        self?.updateXTZButtonConfiguration(for: change)
+                    }
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    private func getETHGasFee() {
+        apiService.getGasFee { [weak self] result in
+            switch result {
+            case .success(let gasFee):
+                self?.ethData.gasFee = gasFee
+                DispatchQueue.main.async { [weak self] in
+                    self?.gasFeeLabel.text = self?.ethData.gasFee
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    private func getETHHistoryPrice() {
+        apiService.getHistoryPrice(for: .ETH) { [weak self] result in
+            switch result {
+            case .success(let historyPriceData):
+                self?.ethData.historyPriceData = historyPriceData
+                DispatchQueue.main.async { [weak self] in
+                    guard let ethPriceData = self?.ethData.historyPriceData else {
+                        print("Cannot fetch ethPriceData.")
+                        BCProgressHUD.showFailure()
+                        return
+                    }
+                    self?.ethhostingController.rootView = ETHPriceChart(ethPriceData: ethPriceData)
+                }
+            case .failure(let error):
+                print("Error fetching history price data: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func getXTZHistoryPrice() {
+        apiService.getHistoryPrice(for: .XTZ) { [weak self] result in
+            switch result {
+            case .success(let historyPriceData):
+                self?.xtzData.historyPriceData = historyPriceData
+                DispatchQueue.main.async { [weak self] in
+                    guard let xtzPriceData = self?.xtzData.historyPriceData else {
+                        print("Cannot fetch xtzPriceData.")
+                        BCProgressHUD.showFailure()
+                        return
+                    }
+                    self?.xtzhostingController.rootView = XTZPriceChart(xtzPriceData: xtzPriceData)
+                }
+            case .failure(let error):
+                print("Error fetching history price data: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func startTimer() {
+        updateTimer?.invalidate()
+        updateTimer = Timer.scheduledTimer(timeInterval: 4.0, target: self, selector: #selector(updatePriceLabel), userInfo: nil, repeats: true)
     }
     
     @objc func updatePriceLabel() {
