@@ -14,7 +14,8 @@ final class SearchNFTTest: XCTestCase {
     
     override func setUpWithError() throws {
         try super.setUpWithError()
-        sut = DiscoverAPIService(session: MockURLSession())
+        mockSession = MockURLSession()
+        sut = DiscoverAPIService(session: mockSession)
     }
     
     override func tearDownWithError() throws {
@@ -23,15 +24,11 @@ final class SearchNFTTest: XCTestCase {
     }
     
     func testNoDataResponse() {
-        let mockSession = MockURLSession()
-        
         mockSession.stubbedData = nil
         mockSession.stubbedError = nil
         
-        let service = DiscoverAPIService(session: mockSession)
-        
         let expectation = self.expectation(description: "No Data Response Test")
-        service.searchNFT(keyword: "test", offset: 0) { result in
+        sut.searchNFT(keyword: "test", offset: 0) { result in
             switch result {
             case .success:
                 print("Received result: \(result)")
