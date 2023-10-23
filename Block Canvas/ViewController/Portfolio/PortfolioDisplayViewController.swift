@@ -16,6 +16,8 @@ class PortfolioDisplayViewController: UIViewController {
         return button
     }()
     
+    private let apiService = PortfolioAPIService.shared
+    
     var nftInfoForDisplay: [NFTInfoForDisplay]?
     
     var walletAddress: String?
@@ -117,126 +119,23 @@ extension PortfolioDisplayViewController {
             return
         }
         
-        let apiKey = getAPIKey()
-        
-        guard let url = buildAPIURL(for: address) else {
-            handleFailure(message: "Invalid URL.")
-            return
-        }
-        
-        var request = URLRequest(url: url)
-        request.setValue(apiKey, forHTTPHeaderField: "X-API-Key")
-        request.httpMethod = "GET"
-        
-        let session = URLSession.shared
-        
-        let task = session.dataTask(with: request) { [weak self] data, response, error in
-            if let error = error {
-                self?.handleFailure(message: error.localizedDescription)
-                return
+        apiService.getNFTsByWallet(walletAddress: address) { [weak self] nftInfoForDisplay, error in
+                if let error = error {
+                    self?.handleFailure(message: error.localizedDescription)
+                } else {
+                    self?.nftInfoForDisplay = nftInfoForDisplay
+                    self?.updateUserNFTs()
+                    DispatchQueue.main.async { [weak self] in
+                        self?.setupDisplay()
+                    }
+                }
+                BCProgressHUD.dismiss()
             }
-            
-            guard let data = data else {
-                self?.handleFailure(message: "No data.")
-                return
-            }
-            
-            self?.handleNFTData(data: data)
-        }
-        task.resume()
     }
     
     private func handleFailure(message: String) {
         print(message)
         BCProgressHUD.showFailure(text: "Address error.")
-    }
-    
-    private func getAPIKey() -> String? {
-        let apiKey: String?
-        if walletAddress?.hasPrefix("0x") == true {
-            apiKey = Bundle.main.object(forInfoDictionaryKey: "Moralis_API_Key") as? String
-        } else {
-            apiKey = Bundle.main.object(forInfoDictionaryKey: "Rarible_API_Key") as? String
-        }
-        
-        if apiKey == nil || apiKey?.isEmpty == true {
-            print("API Key does not exist.")
-        }
-        
-        return apiKey
-    }
-    
-    private func buildAPIURL(for address: String) -> URL? {
-        let baseURL: String
-        if address.hasPrefix("0x") {
-            baseURL = "https://deep-index.moralis.io/api/v2.2/\(address)/nft?chain=eth&format=decimal&exclude_spam=true&normalizeMetadata=true&media_items=true"
-        } else {
-            let modifiedContract = address.replacingOccurrences(of: "TEZOS:", with: "")
-            baseURL = "https://api.rarible.org/v0.1/items/byOwner?owner=TEZOS:\(modifiedContract)"
-        }
-        
-        return URL(string: baseURL)
-    }
-    
-    private func handleNFTData(data: Data) {
-        let decoder = JSONDecoder()
-        
-        do {
-            if walletAddress?.hasPrefix("0x") == true {
-                let ethNFTData = try decoder.decode(EthNFT.self, from: data)
-                self.handleEthNFTData(ethNFTData)
-            } else {
-                let tezosNFTData = try decoder.decode(TezosNFT.self, from: data)
-                self.handleTezosNFTData(tezosNFTData)
-            }
-        } catch {
-            print("Error in JSON decoding.")
-            BCProgressHUD.dismiss()
-        }
-    }
-    
-    private func handleEthNFTData(_ ethNFTData: EthNFT) {
-        self.nftInfoForDisplay = ethNFTData.result.map { ethNFTMetadata in
-            return ethNFTMetadata.compactMap { ethNFT in
-                if let image = ethNFT.media?.mediaCollection?.high?.url {
-                    guard let imageUrl = URL(string: image) else {
-                        fatalError("Cannot get the image URL of NFT.")
-                    }
-                    return NFTInfoForDisplay(url: imageUrl, title: ethNFT.normalizedMetadata?.name ?? "", artist: ethNFT.metadataObject?.createdBy ?? "", description: ethNFT.normalizedMetadata?.description ?? "")
-                } else {
-                    return nil
-                }
-            }
-        }
-        print(self.nftInfoForDisplay)
-        self.updateUserNFTs()
-        DispatchQueue.main.async { [weak self] in
-            self?.setupDisplay()
-        }
-        BCProgressHUD.dismiss()
-    }
-    
-    private func handleTezosNFTData(_ tezosNFTData: TezosNFT) {
-        self.nftInfoForDisplay = tezosNFTData.items.map { tezosNFTMetadata in
-            return tezosNFTMetadata.compactMap { tezosNFT in
-                if let image = tezosNFT.meta?.content?.first?.url {
-                    guard let imageUrl = URL(string: image) else {
-                        fatalError("Cannot get the image URL of NFT.")
-                    }
-                    let modifiedContract = tezosNFT.contract?.replacingOccurrences(of: "TEZOS:", with: "")
-                    
-                    return NFTInfoForDisplay(url: imageUrl, title: tezosNFT.meta?.name ?? "", artist: "", description: tezosNFT.meta?.description ?? "")
-                } else {
-                    return nil
-                }
-            }
-        }
-        print(self.nftInfoForDisplay)
-        self.updateUserNFTs()
-        DispatchQueue.main.async { [weak self] in
-            self?.setupDisplay()
-        }
-        BCProgressHUD.dismiss()
     }
     
     private func updateUserNFTs() {
