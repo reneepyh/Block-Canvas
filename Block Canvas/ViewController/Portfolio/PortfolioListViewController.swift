@@ -47,6 +47,10 @@ class PortfolioListViewController: UIViewController {
         setupNavTab()
     }
     
+}
+
+// MARK: - UI Functions
+extension PortfolioListViewController {
     private func setupTableView() {
         portfolioListTableView.delegate = self
         portfolioListTableView.dataSource = self
@@ -60,11 +64,11 @@ class PortfolioListViewController: UIViewController {
         navigationItem.backButtonTitle = ""
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "", image: UIImage(systemName: "plus.circle.fill")?.withTintColor(.secondary, renderingMode: .alwaysOriginal), target: self, action: #selector(addWallet))
         // 如不內建demo錢包，加入以下empty view
-//        view.addSubview(emptyView)
-//        emptyView.snp.makeConstraints { make in
-//            make.centerX.equalTo(view.snp.centerX)
-//            make.centerY.equalTo(view.snp.centerY)
-//        }
+        //        view.addSubview(emptyView)
+        //        emptyView.snp.makeConstraints { make in
+        //            make.centerX.equalTo(view.snp.centerX)
+        //            make.centerY.equalTo(view.snp.centerY)
+        //        }
     }
     
     private func setupNavTab() {
@@ -82,7 +86,10 @@ class PortfolioListViewController: UIViewController {
         
         tabBarController?.tabBar.isHidden = false
     }
-    
+}
+
+// MARK: - API Functions
+extension PortfolioListViewController {
     private func fetchWallets() {
         let savedWallets = UserDefaults.standard.object(forKey: "walletAddress") as? [[String: String]] ?? []
         
@@ -171,7 +178,10 @@ class PortfolioListViewController: UIViewController {
         }
         
     }
-    
+}
+
+// MARK: - Add wallet
+extension PortfolioListViewController {
     @objc private func addWallet() {
         guard
             let addressInputVC = UIStoryboard.portfolio.instantiateViewController(
@@ -185,6 +195,7 @@ class PortfolioListViewController: UIViewController {
     }
 }
 
+// MARK: - Table View
 extension PortfolioListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         walletAddresses.count
@@ -267,6 +278,7 @@ extension PortfolioListViewController: UITableViewDelegate, UITableViewDataSourc
     }
 }
 
+// MARK: - UITextFieldDelegate
 extension PortfolioListViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if let newName = textField.text, !newName.isEmpty, let walletListCell = textField.superview?.superview as? WalletListCell, let indexPath = portfolioListTableView.indexPath(for: walletListCell) {

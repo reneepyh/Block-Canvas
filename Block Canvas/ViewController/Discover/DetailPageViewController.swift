@@ -69,7 +69,10 @@ class DetailPageViewController: UIViewController {
         setupNavBarTitle()
         setupButtons()
     }
-    
+}
+
+// MARK: - UI Functions
+extension DetailPageViewController {
     private func setupUI() {
         view.backgroundColor = .primary
         detailTableView.backgroundColor = .primary
@@ -106,17 +109,20 @@ class DetailPageViewController: UIViewController {
         }
     }
     
-    private func checkIfInWatchlist() {
-        if let discoverNFTMetadata = discoverNFTMetadata {
-            isWatchlistButtonSelected = WatchlistManager.shared.isInWatchlist(nft: discoverNFTMetadata)
-        }
-    }
-    
     private func updateWatchlistButtonImage() {
         if let watchlistButton = navigationItem.rightBarButtonItems?[1] {
             DispatchQueue.main.async { [weak self] in
                 watchlistButton.image = self?.watchlistButtonImage()
             }
+        }
+    }
+}
+
+// MARK: - Functions
+extension DetailPageViewController {
+    private func checkIfInWatchlist() {
+        if let discoverNFTMetadata = discoverNFTMetadata {
+            isWatchlistButtonSelected = WatchlistManager.shared.isInWatchlist(nft: discoverNFTMetadata)
         }
     }
     
@@ -174,6 +180,7 @@ class DetailPageViewController: UIViewController {
     }
 }
 
+// MARK: - Table View
 extension DetailPageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         isDetailViewHidden ? 2 : 3
@@ -229,6 +236,7 @@ extension DetailPageViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+// MARK: - DetailMetadataInfoCellDelegate
 extension DetailPageViewController: DetailMetadataInfoCellDelegate {
     func tokenTapped() {
         if let contract = discoverNFTMetadata?.contract {
@@ -254,6 +262,7 @@ extension DetailPageViewController: DetailMetadataInfoCellDelegate {
     }
 }
 
+// MARK: - Web View
 class PlatformWebViewController: UIViewController {
     private var webView: WKWebView!
     var urlString: String?
