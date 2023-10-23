@@ -8,9 +8,11 @@
 import Foundation
 
 class DiscoverAPIService {
-    static let shared = DiscoverAPIService()
+    private let session: URLSession
     
-    private init() {}
+    init(session: URLSession = URLSession.shared) {
+        self.session = session
+    }
 }
 
 extension DiscoverAPIService {
@@ -72,7 +74,7 @@ extension DiscoverAPIService {
             
             request.httpBody = jsonData
             
-            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            let task = session.dataTask(with: request) { data, response, error in
                 defer {
                     group.leave()
                 }
@@ -142,8 +144,6 @@ extension DiscoverAPIService {
             let configuration = URLSessionConfiguration.default
             configuration.timeoutIntervalForRequest = 6.0
             configuration.timeoutIntervalForResource = 6.0
-            
-            let session = URLSession(configuration: configuration)
             
             let task = session.dataTask(with: request) { data, response, error in
                 if let error = error {
@@ -233,21 +233,13 @@ extension DiscoverAPIService {
                 print("Failed to encode the JSON data")
             }
             
-            URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
+            session.dataTask(with: request) { [weak self] data, response, error in
                 if let data = data {
                     do {
                         let data = try JSONDecoder().decode(OpenAIResponse.self, from: data)
                         let recommendedResponse = data.choices?[0].message?.content
                         print("response: \(recommendedResponse)")
-                        let recommendedCollections = recommendedResponse?.split(separator: "\n").map { line -> String in
-                            let trimmedLine = line.trimmingCharacters(in: .whitespacesAndNewlines)
-                            if trimmedLine.hasPrefix("-") {
-                                let collectionName = String(trimmedLine.dropFirst().trimmingCharacters(in: .whitespaces))
-                                return collectionName.replacingOccurrences(of: " ", with: "")
-                            } else {
-                                return trimmedLine.replacingOccurrences(of: " ", with: "")
-                            }
-                        }
+                        let recommendedCollections = self?.formatRecommendationResponse(recommendedResponse)
                         completion(.success(recommendedCollections ?? []))
                     } catch {
                         completion(.failure(error))
@@ -282,8 +274,6 @@ extension DiscoverAPIService {
             let configuration = URLSessionConfiguration.default
             configuration.timeoutIntervalForRequest = 4.0
             configuration.timeoutIntervalForResource = 4.0
-            
-            let session = URLSession(configuration: configuration)
             
             let task = session.dataTask(with: request) { [weak self] data, response, error in
                 
@@ -333,5 +323,18 @@ extension DiscoverAPIService {
         let startIndex = uri.index(uri.startIndex, offsetBy: 7)
         let newUri = String(uri[startIndex...])
         return gateway + newUri
+    }
+    
+    // remove access control for the purpose of unit test
+    func formatRecommendationResponse(_ response: String?) -> [String] {
+        return response?.split(separator: "\n").map { line -> String in
+            let trimmedLine = line.trimmingCharacters(in: .whitespacesAndNewlines)
+            if trimmedLine.hasPrefix("-") {
+                let collectionName = String(trimmedLine.dropFirst().trimmingCharacters(in: .whitespaces))
+                return collectionName.replacingOccurrences(of: " ", with: "")
+            } else {
+                return trimmedLine.replacingOccurrences(of: " ", with: "")
+            }
+        } ?? []
     }
 }
