@@ -48,7 +48,7 @@ class DiscoverPageViewController: UIViewController {
     
     private var recommendationCache: [DiscoverNFT] = []
     
-    private let apiService = DiscoverAPIService.shared
+    private let apiService = DiscoverAPIService.init()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {

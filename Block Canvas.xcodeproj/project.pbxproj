@@ -43,6 +43,7 @@
 		DB6981932AB4648500BE0036 /* Portfolio.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6981922AB4648500BE0036 /* Portfolio.swift */; };
 		DB8434D72ADD67D400A7FD01 /* Trending.json in Resources */ = {isa = PBXBuildFile; fileRef = DB8434D62ADD67D400A7FD01 /* Trending.json */; };
 		DB8C90F12AB43DCF005D75DF /* DiscoverCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8C90F02AB43DCF005D75DF /* DiscoverCollectionCell.swift */; };
+		DB8E88E92AE5238100B78115 /* ResponseFormatterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8E88E82AE5238100B78115 /* ResponseFormatterTest.swift */; };
 		DB98912F2AC0891700E41967 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB98912E2AC0891700E41967 /* UIColor+Extension.swift */; };
 		DB9DFB872AB7614C006D6CE1 /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9DFB862AB7614C006D6CE1 /* Wallet.swift */; };
 		DB9E028C2AB7408E00285E63 /* PortfolioListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9E028B2AB7408E00285E63 /* PortfolioListViewController.swift */; };
@@ -60,9 +61,11 @@
 		DBC2CDE02ACC3BEA0000974B /* LaunchAnimationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC2CDDF2ACC3BEA0000974B /* LaunchAnimationViewController.swift */; };
 		DBC6E31A2AC036E200B40514 /* WaterFallFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC6E3192AC036E200B40514 /* WaterFallFlowLayout.swift */; };
 		DBD8D4192AD1586E00B8FC00 /* DiscoverAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD8D4182AD1586E00B8FC00 /* DiscoverAPIService.swift */; };
+		DBE0286D2AE55A4F00CE8890 /* PriceChangeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE0286C2AE55A4F00CE8890 /* PriceChangeTests.swift */; };
 		DBE3CE552AC7FD1C00A85FB2 /* SettingsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE3CE542AC7FD1C00A85FB2 /* SettingsPageViewController.swift */; };
 		DBE3CE572AC80E2E00A85FB2 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE3CE562AC80E2E00A85FB2 /* SettingsCell.swift */; };
 		DBE93E262ACAC49B00ECF9E0 /* MJRefreshWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE93E252ACAC49B00ECF9E0 /* MJRefreshWrapper.swift */; };
+		DBEEB01F2AE3C796000988F6 /* SearchNFTTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEEB01E2AE3C796000988F6 /* SearchNFTTest.swift */; };
 		DBEF31572AD7940200D648F4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DBEF31562AD7940200D648F4 /* GoogleService-Info.plist */; };
 		DBF329F22AC55DBB009DE67C /* DetailMetadataInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF329F12AC55DBB009DE67C /* DetailMetadataInfoCell.swift */; };
 		DBF45F472AB6E870002E5D31 /* ARDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF45F462AB6E870002E5D31 /* ARDisplayViewController.swift */; };
@@ -89,6 +92,13 @@
 			remoteGlobalIDString = DB58ED782AC948B20053AAB6;
 			remoteInfo = NFTIntentExtension;
 		};
+		DBEEB0202AE3C796000988F6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DB1DBD142AB1D45A00F74B64 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DB1DBD1B2AB1D45A00F74B64;
+			remoteInfo = "Block Canvas";
+		};
 		DBF5678D2AB85633007BFDA1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DB1DBD142AB1D45A00F74B64 /* Project object */;
@@ -99,6 +109,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		DBD0E27C2AE4FBB2004AD644 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DBF567932AB85633007BFDA1 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -156,6 +176,7 @@
 		DB6981922AB4648500BE0036 /* Portfolio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Portfolio.swift; sourceTree = "<group>"; };
 		DB8434D62ADD67D400A7FD01 /* Trending.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Trending.json; sourceTree = "<group>"; };
 		DB8C90F02AB43DCF005D75DF /* DiscoverCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverCollectionCell.swift; sourceTree = "<group>"; };
+		DB8E88E82AE5238100B78115 /* ResponseFormatterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseFormatterTest.swift; sourceTree = "<group>"; };
 		DB98912E2AC0891700E41967 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		DB9DFB862AB7614C006D6CE1 /* Wallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wallet.swift; sourceTree = "<group>"; };
 		DB9E028B2AB7408E00285E63 /* PortfolioListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioListViewController.swift; sourceTree = "<group>"; };
@@ -173,9 +194,12 @@
 		DBC2CDDF2ACC3BEA0000974B /* LaunchAnimationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAnimationViewController.swift; sourceTree = "<group>"; };
 		DBC6E3192AC036E200B40514 /* WaterFallFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterFallFlowLayout.swift; sourceTree = "<group>"; };
 		DBD8D4182AD1586E00B8FC00 /* DiscoverAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverAPIService.swift; sourceTree = "<group>"; };
+		DBE0286C2AE55A4F00CE8890 /* PriceChangeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceChangeTests.swift; sourceTree = "<group>"; };
 		DBE3CE542AC7FD1C00A85FB2 /* SettingsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPageViewController.swift; sourceTree = "<group>"; };
 		DBE3CE562AC80E2E00A85FB2 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		DBE93E252ACAC49B00ECF9E0 /* MJRefreshWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MJRefreshWrapper.swift; sourceTree = "<group>"; };
+		DBEEB01C2AE3C795000988F6 /* BlockCanvasTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlockCanvasTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DBEEB01E2AE3C796000988F6 /* SearchNFTTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNFTTest.swift; sourceTree = "<group>"; };
 		DBEF31562AD7940200D648F4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DBF329F12AC55DBB009DE67C /* DetailMetadataInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMetadataInfoCell.swift; sourceTree = "<group>"; };
 		DBF45F462AB6E870002E5D31 /* ARDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARDisplayViewController.swift; sourceTree = "<group>"; };
@@ -211,6 +235,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB58ED7B2AC948B20053AAB6 /* Intents.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DBEEB0192AE3C795000988F6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,6 +319,7 @@
 				DB0C67912AC9B560007C960A /* Assets */,
 				DBF567822AB85632007BFDA1 /* NFTWidget */,
 				DB58ED7C2AC948B20053AAB6 /* NFTIntentExtension */,
+				DBEEB01D2AE3C796000988F6 /* BlockCanvasTests */,
 				DB1DBD1D2AB1D45A00F74B64 /* Products */,
 				3DFA27E93D793B7A7BF83901 /* Pods */,
 				7C8272E813E1BE556C8BD678 /* Frameworks */,
@@ -300,6 +332,7 @@
 				DB1DBD1C2AB1D45A00F74B64 /* Block Canvas.app */,
 				DBF5677D2AB85632007BFDA1 /* NFTWidgetExtension.appex */,
 				DB58ED792AC948B20053AAB6 /* NFTIntentExtension.appex */,
+				DBEEB01C2AE3C795000988F6 /* BlockCanvasTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -403,6 +436,16 @@
 			path = Manager;
 			sourceTree = "<group>";
 		};
+		DBEEB01D2AE3C796000988F6 /* BlockCanvasTests */ = {
+			isa = PBXGroup;
+			children = (
+				DBEEB01E2AE3C796000988F6 /* SearchNFTTest.swift */,
+				DB8E88E82AE5238100B78115 /* ResponseFormatterTest.swift */,
+				DBE0286C2AE55A4F00CE8890 /* PriceChangeTests.swift */,
+			);
+			path = BlockCanvasTests;
+			sourceTree = "<group>";
+		};
 		DBF567822AB85632007BFDA1 /* NFTWidget */ = {
 			isa = PBXGroup;
 			children = (
@@ -430,6 +473,7 @@
 				345FC2B13D4A06E7826DC811 /* [CP] Embed Pods Frameworks */,
 				DBF567932AB85633007BFDA1 /* Embed Foundation Extensions */,
 				DB4937CD2AD6A93B00242940 /* ShellScript */,
+				DBD0E27C2AE4FBB2004AD644 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -462,6 +506,26 @@
 			productName = NFTIntentExtension;
 			productReference = DB58ED792AC948B20053AAB6 /* NFTIntentExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
+		};
+		DBEEB01B2AE3C795000988F6 /* BlockCanvasTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DBEEB0242AE3C796000988F6 /* Build configuration list for PBXNativeTarget "BlockCanvasTests" */;
+			buildPhases = (
+				DBEEB0182AE3C795000988F6 /* Sources */,
+				DBEEB0192AE3C795000988F6 /* Frameworks */,
+				DBEEB01A2AE3C795000988F6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DBEEB0212AE3C796000988F6 /* PBXTargetDependency */,
+			);
+			name = BlockCanvasTests;
+			packageProductDependencies = (
+			);
+			productName = BlockCanvasTests;
+			productReference = DBEEB01C2AE3C795000988F6 /* BlockCanvasTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		DBF5677C2AB85632007BFDA1 /* NFTWidgetExtension */ = {
 			isa = PBXNativeTarget;
@@ -496,6 +560,10 @@
 					DB58ED782AC948B20053AAB6 = {
 						CreatedOnToolsVersion = 14.3.1;
 					};
+					DBEEB01B2AE3C795000988F6 = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = DB1DBD1B2AB1D45A00F74B64;
+					};
 					DBF5677C2AB85632007BFDA1 = {
 						CreatedOnToolsVersion = 14.3.1;
 					};
@@ -520,6 +588,7 @@
 				DB1DBD1B2AB1D45A00F74B64 /* Block Canvas */,
 				DBF5677C2AB85632007BFDA1 /* NFTWidgetExtension */,
 				DB58ED782AC948B20053AAB6 /* NFTIntentExtension */,
+				DBEEB01B2AE3C795000988F6 /* BlockCanvasTests */,
 			);
 		};
 /* End PBXProject section */
@@ -545,6 +614,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		DB58ED772AC948B20053AAB6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DBEEB01A2AE3C795000988F6 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -708,6 +784,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DBEEB0182AE3C795000988F6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DBE0286D2AE55A4F00CE8890 /* PriceChangeTests.swift in Sources */,
+				DBEEB01F2AE3C796000988F6 /* SearchNFTTest.swift in Sources */,
+				DB8E88E92AE5238100B78115 /* ResponseFormatterTest.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DBF567792AB85632007BFDA1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -725,6 +811,11 @@
 			isa = PBXTargetDependency;
 			target = DB58ED782AC948B20053AAB6 /* NFTIntentExtension */;
 			targetProxy = DB58ED912AC948B20053AAB6 /* PBXContainerItemProxy */;
+		};
+		DBEEB0212AE3C796000988F6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DB1DBD1B2AB1D45A00F74B64 /* Block Canvas */;
+			targetProxy = DBEEB0202AE3C796000988F6 /* PBXContainerItemProxy */;
 		};
 		DBF5678E2AB85633007BFDA1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -807,9 +898,11 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MARKETING_VERSION = 1.0.1;
+				MODULEMAP_FILE = "";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -864,8 +957,10 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MARKETING_VERSION = 1.0.1;
+				MODULEMAP_FILE = "";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = "";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -1002,6 +1097,60 @@
 			};
 			name = Release;
 		};
+		DBEEB0222AE3C796000988F6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CML8K54JBW;
+				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = "";
+				"HEADER_SEARCH_PATHS[arch=*]" = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				MODULEMAP_FILE = "-Xcc -fmodule-map-file=\"$GENERATED_MODULEMAP_DIR/FirebaseCore.modulemap\"";
+				OTHER_LDFLAGS = "$(OTHER_LDFLAGS)";
+				OTHER_SWIFT_FLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = reneehsu.BlockCanvasTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Block Canvas.app/Block Canvas";
+			};
+			name = Debug;
+		};
+		DBEEB0232AE3C796000988F6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CML8K54JBW;
+				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = "";
+				"HEADER_SEARCH_PATHS[arch=*]" = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				MODULEMAP_FILE = "-Xcc -fmodule-map-file=\"$GENERATED_MODULEMAP_DIR/FirebaseCore.modulemap\"";
+				OTHER_LDFLAGS = "$(OTHER_LDFLAGS)";
+				OTHER_SWIFT_FLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = reneehsu.BlockCanvasTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Block Canvas.app/Block Canvas";
+			};
+			name = Release;
+		};
 		DBF567912AB85633007BFDA1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1084,6 +1233,15 @@
 			buildConfigurations = (
 				DB58ED942AC948B30053AAB6 /* Debug */,
 				DB58ED952AC948B30053AAB6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DBEEB0242AE3C796000988F6 /* Build configuration list for PBXNativeTarget "BlockCanvasTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DBEEB0222AE3C796000988F6 /* Debug */,
+				DBEEB0232AE3C796000988F6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

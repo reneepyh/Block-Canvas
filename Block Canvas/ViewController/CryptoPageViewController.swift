@@ -219,34 +219,7 @@ class CryptoPageViewController: UIViewController {
                 }
                 DispatchQueue.main.async { [weak self] in
                     if let priceChange = self?.ethData.priceChange, let change = Double(priceChange) {
-                        if change > 0 {
-                            var config = UIButton.Configuration.filled()
-                            config.title = "\(priceChange)%"
-                            let size = UIImage.SymbolConfiguration(pointSize: 8)
-                            config.image = UIImage(systemName: "arrowtriangle.up.fill", withConfiguration: size)
-                            config.titlePadding = 4
-                            config.imagePadding = 4
-                            config.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 6, bottom: 4, trailing: 6)
-                            config.background.backgroundColor = .systemGreen
-                            self?.ethPriceChangeButton.configuration = config
-                        } else if change < 0 {
-                            var config = UIButton.Configuration.filled()
-                            config.title = "\(priceChange)%"
-                            let size = UIImage.SymbolConfiguration(pointSize: 8)
-                            config.image = UIImage(systemName: "arrowtriangle.down.fill", withConfiguration: size)
-                            config.titlePadding = 4
-                            config.imagePadding = 4
-                            config.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 6, bottom: 4, trailing: 6)
-                            config.background.backgroundColor = .systemPink
-                            self?.ethPriceChangeButton.configuration = config
-                        } else {
-                            var config = UIButton.Configuration.filled()
-                            config.title = "\(priceChange)%"
-                            config.titlePadding = 4
-                            config.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4)
-                            config.background.backgroundColor = .black
-                            self?.ethPriceChangeButton.configuration = config
-                        }
+                        self?.updateETHButtonConfiguration(for: change)
                     }
                 }
             }
@@ -297,34 +270,7 @@ class CryptoPageViewController: UIViewController {
                 }
                 DispatchQueue.main.async { [weak self] in
                     if let priceChange = self?.xtzData.priceChange, let change = Double(priceChange) {
-                        if change > 0 {
-                            var config = UIButton.Configuration.filled()
-                            config.title = "\(priceChange)%"
-                            let size = UIImage.SymbolConfiguration(pointSize: 8)
-                            config.image = UIImage(systemName: "arrowtriangle.up.fill", withConfiguration: size)
-                            config.titlePadding = 4
-                            config.imagePadding = 4
-                            config.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 6, bottom: 4, trailing: 6)
-                            config.background.backgroundColor = .systemGreen
-                            self?.xtzPriceChangeButton.configuration = config
-                        } else if change < 0 {
-                            var config = UIButton.Configuration.filled()
-                            config.title = "\(priceChange)%"
-                            let size = UIImage.SymbolConfiguration(pointSize: 8)
-                            config.image = UIImage(systemName: "arrowtriangle.down.fill", withConfiguration: size)
-                            config.titlePadding = 4
-                            config.imagePadding = 4
-                            config.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 6, bottom: 4, trailing: 6)
-                            config.background.backgroundColor = .systemPink
-                            self?.xtzPriceChangeButton.configuration = config
-                        } else {
-                            var config = UIButton.Configuration.filled()
-                            config.title = "\(priceChange)%"
-                            config.titlePadding = 4
-                            config.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4)
-                            config.background.backgroundColor = .black
-                            self?.xtzPriceChangeButton.configuration = config
-                        }
+                        self?.updateXTZButtonConfiguration(for: change)
                     }
                 }
             }
@@ -609,6 +555,37 @@ class CryptoPageViewController: UIViewController {
                 }, completion: nil)
             }
         }
+    }
+    
+    // remove access control for the purpose of unit test
+    func configurationForPriceChange(_ priceChange: Double) -> UIButton.Configuration {
+        var config = UIButton.Configuration.filled()
+        config.title = "\(priceChange)%"
+        let size = UIImage.SymbolConfiguration(pointSize: 8)
+        config.titlePadding = 4
+        config.imagePadding = 4
+        config.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 6, bottom: 4, trailing: 6)
+
+        if priceChange > 0 {
+            config.image = UIImage(systemName: "arrowtriangle.up.fill", withConfiguration: size)
+            config.background.backgroundColor = .systemGreen
+        } else if priceChange < 0 {
+            config.image = UIImage(systemName: "arrowtriangle.down.fill", withConfiguration: size)
+            config.background.backgroundColor = .systemPink
+        } else {
+            config.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4)
+            config.background.backgroundColor = .black
+        }
+
+        return config
+    }
+    
+    private func updateETHButtonConfiguration(for priceChange: Double) {
+        ethPriceChangeButton.configuration = configurationForPriceChange(priceChange)
+    }
+
+    private func updateXTZButtonConfiguration(for priceChange: Double) {
+        xtzPriceChangeButton.configuration = configurationForPriceChange(priceChange)
     }
     
     @objc func updatePriceLabel() {
