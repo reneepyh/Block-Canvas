@@ -7,6 +7,33 @@
 
 import Foundation
 
+struct WalletBalanceElement: Codable {
+    let currency: Currency?
+    let confirmedBalance, pendingBalance: String?
+    let confirmedNonce, confirmedBlock: Int?
+
+    enum CodingKeys: String, CodingKey {
+        case currency
+        case confirmedBalance = "confirmed_balance"
+        case pendingBalance = "pending_balance"
+        case confirmedNonce = "confirmed_nonce"
+        case confirmedBlock = "confirmed_block"
+    }
+}
+
+struct Currency: Codable {
+    let assetPath, symbol, name: String?
+    let decimals: Int?
+    let type: String?
+
+    enum CodingKeys: String, CodingKey {
+        case assetPath = "asset_path"
+        case symbol, name, decimals, type
+    }
+}
+
+typealias WalletBalance = [WalletBalanceElement]
+
 struct EthNFT: Codable {
     let page, pageSize: Int?
     let result: [EthNFTMetadata]?

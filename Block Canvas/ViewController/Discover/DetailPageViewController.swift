@@ -69,7 +69,10 @@ class DetailPageViewController: UIViewController {
         setupNavBarTitle()
         setupButtons()
     }
-    
+}
+
+// MARK: - UI Functions
+extension DetailPageViewController {
     private func setupUI() {
         view.backgroundColor = .primary
         detailTableView.backgroundColor = .primary
@@ -106,17 +109,20 @@ class DetailPageViewController: UIViewController {
         }
     }
     
-    private func checkIfInWatchlist() {
-        if let discoverNFTMetadata = discoverNFTMetadata {
-            isWatchlistButtonSelected = WatchlistManager.shared.isInWatchlist(nft: discoverNFTMetadata)
-        }
-    }
-    
     private func updateWatchlistButtonImage() {
         if let watchlistButton = navigationItem.rightBarButtonItems?[1] {
             DispatchQueue.main.async { [weak self] in
                 watchlistButton.image = self?.watchlistButtonImage()
             }
+        }
+    }
+}
+
+// MARK: - Functions
+extension DetailPageViewController {
+    private func checkIfInWatchlist() {
+        if let discoverNFTMetadata = discoverNFTMetadata {
+            isWatchlistButtonSelected = WatchlistManager.shared.isInWatchlist(nft: discoverNFTMetadata)
         }
     }
     
@@ -147,17 +153,20 @@ class DetailPageViewController: UIViewController {
         let arViewController = ARDisplayViewController()
         guard let displayUri = discoverNFTMetadata?.displayUri else {
             print("Cannot find display Uri.")
+            BCProgressHUD.showFailure(text: "Internet error. Please try again.")
             return
         }
         
         guard let imageURL = URL(string: displayUri) else {
             print("Cannot create image URL.")
+            BCProgressHUD.showFailure(text: "Internet error. Please try again.")
             return
         }
         
-        let task = URLSession.shared.dataTask(with: imageURL) { (data, response, error) in
+        let task = URLSession.shared.dataTask(with: imageURL) { (data, _, error) in
             if let error = error {
                 print("Error downloading image: \(error)")
+                BCProgressHUD.showFailure(text: "Internet error. Please try again.")
             } else if let data = data, let image = UIImage(data: data) {
                 arViewController.imageToDisplay = image
                 DispatchQueue.main.async {
@@ -171,6 +180,7 @@ class DetailPageViewController: UIViewController {
     }
 }
 
+// MARK: - Table View
 extension DetailPageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         isDetailViewHidden ? 2 : 3
@@ -178,7 +188,7 @@ extension DetailPageViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.row {
-            case 0:
+        case 0:
                 guard let detailImageCell = detailTableView.dequeueReusableCell(withIdentifier: DetailImageCell.reuseIdentifier, for: indexPath) as? DetailImageCell else {
                     fatalError("Cannot create detail image cell.")
                 }
@@ -188,7 +198,7 @@ extension DetailPageViewController: UITableViewDelegate, UITableViewDataSource {
                     detailImageCell.descriptionLabel.text = discoverNFTMetadata.nftDescription
                 }
                 return detailImageCell
-            case 1:
+        case 1:
                 guard let detailMetadataCell = detailTableView.dequeueReusableCell(withIdentifier: DetailMetadataCell.reuseIdentifier, for: indexPath) as? DetailMetadataCell else {
                     fatalError("Cannot create detail metadata cell.")
                 }
@@ -198,7 +208,7 @@ extension DetailPageViewController: UITableViewDelegate, UITableViewDataSource {
                     detailMetadataCell.arrowImageView.image = UIImage(systemName: "chevron.up")?.withTintColor(.tertiary, renderingMode: .alwaysOriginal)
                 }
                 return detailMetadataCell
-            case 2:
+        case 2:
                 guard let detailMetadataInfoCell = detailTableView.dequeueReusableCell(withIdentifier: DetailMetadataInfoCell.reuseIdentifier, for: indexPath) as? DetailMetadataInfoCell else {
                     fatalError("Cannot create detail image cell.")
                 }
@@ -213,7 +223,7 @@ extension DetailPageViewController: UITableViewDelegate, UITableViewDataSource {
                     detailMetadataInfoCell.delegate = self
                 }
                 return detailMetadataInfoCell
-            default:
+        default:
                 return UITableViewCell()
         }
     }
@@ -226,6 +236,7 @@ extension DetailPageViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+// MARK: - DetailMetadataInfoCellDelegate
 extension DetailPageViewController: DetailMetadataInfoCellDelegate {
     func tokenTapped() {
         if let contract = discoverNFTMetadata?.contract {
@@ -251,6 +262,7 @@ extension DetailPageViewController: DetailMetadataInfoCellDelegate {
     }
 }
 
+// MARK: - Web View
 class PlatformWebViewController: UIViewController {
     private var webView: WKWebView!
     var urlString: String?

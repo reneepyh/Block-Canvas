@@ -9,7 +9,6 @@ import UIKit
 import SnapKit
 
 class LaunchAnimationViewController: UIViewController {
-    
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -25,7 +24,10 @@ class LaunchAnimationViewController: UIViewController {
         super.viewDidAppear(animated)
         setupAnimation()
     }
-    
+}
+
+// MARK: - UI Functions
+extension LaunchAnimationViewController {
     private func setupUI() {
         view.backgroundColor = .primary
         view.addSubview(imageView)

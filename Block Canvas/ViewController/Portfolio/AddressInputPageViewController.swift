@@ -61,7 +61,10 @@ class AddressInputPageViewController: UIViewController {
         super.viewWillAppear(animated)
         setupNavTab()
     }
-    
+}
+
+// MARK: - UI Functions
+extension AddressInputPageViewController {
     private func setupUI() {
         view.backgroundColor = .primary
         self.title = "add Wallet."
@@ -115,6 +118,10 @@ class AddressInputPageViewController: UIViewController {
         tabBarController?.tabBar.isHidden = true
     }
     
+}
+
+// MARK: - Wallet Functions
+extension AddressInputPageViewController {
     private func findWallets() {
         walletAddresses = userDefaults.object(forKey: "walletAddress") as? [[String: String]] ?? []
     }
@@ -149,6 +156,7 @@ class AddressInputPageViewController: UIViewController {
     }
 }
 
+// MARK: - UITextFieldDelegate
 extension AddressInputPageViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == addressTextField {

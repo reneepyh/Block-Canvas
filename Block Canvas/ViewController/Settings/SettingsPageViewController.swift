@@ -20,7 +20,10 @@ class SettingsPageViewController: UIViewController {
         super.viewWillAppear(true)
         setupNavTab()
     }
-    
+}
+
+// MARK: - UI Functions
+extension SettingsPageViewController {
     private func setupTableView() {
         settingsTableView.dataSource = self
         settingsTableView.delegate = self
@@ -46,6 +49,7 @@ class SettingsPageViewController: UIViewController {
     }
 }
 
+// MARK: - Table View
 extension SettingsPageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         3

@@ -27,7 +27,10 @@ class WidgetPageViewController: UIViewController {
         setupNavTab()
         fetchWallets()
     }
-    
+}
+
+// MARK: - UI Functions
+extension WidgetPageViewController {
     private func setupUI() {
         view.backgroundColor = .primary
         self.title = "choose wallet."
@@ -55,7 +58,10 @@ class WidgetPageViewController: UIViewController {
         navigationItem.backButtonTitle = ""
         tabBarController?.tabBar.isHidden = true
     }
-    
+}
+
+// MARK: - API Functions
+extension WidgetPageViewController {
     private func fetchWallets() {
         let savedWallets = UserDefaults.standard.object(forKey: "walletAddress") as? [[String: String]] ?? []
         
@@ -228,6 +234,7 @@ class WidgetPageViewController: UIViewController {
     }
 }
 
+// MARK: - Table View
 extension WidgetPageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         walletAddresses.count
