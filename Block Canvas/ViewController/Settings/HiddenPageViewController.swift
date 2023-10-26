@@ -25,7 +25,7 @@ class HiddenPageViewController: UIViewController {
         }
         return view
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -36,7 +36,10 @@ class HiddenPageViewController: UIViewController {
         fetchHiddenNFTs()
         setupNavTab()
     }
+}
 
+// MARK: - UI Functions
+extension HiddenPageViewController {
     private func setupUI() {
         view.backgroundColor = .primary
         self.title = "hidden."
@@ -56,7 +59,10 @@ class HiddenPageViewController: UIViewController {
         navigationController?.additionalSafeAreaInsets = navigationExtendHeight
         tabBarController?.tabBar.isHidden = true
     }
-    
+}
+
+// MARK: - Fetch Hidden NFTs
+extension HiddenPageViewController {
     private func fetchHiddenNFTs() {
         if let fetchedHiddenItems = HiddenManager.shared.fetchHiddenNFTItems() {
             hiddenNFTs = fetchedHiddenItems.map({ managedObject in
@@ -71,6 +77,7 @@ class HiddenPageViewController: UIViewController {
     }
 }
 
+// MARK: - Collection View
 extension HiddenPageViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         hiddenNFTs.count

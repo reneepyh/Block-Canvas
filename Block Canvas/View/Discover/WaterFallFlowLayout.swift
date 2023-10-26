@@ -12,7 +12,6 @@ protocol WaterFallLayoutDelegate: NSObjectProtocol {
 }
 
 class WaterFallFlowLayout: UICollectionViewFlowLayout {
-
     weak var delegate: WaterFallLayoutDelegate?
     // 列数
     var cols = 2
@@ -70,7 +69,6 @@ class WaterFallFlowLayout: UICollectionViewFlowLayout {
 }
 
 extension WaterFallFlowLayout {
-    
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         return layoutAttributeArray.filter {
             $0.frame.intersects(rect)

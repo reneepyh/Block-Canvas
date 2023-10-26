@@ -36,7 +36,10 @@ class WatchlistPageViewController: UIViewController {
         fetchWatchlist()
         setupNavTab()
     }
-    
+}
+
+// MARK: - UI Functions
+extension WatchlistPageViewController {
     private func setupUI() {
         view.backgroundColor = .primary
         watchlistCollectionView.dataSource = self
@@ -55,7 +58,10 @@ class WatchlistPageViewController: UIViewController {
         navigationController?.additionalSafeAreaInsets = navigationExtendHeight
         tabBarController?.tabBar.isHidden = true
     }
-    
+}
+
+// MARK: - Fetch Watchlist
+extension WatchlistPageViewController {
     private func fetchWatchlist() {
         if let fetchedWatchlistItems = WatchlistManager.shared.fetchWatchlistItems() {
             watchlistNFTs = fetchedWatchlistItems.map({ managedObject in
@@ -67,6 +73,7 @@ class WatchlistPageViewController: UIViewController {
     }
 }
 
+// MARK: - Collection View
 extension WatchlistPageViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         watchlistNFTs.count
@@ -108,6 +115,7 @@ extension WatchlistPageViewController: UICollectionViewDelegateFlowLayout, UICol
     }
 }
 
+// MARK: - DetailPageViewControllerDelegate
 extension WatchlistPageViewController: DetailPageViewControllerDelegate {
     func deleteWatchlistItem(at indexPath: IndexPath) {
         let nftToDelete = watchlistNFTs[indexPath.row]

@@ -11,7 +11,7 @@ import Lottie
 
 class WidgetWalletSelectedViewController: UIViewController {
     private var animationView: LottieAnimationView?
-
+    
     private let greatLabel: UILabel = {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 32)
@@ -35,7 +35,10 @@ class WidgetWalletSelectedViewController: UIViewController {
         setupUI()
         setupAnimation()
     }
-    
+}
+
+// MARK: - UI Functions
+extension WidgetWalletSelectedViewController {
     private func setupUI() {
         view.backgroundColor  = .primary
         view.addSubview(greatLabel)
@@ -66,5 +69,4 @@ class WidgetWalletSelectedViewController: UIViewController {
         })
         animationView!.play()
     }
-    
 }
