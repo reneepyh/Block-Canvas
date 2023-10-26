@@ -11,7 +11,6 @@ import SnapKit
 import Lottie
 
 class ARDisplayViewController: UIViewController, ARSCNViewDelegate {
-    
     private var sceneView: ARSCNView!
     var imageToDisplay: UIImage?
     private var lastAddedNode: SCNNode?
@@ -54,6 +53,7 @@ class ARDisplayViewController: UIViewController, ARSCNViewDelegate {
         sceneView.addGestureRecognizer(pinchGestureRecognizer)
         
         setupUI()
+        setupInstructionAnimations()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -67,42 +67,9 @@ class ARDisplayViewController: UIViewController, ARSCNViewDelegate {
         super.viewWillDisappear(animated)
         sceneView.session.pause()
     }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        lastAddedNode?.removeFromParentNode()
-        
-        guard let touch = touches.first else { return }
-        let location = touch.location(in: sceneView)
-        
-        let hitResults = sceneView.hitTest(location, types: .featurePoint)
-        
-        if let hitResult = hitResults.first {
-            let transform = hitResult.worldTransform
-            let position = SCNVector3(x: transform.columns.3.x, y: transform.columns.3.y, z: transform.columns.3.z)
-            
-            guard let image = imageToDisplay else { return }
-            
-            // Calculate aspect ratio
-            let width = CGFloat(image.size.width)
-            let height = CGFloat(image.size.height)
-            
-            let aspectRatio = width / height
-            
-            // Create plane with dynamic size
-            let plane = SCNPlane(width: 0.1 * aspectRatio, height: 0.1)
-            plane.firstMaterial?.diffuse.contents = image
-            
-            let planeNode = SCNNode(geometry: plane)
-            planeNode.position = position
-            
-            sceneView.scene.rootNode.addChildNode(planeNode)
-            
-            // Keep track of the last added node
-            lastAddedNode = planeNode
-        }
-    }
 }
 
+// MARK: - UI Functions
 extension ARDisplayViewController {
     private func setupUI() {
         view.addSubview(instructionButton)
@@ -138,8 +105,9 @@ extension ARDisplayViewController {
             make.width.equalTo(58)
             make.height.equalTo(48)
         }
-        
-        // MARK: Lottie
+    }
+    
+    private func setupInstructionAnimations() {
         tapAnimationView = .init(name: "tap")
         tapAnimationView!.contentMode = .scaleAspectFit
         tapAnimationView!.loopMode = .repeat(2)
@@ -184,6 +152,43 @@ extension ARDisplayViewController {
                     }
                 }
             }
+        }
+    }
+}
+
+// MARK: - Actions
+extension ARDisplayViewController {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        lastAddedNode?.removeFromParentNode()
+        
+        guard let touch = touches.first else { return }
+        let location = touch.location(in: sceneView)
+        
+        let hitResults = sceneView.hitTest(location, types: .featurePoint)
+        
+        if let hitResult = hitResults.first {
+            let transform = hitResult.worldTransform
+            let position = SCNVector3(x: transform.columns.3.x, y: transform.columns.3.y, z: transform.columns.3.z)
+            
+            guard let image = imageToDisplay else { return }
+            
+            // Calculate aspect ratio
+            let width = CGFloat(image.size.width)
+            let height = CGFloat(image.size.height)
+            
+            let aspectRatio = width / height
+            
+            // Create plane with dynamic size
+            let plane = SCNPlane(width: 0.1 * aspectRatio, height: 0.1)
+            plane.firstMaterial?.diffuse.contents = image
+            
+            let planeNode = SCNNode(geometry: plane)
+            planeNode.position = position
+            
+            sceneView.scene.rootNode.addChildNode(planeNode)
+            
+            // Keep track of the last added node
+            lastAddedNode = planeNode
         }
     }
     
