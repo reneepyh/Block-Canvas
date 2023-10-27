@@ -129,13 +129,13 @@ extension AddressInputPageViewController {
     @objc func continueButtonTapped() {
         guard let address = addressTextField.text, (address.hasPrefix("0x") || address.hasPrefix("tz") || (address.hasPrefix("tx"))) else {
             print("User did not enter valid address")
-            BCProgressHUD.showFailure(text: "Address is not valid.")
+            BCProgressHUD.showFailure(text: BCConstant.notValidAddress)
             return
         }
         
         guard let walletName = nameTextField.text, !walletName.isEmpty else {
             print("User did not enter wallet name")
-            BCProgressHUD.showFailure(text: "Wallet name empty.")
+            BCProgressHUD.showFailure(text: BCConstant.emptyWalletName)
             return
         }
         

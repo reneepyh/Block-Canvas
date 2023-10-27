@@ -153,20 +153,20 @@ extension DetailPageViewController {
         let arViewController = ARDisplayViewController()
         guard let displayUri = discoverNFTMetadata?.displayUri else {
             print("Cannot find display Uri.")
-            BCProgressHUD.showFailure(text: "Internet error. Please try again.")
+            BCProgressHUD.showFailure(text: BCConstant.internetError)
             return
         }
         
         guard let imageURL = URL(string: displayUri) else {
             print("Cannot create image URL.")
-            BCProgressHUD.showFailure(text: "Internet error. Please try again.")
+            BCProgressHUD.showFailure(text: BCConstant.internetError)
             return
         }
         
         let task = URLSession.shared.dataTask(with: imageURL) { (data, _, error) in
             if let error = error {
                 print("Error downloading image: \(error)")
-                BCProgressHUD.showFailure(text: "Internet error. Please try again.")
+                BCProgressHUD.showFailure(text: BCConstant.internetError)
             } else if let data = data, let image = UIImage(data: data) {
                 arViewController.imageToDisplay = image
                 DispatchQueue.main.async {

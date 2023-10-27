@@ -171,13 +171,13 @@ extension WidgetPageViewController {
                 let task = session.dataTask(with: request) { [weak self] data, response, error in
                     if let error = error {
                         print(error)
-                        BCProgressHUD.showFailure(text: "Address error.")
+                        BCProgressHUD.showFailure(text: BCConstant.addressError)
                         return
                     }
                     
                     guard let data = data else {
                         print("No data.")
-                        BCProgressHUD.showFailure(text: "No NFT to show.")
+                        BCProgressHUD.showFailure(text: BCConstant.noNFT)
                         return
                     }
                     
@@ -228,7 +228,7 @@ extension WidgetPageViewController {
             }
             else {
                 print("Invalid URL.")
-                BCProgressHUD.showFailure(text: "Address error.")
+                BCProgressHUD.showFailure(text: BCConstant.addressError)
             }
         }
     }
