@@ -25,6 +25,7 @@
 		DB1DBD2C2AB1D45B00F74B64 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB1DBD2A2AB1D45B00F74B64 /* LaunchScreen.storyboard */; };
 		DB2324452ADC375200938635 /* CryptoAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2324442ADC375200938635 /* CryptoAPIService.swift */; };
 		DB4422792AC2712C0038E34C /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4422782AC2712C0038E34C /* UIFont+Extension.swift */; };
+		DB471ECC2AEBB148007DB516 /* BCConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB471ECB2AEBB147007DB516 /* BCConstant.swift */; };
 		DB4937CB2AD6A70F00242940 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB4937CA2AD6A70F00242940 /* FirebaseCrashlytics */; };
 		DB4937D32AD6AE1E00242940 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB4937D22AD6AE1E00242940 /* FirebaseAnalytics */; };
 		DB4BFB2D2AB6A31C00187B1C /* PortfolioDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4BFB2C2AB6A31C00187B1C /* PortfolioDisplayViewController.swift */; };
@@ -156,6 +157,7 @@
 		DB1DBD2D2AB1D45B00F74B64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB2324442ADC375200938635 /* CryptoAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoAPIService.swift; sourceTree = "<group>"; };
 		DB4422782AC2712C0038E34C /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
+		DB471ECB2AEBB147007DB516 /* BCConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BCConstant.swift; sourceTree = "<group>"; };
 		DB4BFB2C2AB6A31C00187B1C /* PortfolioDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioDisplayViewController.swift; sourceTree = "<group>"; };
 		DB4BFB2E2AB6AA1300187B1C /* PortfolioDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioDisplayView.swift; sourceTree = "<group>"; };
 		DB5386A82AC2B4700077672B /* DetailMetadataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMetadataCell.swift; sourceTree = "<group>"; };
@@ -278,7 +280,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		DB0C67912AC9B560007C960A /* Assets */ = {
+		DB0C67912AC9B560007C960A /* Resource */ = {
 			isa = PBXGroup;
 			children = (
 				DB8434D62ADD67D400A7FD01 /* Trending.json */,
@@ -286,8 +288,9 @@
 				DB1DBD282AB1D45B00F74B64 /* Assets.xcassets */,
 				DB00B65E2AC6C72100AE8164 /* tap.json */,
 				DB00B6622AC7F78B00AE8164 /* pinch to zoom.json */,
+				DB471ECB2AEBB147007DB516 /* BCConstant.swift */,
 			);
-			path = Assets;
+			path = Resource;
 			sourceTree = "<group>";
 		};
 		DB0C67962AC9BB7B007C960A /* Extensions */ = {
@@ -316,7 +319,7 @@
 			children = (
 				DBF567952AB8844F007BFDA1 /* NFTWidgetExtension.entitlements */,
 				DB1DBD1E2AB1D45A00F74B64 /* Block Canvas */,
-				DB0C67912AC9B560007C960A /* Assets */,
+				DB0C67912AC9B560007C960A /* Resource */,
 				DBF567822AB85632007BFDA1 /* NFTWidget */,
 				DB58ED7C2AC948B20053AAB6 /* NFTIntentExtension */,
 				DBEEB01D2AE3C796000988F6 /* BlockCanvasTests */,
@@ -792,6 +795,7 @@
 			files = (
 				DBC6E31A2AC036E200B40514 /* WaterFallFlowLayout.swift in Sources */,
 				DBA57DC32ABC2F4200C1CE30 /* SettingsManager.xcdatamodeld in Sources */,
+				DB471ECC2AEBB148007DB516 /* BCConstant.swift in Sources */,
 				DBA478792AB2B29C0014E825 /* BCTabBarController.swift in Sources */,
 				DB5386AD2AC2C10F0077672B /* DetailImageCell.swift in Sources */,
 				DBE3CE572AC80E2E00A85FB2 /* SettingsCell.swift in Sources */,
