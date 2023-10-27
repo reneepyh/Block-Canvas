@@ -135,7 +135,7 @@ extension PortfolioDisplayViewController {
     
     private func handleFailure(message: String) {
         print(message)
-        BCProgressHUD.showFailure(text: "Address error.")
+        BCProgressHUD.showFailure(text: BCConstant.addressError)
     }
     
     private func updateUserNFTs() {

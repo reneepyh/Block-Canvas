@@ -91,7 +91,7 @@ extension DiscoverPageViewController {
             if self.selectedPage == 0 {
                 self.getTrendingFromManager()
             } else if self.selectedPage == 1 {
-                BCProgressHUD.show(text: "AI calculating...")
+                BCProgressHUD.show(text: BCConstant.aiCalculating)
                 self.fetchRecommendationData()
             }
         })
@@ -207,13 +207,13 @@ extension DiscoverPageViewController {
     }
     
     private func searchNFTFromManager(keyword: String) {
-        BCProgressHUD.show(text: "Searching")
+        BCProgressHUD.show(text: BCConstant.searching)
         apiService.searchNFT(keyword: keyword, offset: currentOffset) { [weak self] result in
             switch result {
             case .success(let nfts):
                 self?.searchedNFTs = nfts
                 if nfts.count == 0 {
-                    BCProgressHUD.showFailure(text: "No result.")
+                    BCProgressHUD.showFailure(text: BCConstant.noResult)
                 } else {
                     self?.currentOffset += 10
                     DispatchQueue.main.async {
@@ -223,9 +223,9 @@ extension DiscoverPageViewController {
                 }
             case .failure(let error):
                 if (error as NSError).code == NSURLErrorTimedOut {
-                    BCProgressHUD.showFailure(text: "Internet error. Please try again.")
+                    BCProgressHUD.showFailure(text: BCConstant.internetError)
                 } else {
-                    BCProgressHUD.showFailure(text: "No result.")
+                    BCProgressHUD.showFailure(text: BCConstant.noResult)
                 }
             }
         }
@@ -262,13 +262,13 @@ extension DiscoverPageViewController {
                             BCProgressHUD.dismiss()
                         }
                     } else {
-                        BCProgressHUD.showFailure(text: "Internet error. Please try again.")
+                        BCProgressHUD.showFailure(text: BCConstant.internetError)
                     }
                     
                 }
             case .failure(let error):
                 print("Error fetching recommendation: \(error.localizedDescription)")
-                BCProgressHUD.showFailure(text: "Internet error. Please try again.")
+                BCProgressHUD.showFailure(text: BCConstant.internetError)
             }
         }
     }
@@ -436,7 +436,7 @@ extension DiscoverPageViewController {
                 self.discoverCollectionView.endHeaderRefreshing()
                 BCProgressHUD.dismiss()
             } else {
-                BCProgressHUD.show(text: "AI calculating...")
+                BCProgressHUD.show(text: BCConstant.aiCalculating)
                 fetchRecommendationData()
             }
         }
