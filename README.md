@@ -7,7 +7,7 @@ Block Canvas is an innovative NFT application focusing on AR visualization, inte
 
 <div align="center">
     <a href="https://apps.apple.com/tw/app/block-canvas/id6467013238">
-        <img src="https://github.com/reneepyh/Block-Canvas/assets/122091184/8176ee96-f085-48ff-aa92-4c36b0e9a63f" alt="Download">
+        <img src="https://github-production-user-asset-6210df.s3.amazonaws.com/122091184/278551636-8176ee96-f085-48ff-aa92-4c36b0e9a63f.svg" alt="Download">
     </a>
 </div>
 
