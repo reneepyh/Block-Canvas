@@ -49,11 +49,9 @@ class ARDisplayViewController: UIViewController, ARSCNViewDelegate {
         sceneView.delegate = self
         view.addSubview(sceneView)
         
-        let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(didPinch))
-        sceneView.addGestureRecognizer(pinchGestureRecognizer)
-        
         setupUI()
         setupInstructionAnimations()
+        setupGestures()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -154,15 +152,24 @@ extension ARDisplayViewController {
             }
         }
     }
+    
+    private func setupGestures() {
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTap))
+        sceneView.addGestureRecognizer(tapGestureRecognizer)
+        
+        let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(didPinch))
+        tapGestureRecognizer.require(toFail: pinchGestureRecognizer) // Ensure pinch is recognized first before a tap
+        sceneView.addGestureRecognizer(pinchGestureRecognizer)
+
+    }
 }
 
 // MARK: - Actions
 extension ARDisplayViewController {
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    @objc func didTap(_ recognizer: UITapGestureRecognizer) {
         lastAddedNode?.removeFromParentNode()
         
-        guard let touch = touches.first else { return }
-        let location = touch.location(in: sceneView)
+        let location = recognizer.location(in: sceneView)
         
         let hitResults = sceneView.hitTest(location, types: .featurePoint)
         
