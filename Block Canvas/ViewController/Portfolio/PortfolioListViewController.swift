@@ -94,7 +94,7 @@ extension PortfolioListViewController {
         let savedWallets = UserDefaults.standard.object(forKey: "walletAddress") as? [[String: String]] ?? []
         
         if savedWallets.isEmpty {
-            walletAddresses = [["address": "0x423cE4833b42b48611C662cFdc70929E3139b009", "name": "Demo Address"]]
+            walletAddresses = [["address": "0xC28EbDc6affEFa2B6326D295eB2eEc89d00aFF5f", "name": "Demo Address"]]
         } else {
             walletAddresses = savedWallets
         }
