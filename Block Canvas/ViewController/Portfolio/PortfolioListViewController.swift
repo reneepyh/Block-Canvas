@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import Combine
 
 class PortfolioListViewController: UIViewController {
     @IBOutlet weak var portfolioListTableView: UITableView!
@@ -25,28 +26,50 @@ class PortfolioListViewController: UIViewController {
         return view
     }()
     
-    private let userDefaults = UserDefaults.standard
+    private var viewModel = PortfolioListViewModel()
     
-    private var walletAddresses: [[String: String]] = []
-    
-    private var balance: [String: String] = [:]
+    private var cancellables = Set<AnyCancellable>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
         setupUI()
+        setupBindings()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        fetchWallets()
-        balance.removeAll()
-        walletAddresses.forEach { wallet in
-            fetchWalletBalance(address: wallet["address"] ?? "")
-        }
+        viewModel.loadWallets()
+        viewModel.balance.removeAll()
+        viewModel.updateWalletBalances()
         setupNavTab()
     }
     
+    private func setupBindings() {
+        viewModel.$walletAddresses
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.portfolioListTableView.reloadData()
+            }
+            .store(in: &cancellables)
+        
+        viewModel.$balance
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.portfolioListTableView.reloadData()
+            }
+            .store(in: &cancellables)
+        
+        viewModel.$errorMessage
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] errorMessage in
+                if let message = errorMessage {
+                    BCProgressHUD.showFailure(text: BCConstant.internetError)
+                }
+                self?.viewModel.errorMessage = nil
+            }
+            .store(in: &cancellables)
+    }
 }
 
 // MARK: - UI Functions
@@ -88,98 +111,6 @@ extension PortfolioListViewController {
     }
 }
 
-// MARK: - API Functions
-extension PortfolioListViewController {
-    private func fetchWallets() {
-        let savedWallets = UserDefaults.standard.object(forKey: "walletAddress") as? [[String: String]] ?? []
-        
-        if savedWallets.isEmpty {
-            walletAddresses = [["address": "0xC28EbDc6affEFa2B6326D295eB2eEc89d00aFF5f", "name": "Demo Address"]]
-        } else {
-            walletAddresses = savedWallets
-        }
-        // 內建一個錢包地址，先拿掉以下判斷
-        //        if ethWallets.count == 0 {
-        //            guard
-        //                let addressInputVC = UIStoryboard.portfolio.instantiateViewController(
-        //                    withIdentifier: String(describing: AddressInputPageViewController.self)
-        //                ) as? AddressInputPageViewController
-        //            else {
-        //                return
-        //            }
-        //            addressInputVC.modalPresentationStyle = .overFullScreen
-        //            navigationController?.pushViewController(addressInputVC, animated: false)
-        //            addressInputVC.navigationItem.hidesBackButton = true
-        //        }
-        // emptyView.isHidden = !walletAddresses.isEmpty
-    }
-    
-    private func fetchWalletBalance(address: String) {
-        let apiKey = Bundle.main.object(forInfoDictionaryKey: "Blockdaemon_API_Key") as? String
-        
-        guard let key = apiKey, !key.isEmpty else {
-            print("Blockdaemon API Key does not exist.")
-            return
-        }
-        
-        let urlString: String
-        
-        if address.hasPrefix("0x") {
-            urlString = "https://svc.blockdaemon.com/universal/v1/ethereum/mainnet/account/\(address)"
-        } else {
-            urlString = "https://svc.blockdaemon.com/universal/v1/tezos/mainnet/account/\(address)"
-        }
-        
-        if let url = URL(string: urlString) {
-            var request = URLRequest(url: url)
-            request.setValue("application/json", forHTTPHeaderField: "Accept")
-            request.setValue(apiKey, forHTTPHeaderField: "X-API-Key")
-            request.httpMethod = "GET"
-            
-            let session = URLSession.shared
-            
-            let task = session.dataTask(with: request) { [weak self] data, response, error in
-                if let error = error {
-                    print(error)
-                    return
-                }
-                
-                guard let data = data else {
-                    print("No data.")
-                    return
-                }
-                
-                let decoder = JSONDecoder()
-                
-                do {
-                    let balanceData = try decoder.decode(WalletBalance.self, from: data)
-                    print(balanceData)
-                    let confirmedBalanceInInt = Int(balanceData[0].confirmedBalance ?? "0")
-                    let confirmedBalance = Decimal(confirmedBalanceInInt ?? 0)
-                    let decimals = balanceData[0].currency?.decimals
-                    let divisor = pow(10, decimals ?? 1)
-                    let actualBalance = confirmedBalance / divisor
-                    let formattedBalance = String(format: "%.5f", NSDecimalNumber(decimal: actualBalance).doubleValue)
-                    
-                    self?.balance[address] = formattedBalance
-                    
-                }
-                catch {
-                    print("Error in JSON decoding.")
-                }
-                DispatchQueue.main.async { [weak self] in
-                    self?.portfolioListTableView.reloadData()
-                }
-            }
-            task.resume()
-        }
-        else {
-            print("Invalid URL.")
-        }
-        
-    }
-}
-
 // MARK: - Add wallet
 extension PortfolioListViewController {
     @objc private func addWallet() {
@@ -198,7 +129,7 @@ extension PortfolioListViewController {
 // MARK: - Table View
 extension PortfolioListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        walletAddresses.count
+        viewModel.walletAddresses.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -206,15 +137,15 @@ extension PortfolioListViewController: UITableViewDelegate, UITableViewDataSourc
             fatalError("Cannot create wallet list cell.")
         }
         
-        guard let address = walletAddresses[indexPath.row]["address"] else {
+        guard let address = viewModel.walletAddresses[indexPath.row]["address"] else {
             fatalError("Cannot find wallet address.")
         }
         walletCell.addressLabel.text = address
         walletCell.arrowImageView.image = UIImage(systemName: "chevron.forward")?.withTintColor(.secondary, renderingMode: .alwaysOriginal)
         walletCell.walletNameTextField.delegate = self
-        walletCell.walletNameTextField.text = walletAddresses[indexPath.row]["name"]
+        walletCell.walletNameTextField.text = viewModel.walletAddresses[indexPath.row]["name"]
         walletCell.walletNameTextField.isUserInteractionEnabled = false
-        if balance.count != walletAddresses.count {
+        if viewModel.balance.count != viewModel.walletAddresses.count {
             if address.hasPrefix("0x") {
                 walletCell.balanceLabel.text = "-- ETH"
                 walletCell.walletImageView.image = UIImage(named: "ethereum")
@@ -223,7 +154,7 @@ extension PortfolioListViewController: UITableViewDelegate, UITableViewDataSourc
                 walletCell.walletImageView.image = UIImage(named: "tezos")
             }
         } else {
-            if let balance = balance[address] {
+            if let balance = viewModel.balance[address] {
                 if address.hasPrefix("0x") {
                     walletCell.balanceLabel.text = "\(balance) ETH"
                     walletCell.walletImageView.image = UIImage(named: "ethereum")
@@ -233,7 +164,6 @@ extension PortfolioListViewController: UITableViewDelegate, UITableViewDataSourc
                 }
             }
         }
-        print(walletAddresses[indexPath.row])
         
         return walletCell
     }
@@ -246,16 +176,15 @@ extension PortfolioListViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "showPortfolio", sender: walletAddresses[indexPath.row]["address"])
+        performSegue(withIdentifier: "showPortfolio", sender: viewModel.walletAddresses[indexPath.row]["address"])
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive, title: "") { [weak self] (action, view, completionHandler) in
-            self?.walletAddresses.remove(at: indexPath.row)
-            self?.userDefaults.set(self?.walletAddresses, forKey: "walletAddress")
+            self?.viewModel.deleteWallet(at: indexPath.row)
             self?.portfolioListTableView.deleteRows(at: [indexPath], with: .left)
             // 如不內建demo錢包，加入以下empty view
-            // emptyView.isHidden = !walletAddresses.isEmpty
+            // emptyView.isHidden = !viewModel.walletAddresses.isEmpty
         }
         delete.backgroundColor = .systemPink
         delete.image = UIImage(systemName: "trash")
@@ -281,9 +210,8 @@ extension PortfolioListViewController: UITableViewDelegate, UITableViewDataSourc
 // MARK: - UITextFieldDelegate
 extension PortfolioListViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if let newName = textField.text, !newName.isEmpty, let walletListCell = textField.superview?.superview as? WalletListCell, let indexPath = portfolioListTableView.indexPath(for: walletListCell) {
-            walletAddresses[indexPath.row]["name"] = newName
-            userDefaults.set(walletAddresses, forKey: "walletAddress")
+        if let newName = textField.text, let walletListCell = textField.superview?.superview as? WalletListCell, let indexPath = portfolioListTableView.indexPath(for: walletListCell) {
+            viewModel.updateWalletName(at: indexPath.row, newName: newName)
         }
         textField.resignFirstResponder()
         textField.isUserInteractionEnabled = false
