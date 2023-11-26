@@ -45,6 +45,8 @@
 		DB81C30A2AE697590073A785 /* PortfolioAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB81C3092AE697590073A785 /* PortfolioAPIService.swift */; };
 		DB8434D72ADD67D400A7FD01 /* Trending.json in Resources */ = {isa = PBXBuildFile; fileRef = DB8434D62ADD67D400A7FD01 /* Trending.json */; };
 		DB8C90F12AB43DCF005D75DF /* DiscoverCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8C90F02AB43DCF005D75DF /* DiscoverCollectionCell.swift */; };
+		DB8D79672B1312B500F06A48 /* AddressInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8D79662B1312B500F06A48 /* AddressInputViewModel.swift */; };
+		DB8D79692B131A4A00F06A48 /* UITextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8D79682B131A4A00F06A48 /* UITextField+Extension.swift */; };
 		DB8E88E92AE5238100B78115 /* ResponseFormatterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8E88E82AE5238100B78115 /* ResponseFormatterTest.swift */; };
 		DB98912F2AC0891700E41967 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB98912E2AC0891700E41967 /* UIColor+Extension.swift */; };
 		DB9E028C2AB7408E00285E63 /* PortfolioListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9E028B2AB7408E00285E63 /* PortfolioListViewController.swift */; };
@@ -180,6 +182,8 @@
 		DB81C3092AE697590073A785 /* PortfolioAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioAPIService.swift; sourceTree = "<group>"; };
 		DB8434D62ADD67D400A7FD01 /* Trending.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Trending.json; sourceTree = "<group>"; };
 		DB8C90F02AB43DCF005D75DF /* DiscoverCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverCollectionCell.swift; sourceTree = "<group>"; };
+		DB8D79662B1312B500F06A48 /* AddressInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressInputViewModel.swift; sourceTree = "<group>"; };
+		DB8D79682B131A4A00F06A48 /* UITextField+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extension.swift"; sourceTree = "<group>"; };
 		DB8E88E82AE5238100B78115 /* ResponseFormatterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseFormatterTest.swift; sourceTree = "<group>"; };
 		DB98912E2AC0891700E41967 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		DB9E028B2AB7408E00285E63 /* PortfolioListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioListViewController.swift; sourceTree = "<group>"; };
@@ -302,6 +306,7 @@
 				DBA478782AB2B29C0014E825 /* UIStoryboard+Extension.swift */,
 				DB98912E2AC0891700E41967 /* UIColor+Extension.swift */,
 				DB4422782AC2712C0038E34C /* UIFont+Extension.swift */,
+				DB8D79682B131A4A00F06A48 /* UITextField+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -378,6 +383,7 @@
 				DB6981902AB4608100BE0036 /* AddressInputPageViewController.swift */,
 				DB4BFB2C2AB6A31C00187B1C /* PortfolioDisplayViewController.swift */,
 				DBF45F462AB6E870002E5D31 /* ARDisplayViewController.swift */,
+				DB8D79662B1312B500F06A48 /* AddressInputViewModel.swift */,
 			);
 			path = Portfolio;
 			sourceTree = "<group>";
@@ -804,6 +810,7 @@
 				DBE3CE572AC80E2E00A85FB2 /* SettingsCell.swift in Sources */,
 				DB9E028C2AB7408E00285E63 /* PortfolioListViewController.swift in Sources */,
 				DB1DBD242AB1D45A00F74B64 /* DiscoverPageViewController.swift in Sources */,
+				DB8D79672B1312B500F06A48 /* AddressInputViewModel.swift in Sources */,
 				DBF5678C2AB85633007BFDA1 /* NFTWidget.intentdefinition in Sources */,
 				DBE93E262ACAC49B00ECF9E0 /* MJRefreshWrapper.swift in Sources */,
 				DBA57DCF2ABC32AF00C1CE30 /* WatchlistItem+CoreDataProperties.swift in Sources */,
@@ -830,6 +837,7 @@
 				DB4BFB2F2AB6AA1300187B1C /* PortfolioDisplayView.swift in Sources */,
 				DB1C573C2ACE85AA00C203B3 /* UIImageView+Extension.swift in Sources */,
 				DBD8D4192AD1586E00B8FC00 /* DiscoverAPIService.swift in Sources */,
+				DB8D79692B131A4A00F06A48 /* UITextField+Extension.swift in Sources */,
 				DB6981912AB4608100BE0036 /* AddressInputPageViewController.swift in Sources */,
 				DB68EBFF2AD0413F00D01B16 /* HiddenManager.swift in Sources */,
 				DB0864842ABC435F004598D6 /* WatchlistCell.swift in Sources */,

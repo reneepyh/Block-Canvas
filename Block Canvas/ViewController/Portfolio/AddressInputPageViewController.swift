@@ -7,11 +7,12 @@
 
 import UIKit
 import SnapKit
+import Combine
 
 class AddressInputPageViewController: UIViewController {
-    private let userDefaults = UserDefaults.standard
+    private var viewModel = AddressInputViewModel()
     
-    private var walletAddresses: [[String: String]] = []
+    private var cancellables = Set<AnyCancellable>()
     
     private let addressTextField: UITextField = {
         let textField = UITextField()
@@ -54,12 +55,27 @@ class AddressInputPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        findWallets()
+        setupBindings()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavTab()
+    }
+    
+    private func setupBindings() {
+        addressTextField.textPublisher
+            .assign(to: \.addressInput, on: viewModel)
+            .store(in: &cancellables)
+        
+        nameTextField.textPublisher
+            .assign(to: \.nameInput, on: viewModel)
+            .store(in: &cancellables)
+        
+        viewModel.validToSubmit
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.isEnabled, on: continueButton)
+            .store(in: &cancellables)
     }
 }
 
@@ -122,26 +138,8 @@ extension AddressInputPageViewController {
 
 // MARK: - Wallet Functions
 extension AddressInputPageViewController {
-    private func findWallets() {
-        walletAddresses = userDefaults.object(forKey: "walletAddress") as? [[String: String]] ?? []
-    }
-    
     @objc func continueButtonTapped() {
-        guard let address = addressTextField.text, (address.hasPrefix("0x") || address.hasPrefix("tz") || (address.hasPrefix("tx"))) else {
-            print("User did not enter valid address")
-            BCProgressHUD.showFailure(text: BCConstant.notValidAddress)
-            return
-        }
-        
-        guard let walletName = nameTextField.text, !walletName.isEmpty else {
-            print("User did not enter wallet name")
-            BCProgressHUD.showFailure(text: BCConstant.emptyWalletName)
-            return
-        }
-        
-        let walletInfo = ["address": address, "name": walletName]
-        walletAddresses.append(walletInfo)
-        userDefaults.set(walletAddresses, forKey: "walletAddress")
+        viewModel.addWallet()
         
         guard
             let portfolioListVC = UIStoryboard.portfolio.instantiateViewController(
@@ -168,6 +166,6 @@ extension AddressInputPageViewController: UITextFieldDelegate {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-            self.view.endEditing(true)
-        }
+        self.view.endEditing(true)
+    }
 }
