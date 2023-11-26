@@ -57,6 +57,7 @@
 		DBA57DCF2ABC32AF00C1CE30 /* WatchlistItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA57DCD2ABC32AF00C1CE30 /* WatchlistItem+CoreDataProperties.swift */; };
 		DBA57DD22ABC33AB00C1CE30 /* WatchlistManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA57DD12ABC33AB00C1CE30 /* WatchlistManager.swift */; };
 		DBAACF122AC96D0B001C7E76 /* WidgetPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAACF112AC96D0B001C7E76 /* WidgetPageViewController.swift */; };
+		DBAAE1D82B123C4200574E51 /* PortfolioListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAAE1D72B123C4200574E51 /* PortfolioListViewModel.swift */; };
 		DBB880322AB4B33600526E40 /* DetailPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB880312AB4B33600526E40 /* DetailPageViewController.swift */; };
 		DBB9BDBC2AB44E07002A5FBC /* KingfisherWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB9BDBB2AB44E07002A5FBC /* KingfisherWrapper.swift */; };
 		DBC2CDE02ACC3BEA0000974B /* LaunchAnimationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC2CDDF2ACC3BEA0000974B /* LaunchAnimationViewController.swift */; };
@@ -191,6 +192,7 @@
 		DBA57DCD2ABC32AF00C1CE30 /* WatchlistItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "WatchlistItem+CoreDataProperties.swift"; path = "Block Canvas/Model/WatchlistItem+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		DBA57DD12ABC33AB00C1CE30 /* WatchlistManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistManager.swift; sourceTree = "<group>"; };
 		DBAACF112AC96D0B001C7E76 /* WidgetPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetPageViewController.swift; sourceTree = "<group>"; };
+		DBAAE1D72B123C4200574E51 /* PortfolioListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioListViewModel.swift; sourceTree = "<group>"; };
 		DBB880312AB4B33600526E40 /* DetailPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPageViewController.swift; sourceTree = "<group>"; };
 		DBB9BDBB2AB44E07002A5FBC /* KingfisherWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingfisherWrapper.swift; sourceTree = "<group>"; };
 		DBC2CDDF2ACC3BEA0000974B /* LaunchAnimationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAnimationViewController.swift; sourceTree = "<group>"; };
@@ -371,6 +373,7 @@
 		DB52D3FF2AE602C600973267 /* Portfolio */ = {
 			isa = PBXGroup;
 			children = (
+				DBAAE1D72B123C4200574E51 /* PortfolioListViewModel.swift */,
 				DB9E028B2AB7408E00285E63 /* PortfolioListViewController.swift */,
 				DB6981902AB4608100BE0036 /* AddressInputPageViewController.swift */,
 				DB4BFB2C2AB6A31C00187B1C /* PortfolioDisplayViewController.swift */,
@@ -806,6 +809,7 @@
 				DBA57DCF2ABC32AF00C1CE30 /* WatchlistItem+CoreDataProperties.swift in Sources */,
 				DB1DBD202AB1D45A00F74B64 /* AppDelegate.swift in Sources */,
 				DB98912F2AC0891700E41967 /* UIColor+Extension.swift in Sources */,
+				DBAAE1D82B123C4200574E51 /* PortfolioListViewModel.swift in Sources */,
 				DBA57DCE2ABC32AF00C1CE30 /* WatchlistItem+CoreDataClass.swift in Sources */,
 				DB0C67952AC9B892007C960A /* WidgetWalletSelectedViewController.swift in Sources */,
 				DB1DBD222AB1D45A00F74B64 /* SceneDelegate.swift in Sources */,
