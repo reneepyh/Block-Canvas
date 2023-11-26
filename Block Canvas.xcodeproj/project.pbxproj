@@ -380,10 +380,10 @@
 			children = (
 				DBAAE1D72B123C4200574E51 /* PortfolioListViewModel.swift */,
 				DB9E028B2AB7408E00285E63 /* PortfolioListViewController.swift */,
+				DB8D79662B1312B500F06A48 /* AddressInputViewModel.swift */,
 				DB6981902AB4608100BE0036 /* AddressInputPageViewController.swift */,
 				DB4BFB2C2AB6A31C00187B1C /* PortfolioDisplayViewController.swift */,
 				DBF45F462AB6E870002E5D31 /* ARDisplayViewController.swift */,
-				DB8D79662B1312B500F06A48 /* AddressInputViewModel.swift */,
 			);
 			path = Portfolio;
 			sourceTree = "<group>";

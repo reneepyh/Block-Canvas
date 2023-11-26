@@ -6,20 +6,46 @@
 //
 
 import Foundation
+import Combine
 
 class PortfolioAPIService {
     static let shared = PortfolioAPIService()
     
     private init() {}
     
+    func fetchWalletBalance(address: String) -> AnyPublisher<WalletBalance, Error> {
+        let urlString: String
+        
+        if address.hasPrefix("0x") {
+            urlString = "https://svc.blockdaemon.com/universal/v1/ethereum/mainnet/account/\(address)"
+        } else {
+            urlString = "https://svc.blockdaemon.com/universal/v1/tezos/mainnet/account/\(address)"
+        }
+        
+        guard let url = URL(string: urlString) else {
+            return Fail(error: NSError(domain: "ErrorDomain", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"]))
+                .eraseToAnyPublisher()
+        }
+        
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.setValue(Bundle.main.object(forInfoDictionaryKey: "Blockdaemon_API_Key") as? String, forHTTPHeaderField: "X-API-Key")
+        request.httpMethod = "GET"
+        
+        return URLSession.shared.dataTaskPublisher(for: request)
+            .map(\.data)
+            .decode(type: WalletBalance.self, decoder: JSONDecoder())
+            .eraseToAnyPublisher()
+    }
+    
     func getNFTsByWallet(walletAddress: String, completion: @escaping ([NFTInfoForDisplay]?, Error?) -> Void) {
         guard let apiKey = getAPIKey(for: walletAddress) else {
-            completion(nil, NSError(domain: "YourAppErrorDomain", code: 0, userInfo: [NSLocalizedDescriptionKey: "API Key not found"]))
+            completion(nil, NSError(domain: "ErrorDomain", code: 0, userInfo: [NSLocalizedDescriptionKey: "API Key not found"]))
             return
         }
         
         guard let url = buildAPIURL(for: walletAddress) else {
-            completion(nil, NSError(domain: "YourAppErrorDomain", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"]))
+            completion(nil, NSError(domain: "ErrorDomain", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"]))
             return
         }
         
@@ -36,7 +62,7 @@ class PortfolioAPIService {
             }
             
             guard let data = data else {
-                completion(nil, NSError(domain: "YourAppErrorDomain", code: 0, userInfo: [NSLocalizedDescriptionKey: "No data"]))
+                completion(nil, NSError(domain: "ErrorDomain", code: 0, userInfo: [NSLocalizedDescriptionKey: "No data"]))
                 return
             }
             

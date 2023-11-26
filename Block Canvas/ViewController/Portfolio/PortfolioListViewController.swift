@@ -59,6 +59,16 @@ class PortfolioListViewController: UIViewController {
                 self?.portfolioListTableView.reloadData()
             }
             .store(in: &cancellables)
+        
+        viewModel.$errorMessage
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] errorMessage in
+                if let message = errorMessage {
+                    BCProgressHUD.showFailure(text: BCConstant.internetError)
+                }
+                self?.viewModel.errorMessage = nil
+            }
+            .store(in: &cancellables)
     }
 }
 
@@ -154,7 +164,6 @@ extension PortfolioListViewController: UITableViewDelegate, UITableViewDataSourc
                 }
             }
         }
-        print(viewModel.walletAddresses[indexPath.row])
         
         return walletCell
     }

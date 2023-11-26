@@ -13,9 +13,13 @@ class PortfolioListViewModel {
     
     @Published var balance: [String: String] = [:]
     
+    @Published var errorMessage: String?
+    
     private var cancellables = Set<AnyCancellable>()
     
     private let userDefaults = UserDefaults.standard
+    
+    private let apiService = PortfolioAPIService.shared
     
     init() {
         loadWallets()
@@ -29,6 +33,8 @@ class PortfolioListViewModel {
         } else {
             walletAddresses = savedWallets
         }
+        
+        print(walletAddresses)
         // 內建一個錢包地址，先拿掉以下判斷
         //        if walletAddresses.count == 0 {
         //            guard
@@ -45,48 +51,21 @@ class PortfolioListViewModel {
         // emptyView.isHidden = !walletAddresses.isEmpty
     }
     
-    private func fetchWalletBalance(address: String) {
-        let apiKey = Bundle.main.object(forInfoDictionaryKey: "Blockdaemon_API_Key") as? String
-        
-        guard let key = apiKey, !key.isEmpty else {
-            print("Blockdaemon API Key does not exist.")
-            return
-        }
-        
-        let urlString: String
-        
-        if address.hasPrefix("0x") {
-            urlString = "https://svc.blockdaemon.com/universal/v1/ethereum/mainnet/account/\(address)"
-        } else {
-            urlString = "https://svc.blockdaemon.com/universal/v1/tezos/mainnet/account/\(address)"
-        }
-        
-        if let url = URL(string: urlString) {
-            var request = URLRequest(url: url)
-            request.setValue("application/json", forHTTPHeaderField: "Accept")
-            request.setValue(apiKey, forHTTPHeaderField: "X-API-Key")
-            request.httpMethod = "GET"
+    func updateWalletBalances() {
+        walletAddresses.forEach { wallet in
+            guard let address = wallet["address"] else { return }
             
-            let session = URLSession.shared
-            
-            let task = session.dataTask(with: request) { [weak self] data, response, error in
-                if let error = error {
-                    BCProgressHUD.showFailure(text: BCConstant.internetError)
-                    print(error)
-                    return
-                }
-                
-                guard let data = data else {
-                    BCProgressHUD.showFailure(text: BCConstant.internetError)
-                    print("No data.")
-                    return
-                }
-                
-                let decoder = JSONDecoder()
-                
-                do {
-                    let balanceData = try decoder.decode(WalletBalance.self, from: data)
-                    print(balanceData)
+            apiService.fetchWalletBalance(address: address)
+                .receive(on: DispatchQueue.main)
+                .sink(receiveCompletion: { completion in
+                    switch completion {
+                    case .failure(let error):
+                        print("Error: \(error.localizedDescription)")
+                        self.errorMessage = "Failed to fetch balance"
+                    case .finished:
+                        break
+                    }
+                }, receiveValue: { [weak self] balanceData in
                     let confirmedBalanceInInt = Int(balanceData[0].confirmedBalance ?? "0")
                     let confirmedBalance = Decimal(confirmedBalanceInInt ?? 0)
                     let decimals = balanceData[0].currency?.decimals
@@ -95,32 +74,20 @@ class PortfolioListViewModel {
                     let formattedBalance = String(format: "%.5f", NSDecimalNumber(decimal: actualBalance).doubleValue)
                     
                     self?.balance[address] = formattedBalance
-                    
-                }
-                catch {
-                    BCProgressHUD.showFailure(text: BCConstant.internetError)
-                    print("Error in JSON decoding.")
-                }
-            }
-            task.resume()
-        }
-        else {
-            print("Invalid URL.")
-        }
-    }
-    
-    func updateWalletBalances() {
-        walletAddresses.forEach { wallet in
-            fetchWalletBalance(address: wallet["address"] ?? "")
+                })
+                .store(in: &cancellables)
         }
     }
     
     func deleteWallet(at index: Int) {
         guard index < walletAddresses.count else { return }
         
-        guard let address = walletAddresses[index]["address"] else { return }
+        let address = walletAddresses[index]["address"]
         walletAddresses.remove(at: index)
-        balance[address] = nil
+        
+        if let address = address {
+            balance[address] = nil
+        }
         
         userDefaults.set(walletAddresses, forKey: "walletAddress")
     }
